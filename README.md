@@ -4,7 +4,7 @@ Automação determinística de cenários de teste no OWASP Juice Shop usando a i
 
 ## Escopo
 
-O catálogo inicial contém **78 cenários definidos para execução**, distribuídos exatamente nos domínios definidos no trabalho:
+O catálogo inicial contém **78 cenários definidos para execução**. A definição de um cenário não significa que ele já tenha sido validado em uma instância local; a validação ocorre pela execução real., distribuídos exatamente nos domínios definidos no trabalho:
 
 | Domínio | Cenários |
 |---|---:|
@@ -53,7 +53,7 @@ O cenário descreve o objetivo e as ações planejadas. O executor:
 7. captura evidências;
 8. gera a Ficha de Cenário no padrão definido no trabalho.
 
-O relatório não deve inventar resultados: campos de resultado e evidência devem ser preenchidos a partir do que foi observado durante a execução.
+O relatório não deve inventar resultados: campos de resultado, mensagens e respostas de interface devem ser preenchidos a partir do que foi observado durante a execução. Um cenário não é marcado como PASSED apenas por existir no inventário.
 
 ## Evidências
 
