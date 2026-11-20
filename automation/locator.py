@@ -288,13 +288,19 @@ async def _semantic_control_candidates(page: Page, value: str) -> list[Locator]:
             # container instead of Angular Material's mat-form-field.
             try:
                 context_text = await control.evaluate(
-                    '(el) => { ' +
-                    'const directLabel = el.id ' +
-                    '? document.querySelector("label[for=\"" + CSS.escape(el.id) + "\"]") ' +
-                    ': null; ' +
-                    'const container = el.closest("form, .form-container, .profile-field, [class*=\"field\"], [class*=\"form\"]"); ' +
-                    'return [directLabel?.textContent || "", container?.textContent || ""].join(" "); ' +
-                    '}'
+                    """(el) => {
+                        const labels = Array.from(document.querySelectorAll("label"));
+                        const directLabel = el.id
+                            ? labels.find(label => label.htmlFor === el.id)
+                            : null;
+                        const container = el.closest(
+                            "form, .form-container, .profile-field, [class*='field'], [class*='form']"
+                        );
+                        return [
+                            directLabel?.textContent || "",
+                            container?.textContent || ""
+                        ].join(" ");
+                    }"""
                 )
                 if _semantic_text_match(wanted, context_text):
                     candidates.append(control)
