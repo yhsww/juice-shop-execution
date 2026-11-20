@@ -229,6 +229,28 @@ async def execute(page: Page, action: dict) -> ActionResult:
             if locator is None:
                 raise RuntimeError("Elemento alvo não encontrado ou não visível.")
             await _click(locator)
+        elif kind == "CLICK_ALL":
+            # Generic repeated-click primitive for actions whose semantics are
+            # explicitly plural (for example, clearing a basket). The target
+            # is resolved afresh after every click because Angular re-renders
+            # the table after mutations.
+            max_clicks = max(1, min(int(action.get("max_clicks", 20)), 100))
+            clicked = 0
+
+            for _ in range(max_clicks):
+                locator = await resolve(page, action.get("target", {}))
+                if locator is None:
+                    break
+                await _click(locator)
+                clicked += 1
+                await page.wait_for_timeout(
+                    min(250, max(50, settings.action_timeout_ms // 40))
+                )
+
+            if clicked == 0:
+                raise RuntimeError(
+                    "Nenhum elemento correspondente à ação repetitiva foi encontrado."
+                )
         elif kind == "FILL":
             locator = None
 
