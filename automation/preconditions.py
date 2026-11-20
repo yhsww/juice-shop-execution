@@ -135,7 +135,7 @@ async def _add_address_if_needed(page) -> bool:
         values = [
             ("Country", "Brazil"),
             ("Name", "Cliente Teste"),
-            ("Mobile Number", "85999999999"),
+            ("Mobile Number", "8599999999"),
             ("ZIP Code", "60000000"),
             ("Address", "Rua Teste, 100"),
             ("City", "Fortaleza"),
