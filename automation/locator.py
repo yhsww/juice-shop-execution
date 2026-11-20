@@ -773,4 +773,77 @@ async def resolve(page: Page, target: dict) -> Locator | None:
                 except Exception:
                     continue
 
+    # 9. Icon-only Angular Material controls.
+    # Juice Shop intentionally uses mat-icon-button elements whose accessible
+    # name can be empty because the visible action is represented only by a
+    # Font Awesome icon (plus, minus, trash, etc.). The scenario still names
+    # the user action semantically. Map that intent to the icon metadata
+    # instead of hard-coding a page or scenario selector.
+    if role and role.lower() in {"button", "link"} and name:
+        wanted = _norm(str(name))
+        icon_patterns: list[tuple[tuple[str, ...], str]] = [
+            (("increase", "increment", "plus", "add"),
+             "fa-plus-square, fa-plus, fa-circle-plus, mat-icon"),
+            (("decrease", "decrement", "minus", "subtract"),
+             "fa-minus-square, fa-minus, fa-circle-minus, mat-icon"),
+            (("remove", "delete", "trash", "discard"),
+             "fa-trash-alt, fa-trash, fa-trash-can, delete, trash"),
+        ]
+
+        for keywords, icon_selector in icon_patterns:
+            if not any(keyword in wanted for keyword in keywords):
+                continue
+
+            icon_nodes = page.locator(
+                "button, a, [role='button'], [role='link']"
+            )
+            try:
+                count = await icon_nodes.count()
+            except Exception:
+                count = 0
+
+            for index in range(count):
+                node = icon_nodes.nth(index)
+                try:
+                    if not await node.is_visible():
+                        continue
+                    html = (await node.inner_html()).casefold()
+                    classes = (await node.get_attribute("class") or "").casefold()
+                    aria = _norm(await node.get_attribute("aria-label"))
+                    title = _norm(await node.get_attribute("title"))
+                    icon_blob = " ".join((html, classes, aria, title))
+                    if any(token in icon_blob for token in icon_selector.split(", ")):
+                        candidates.append(node)
+                except Exception:
+                    continue
+
+            break
+
+    # 10. Radio controls without an accessible name.
+    # The current address table renders mat-radio-button without a label; the
+    # human-readable address is in the table row. When a scenario asks for a
+    # generic "Address" radio, selecting the first visible option is the
+    # semantic default and remains independent of the number of saved rows.
+    if role and role.lower() == "radio" and name:
+        wanted = _norm(str(name))
+        if wanted in {"address", "selection", "option"}:
+            unnamed_radios = page.locator(
+                "mat-radio-button, [role='radio']"
+            )
+            try:
+                count = await unnamed_radios.count()
+            except Exception:
+                count = 0
+
+            for index in range(count):
+                radio = unnamed_radios.nth(index)
+                try:
+                    if not await radio.is_visible():
+                        continue
+                    accessible_name = _norm(await radio.get_attribute("aria-label"))
+                    if not accessible_name:
+                        candidates.append(radio)
+                except Exception:
+                    continue
+
     return await first_visible(candidates)
