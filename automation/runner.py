@@ -95,6 +95,10 @@ async def run_scenario(scenario: dict) -> dict:
         for number, action in enumerate(scenario.get("actions", []), start=1):
             if number > settings.max_steps:
                 execution["final_result"] = "Execução interrompida pelo limite máximo de passos."
+                print(
+                    f"[ERROR] {scenario['id']} | limite máximo de passos "
+                    f"({settings.max_steps}) atingido."
+                )
                 break
 
             fingerprint = json.dumps(action, sort_keys=True, ensure_ascii=False)
@@ -103,6 +107,10 @@ async def run_scenario(scenario: dict) -> dict:
 
             if repeated >= 2:
                 execution["final_result"] = "Execução interrompida por repetição da mesma ação sem progresso."
+                print(
+                    f"[ERROR] {scenario['id']} | passo {number} | "
+                    "repetição da mesma ação sem progresso."
+                )
                 break
 
             result = await execute(page, action)
@@ -135,6 +143,22 @@ async def run_scenario(scenario: dict) -> dict:
 
             if result.error:
                 execution["final_result"] = result.observed_result or result.error
+
+                print(
+                    f"[ERROR] {scenario['id']} | passo {number} | "
+                    f"{result.user_action}"
+                )
+                print(f"[ERROR] {result.error}")
+                print(f"[ERROR] URL antes: {result.url_before}")
+                print(f"[ERROR] URL depois: {result.url_after}")
+                if result.observed_result:
+                    print(
+                        f"[ERROR] Resultado observado: "
+                        f"{result.observed_result}"
+                    )
+                if result.screenshot:
+                    print(f"[ERROR] Evidência: {result.screenshot}")
+
                 break
 
         final_state = await observe(page)
