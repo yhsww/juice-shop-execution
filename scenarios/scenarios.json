@@ -2176,7 +2176,7 @@
             "label": "Email address",
             "exact": false
           },
-          "value": "${SCENARIO_EMAIL}"
+          "value": "${UNIQUE_EMAIL}"
         },
         {
           "type": "FILL",
