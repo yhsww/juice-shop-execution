@@ -367,7 +367,7 @@ async def ensure_card(page) -> bool:
 
     existing = await resolve(
         page,
-        {"role": "radio", "name": "1111", "exact": False},
+        {"role": "radio", "name": "0002", "exact": False},
     )
     if existing is not None:
         return True
@@ -416,7 +416,7 @@ async def ensure_card(page) -> bool:
 
     return await resolve(
         page,
-        {"role": "radio", "name": "1111", "exact": False},
+        {"role": "radio", "name": "0002", "exact": False},
     ) is not None
 
 
@@ -432,7 +432,7 @@ async def ensure_order_summary(page) -> bool:
 
     card = await resolve(
         page,
-        {"role": "radio", "name": "1111", "exact": False},
+        {"role": "radio", "name": "0002", "exact": False},
     )
     if card is None:
         return False
