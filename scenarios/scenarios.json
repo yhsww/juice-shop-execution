@@ -1301,8 +1301,7 @@
         {
           "type": "CLICK",
           "target": {
-            "role": "text",
-            "name": "Other payment options"
+            "text": "Other payment options"
           }
         },
         {
@@ -2303,7 +2302,7 @@
       "actions": [
         {
           "type": "NAVIGATE",
-          "route": "/#/privacy-security/data-erasure"
+          "route": "/dataerasure"
         },
         {
           "type": "WAIT",
