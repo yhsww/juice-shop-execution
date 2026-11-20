@@ -230,7 +230,17 @@ async def execute(page: Page, action: dict) -> ActionResult:
                 raise RuntimeError("Elemento alvo não encontrado ou não visível.")
             await _click(locator)
         elif kind == "FILL":
-            locator = await resolve(page, action.get("target", {}))
+            locator = None
+
+            # Angular pages can expose the route before the form controls have
+            # finished rendering. Resolve generically with a short retry window
+            # instead of baking page/scenario-specific waits into the scenarios.
+            for attempt in range(8):
+                locator = await resolve(page, action.get("target", {}))
+                if locator is not None:
+                    break
+                await page.wait_for_timeout(250)
+
             if locator is None:
                 raise RuntimeError("Campo alvo não encontrado ou não visível.")
             await _fill(locator, str(action["value"]))
