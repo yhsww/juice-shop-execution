@@ -14,7 +14,7 @@
       "actions": [
         {
           "type": "NAVIGATE",
-          "route": "/#/profile+",
+          "route": "/#/profile",
           "user_action": "Abrir a área de perfil do usuário"
         },
         {
