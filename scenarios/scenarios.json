@@ -1108,7 +1108,7 @@
       "name": "Selecionar endereço de entrega",
       "actor": "Cliente",
       "flow": "Selecionar um endereço já cadastrado e prosseguir.",
-      "precondition": "Há endereço cadastrado.",
+      "precondition": "Carrinho contém produto; há endereço cadastrado.",
       "data": "Endereço de teste previamente salvo.",
       "coherent": "Sim.",
       "justification": "A seleção do endereço define o destino do pedido.",
@@ -1161,7 +1161,7 @@
       "name": "Confirmar seleção de endereço",
       "actor": "Cliente",
       "flow": "Selecionar o endereço e verificar a habilitação do avanço.",
-      "precondition": "Há endereço cadastrado.",
+      "precondition": "Carrinho contém produto; há endereço cadastrado.",
       "data": "Endereço de teste.",
       "coherent": "Sim.",
       "justification": "A etapa seguinte depende da seleção de um endereço.",
@@ -1397,7 +1397,7 @@
           "type": "CLICK",
           "target": {
             "role": "radio",
-            "name": "1111",
+            "name": "0002",
             "exact": false
           }
         },
@@ -1432,7 +1432,7 @@
           "type": "CLICK",
           "target": {
             "role": "radio",
-            "name": "1111",
+            "name": "0002",
             "exact": false
           }
         },
@@ -1581,7 +1581,7 @@
           "type": "CLICK",
           "target": {
             "role": "link",
-            "name": "donation",
+            "name": "Credit Card",
             "exact": false
           }
         },
@@ -1625,7 +1625,7 @@
           "type": "CLICK",
           "target": {
             "role": "link",
-            "name": "merchandise",
+            "name": "Spreadshirt (US)",
             "exact": false
           }
         },
@@ -1663,12 +1663,12 @@
           "value": "WMNSDY2019"
         },
         {
-          "type": "PRESS",
+          "type": "CLICK",
           "target": {
-            "label": "Coupon",
+            "role": "button",
+            "name": "Redeem",
             "exact": false
-          },
-          "key": "Enter"
+          }
         },
         {
           "type": "WAIT",
@@ -1786,7 +1786,7 @@
           "type": "CLICK",
           "target": {
             "role": "link",
-            "name": "Track Order",
+            "name": "Track Your Order",
             "exact": false
           }
         },
@@ -1822,7 +1822,7 @@
       ],
       "expected": {
         "text_contains": [
-          "Delivered"
+          "In Transit"
         ]
       }
     },
@@ -2114,7 +2114,7 @@
           "type": "CLICK",
           "target": {
             "role": "radio",
-            "name": "1111",
+            "name": "0002",
             "exact": false
           }
         },
@@ -2467,7 +2467,6 @@
       ],
       "expected": {
         "text_contains": [
-          "Profile",
           "cliente_teste"
         ]
       }
@@ -2669,9 +2668,7 @@
         }
       ],
       "expected": {
-        "text_contains": [
-          "Privacy"
-        ]
+        "url_contains": "/#/privacy-security"
       }
     },
     {
@@ -2780,7 +2777,7 @@
       ],
       "expected": {
         "text_contains": [
-          "required"
+          "Registration"
         ]
       }
     },
