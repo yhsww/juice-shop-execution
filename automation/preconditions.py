@@ -376,6 +376,7 @@ async def prepare_precondition(page, scenario: dict) -> tuple[bool, str]:
             "método de entrega selecionado" in precondition
             or "entrega selecionada" in precondition
             or "etapa de pagamento" in precondition
+            or "pagamento acessível" in precondition
             or "cartão de teste cadastrado" in precondition
             or "cartão selecionado" in precondition
             or "seção de outras opções" in precondition
