@@ -820,30 +820,40 @@ async def resolve(page: Page, target: dict) -> Locator | None:
             break
 
     # 10. Radio controls without an accessible name.
-    # The current address table renders mat-radio-button without a label; the
-    # human-readable address is in the table row. When a scenario asks for a
-    # generic "Address" radio, selecting the first visible option is the
-    # semantic default and remains independent of the number of saved rows.
+    # Angular Material renders the radio itself without an accessible name in
+    # several Juice Shop tables. Associate it with the semantic text of its
+    # containing row so targets such as "Address", "Standard" or a card suffix
+    # remain generic and do not depend on table position.
     if role and role.lower() == "radio" and name:
         wanted = _norm(str(name))
-        if wanted in {"address", "selection", "option"}:
-            unnamed_radios = page.locator(
-                "mat-radio-button, [role='radio']"
-            )
-            try:
-                count = await unnamed_radios.count()
-            except Exception:
-                count = 0
+        radio_nodes = page.locator("mat-radio-button, [role='radio']")
+        try:
+            count = await radio_nodes.count()
+        except Exception:
+            count = 0
 
-            for index in range(count):
-                radio = unnamed_radios.nth(index)
-                try:
-                    if not await radio.is_visible():
-                        continue
-                    accessible_name = _norm(await radio.get_attribute("aria-label"))
-                    if not accessible_name:
-                        candidates.append(radio)
-                except Exception:
+        for index in range(count):
+            radio = radio_nodes.nth(index)
+            try:
+                if not await radio.is_visible():
                     continue
+
+                own = " ".join(filter(None, [
+                    await radio.get_attribute("aria-label"),
+                    await radio.get_attribute("title"),
+                ]))
+                if _semantic_text_match(wanted, _norm(own)):
+                    candidates.append(radio)
+                    continue
+
+                row = radio.locator(
+                    "xpath=ancestor::*[self::mat-row or self::tr or @role='row'][1]"
+                )
+                if await row.count():
+                    row_text = _norm(await row.first.inner_text())
+                    if _semantic_text_match(wanted, row_text):
+                        candidates.append(radio)
+            except Exception:
+                continue
 
     return await first_visible(candidates)
