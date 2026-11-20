@@ -333,47 +333,62 @@ async def ensure_completed_order(page) -> bool:
 
 
 async def prepare_precondition(page, scenario: dict) -> tuple[bool, str]:
+    """
+    Prepare only the state explicitly required by the scenario precondition.
+
+    The rules are metadata-driven (domain + precondition text), so no scenario
+    ID is used as a locator or as a special execution branch.
+    """
     if not await ensure_authentication(page, scenario):
         return False, "Pré-condição de autenticação não pôde ser preparada."
 
-    scenario_id = scenario["id"]
+    domain = str(scenario.get("domain", "")).upper()
+    precondition = str(scenario.get("precondition", "")).casefold()
 
-    if scenario_id == "CEN-IDT-14":
+    if domain == "IDT" and "e-mail informado" in precondition:
         if not await ensure_base_user(page):
             return False, "Não foi possível preparar o usuário existente exigido pelo cenário."
 
-    if scenario_id in {
-        "CEN-CAR-02", "CEN-CAR-03", "CEN-CAR-04", "CEN-CAR-05", "CEN-CAR-06",
-        "CEN-CHK-01", "CEN-CHK-02", "CEN-CHK-03", "CEN-CHK-04", "CEN-CHK-05",
-        "CEN-CHK-06", "CEN-CHK-07", "CEN-CHK-08", "CEN-CHK-09", "CEN-CHK-10",
-        "CEN-CHK-11", "CEN-CHK-12", "CEN-CHK-13", "CEN-CHK-14", "CEN-CHK-15",
-        "CEN-CHK-28",
-    }:
+    if domain == "CAR" and (
+        "carrinho" in precondition
+        and ("produto" in precondition or "produtos" in precondition)
+    ):
         if not await ensure_basket(page):
             return False, "Pré-condição de carrinho não pôde ser preparada."
 
-    if scenario_id in {"CEN-CHK-05", "CEN-CHK-06", "CEN-CHK-07",
-                        "CEN-CHK-08", "CEN-CHK-09", "CEN-CHK-10",
-                        "CEN-CHK-11", "CEN-CHK-12", "CEN-CHK-13",
-                        "CEN-CHK-14", "CEN-CHK-15"}:
-        if not await ensure_payment(page):
-            return False, "Pré-condição de pagamento não pôde ser preparada."
+    if domain == "CHK":
+        # Every checkout scenario that starts with a populated basket needs
+        # that state independently; OWASP documents that checkout starts from
+        # the basket and then proceeds through address, delivery and payment.
+        if "carrinho" in precondition or "produto no carrinho" in precondition:
+            if not await ensure_basket(page):
+                return False, "Pré-condição de carrinho não pôde ser preparada."
 
-    if scenario_id in {"CEN-CHK-10", "CEN-CHK-11", "CEN-CHK-26", "CEN-CHK-27"}:
-        if not await ensure_order_summary(page):
-            return False, "Pré-condição de resumo do pedido não pôde ser preparada."
+        if "endereço de entrega selecionado" in precondition:
+            if not await ensure_address(page, select=True):
+                return False, "Pré-condição de endereço selecionado não pôde ser preparada."
 
-    if scenario_id in {"CEN-CHK-17", "CEN-CHK-18", "CEN-CHK-19",
-                        "CEN-CHK-20", "CEN-CHK-21", "CEN-CHK-22"}:
-        if not await ensure_completed_order(page):
-            return False, "Pré-condição de pedido concluído não pôde ser preparada."
+        if (
+            "método de entrega selecionado" in precondition
+            or "entrega selecionada" in precondition
+            or "etapa de pagamento" in precondition
+            or "seção de outras opções" in precondition
+            or "checkout iniciado" in precondition and "/#/payment/shop" in str(scenario.get("actions", [{}])[0].get("route", ""))
+        ):
+            if not await ensure_payment(page):
+                return False, "Pré-condição de pagamento não pôde ser preparada."
 
-    if scenario_id == "CEN-CHK-24":
-        if not await ensure_address(page, select=True):
-            return False, "Pré-condição de endereço selecionado não pôde ser preparada."
+        if (
+            "pedido com endereço" in precondition
+            or "pedido pronto para confirmação" in precondition
+            or "checkout preparados" in precondition
+            or "checkout parcialmente preenchido" in precondition
+        ):
+            if not await ensure_order_summary(page):
+                return False, "Pré-condição de resumo do pedido não pôde ser preparada."
 
-    if scenario_id == "CEN-CHK-25":
-        if not await ensure_payment(page):
-            return False, "Pré-condição de pagamento não pôde ser preparada."
+        if "pedido concluído" in precondition:
+            if not await ensure_completed_order(page):
+                return False, "Pré-condição de pedido concluído não pôde ser preparada."
 
     return True, ""
