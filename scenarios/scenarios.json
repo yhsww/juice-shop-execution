@@ -1014,7 +1014,7 @@
           "type": "CLICK",
           "target": {
             "role": "button",
-            "name": "Add New Address",
+            "name": "Add a new address",
             "exact": false
           }
         },
@@ -1211,7 +1211,7 @@
           "type": "CLICK",
           "target": {
             "role": "radio",
-            "name": "Standard Delivery",
+            "name": "Standard",
             "exact": false
           }
         },
@@ -2382,7 +2382,7 @@
           "type": "CLICK",
           "target": {
             "role": "button",
-            "name": "Save",
+            "name": "Set Username",
             "exact": false
           }
         },
