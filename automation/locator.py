@@ -283,6 +283,25 @@ async def _semantic_control_candidates(page: Page, value: str) -> list[Locator]:
                 candidates.append(control)
                 continue
 
+            # Generic legacy/native form relationship. Some Juice Shop pages
+            # use a visible <label> plus a sibling input inside a form-field
+            # container instead of Angular Material's mat-form-field.
+            try:
+                context_text = await control.evaluate(
+                    '(el) => { ' +
+                    'const directLabel = el.id ' +
+                    '? document.querySelector("label[for=\"" + CSS.escape(el.id) + "\"]") ' +
+                    ': null; ' +
+                    'const container = el.closest("form, .form-container, .profile-field, [class*=\"field\"], [class*=\"form\"]"); ' +
+                    'return [directLabel?.textContent || "", container?.textContent || ""].join(" "); ' +
+                    '}'
+                )
+                if _semantic_text_match(wanted, context_text):
+                    candidates.append(control)
+                    continue
+            except Exception:
+                pass
+
             control_id = await control.get_attribute("id")
             if control_id:
                 label = page.locator(f"label[for='{control_id}']")
