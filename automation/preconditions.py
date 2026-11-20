@@ -23,11 +23,14 @@ def scenario_password(scenario: dict) -> str:
 def needs_authentication(scenario: dict) -> bool:
     domain = str(scenario.get("domain", "")).upper()
     precondition = str(scenario.get("precondition", "")).casefold()
+    actions = scenario.get("actions", []) or []
+    first_route = str(actions[0].get("route", "")).casefold() if actions else ""
     scenario_id = scenario["id"]
     return (
         "autenticad" in precondition
         or domain in {"PER", "CHK"}
         or scenario_id in AUTHENTICATED_IDT
+        or first_route.startswith(("/#/profile", "/#/privacy-security", "/#/address/", "/#/saved-payment-methods", "/#/order-history", "/#/order-completion", "/#/payment/", "/#/delivery-method"))
     )
 
 
