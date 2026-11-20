@@ -8,6 +8,11 @@ from automation.executor import execute
 from automation.locator import resolve
 from automation.observer import observe
 from automation.validator import validate
+from automation.preconditions import (
+    prepare_precondition,
+    scenario_email,
+    scenario_password,
+)
 from config.settings import settings
 from reporting.evidence import Evidence, capture, save_execution, timestamp
 from reporting.report import save_report
@@ -68,6 +73,29 @@ async def _login(page, scenario: dict) -> str | None:
     return None
 
 
+
+
+def _materialize_action(action: dict, scenario: dict) -> dict:
+    """Resolve scenario data placeholders at execution time."""
+    replacements = {
+        "${SCENARIO_EMAIL}": scenario_email(scenario),
+        "${SCENARIO_PASSWORD}": scenario_password(scenario),
+        "${BASE_TEST_EMAIL}": "teste@example.com",
+    }
+
+    def replace(value):
+        if isinstance(value, str):
+            for source, target in replacements.items():
+                value = value.replace(source, target)
+            return value
+        if isinstance(value, list):
+            return [replace(item) for item in value]
+        if isinstance(value, dict):
+            return {key: replace(item) for key, item in value.items()}
+        return value
+
+    return replace(action)
+
 async def run_scenario(scenario: dict) -> dict:
     execution = {
         "scenario_id": scenario["id"],
@@ -80,10 +108,11 @@ async def run_scenario(scenario: dict) -> dict:
     async with browser_session() as (_, _, page):
         await open_juice_shop(page)
 
-        auth_error = await _login(page, scenario)
-        if auth_error:
-            execution["final_result"] = auth_error
+        prepared, preparation_error = await prepare_precondition(page, scenario)
+        if not prepared:
+            execution["final_result"] = preparation_error
             execution["status"] = "FAILED"
+            print(f"[ERROR] {scenario['id']} | pré-condição | {preparation_error}")
             out = settings.report_dir / scenario["id"]
             save_execution(out.with_suffix(".json"), execution)
             save_report(out.with_suffix(".md"), scenario, execution)
@@ -92,7 +121,8 @@ async def run_scenario(scenario: dict) -> dict:
         previous_action = None
         repeated = 0
 
-        for number, action in enumerate(scenario.get("actions", []), start=1):
+        for number, raw_action in enumerate(scenario.get("actions", []), start=1):
+            action = _materialize_action(raw_action, scenario)
             if number > settings.max_steps:
                 execution["final_result"] = "Execução interrompida pelo limite máximo de passos."
                 print(
