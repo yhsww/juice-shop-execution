@@ -376,6 +376,8 @@ async def prepare_precondition(page, scenario: dict) -> tuple[bool, str]:
             "método de entrega selecionado" in precondition
             or "entrega selecionada" in precondition
             or "etapa de pagamento" in precondition
+            or "cartão de teste cadastrado" in precondition
+            or "cartão selecionado" in precondition
             or "seção de outras opções" in precondition
             or "endereço, entrega e pagamento disponíveis" in precondition
             or ("checkout iniciado" in precondition and "/#/payment/shop" in str(scenario.get("actions", [{}])[0].get("route", "")))
