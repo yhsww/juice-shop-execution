@@ -206,6 +206,119 @@ async def _associated_field(page: Page, label: str) -> Locator | None:
     return None
 
 
+async def _semantic_control_candidates(page: Page, value: str) -> list[Locator]:
+    """
+    Generic fallback for Angular Material/native controls whose accessible
+    name is generated from a visible label or icon.
+    """
+    wanted = _norm(value)
+    if not wanted:
+        return []
+
+    candidates: list[Locator] = []
+    controls = page.locator(
+        "input, textarea, select, mat-select, "
+        "[role='textbox'], [role='combobox'], "
+        "[role='radio'], [role='checkbox']"
+    )
+
+    try:
+        count = await controls.count()
+    except Exception:
+        count = 0
+
+    for index in range(count):
+        control = controls.nth(index)
+        try:
+            if not await control.is_visible():
+                continue
+
+            attrs = [
+                await control.get_attribute("aria-label"),
+                await control.get_attribute("placeholder"),
+                await control.get_attribute("title"),
+                await control.get_attribute("name"),
+                await control.get_attribute("id"),
+            ]
+
+            if any(
+                wanted == _norm(attr) or wanted in _norm(attr)
+                for attr in attrs
+                if attr
+            ):
+                candidates.append(control)
+                continue
+
+            parent = control.locator("xpath=ancestor::mat-form-field[1]")
+            if await parent.count() and wanted in _norm(await parent.inner_text()):
+                candidates.append(control)
+                continue
+
+            control_id = await control.get_attribute("id")
+            if control_id:
+                label = page.locator(f"label[for='{control_id}']")
+                if await label.count() and await label.first.is_visible():
+                    if wanted in _norm(await label.first.inner_text()):
+                        candidates.append(control)
+        except Exception:
+            continue
+
+    return candidates
+
+
+async def _visible_text_control(page: Page, value: str) -> list[Locator]:
+    """
+    Resolve controls represented by visible text, including Angular Material
+    radio/checkbox components and icon buttons.
+    """
+    wanted = _norm(value)
+    if not wanted:
+        return []
+
+    candidates: list[Locator] = []
+
+    for selector in (
+        "mat-radio-button",
+        "mat-checkbox",
+        "label",
+        "[role='radio']",
+        "[role='checkbox']",
+        "button",
+        "a",
+        "[role='button']",
+        "[role='link']",
+    ):
+        nodes = page.locator(selector)
+        try:
+            count = await nodes.count()
+        except Exception:
+            continue
+
+        for index in range(count):
+            node = nodes.nth(index)
+            try:
+                if not await node.is_visible():
+                    continue
+
+                text = _norm(await node.inner_text())
+                aria = _norm(await node.get_attribute("aria-label"))
+                title = _norm(await node.get_attribute("title"))
+
+                if (
+                    wanted == text
+                    or wanted in text
+                    or wanted == aria
+                    or wanted in aria
+                    or wanted == title
+                    or wanted in title
+                ):
+                    candidates.append(node)
+            except Exception:
+                continue
+
+    return candidates
+
+
 async def resolve(page: Page, target: dict) -> Locator | None:
     """
     Resolve a scenario target against the real Juice Shop DOM.
@@ -254,6 +367,17 @@ async def resolve(page: Page, target: dict) -> Locator | None:
         candidates.append(page.get_by_text(wanted_text, exact=exact))
         if exact:
             candidates.append(page.get_by_text(wanted_text, exact=False))
+
+    # 5. Generic semantic control fallback. It is independent of
+    # individual scenario IDs and complements the primary ARIA/label lookup.
+    for value in (label, placeholder, name, text):
+        if value:
+            candidates.extend(
+                await _semantic_control_candidates(page, str(value))
+            )
+            candidates.extend(
+                await _visible_text_control(page, str(value))
+            )
 
     # 5. Explicit CSS.
     if css:
