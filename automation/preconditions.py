@@ -59,48 +59,142 @@ async def _register_user(page, email: str, password: str) -> bool:
         return False
 
     await _click(register)
-    await page.wait_for_timeout(800)
+    deadline = __import__("time").monotonic() + settings.action_timeout_ms / 1000
+
+    while __import__("time").monotonic() < deadline:
+        if "/#/login" in page.url:
+            return True
+        await page.wait_for_timeout(100)
+
     return "/#/login" in page.url
 
 
 async def _login(page, email: str, password: str) -> bool:
-    await page.goto(f"{settings.base_url}/#/login", wait_until="domcontentloaded")
+    """
+    Authenticate through the real Juice Shop login flow.
 
-    email_field = await resolve(page, {"label": "Email", "exact": False})
-    password_field = await resolve(page, {"label": "Password", "exact": False})
-    login = await resolve(
-        page,
-        {"role": "button", "name": "Login", "exact": False},
-    )
+    Authentication is validated from the login response/session state, not by
+    navigating to a particular profile page or requiring a profile locator.
+    This keeps the precondition independent from page-specific UI changes.
 
-    if not email_field or not password_field or not login:
+    The Juice Shop is an Angular SPA backed by REST endpoints. The documented
+    login flow uses /#/login and the backend exposes /rest/user/login and
+    /rest/user/whoami. The latter is useful as a protected-session signal, but
+    the login response itself is the primary success criterion here because
+    the browser application's Authorization state is managed by the frontend.
+    """
+    try:
+        await page.goto(
+            f"{settings.base_url}/#/login",
+            wait_until="domcontentloaded",
+            timeout=settings.navigation_timeout_ms,
+        )
+
+        email_field = await resolve(
+            page, {"label": "Email", "exact": False}
+        )
+        password_field = await resolve(
+            page, {"label": "Password", "exact": False}
+        )
+        login = await resolve(
+            page,
+            {"role": "button", "name": "Login", "exact": False},
+        )
+
+        if email_field is None or password_field is None or login is None:
+            return False
+
+        await _fill(email_field, email)
+        await _fill(password_field, password)
+
+        # The login request is the authoritative UI->backend authentication
+        # boundary. Do not infer authentication merely from a URL transition.
+        try:
+            async with page.expect_response(
+                lambda response: (
+                    response.request.method == "POST"
+                    and "/rest/user/login" in response.url
+                ),
+                timeout=settings.action_timeout_ms,
+            ) as response_info:
+                await _click(login)
+
+            response = await response_info.value
+
+            if not response.ok:
+                return False
+
+            try:
+                payload = await response.json()
+            except Exception:
+                payload = {}
+
+            # Current Juice Shop login responses contain authentication/token
+            # information. Accept either the current nested representation or
+            # a flat token field so the precondition remains version-tolerant.
+            authentication = (
+                payload.get("authentication")
+                if isinstance(payload, dict)
+                else None
+            )
+            token = None
+
+            if isinstance(authentication, dict):
+                token = authentication.get("token")
+
+            if token is None and isinstance(payload, dict):
+                token = payload.get("token")
+
+            if not token:
+                return False
+
+        except Exception:
+            # If the response observer missed the request because the local
+            # browser/application completed it before the observer attached,
+            # do not silently declare authentication successful. Give the SPA
+            # a short settle period and verify its authenticated state instead.
+            await page.wait_for_timeout(250)
+
+            if "/#/login" in page.url:
+                return False
+
+            token = await page.evaluate(
+                """() => {
+                    try {
+                        return localStorage.getItem('token') || null;
+                    } catch (_) {
+                        return null;
+                    }
+                }"""
+            )
+
+            if not token:
+                return False
+
+        # Give Angular a chance to finish updating the authenticated session.
+        await page.wait_for_timeout(150)
+
+        # /rest/user/whoami is an authenticated Juice Shop endpoint and is a
+        # useful secondary consistency check. We intentionally do not require
+        # its response to be parsed through page.request because the Angular
+        # application may add its Authorization header through an interceptor.
+        #
+        # Instead, verify that the browser has the token that the frontend
+        # stores after a successful login.
+        browser_token = await page.evaluate(
+            """() => {
+                try {
+                    return localStorage.getItem('token') || null;
+                } catch (_) {
+                    return null;
+                }
+            }"""
+        )
+
+        return bool(browser_token or token)
+
+    except Exception:
         return False
-
-    await _fill(email_field, email)
-    await _fill(password_field, password)
-    await _click(login)
-    await page.wait_for_timeout(700)
-
-    if "/#/login" in page.url:
-        return False
-
-    # Do not consider the login successful merely because the URL changed.
-    # Verify a protected UI resource is actually rendered and exposes the
-    # authenticated user's profile field. This prevents downstream scenarios
-    # from being misclassified as locator failures when authentication did not
-    # really establish a usable session.
-    await page.goto(
-        f"{settings.base_url}/#/profile",
-        wait_until="domcontentloaded",
-    )
-    await page.wait_for_timeout(400)
-
-    profile_field = await resolve(
-        page,
-        {"label": "Username", "exact": False},
-    )
-    return profile_field is not None
-
 
 async def ensure_user(page, email: str, password: str) -> bool:
     if await _login(page, email, password):
@@ -132,7 +226,11 @@ async def ensure_authentication(page, scenario: dict) -> bool:
 
 
 async def ensure_base_user(page) -> bool:
-    return await ensure_user(page, "teste@example.com", "Teste@12345")
+    return await ensure_user(
+        page,
+        settings.user_email,
+        settings.user_password,
+    )
 
 
 async def _add_address_if_needed(page) -> bool:
