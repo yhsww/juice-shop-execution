@@ -88,9 +88,18 @@ async def _click(locator) -> None:
     await _scroll_into_view(locator)
     try:
         await locator.click(timeout=settings.action_timeout_ms)
-    except Exception:
+        return
+    except Exception as first_error:
         await locator.page.wait_for_timeout(150)
-        await locator.click(timeout=settings.action_timeout_ms)
+        try:
+            await locator.click(timeout=settings.action_timeout_ms)
+            return
+        except Exception:
+            try:
+                await locator.click(timeout=1500, force=True)
+                return
+            except Exception:
+                raise first_error
 
 
 async def _fill(locator, value: str) -> None:
@@ -219,7 +228,7 @@ async def execute(page: Page, action: dict) -> ActionResult:
             locator = await resolve(page, action.get("target", {}))
             if locator is None:
                 raise RuntimeError("Elemento alvo não encontrado ou não visível.")
-            await locator.click(timeout=settings.action_timeout_ms)
+            await _click(locator)
         elif kind == "FILL":
             locator = await resolve(page, action.get("target", {}))
             if locator is None:
@@ -234,20 +243,30 @@ async def execute(page: Page, action: dict) -> ActionResult:
             locator = await resolve(page, action.get("target", {}))
             if locator is None:
                 raise RuntimeError("Controle alvo não encontrado ou não visível.")
+            await _scroll_into_view(locator)
             await locator.check(timeout=settings.action_timeout_ms)
         elif kind == "UNCHECK":
             locator = await resolve(page, action.get("target", {}))
             if locator is None:
                 raise RuntimeError("Controle alvo não encontrado ou não visível.")
+            await _scroll_into_view(locator)
             await locator.uncheck(timeout=settings.action_timeout_ms)
         elif kind == "PRESS":
             locator = await resolve(page, action.get("target", {}))
             if locator is None:
                 raise RuntimeError("Elemento alvo não encontrado ou não visível.")
-            await locator.press(
-                action.get("key", "Enter"),
-                timeout=settings.action_timeout_ms,
-            )
+            await _scroll_into_view(locator)
+            try:
+                await locator.press(
+                    action.get("key", "Enter"),
+                    timeout=settings.action_timeout_ms,
+                )
+            except Exception:
+                await _click(locator)
+                await locator.press(
+                    action.get("key", "Enter"),
+                    timeout=settings.action_timeout_ms,
+                )
         elif kind == "WAIT":
             await page.wait_for_timeout(int(action.get("milliseconds", 500)))
         else:
@@ -260,6 +279,18 @@ async def execute(page: Page, action: dict) -> ActionResult:
             )
         except PlaywrightTimeoutError:
             pass
+
+        # Angular can finish rendering a control after DOMContentLoaded.
+        # A short generic settle prevents interacting with an intermediate
+        # state without replacing scenario-defined WAITs.
+        try:
+            await page.wait_for_function(
+                "() => document.readyState === 'complete'",
+                timeout=1200,
+            )
+        except Exception:
+            pass
+        await page.wait_for_timeout(120)
 
     except Exception as exc:
         error = str(exc)
