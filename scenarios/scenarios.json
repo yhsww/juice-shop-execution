@@ -1907,14 +1907,14 @@
           "target": {
             "label": "Security Question"
           },
-          "value": "1"
+          "value": "Your favorite book?"
         },
         {
           "type": "FILL",
           "target": {
             "label": "Answer"
           },
-          "value": "Fortaleza"
+          "value": "a"
         },
         {
           "type": "CLICK",
