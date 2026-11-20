@@ -248,6 +248,16 @@ async def ensure_base_user(page) -> bool:
 
 
 async def _add_address_if_needed(page) -> bool:
+    # The selection screen exposes one radio per saved address. Reuse an
+    # existing address instead of opening the creation form on every
+    # precondition preparation.
+    existing = page.locator("mat-radio-button, [role='radio']")
+    try:
+        if await existing.count() > 0:
+            return True
+    except Exception:
+        pass
+
     add = await resolve(
         page,
         {"role": "button", "name": "Add New Address", "exact": False},
@@ -285,7 +295,20 @@ async def _add_address_if_needed(page) -> bool:
             return False
 
         await _click(submit)
-        await page.wait_for_timeout(700)
+
+        # Saving an address is asynchronous. Do not return while the SPA is
+        # still on /address/create, otherwise the next scenario action can
+        # race the form submission.
+        deadline = __import__("time").monotonic() + settings.action_timeout_ms / 1000
+        while __import__("time").monotonic() < deadline:
+            if "/#/address/create" not in page.url:
+                break
+            await page.wait_for_timeout(100)
+
+        if "/#/address/create" in page.url:
+            return False
+
+        await page.wait_for_timeout(250)
 
     return True
 
@@ -389,7 +412,7 @@ async def ensure_card(page) -> bool:
 
     values = [
         ("Name", "Cliente Teste"),
-        ("Card Number", "4111111111111111"),
+        ("Card Number", "4000000000000002"),
     ]
     for label, value in values:
         field = await resolve(page, {"label": label, "exact": False})
