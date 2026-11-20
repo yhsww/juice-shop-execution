@@ -171,6 +171,13 @@ async def run_scenario(scenario: dict) -> dict:
             "message": validation_message,
         }
 
+        if not valid:
+            print(
+                f"[VALIDATION] {scenario['id']} | "
+                f"{validation_message}"
+            )
+            print(f"[VALIDATION] URL final: {final_state.url}")
+
         execution["status"] = (
             "PASSED"
             if execution["steps"]
