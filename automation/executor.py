@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from time import monotonic
 
-from playwright.async_api import Page
+from playwright.async_api import Page, TimeoutError as PlaywrightTimeoutError
 
 from automation.locator import resolve
 from automation.observer import UIState, meaningful_change, observe
@@ -22,16 +22,30 @@ class ActionResult:
     error: str | None = None
 
 
+async def _safe_observe(page: Page, fallback: UIState) -> UIState:
+    deadline = monotonic() + 5
+    while monotonic() < deadline:
+        try:
+            return await observe(page)
+        except Exception:
+            await page.wait_for_timeout(150)
+    return fallback
+
+
 async def execute(page: Page, action: dict) -> ActionResult:
     before = await observe(page)
     kind = action["type"].upper()
     data = action.get("data", "")
     target = action.get("target", {})
+    error: str | None = None
 
     try:
         if kind == "NAVIGATE":
             route = action["route"]
-            await page.goto(f"{settings.base_url}{route}", wait_until="domcontentloaded")
+            await page.goto(
+                f"{settings.base_url}{route}",
+                wait_until="domcontentloaded",
+            )
         elif kind == "CLICK":
             locator = await resolve(page, target)
             if locator is None:
@@ -67,25 +81,18 @@ async def execute(page: Page, action: dict) -> ActionResult:
         else:
             raise ValueError(f"Tipo de ação não suportado: {kind}")
 
-        await page.wait_for_load_state("domcontentloaded", timeout=3000)
-    except Exception as exc:
-        # A ação pode ter disparado navegação; a observação abaixo deve acontecer
-        # mesmo quando o wait de navegação não for aplicável.
-        error = str(exc)
-    else:
-        error = None
-
-    deadline = monotonic() + 5
-    after = before
-    while monotonic() < deadline:
+        # Navigation is a possible consequence of an action, not necessarily
+        # an error. A short timeout here only means there was no navigation.
         try:
-            after = await observe(page)
-            break
-        except Exception:
-            await page.wait_for_timeout(150)
+            await page.wait_for_load_state("domcontentloaded", timeout=1500)
+        except PlaywrightTimeoutError:
+            pass
 
+    except Exception as exc:
+        error = str(exc)
+
+    after = await _safe_observe(page, before)
     changed = meaningful_change(before, after)
-    success = error is None
 
     return ActionResult(
         action=kind,
@@ -94,6 +101,6 @@ async def execute(page: Page, action: dict) -> ActionResult:
         url_after=after.url,
         observed_result=after.visible_text,
         changed=changed,
-        success=success,
+        success=error is None,
         error=error,
     )
