@@ -63,6 +63,9 @@ def _materialize_action(action: dict, scenario: dict) -> dict:
 
 
 async def _run_scenario(scenario: dict) -> dict:
+    scenario_started = time.monotonic()
+    scenario_timeout = max(1, settings.scenario_timeout_seconds)
+
     execution = {
         "scenario_id": scenario["id"],
         "status": "ERROR",
@@ -87,10 +90,19 @@ async def _run_scenario(scenario: dict) -> dict:
         previous_action = None
         repeated = 0
         timed_out = False
-        scenario_started = time.monotonic()
-        scenario_timeout = max(1, settings.scenario_timeout_seconds)
 
         print(f"[START] {scenario['id']} | limite: {scenario_timeout}s")
+
+        if time.monotonic() - scenario_started >= scenario_timeout:
+            execution["status"] = "TIMEOUT"
+            execution["final_result"] = (
+                f"Tempo limite do cenário atingido ({scenario_timeout}s) durante a pré-condição."
+            )
+            print(f"[TIMEOUT] {scenario['id']} | pré-condição excedeu {scenario_timeout}s.")
+            out = settings.report_dir / scenario["id"]
+            save_execution(out.with_suffix(".json"), execution)
+            save_report(out.with_suffix(".md"), scenario, execution)
+            return execution
 
         for number, raw_action in enumerate(scenario.get("actions", []), start=1):
             elapsed = time.monotonic() - scenario_started
