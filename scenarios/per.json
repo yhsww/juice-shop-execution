@@ -105,9 +105,7 @@
         }
       ],
       "expected": {
-        "text_contains": [
-          "Privacy"
-        ]
+        "url_contains": "/#/privacy-security"
       }
     },
     {
