@@ -475,11 +475,18 @@ async def resolve(page: Page, target: dict) -> Locator | None:
             page.locator("[role='link']").filter(has_text=name),
         ])
 
-        # aria-label/title are more stable than generated CSS classes.
+        # Attribute values can contain quotes or CSS-significant characters.
+        # Avoid interpolating scenario text into raw CSS selectors; the generic
+        # attribute scan below resolves aria-label/title safely.
+        #
+        # Playwright's semantic locators are preferred here. Attribute matching
+        # is intentionally handled by the DOM scan below so malformed target
+        # text cannot produce "Unexpected token while parsing css selector".
         candidates.extend([
-            page.locator(f"[aria-label='{name}']"),
-            page.locator(f"[title='{name}']"),
+            page.get_by_title(name, exact=exact),
         ])
+        if exact:
+            candidates.append(page.get_by_title(name, exact=False))
 
     if label:
         angular = await _angular_material_field(page, label)
