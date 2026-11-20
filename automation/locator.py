@@ -631,6 +631,99 @@ async def resolve(page: Page, target: dict) -> Locator | None:
             except Exception:
                 continue
 
+    # 8. Final generic DOM association fallback.
+    # Some legacy Juice Shop forms expose a real native input whose label
+    # relationship is present in the DOM but is not exposed consistently by
+    # Playwright's accessible-name machinery. Resolve it from rendered DOM
+    # context without encoding any scenario ID or page route.
+    for value in (label, name, text):
+        if not value:
+            continue
+        wanted = _norm(str(value))
+        if not wanted:
+            continue
+
+        # Direct semantic id/name fallback. This remains generic: a target
+        # "Username" can resolve an input with id/name "username".
+        for candidate in (str(value), wanted.replace(" ", "-")):
+            try:
+                for selector in (
+                    f"input[id='{candidate}'], textarea[id='{candidate}'], select[id='{candidate}']",
+                    f"input[name='{candidate}'], textarea[name='{candidate}'], select[name='{candidate}']",
+                ):
+                    nodes = page.locator(selector)
+                    for index in range(await nodes.count()):
+                        node = nodes.nth(index)
+                        if await node.is_visible():
+                            candidates.append(node)
+            except Exception:
+                continue
+
+        # DOM-level association fallback. It handles label[for], nested labels
+        # and legacy form containers while still deriving the match from the
+        # action target supplied by the scenario.
+        try:
+            selectors = await page.locator(
+                "input:not([type='hidden']), textarea, select"
+            ).evaluate_all(
+                """(controls, wanted) => controls.map((el) => {
+                    const visible = !!(
+                        el.offsetWidth || el.offsetHeight || el.getClientRects().length
+                    );
+                    if (!visible) return null;
+
+                    const own = [
+                        el.id,
+                        el.name,
+                        el.getAttribute('aria-label'),
+                        el.getAttribute('placeholder'),
+                        el.getAttribute('title')
+                    ].filter(Boolean).join(' ');
+
+                    const labels = Array.from(document.querySelectorAll('label'))
+                        .filter(label => label.htmlFor === el.id || label.contains(el))
+                        .map(label => label.textContent || '')
+                        .join(' ');
+
+                    const container = el.closest(
+                        'form, .profile-field, .field, [class*="field"], [class*="form"]'
+                    );
+
+                    const context = [
+                        own,
+                        labels,
+                        container ? container.textContent || '' : ''
+                    ].join(' ').toLowerCase();
+
+                    const tokens = wanted.split(/\\s+/).filter(Boolean);
+                    if (!tokens.length || !tokens.every(token => context.includes(token))) {
+                        return null;
+                    }
+
+                    if (el.id) {
+                        return '#' + CSS.escape(el.id);
+                    }
+
+                    if (el.name) {
+                        return el.tagName.toLowerCase() +
+                            '[name="' + CSS.escape(el.name) + '"]';
+                    }
+
+                    return null;
+                }).filter(Boolean)""",
+                wanted,
+            )
+
+            for selector in selectors:
+                try:
+                    node = page.locator(str(selector)).first
+                    if await node.is_visible():
+                        candidates.append(node)
+                except Exception:
+                    continue
+        except Exception:
+            pass
+
     # 8. Attribute fallbacks for Angular-generated controls.
 
     # has_text() inspects descendants, not attribute values, so aria-label
