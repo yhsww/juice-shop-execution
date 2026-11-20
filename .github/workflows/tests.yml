@@ -12,35 +12,35 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: '3.12'
       - run: pip install -r requirements.txt
       - run: pytest -q
 
   ui:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    services:
-      juice-shop:
-        image: bkimminich/juice-shop:latest
-        ports:
-          - 3000:3000
-        options: >-
-          --health-cmd "wget --no-verbose --tries=1 --spider http://localhost:3000/"
-          --health-interval 5s
-          --health-timeout 5s
-          --health-retries 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: '3.12'
       - run: pip install -r requirements.txt
       - run: python -m playwright install --with-deps chromium
+      - name: Start pinned Juice Shop environment
+        run: docker compose -f juice-shop/docker-compose.yml up -d
+      - name: Wait for Juice Shop
+        run: |
+          for attempt in $(seq 1 60); do
+            if curl --fail --silent http://127.0.0.1:3000/ >/dev/null; then exit 0; fi
+            sleep 2
+          done
+          docker compose -f juice-shop/docker-compose.yml logs
+          exit 1
       - run: pytest -q
       - name: Execute all UI scenarios
         env:
           JUICE_SHOP_BASE_URL: http://127.0.0.1:3000
-          JUICE_SHOP_HEADLESS: "true"
+          JUICE_SHOP_HEADLESS: 'true'
         run: python run.py --all
       - name: Upload execution evidence
         if: always()
@@ -51,3 +51,6 @@ jobs:
             reports/executions/**
             screenshots/**
           if-no-files-found: warn
+      - name: Stop Juice Shop environment
+        if: always()
+        run: docker compose -f juice-shop/docker-compose.yml down
