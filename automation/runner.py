@@ -6,9 +6,10 @@ from pathlib import Path
 from automation.browser import browser_session, open_juice_shop
 from automation.executor import execute
 from automation.observer import observe
+from automation.validator import validate
 from config.settings import settings
-from reporting.evidence import Evidence, capture, save_json, timestamp
-from reporting.report import save_execution, save_report
+from reporting.evidence import Evidence, capture, save_execution, timestamp
+from reporting.report import save_report
 
 
 def load_scenarios(path: Path) -> list[dict]:
@@ -36,10 +37,7 @@ async def run_scenario(scenario: dict) -> dict:
                 break
 
             fingerprint = json.dumps(action, sort_keys=True, ensure_ascii=False)
-            if fingerprint == previous_action:
-                repeated += 1
-            else:
-                repeated = 0
+            repeated = repeated + 1 if fingerprint == previous_action else 0
             previous_action = fingerprint
 
             if repeated >= 2:
@@ -76,12 +74,23 @@ async def run_scenario(scenario: dict) -> dict:
         final_state = await observe(page)
         execution["final_url"] = final_state.url
         execution["final_visible_text"] = final_state.visible_text
-        execution["status"] = "PASSED" if execution["steps"] and all(
-            item["success"] for item in execution["steps"]
-        ) else "FAILED"
+
+        valid, validation_message = validate(final_state, scenario.get("expected", {}))
+        execution["validation"] = {
+            "passed": valid,
+            "message": validation_message,
+        }
+
+        execution["status"] = (
+            "PASSED"
+            if execution["steps"]
+            and all(item["success"] for item in execution["steps"])
+            and valid
+            else "FAILED"
+        )
 
         if not execution["final_result"]:
-            execution["final_result"] = final_state.visible_text[:2000]
+            execution["final_result"] = validation_message
 
     out = settings.report_dir / scenario["id"]
     save_execution(out.with_suffix(".json"), execution)
@@ -90,13 +99,17 @@ async def run_scenario(scenario: dict) -> dict:
 
 
 async def run_selected(ids: set[str] | None = None) -> list[dict]:
-    scenarios = load_scenarios(Path(__file__).resolve().parents[1] / "scenarios" / "scenarios.json")
+    scenarios = load_scenarios(
+        Path(__file__).resolve().parents[1] / "scenarios" / "scenarios.json"
+    )
     selected = [s for s in scenarios if ids is None or s["id"] in ids]
 
     if ids:
         missing = ids - {s["id"] for s in selected}
         if missing:
-            raise ValueError(f"Cenários não encontrados: {', '.join(sorted(missing))}")
+            raise ValueError(
+                f"Cenários não encontrados: {', '.join(sorted(missing))}"
+            )
 
     results = []
     for scenario in selected:
