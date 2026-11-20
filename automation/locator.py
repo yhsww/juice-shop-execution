@@ -856,4 +856,38 @@ async def resolve(page: Page, target: dict) -> Locator | None:
             except Exception:
                 continue
 
+    # Address selection is represented by an unnamed radio in a table:
+    # the row contains the actual address values, while the column header
+    # contains the semantic word "Address". If the target names that
+    # selection column and no radio matched by row text, use the first
+    # visible selection control. This remains generic for any table whose
+    # selection column is identified by the requested semantic label.
+    if role and role.lower() == "radio" and name and not candidates:
+        wanted = _norm(str(name))
+        headers = page.locator("th, mat-header-cell")
+        try:
+            header_count = await headers.count()
+        except Exception:
+            header_count = 0
+
+        header_matches = False
+        for index in range(header_count):
+            header = headers.nth(index)
+            try:
+                if await header.is_visible() and _semantic_text_match(
+                    wanted, _norm(await header.inner_text())
+                ):
+                    header_matches = True
+                    break
+            except Exception:
+                continue
+
+        if header_matches:
+            first_radio = await first_visible([
+                page.locator("mat-radio-button"),
+                page.locator("[role='radio']"),
+            ])
+            if first_radio is not None:
+                candidates.append(first_radio)
+
     return await first_visible(candidates)
