@@ -456,7 +456,44 @@ async def resolve(page: Page, target: dict) -> Locator | None:
         if associated is not None:
             candidates.append(associated)
 
-    # 7. Attribute fallbacks for Angular-generated controls.
+    # 7. Generic DOM attribute fallbacks for legacy/Angular controls.
+    # These attributes are stable semantic metadata, not scenario-specific selectors.
+    # Some Juice Shop screens expose native inputs with id/name but no accessible
+    # label that Playwright can resolve directly.
+    for value in (name, label, text, placeholder):
+        if not value:
+            continue
+        wanted = _norm(str(value))
+        if not wanted:
+            continue
+
+        nodes = page.locator("input, textarea, select, mat-select, [role='textbox'], [role='combobox']")
+        try:
+            count = await nodes.count()
+        except Exception:
+            continue
+
+        for index in range(count):
+            node = nodes.nth(index)
+            try:
+                if not await node.is_visible():
+                    continue
+
+                attrs = [
+                    await node.get_attribute("id"),
+                    await node.get_attribute("name"),
+                    await node.get_attribute("formcontrolname"),
+                    await node.get_attribute("aria-label"),
+                    await node.get_attribute("placeholder"),
+                    await node.get_attribute("title"),
+                ]
+                if any(_semantic_text_match(wanted, attr) for attr in attrs if attr):
+                    candidates.append(node)
+                    break
+            except Exception:
+                continue
+
+    # 8. Attribute fallbacks for Angular-generated controls.
     # has_text() inspects descendants, not attribute values, so aria-label
     # and title must be checked explicitly.
     for value in (name, label, text):
