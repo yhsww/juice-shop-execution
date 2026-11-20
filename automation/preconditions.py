@@ -81,7 +81,25 @@ async def _login(page, email: str, password: str) -> bool:
     await _click(login)
     await page.wait_for_timeout(700)
 
-    return "/#/login" not in page.url
+    if "/#/login" in page.url:
+        return False
+
+    # Do not consider the login successful merely because the URL changed.
+    # Verify a protected UI resource is actually rendered and exposes the
+    # authenticated user's profile field. This prevents downstream scenarios
+    # from being misclassified as locator failures when authentication did not
+    # really establish a usable session.
+    await page.goto(
+        f"{settings.base_url}/#/profile",
+        wait_until="domcontentloaded",
+    )
+    await page.wait_for_timeout(400)
+
+    profile_field = await resolve(
+        page,
+        {"label": "Username", "exact": False},
+    )
+    return profile_field is not None
 
 
 async def ensure_user(page, email: str, password: str) -> bool:
