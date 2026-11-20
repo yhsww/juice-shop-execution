@@ -1,0 +1,10 @@
+services:
+  juice-shop:
+    image: bkimminich/juice-shop:v20.3.0
+    container_name: juice-shop
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3000:3000"
+    init: true
+    security_opt:
+      - no-new-privileges:true
