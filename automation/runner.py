@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from uuid import uuid4
 
 from automation.browser import browser_session, open_juice_shop
 from automation.executor import execute
@@ -77,10 +78,15 @@ async def _login(page, scenario: dict) -> str | None:
 
 def _materialize_action(action: dict, scenario: dict) -> dict:
     """Resolve scenario data placeholders at execution time."""
+    runtime = scenario.setdefault("_runtime_data", {})
+    if "unique_email" not in runtime:
+        runtime["unique_email"] = f"cen-{scenario['id'].lower()}-{uuid4().hex[:10]}@example.com"
+
     replacements = {
         "${SCENARIO_EMAIL}": scenario_email(scenario),
         "${SCENARIO_PASSWORD}": scenario_password(scenario),
         "${BASE_TEST_EMAIL}": "teste@example.com",
+        "${UNIQUE_EMAIL}": runtime["unique_email"],
     }
 
     def replace(value):
