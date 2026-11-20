@@ -1301,7 +1301,7 @@
       "actor": "Cliente",
       "flow": "Cadastrar um cartão de crédito de teste na etapa de pagamento.",
       "precondition": "Checkout na etapa de pagamento.",
-      "data": "Número de teste: 1111; validade e nome de teste.",
+      "data": "Número de teste: 4000000000000002; validade e nome de teste.",
       "coherent": "Sim.",
       "justification": "O pedido precisa de uma forma de pagamento.",
       "requirement": "A aplicação deve permitir cadastrar uma forma de pagamento.",
@@ -1380,7 +1380,7 @@
       "actor": "Cliente",
       "flow": "Selecionar um cartão já cadastrado.",
       "precondition": "Cartão de teste cadastrado.",
-      "data": "Cartão terminado em 1111.",
+      "data": "Cartão terminado em 0002.",
       "coherent": "Sim.",
       "justification": "A seleção define a forma de pagamento do pedido.",
       "requirement": "A aplicação deve permitir selecionar um cartão.",
@@ -1408,7 +1408,7 @@
       ],
       "expected": {
         "text_contains": [
-          "1111"
+          "0002"
         ]
       }
     },
@@ -1419,7 +1419,7 @@
       "actor": "Cliente",
       "flow": "Selecionar a forma de pagamento e prosseguir.",
       "precondition": "Cartão selecionado.",
-      "data": "Cartão terminado em 1111.",
+      "data": "Cartão terminado em 0002.",
       "coherent": "Sim.",
       "justification": "A etapa de pagamento deve levar ao resumo do pedido.",
       "requirement": "A aplicação deve habilitar o avanço após uma forma de pagamento válida.",
@@ -2049,7 +2049,7 @@
       "actor": "Cliente",
       "flow": "Executar o fluxo de compra desde o carrinho até a confirmação.",
       "precondition": "Produto no carrinho; endereço, entrega e pagamento disponíveis.",
-      "data": "Produto: Apple Juice; cartão de teste terminado em 1111.",
+      "data": "Produto: Apple Juice; cartão de teste terminado em 0002.",
       "coherent": "Sim.",
       "justification": "O fluxo completo valida a integração entre catálogo, carrinho e checkout.",
       "requirement": "A aplicação deve permitir concluir uma compra pelo fluxo da interface.",
@@ -2641,9 +2641,7 @@
         }
       ],
       "expected": {
-        "text_contains": [
-          "Data Erasure"
-        ]
+        "url_contains": "/dataerasure"
       }
     },
     {
