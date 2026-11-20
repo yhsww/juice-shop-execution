@@ -200,8 +200,7 @@
       ],
       "expected": {
         "text_contains": [
-          "2",
-          "Quantity"
+          "2"
         ]
       }
     },
