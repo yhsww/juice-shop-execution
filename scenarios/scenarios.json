@@ -2422,7 +2422,7 @@
       "actions": [
         {
           "type": "NAVIGATE",
-          "route": "/#/profile"
+          "route": "/profile"
         },
         {
           "type": "WAIT",
@@ -2449,7 +2449,7 @@
       "actions": [
         {
           "type": "NAVIGATE",
-          "route": "/#/profile"
+          "route": "/profile"
         },
         {
           "type": "FILL",
