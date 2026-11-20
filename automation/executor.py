@@ -75,25 +75,90 @@ async def _safe_observe(page: Page, fallback: UIState) -> UIState:
 
 async def _select_option(locator, value: str) -> None:
     """
-    Seleciona uma opção de forma compatível com selects nativos e
-    controles Angular Material.
+    Seleciona uma opção de forma compatível com:
+    - <select> nativo;
+    - Angular Material mat-select / role=combobox.
 
-    A preferência é pelo value real do controle. Se o catálogo fornecer
-    o texto visível da opção, usa label como fallback.
+    Para controles customizados, o valor aceito pelo cenário pode ser
+    tanto o value/ID quanto o texto visível da opção.
     """
+    tag_name = ""
+    role = ""
+
     try:
-        await locator.select_option(
-            value,
-            timeout=settings.action_timeout_ms,
-        )
-    except Exception as first_error:
+        tag_name = (await locator.evaluate("(el) => el.tagName")).upper()
+        role = (await locator.get_attribute("role") or "").lower()
+    except Exception:
+        pass
+
+    if tag_name == "SELECT":
         try:
             await locator.select_option(
-                label=value,
+                value,
                 timeout=settings.action_timeout_ms,
             )
-        except Exception:
-            raise first_error
+            return
+        except Exception as first_error:
+            try:
+                await locator.select_option(
+                    label=value,
+                    timeout=settings.action_timeout_ms,
+                )
+                return
+            except Exception:
+                raise first_error
+
+    if tag_name == "MAT-SELECT" or role == "combobox":
+        await locator.click(timeout=settings.action_timeout_ms)
+
+        options = locator.page.locator(
+            "[role='option'], .mat-mdc-option"
+        )
+        wanted = " ".join(str(value).split()).strip().casefold()
+
+        deadline = monotonic() + settings.action_timeout_ms / 1000
+        while monotonic() < deadline:
+            count = await options.count()
+
+            for index in range(count):
+                option = options.nth(index)
+
+                try:
+                    if not await option.is_visible():
+                        continue
+
+                    text = " ".join(
+                        (await option.inner_text()).split()
+                    ).strip()
+
+                    data_value = await option.get_attribute("data-value")
+                    aria_label = await option.get_attribute("aria-label")
+
+                    candidates = {
+                        text.casefold(),
+                        str(data_value or "").strip().casefold(),
+                        str(aria_label or "").strip().casefold(),
+                    }
+
+                    if wanted in candidates:
+                        await option.click(
+                            timeout=settings.action_timeout_ms
+                        )
+                        return
+
+                except Exception:
+                    continue
+
+            await locator.page.wait_for_timeout(100)
+
+        raise RuntimeError(
+            f"Opção de seleção não encontrada: {value!r}"
+        )
+
+    raise RuntimeError(
+        f"Controle não suporta SELECT de forma semântica: "
+        f"tag={tag_name!r}, role={role!r}"
+    )
 
 
 async def execute(page: Page, action: dict) -> ActionResult:
