@@ -1903,11 +1903,11 @@
           "value": "Teste@12345"
         },
         {
-          "type": "FILL",
+          "type": "SELECT",
           "target": {
             "label": "Security Question"
           },
-          "value": "Cidade?"
+          "value": "1"
         },
         {
           "type": "FILL",
