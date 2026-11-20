@@ -288,23 +288,36 @@ async def resolve(page: Page, target: dict) -> Locator | None:
         if associated is not None:
             candidates.append(associated)
 
-    # 7. Useful generic attributes for generated Angular controls.
+    # 7. Attribute fallbacks for Angular-generated controls.
+    # has_text() inspects descendants, not attribute values, so aria-label
+    # and title must be checked explicitly.
     for value in (name, label, text):
         if not value:
             continue
-        normalized = _norm(value)
-        if not normalized:
+        wanted = _norm(str(value))
+        if not wanted:
             continue
 
-        # CSS attribute selectors are intentionally broad here; they are
-        # only fallbacks after semantic strategies have failed.
-        candidates.extend([
-            page.locator("[aria-label]").filter(
-                has_text=value
-            ),
-            page.locator("[title]").filter(
-                has_text=value
-            ),
-        ])
+        for selector, attr_name in (
+            ("[aria-label]", "aria-label"),
+            ("[title]", "title"),
+        ):
+            nodes = page.locator(selector)
+            try:
+                count = await nodes.count()
+            except Exception:
+                continue
+
+            for index in range(count):
+                node = nodes.nth(index)
+                try:
+                    if not await node.is_visible():
+                        continue
+                    attr = await node.get_attribute(attr_name)
+                    normalized_attr = _norm(attr)
+                    if wanted == normalized_attr or wanted in normalized_attr:
+                        candidates.append(node)
+                except Exception:
+                    continue
 
     return await first_visible(candidates)
