@@ -26,6 +26,35 @@ def _norm(value: str | None) -> str:
     return re.sub(r"\s+", " ", value or "").strip().casefold()
 
 
+def _tokens(value: str | None) -> set[str]:
+    # Ignore short English UI articles/prepositions so semantic labels such as
+    # "Add New Address" can resolve controls exposed as "Add a new address".
+    stop_words = {"a", "an", "the", "to", "of", "for", "in", "on"}
+    return {
+        token
+        for token in re.findall(r"[\wÀ-ÿ]+", _norm(value))
+        if token not in stop_words
+    }
+
+
+def _semantic_text_match(wanted: str | None, actual: str | None) -> bool:
+    wanted_norm = _norm(wanted)
+    actual_norm = _norm(actual)
+    if not wanted_norm or not actual_norm:
+        return False
+
+    if wanted_norm == actual_norm:
+        return True
+
+    if wanted_norm in actual_norm or actual_norm in wanted_norm:
+        return True
+
+    wanted_tokens = _tokens(wanted_norm)
+    actual_tokens = _tokens(actual_norm)
+
+    return bool(wanted_tokens) and wanted_tokens.issubset(actual_tokens)
+
+
 async def first_visible(candidates: list[Locator]) -> Locator | None:
     seen: set[str] = set()
 
@@ -242,7 +271,7 @@ async def _semantic_control_candidates(page: Page, value: str) -> list[Locator]:
             ]
 
             if any(
-                wanted == _norm(attr) or wanted in _norm(attr)
+                _semantic_text_match(wanted, attr)
                 for attr in attrs
                 if attr
             ):
@@ -304,14 +333,29 @@ async def _visible_text_control(page: Page, value: str) -> list[Locator]:
                 aria = _norm(await node.get_attribute("aria-label"))
                 title = _norm(await node.get_attribute("title"))
 
-                if (
-                    wanted == text
-                    or wanted in text
-                    or wanted == aria
-                    or wanted in aria
-                    or wanted == title
-                    or wanted in title
-                ):
+                direct_match = (
+                    _semantic_text_match(wanted, text)
+                    or _semantic_text_match(wanted, aria)
+                    or _semantic_text_match(wanted, title)
+                )
+
+                # Angular Material delivery rows expose the delivery name in a
+                # sibling mat-cell while the actual radio control has no name.
+                row_match = False
+                if selector in ("mat-radio-button", "[role='radio']"):
+                    for ancestor in ("mat-row", "[role='row']", "tr"):
+                        parent = node.locator(
+                            f"xpath=ancestor::{ancestor}[1]"
+                        )
+                        if await parent.count():
+                            row_match = _semantic_text_match(
+                                wanted,
+                                await parent.inner_text(),
+                            )
+                            if row_match:
+                                break
+
+                if direct_match or row_match:
                     candidates.append(node)
             except Exception:
                 continue
@@ -439,7 +483,7 @@ async def resolve(page: Page, target: dict) -> Locator | None:
                         continue
                     attr = await node.get_attribute(attr_name)
                     normalized_attr = _norm(attr)
-                    if wanted == normalized_attr or wanted in normalized_attr:
+                    if _semantic_text_match(wanted, normalized_attr):
                         candidates.append(node)
                 except Exception:
                     continue
