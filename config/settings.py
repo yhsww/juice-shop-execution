@@ -29,8 +29,8 @@ class Settings:
     report_dir: Path = ROOT / os.getenv("JUICE_SHOP_REPORT_DIR", "reports/executions")
     user_email: str = os.getenv("JUICE_SHOP_USER_EMAIL", "teste@example.com")
     user_password: str = os.getenv("JUICE_SHOP_USER_PASSWORD", "Teste@12345")
-    admin_email: str = os.getenv("JUICE_SHOP_ADMIN_EMAIL", "")
-    admin_password: str = os.getenv("JUICE_SHOP_ADMIN_PASSWORD", "")
+    admin_email: str = os.getenv("JUICE_SHOP_ADMIN_EMAIL", "admin@juice-sh.op")
+    admin_password: str = os.getenv("JUICE_SHOP_ADMIN_PASSWORD", "admin123")
 
 
 settings = Settings()
