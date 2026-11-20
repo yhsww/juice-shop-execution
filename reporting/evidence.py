@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass
+from dataclasses import dataclass
 from datetime import datetime, timezone
 import json
 from pathlib import Path
@@ -12,6 +12,7 @@ from playwright.async_api import Page
 class Evidence:
     step: int
     action: str
+    user_action: str
     data: str
     url_before: str
     url_after: str
@@ -30,7 +31,7 @@ async def capture(page: Page, directory: Path, scenario_id: str, step: int) -> s
     return str(path).replace("\\", "/")
 
 
-def save_json(path: Path, payload: object) -> None:
+def save_execution(path: Path, payload: object) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
         json.dumps(payload, ensure_ascii=False, indent=2),
