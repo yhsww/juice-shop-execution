@@ -458,6 +458,58 @@ async def resolve(page: Page, target: dict) -> Locator | None:
 
     # 7. Generic DOM attribute fallbacks for legacy/Angular controls.
     # These attributes are stable semantic metadata, not scenario-specific selectors.
+    # Legacy Juice Shop screens can expose native inputs through id/name while
+    # the label relationship is not recognized by Playwright's get_by_label().
+    for value in (name, label, text, placeholder):
+        if not value:
+            continue
+        wanted = _norm(str(value))
+        if not wanted:
+            continue
+
+        # Exact semantic attributes first. This is generic and derived from
+        # the scenario target rather than from any scenario ID.
+        for attr in ("name", "id", "formcontrolname"):
+            try:
+                candidates.append(
+                    page.locator(
+                        f"input[{attr}='{str(value)}'], "
+                        f"textarea[{attr}='{str(value)}'], "
+                        f"select[{attr}='{str(value)}']"
+                    )
+                )
+            except Exception:
+                pass
+
+        nodes = page.locator(
+            "input, textarea, select, mat-select, "
+            "[role='textbox'], [role='combobox']"
+        )
+        try:
+            count = await nodes.count()
+        except Exception:
+            count = 0
+
+        for index in range(count):
+            node = nodes.nth(index)
+            try:
+                if not await node.is_visible():
+                    continue
+
+                attrs = [
+                    await node.get_attribute("id"),
+                    await node.get_attribute("name"),
+                    await node.get_attribute("formcontrolname"),
+                    await node.get_attribute("aria-label"),
+                    await node.get_attribute("placeholder"),
+                    await node.get_attribute("title"),
+                ]
+                if any(_semantic_text_match(wanted, attr) for attr in attrs if attr):
+                    candidates.append(node)
+                    break
+            except Exception:
+                continue
+
     # Some Juice Shop screens expose native inputs with id/name but no accessible
     # label that Playwright can resolve directly.
     for value in (name, label, text, placeholder):
