@@ -15,7 +15,7 @@ from reporting.report import save_report
 
 def load_scenarios(path: Path) -> list[dict]:
     scenarios = []
-    for file in sorted(path.parent.glob("*.json")):
+    for file in sorted(path.glob("*.json")):
         if file.name.startswith("_"):
             continue
         payload = json.loads(file.read_text(encoding="utf-8"))
