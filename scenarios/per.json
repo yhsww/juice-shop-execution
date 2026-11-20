@@ -23,7 +23,7 @@
         }
       ],
       "expected": {
-        "url_contains": "/#/profile+"
+        "url_contains": "/#/profile"
       }
     },
     {
