@@ -22,9 +22,11 @@ def scenario_password(scenario: dict) -> str:
 
 def needs_authentication(scenario: dict) -> bool:
     domain = str(scenario.get("domain", "")).upper()
+    precondition = str(scenario.get("precondition", "")).casefold()
     scenario_id = scenario["id"]
     return (
-        domain in {"ADM", "PER", "CHK"}
+        "autenticad" in precondition
+        or domain in {"PER", "CHK"}
         or scenario_id in AUTHENTICATED_IDT
     )
 
