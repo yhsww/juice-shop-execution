@@ -1,0 +1,168 @@
+{
+  "scenarios": [
+    {
+      "id": "CEN-PER-01",
+      "domain": "PER",
+      "name": "Visualização dos dados da conta",
+      "actor": "Cliente autenticado",
+      "flow": "Abrir o perfil pelo menu do usuário e consultar os dados da conta.",
+      "precondition": "Cliente autenticado.",
+      "data": "Dados da conta do usuário de teste.",
+      "coherent": "Sim.",
+      "justification": "A loja deve permitir ao cliente consultar os dados associados à sua conta.",
+      "requirement": "O sistema deve permitir ao cliente visualizar os dados do próprio perfil.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/profile+",
+          "user_action": "Abrir a área de perfil do usuário"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 500
+        }
+      ],
+      "expected": {
+        "url_contains": "/#/profile+"
+      }
+    },
+    {
+      "id": "CEN-PER-02",
+      "domain": "PER",
+      "name": "Acesso aos endereços salvos",
+      "actor": "Cliente autenticado",
+      "flow": "Abrir a área de endereços salvos e verificar os endereços disponíveis.",
+      "precondition": "Cliente autenticado.",
+      "data": "Nenhum dado pessoal real.",
+      "coherent": "Sim.",
+      "justification": "O cliente precisa consultar os endereços utilizados para entrega.",
+      "requirement": "O sistema deve permitir ao cliente consultar seus endereços salvos.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/address/saved",
+          "user_action": "Abrir a área de endereços salvos"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 500
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "Address"
+        ]
+      }
+    },
+    {
+      "id": "CEN-PER-03",
+      "domain": "PER",
+      "name": "Acesso às opções de pagamento",
+      "actor": "Cliente autenticado",
+      "flow": "Abrir a área de opções de pagamento e consultar os cartões salvos.",
+      "precondition": "Cliente autenticado.",
+      "data": "Nenhum dado real de cartão.",
+      "coherent": "Sim.",
+      "justification": "A gestão dos meios de pagamento é necessária para compras recorrentes.",
+      "requirement": "O sistema deve permitir ao cliente consultar e gerenciar seus meios de pagamento.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/saved-payment-methods",
+          "user_action": "Abrir as opções de pagamento salvas"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 500
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "Payment"
+        ]
+      }
+    },
+    {
+      "id": "CEN-PER-04",
+      "domain": "PER",
+      "name": "Acesso à privacidade e segurança",
+      "actor": "Cliente autenticado",
+      "flow": "Abrir a área de privacidade e segurança da conta.",
+      "precondition": "Cliente autenticado.",
+      "data": "Nenhum dado adicional.",
+      "coherent": "Sim.",
+      "justification": "A conta possui funções de privacidade e segurança acessíveis ao usuário autenticado.",
+      "requirement": "O sistema deve disponibilizar ao cliente as funções de privacidade e segurança da conta.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/privacy-security",
+          "user_action": "Abrir a área de privacidade e segurança"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 500
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "Privacy"
+        ]
+      }
+    },
+    {
+      "id": "CEN-PER-05",
+      "domain": "PER",
+      "name": "Acesso à alteração de senha",
+      "actor": "Cliente autenticado",
+      "flow": "Abrir a tela de alteração de senha.",
+      "precondition": "Cliente autenticado.",
+      "data": "Nenhuma senha real deve ser registrada no relatório.",
+      "coherent": "Sim.",
+      "justification": "O usuário precisa conseguir atualizar a própria senha pela interface.",
+      "requirement": "O sistema deve permitir ao usuário alterar sua senha mediante autenticação.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/privacy-security/change-password",
+          "user_action": "Abrir a tela de alteração de senha"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 500
+        }
+      ],
+      "expected": {
+        "url_contains": "/#/privacy-security/change-password"
+      }
+    },
+    {
+      "id": "CEN-PER-06",
+      "domain": "PER",
+      "name": "Visualização do histórico de pedidos",
+      "actor": "Cliente autenticado",
+      "flow": "Abrir a área de pedidos e consultar pedidos realizados.",
+      "precondition": "Cliente autenticado; pode não haver pedidos anteriores.",
+      "data": "Nenhum dado pessoal adicional.",
+      "coherent": "Sim.",
+      "justification": "O histórico permite acompanhar compras atuais e anteriores.",
+      "requirement": "O sistema deve permitir ao cliente consultar seus pedidos.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/order-history",
+          "user_action": "Abrir o histórico de pedidos"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 500
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "Order"
+        ]
+      }
+    }
+  ]
+}
