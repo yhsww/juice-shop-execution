@@ -364,6 +364,10 @@ async def prepare_precondition(page, scenario: dict) -> tuple[bool, str]:
             if not await ensure_basket(page):
                 return False, "Pré-condição de carrinho não pôde ser preparada."
 
+        if "há endereço cadastrado" in precondition:
+            if not await ensure_address(page, select=False):
+                return False, "Pré-condição de endereço cadastrado não pôde ser preparada."
+
         if "endereço de entrega selecionado" in precondition:
             if not await ensure_address(page, select=True):
                 return False, "Pré-condição de endereço selecionado não pôde ser preparada."
@@ -373,7 +377,8 @@ async def prepare_precondition(page, scenario: dict) -> tuple[bool, str]:
             or "entrega selecionada" in precondition
             or "etapa de pagamento" in precondition
             or "seção de outras opções" in precondition
-            or "checkout iniciado" in precondition and "/#/payment/shop" in str(scenario.get("actions", [{}])[0].get("route", ""))
+            or "endereço, entrega e pagamento disponíveis" in precondition
+            or ("checkout iniciado" in precondition and "/#/payment/shop" in str(scenario.get("actions", [{}])[0].get("route", "")))
         ):
             if not await ensure_payment(page):
                 return False, "Pré-condição de pagamento não pôde ser preparada."
