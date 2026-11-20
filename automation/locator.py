@@ -413,6 +413,15 @@ async def resolve(page: Page, target: dict) -> Locator | None:
     # 1. Semantic ARIA role.
     candidates.extend(_safe_role_candidate(page, role, name, exact))
 
+    # A label target is especially common on native/legacy Juice Shop forms.
+    # Resolve the explicit DOM label relationship before broader heuristics.
+    # This keeps the resolver generic while avoiding dependence on generated
+    # CSS classes or scenario-specific selectors.
+    if label:
+        associated = await _associated_field(page, str(label))
+        if associated is not None:
+            candidates.insert(0, associated)
+
     # 2. Label-based controls.
     if label:
         candidates.append(page.get_by_label(label, exact=exact))
