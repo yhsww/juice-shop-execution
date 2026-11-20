@@ -156,8 +156,8 @@ async def run_scenario(scenario: dict) -> dict:
                         f"[ERROR] Resultado observado: "
                         f"{result.observed_result}"
                     )
-                if result.screenshot:
-                    print(f"[ERROR] Evidência: {result.screenshot}")
+                if screenshot:
+                    print(f"[ERROR] Evidência: {screenshot}")
 
                 break
 
