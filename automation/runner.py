@@ -5,6 +5,7 @@ from pathlib import Path
 
 from automation.browser import browser_session, open_juice_shop
 from automation.executor import execute
+from automation.locator import resolve
 from automation.observer import observe
 from automation.validator import validate
 from config.settings import settings
@@ -45,12 +46,8 @@ async def _login(page, scenario: dict) -> str | None:
     password = settings.admin_password if _is_admin(scenario) else settings.user_password
 
     await page.goto(f"{settings.base_url}/#/login", wait_until="domcontentloaded")
-    email_field = await __import__("automation.locator", fromlist=["resolve"]).resolve(
-        page, {"label": "Email", "exact": False}
-    )
-    password_field = await __import__("automation.locator", fromlist=["resolve"]).resolve(
-        page, {"label": "Password", "exact": False}
-    )
+    email_field = await resolve(page, {"label": "Email", "exact": False})
+    password_field = await resolve(page, {"label": "Password", "exact": False})
 
     if email_field is None or password_field is None:
         return "Não foi possível localizar os campos de autenticação."
@@ -58,9 +55,7 @@ async def _login(page, scenario: dict) -> str | None:
     await email_field.fill(email, timeout=settings.action_timeout_ms)
     await password_field.fill(password, timeout=settings.action_timeout_ms)
 
-    login_button = await __import__("automation.locator", fromlist=["resolve"]).resolve(
-        page, {"role": "button", "name": "Login", "exact": False}
-    )
+    login_button = await resolve(page, {"role": "button", "name": "Login", "exact": False})
     if login_button is None:
         return "Botão de login não encontrado."
 
@@ -134,8 +129,9 @@ async def run_scenario(scenario: dict) -> dict:
             )
             execution["steps"].append(evidence.__dict__)
 
-            if result.observed_result and result.observed_result not in execution["messages"]:
-                execution["messages"].append(result.observed_result)
+            for message in result.messages:
+                if message not in execution["messages"]:
+                    execution["messages"].append(message)
 
             if result.error:
                 execution["final_result"] = result.observed_result or result.error
