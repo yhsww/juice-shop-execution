@@ -4,7 +4,7 @@ Automação determinística de cenários de teste no OWASP Juice Shop usando a i
 
 ## Escopo
 
-O catálogo inicial contém **72 cenários executáveis**, distribuídos exatamente nos domínios definidos no trabalho:
+O catálogo inicial contém **78 cenários definidos para execução**, distribuídos exatamente nos domínios definidos no trabalho:
 
 | Domínio | Cenários |
 |---|---:|
@@ -17,7 +17,7 @@ O catálogo inicial contém **72 cenários executáveis**, distribuídos exatame
 
 A estrutura não limita o projeto a 72 casos. Novos cenários podem ser adicionados quando permanecerem dentro do mesmo escopo funcional e forem observáveis pela interface real.
 
-O escopo cobre catálogo, busca, carrinho, identificação/autenticação, checkout, pedidos e administração da loja. O inventário também inclui fluxos de privacidade e segurança de conta que fazem parte da interface do Juice Shop.
+O escopo cobre catálogo, busca, carrinho, identificação/autenticação, perfil, checkout, pedidos e administração da loja. O inventário também inclui fluxos de privacidade e segurança de conta que fazem parte da interface do Juice Shop.
 
 ## Execução
 
