@@ -19,7 +19,7 @@ def _bool(name: str, default: bool) -> bool:
 
 @dataclass(frozen=True)
 class Settings:
-    base_url: str = os.getenv("JUICE_SHOP_BASE_URL", "http://localhost:3000").rstrip("/")
+    base_url: str = os.getenv("JUICE_SHOP_BASE_URL", "http://127.0.0.1:3000").rstrip("/")
     headless: bool = _bool("JUICE_SHOP_HEADLESS", False)
     action_timeout_ms: int = int(os.getenv("JUICE_SHOP_ACTION_TIMEOUT_MS", "10000"))
     navigation_timeout_ms: int = int(os.getenv("JUICE_SHOP_NAVIGATION_TIMEOUT_MS", "15000"))
