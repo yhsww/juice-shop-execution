@@ -73,6 +73,29 @@ async def _safe_observe(page: Page, fallback: UIState) -> UIState:
     return fallback
 
 
+async def _select_option(locator, value: str) -> None:
+    """
+    Seleciona uma opção de forma compatível com selects nativos e
+    controles Angular Material.
+
+    A preferência é pelo value real do controle. Se o catálogo fornecer
+    o texto visível da opção, usa label como fallback.
+    """
+    try:
+        await locator.select_option(
+            value,
+            timeout=settings.action_timeout_ms,
+        )
+    except Exception as first_error:
+        try:
+            await locator.select_option(
+                label=value,
+                timeout=settings.action_timeout_ms,
+            )
+        except Exception:
+            raise first_error
+
+
 async def execute(page: Page, action: dict) -> ActionResult:
     before = await observe(page)
     kind = action["type"].upper()
@@ -100,7 +123,7 @@ async def execute(page: Page, action: dict) -> ActionResult:
             locator = await resolve(page, action.get("target", {}))
             if locator is None:
                 raise RuntimeError("Select alvo não encontrado ou não visível.")
-            await locator.select_option(str(action["value"]), timeout=settings.action_timeout_ms)
+            await _select_option(locator, str(action["value"]))
         elif kind == "CHECK":
             locator = await resolve(page, action.get("target", {}))
             if locator is None:
@@ -115,7 +138,10 @@ async def execute(page: Page, action: dict) -> ActionResult:
             locator = await resolve(page, action.get("target", {}))
             if locator is None:
                 raise RuntimeError("Elemento alvo não encontrado ou não visível.")
-            await locator.press(action.get("key", "Enter"), timeout=settings.action_timeout_ms)
+            await locator.press(
+                action.get("key", "Enter"),
+                timeout=settings.action_timeout_ms,
+            )
         elif kind == "WAIT":
             await page.wait_for_timeout(int(action.get("milliseconds", 500)))
         else:
