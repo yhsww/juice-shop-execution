@@ -2765,19 +2765,26 @@
         {
           "type": "CLICK",
           "target": {
-            "role": "button",
-            "name": "Register",
+            "label": "Email address",
             "exact": false
           }
         },
         {
+          "type": "PRESS",
+          "target": {
+            "label": "Email address",
+            "exact": false
+          },
+          "key": "Tab"
+        },
+        {
           "type": "WAIT",
-          "milliseconds": 700
+          "milliseconds": 300
         }
       ],
       "expected": {
         "text_contains": [
-          "Registration"
+          "email"
         ]
       }
     },
