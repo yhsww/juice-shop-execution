@@ -73,6 +73,42 @@ async def _safe_observe(page: Page, fallback: UIState) -> UIState:
     return fallback
 
 
+def _norm_text(value: object) -> str:
+    return " ".join(str(value or "").split()).strip().casefold()
+
+
+async def _scroll_into_view(locator) -> None:
+    try:
+        await locator.scroll_into_view_if_needed(timeout=1500)
+    except Exception:
+        pass
+
+
+async def _click(locator) -> None:
+    await _scroll_into_view(locator)
+    try:
+        await locator.click(timeout=settings.action_timeout_ms)
+    except Exception:
+        await locator.page.wait_for_timeout(150)
+        await locator.click(timeout=settings.action_timeout_ms)
+
+
+async def _fill(locator, value: str) -> None:
+    await _scroll_into_view(locator)
+    try:
+        await locator.fill(value, timeout=settings.action_timeout_ms)
+        return
+    except Exception as first_error:
+        try:
+            await _click(locator)
+            await locator.press("ControlOrMeta+A", timeout=1500)
+            await locator.press("Backspace", timeout=1500)
+            await locator.type(value, timeout=settings.action_timeout_ms)
+            return
+        except Exception:
+            raise first_error
+
+
 async def _select_option(locator, value: str) -> None:
     """
     Seleciona uma opção de forma compatível com:
@@ -135,12 +171,17 @@ async def _select_option(locator, value: str) -> None:
                     aria_label = await option.get_attribute("aria-label")
 
                     candidates = {
-                        text.casefold(),
-                        str(data_value or "").strip().casefold(),
-                        str(aria_label or "").strip().casefold(),
+                        _norm_text(text),
+                        _norm_text(data_value),
+                        _norm_text(aria_label),
                     }
 
-                    if wanted in candidates:
+                    if wanted in candidates or any(
+                        wanted and (wanted in candidate or candidate in wanted)
+                        for candidate in candidates
+                        if candidate
+                    ):
+                        await _scroll_into_view(option)
                         await option.click(
                             timeout=settings.action_timeout_ms
                         )
@@ -183,7 +224,7 @@ async def execute(page: Page, action: dict) -> ActionResult:
             locator = await resolve(page, action.get("target", {}))
             if locator is None:
                 raise RuntimeError("Campo alvo não encontrado ou não visível.")
-            await locator.fill(str(action["value"]), timeout=settings.action_timeout_ms)
+            await _fill(locator, str(action["value"]))
         elif kind == "SELECT":
             locator = await resolve(page, action.get("target", {}))
             if locator is None:
