@@ -259,7 +259,7 @@ async def ensure_card(page) -> bool:
 
     values = [
         ("Name", "Cliente Teste"),
-        ("Card Number", "1111222233334444"),
+        ("Card Number", "4111111111111111"),
     ]
     for label, value in values:
         field = await resolve(page, {"label": label, "exact": False})
