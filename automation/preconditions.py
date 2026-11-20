@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+import json
+import uuid
+
 from automation.executor import _click, _fill, _select_option
 from automation.locator import resolve
 from config.settings import settings
@@ -219,6 +222,22 @@ async def ensure_authentication(page, scenario: dict) -> bool:
             page,
             settings.admin_email,
             settings.admin_password,
+        )
+
+    actions_text = json.dumps(scenario.get("actions", []), ensure_ascii=False)
+    if (
+        str(scenario.get("domain", "")).upper() == "IDT"
+        and "${SCENARIO_EMAIL}" not in actions_text
+    ):
+        runtime = scenario.setdefault("_runtime_data", {})
+        runtime.setdefault(
+            "auth_email",
+            f"cen-{scenario['id'].lower()}-{uuid.uuid4().hex[:10]}@example.com",
+        )
+        return await ensure_user(
+            page,
+            runtime["auth_email"],
+            scenario_password(scenario),
         )
 
     return await ensure_user(
