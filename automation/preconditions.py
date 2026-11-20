@@ -247,6 +247,64 @@ async def ensure_base_user(page) -> bool:
     )
 
 
+async def _auth_headers(page) -> dict:
+    token = await page.evaluate(
+        """() => localStorage.getItem('token') || null"""
+    )
+    headers = {}
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
+    email = await page.evaluate(
+        """() => localStorage.getItem('email') || null"""
+    )
+    if email:
+        headers["X-User-Email"] = str(email)
+    return headers
+
+
+async def _ensure_address_via_api(page) -> bool:
+    """Seed a valid address through the same REST API used by the UI.
+    
+    This is a precondition helper, not the behavior under test. It is used only
+    when the UI form cannot persist the required fixture, keeping checkout
+    scenarios independent from the current address-form presentation.
+    """
+    headers = await _auth_headers(page)
+    payload = {
+        "country": "Brazil",
+        "fullName": "Cliente Teste",
+        "mobileNum": 8599999999,
+        "zipCode": "60000000",
+        "streetAddress": "Rua Teste, 100",
+        "city": "Fortaleza",
+        "state": "CE",
+    }
+    try:
+        response = await page.request.get(
+            f"{settings.base_url}/api/Addresss",
+            headers=headers,
+            timeout=settings.action_timeout_ms,
+        )
+        if response.ok:
+            body = await response.json()
+            addresses = body.get("data", []) if isinstance(body, dict) else []
+            if addresses:
+                return True
+
+        response = await page.request.post(
+            f"{settings.base_url}/api/Addresss/",
+            headers=headers,
+            data=payload,
+            timeout=settings.action_timeout_ms,
+        )
+        if not response.ok:
+            return False
+
+        return True
+    except Exception:
+        return False
+
+
 async def _add_address_if_needed(page) -> bool:
     # The selection screen exposes one radio per saved address. Reuse an
     # existing address instead of opening the creation form on every
@@ -306,9 +364,16 @@ async def _add_address_if_needed(page) -> bool:
             await page.wait_for_timeout(100)
 
         if "/#/address/create" in page.url:
-            return False
-
-        await page.wait_for_timeout(250)
+            # The form is only a fixture setup. If the current frontend form
+            # rejects the synthetic fixture, create it through the REST resource
+            # used by the same AddressService, then let the checkout UI select it.
+            if not await _ensure_address_via_api(page):
+                return False
+            await page.goto(
+                f"{settings.base_url}/#/address/select",
+                wait_until="domcontentloaded",
+            )
+            await page.wait_for_timeout(250)
 
     return True
 
