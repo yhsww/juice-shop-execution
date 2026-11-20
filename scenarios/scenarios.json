@@ -1,0 +1,81 @@
+{
+  "scenarios": [
+    {
+      "id": "CEN-CAT-01",
+      "domain": "CAT",
+      "name": "Acesso ao catálogo",
+      "actor": "Cliente",
+      "flow": "Acessar a página inicial e verificar a disponibilidade do catálogo de produtos.",
+      "precondition": "Juice Shop em execução e página inicial acessível.",
+      "data": "Nenhum dado de entrada.",
+      "coherent": "Sim.",
+      "justification": "O catálogo é parte central da loja de sucos e permite iniciar a navegação de compra.",
+      "requirement": "A aplicação deve apresentar produtos navegáveis no catálogo.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 500
+        }
+      ],
+      "expected": {
+        "text_contains": ["Apple", "Juice"]
+      }
+    },
+    {
+      "id": "CEN-IDT-01",
+      "domain": "IDT",
+      "name": "Cadastro de novo cliente",
+      "actor": "Cliente",
+      "flow": "Abrir o cadastro, preencher os dados de teste e concluir o registro.",
+      "precondition": "Usuário não cadastrado com o e-mail de teste.",
+      "data": "Nome: Fulano; E-mail: teste@example.com; Senha: Teste@12345.",
+      "coherent": "Sim.",
+      "justification": "O cadastro de clientes é um fluxo essencial para identificação do usuário.",
+      "requirement": "A aplicação deve permitir o cadastro de um novo cliente.",
+      "actions": [
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "link",
+            "name": "Not yet a customer? Register now!"
+          }
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Email address"
+          },
+          "value": "teste@example.com"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Password"
+          },
+          "value": "Teste@12345"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Repeat Password"
+          },
+          "value": "Teste@12345"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Security Question"
+          },
+          "value": "Cidade?"
+        }
+      ],
+      "expected": {
+        "url_contains": "/#/register"
+      }
+    }
+  ]
+}
