@@ -189,17 +189,19 @@
           "type": "CLICK",
           "target": {
             "role": "button",
-            "name": "Increase quantity"
+            "name": "Increase quantity",
+            "exact": false
           }
         },
         {
           "type": "WAIT",
-          "milliseconds": 500
+          "milliseconds": 700
         }
       ],
       "expected": {
         "text_contains": [
-          "2"
+          "2",
+          "Quantity"
         ]
       }
     },
@@ -250,12 +252,13 @@
           "type": "CLICK",
           "target": {
             "role": "button",
-            "name": "Remove"
+            "name": "Remove",
+            "exact": false
           }
         },
         {
           "type": "WAIT",
-          "milliseconds": 500
+          "milliseconds": 700
         }
       ],
       "expected": {
@@ -284,12 +287,13 @@
           "type": "CLICK",
           "target": {
             "role": "button",
-            "name": "Remove all"
+            "name": "Remove all",
+            "exact": false
           }
         },
         {
           "type": "WAIT",
-          "milliseconds": 500
+          "milliseconds": 700
         }
       ],
       "expected": {
@@ -423,22 +427,27 @@
         {
           "type": "FILL",
           "target": {
-            "label": "Search"
+            "label": "Search",
+            "exact": false
           },
           "value": "Apple"
         },
         {
           "type": "PRESS",
+          "target": {
+            "label": "Search",
+            "exact": false
+          },
           "key": "Enter"
         },
         {
           "type": "WAIT",
-          "milliseconds": 700
+          "milliseconds": 1000
         }
       ],
       "expected": {
         "text_contains": [
-          "Apple"
+          "Apple Juice"
         ]
       }
     },
@@ -461,22 +470,27 @@
         {
           "type": "FILL",
           "target": {
-            "label": "Search"
+            "label": "Search",
+            "exact": false
           },
           "value": "Appl"
         },
         {
           "type": "PRESS",
+          "target": {
+            "label": "Search",
+            "exact": false
+          },
           "key": "Enter"
         },
         {
           "type": "WAIT",
-          "milliseconds": 700
+          "milliseconds": 1000
         }
       ],
       "expected": {
         "text_contains": [
-          "Apple"
+          "Apple Juice"
         ]
       }
     },
@@ -499,17 +513,22 @@
         {
           "type": "FILL",
           "target": {
-            "label": "Search"
+            "label": "Search",
+            "exact": false
           },
           "value": "ProdutoInexistenteXYZ"
         },
         {
           "type": "PRESS",
+          "target": {
+            "label": "Search",
+            "exact": false
+          },
           "key": "Enter"
         },
         {
           "type": "WAIT",
-          "milliseconds": 700
+          "milliseconds": 1000
         }
       ],
       "expected": {
@@ -537,23 +556,26 @@
         {
           "type": "FILL",
           "target": {
-            "label": "Search"
+            "label": "Search",
+            "exact": false
           },
           "value": "Limão"
         },
         {
           "type": "PRESS",
+          "target": {
+            "label": "Search",
+            "exact": false
+          },
           "key": "Enter"
         },
         {
           "type": "WAIT",
-          "milliseconds": 700
+          "milliseconds": 1000
         }
       ],
       "expected": {
-        "text_contains": [
-          "Lim"
-        ]
+        "url_contains": "/#/search"
       }
     },
     {
@@ -575,17 +597,22 @@
         {
           "type": "FILL",
           "target": {
-            "label": "Search"
+            "label": "Search",
+            "exact": false
           },
           "value": "Açaí / Limão"
         },
         {
           "type": "PRESS",
+          "target": {
+            "label": "Search",
+            "exact": false
+          },
           "key": "Enter"
         },
         {
           "type": "WAIT",
-          "milliseconds": 700
+          "milliseconds": 1000
         }
       ],
       "expected": {
@@ -634,8 +661,16 @@
           "route": "/#/"
         },
         {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Price",
+            "exact": false
+          }
+        },
+        {
           "type": "WAIT",
-          "milliseconds": 500
+          "milliseconds": 700
         }
       ],
       "expected": {
@@ -661,23 +696,22 @@
           "route": "/#/"
         },
         {
-          "type": "WAIT",
-          "milliseconds": 500
-        },
-        {
           "type": "CLICK",
           "target": {
             "role": "button",
-            "name": "Next"
+            "name": "Next",
+            "exact": false
           }
         },
         {
           "type": "WAIT",
-          "milliseconds": 500
+          "milliseconds": 700
         }
       ],
       "expected": {
-        "url_contains": "/#/"
+        "text_contains": [
+          "Price"
+        ]
       }
     },
     {
@@ -698,7 +732,7 @@
         },
         {
           "type": "WAIT",
-          "milliseconds": 500
+          "milliseconds": 700
         }
       ],
       "expected": {
@@ -761,17 +795,22 @@
         {
           "type": "FILL",
           "target": {
-            "label": "Search"
+            "label": "Search",
+            "exact": false
           },
           "value": "Limão / Açaí"
         },
         {
           "type": "PRESS",
+          "target": {
+            "label": "Search",
+            "exact": false
+          },
           "key": "Enter"
         },
         {
           "type": "WAIT",
-          "milliseconds": 700
+          "milliseconds": 1000
         }
       ],
       "expected": {
@@ -880,12 +919,13 @@
           "type": "CLICK",
           "target": {
             "role": "link",
-            "name": "Privacy Policy"
+            "name": "Privacy Policy",
+            "exact": false
           }
         },
         {
           "type": "WAIT",
-          "milliseconds": 500
+          "milliseconds": 700
         }
       ],
       "expected": {
@@ -941,12 +981,13 @@
           "type": "CLICK",
           "target": {
             "role": "button",
-            "name": "Checkout"
+            "name": "Checkout",
+            "exact": false
           }
         },
         {
           "type": "WAIT",
-          "milliseconds": 700
+          "milliseconds": 1000
         }
       ],
       "expected": {
@@ -973,17 +1014,86 @@
           "type": "CLICK",
           "target": {
             "role": "button",
-            "name": "Add New Address"
+            "name": "Add New Address",
+            "exact": false
           }
         },
         {
           "type": "WAIT",
           "milliseconds": 500
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Country",
+            "exact": false
+          },
+          "value": "Brazil"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Name",
+            "exact": false
+          },
+          "value": "Cliente Teste"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Mobile Number",
+            "exact": false
+          },
+          "value": "85999999999"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "ZIP Code",
+            "exact": false
+          },
+          "value": "60000000"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Address",
+            "exact": false
+          },
+          "value": "Rua Teste, 100"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "City",
+            "exact": false
+          },
+          "value": "Fortaleza"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "State",
+            "exact": false
+          },
+          "value": "CE"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Submit",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 1000
         }
       ],
       "expected": {
         "text_contains": [
-          "Add New Address"
+          "Cliente Teste"
         ]
       }
     },
@@ -1005,13 +1115,35 @@
         },
         {
           "type": "WAIT",
-          "milliseconds": 500
+          "milliseconds": 700
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "radio",
+            "name": "Address",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 300
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Continue",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 800
         }
       ],
       "expected": {
-        "text_contains": [
-          "Continue"
-        ]
+        "url_contains": "/#/delivery-method"
       }
     },
     {
@@ -1031,25 +1163,32 @@
           "route": "/#/address/select"
         },
         {
-          "type": "WAIT",
-          "milliseconds": 500
-        },
-        {
           "type": "CLICK",
           "target": {
             "role": "radio",
-            "name": "Address"
+            "name": "Address",
+            "exact": false
           }
         },
         {
           "type": "WAIT",
           "milliseconds": 300
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Continue",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 800
         }
       ],
       "expected": {
-        "text_contains": [
-          "Continue"
-        ]
+        "url_contains": "/#/delivery-method"
       }
     },
     {
@@ -1069,25 +1208,32 @@
           "route": "/#/delivery-method"
         },
         {
-          "type": "WAIT",
-          "milliseconds": 500
-        },
-        {
           "type": "CLICK",
           "target": {
             "role": "radio",
-            "name": "Standard Delivery"
+            "name": "Standard Delivery",
+            "exact": false
           }
         },
         {
           "type": "WAIT",
           "milliseconds": 300
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Continue",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 800
         }
       ],
       "expected": {
-        "text_contains": [
-          "Continue"
-        ]
+        "url_contains": "/#/payment/shop"
       }
     },
     {
@@ -1107,19 +1253,24 @@
           "route": "/#/delivery-method"
         },
         {
-          "type": "WAIT",
-          "milliseconds": 500
+          "type": "CLICK",
+          "target": {
+            "role": "radio",
+            "name": "Standard Delivery",
+            "exact": false
+          }
         },
         {
           "type": "CLICK",
           "target": {
             "role": "button",
-            "name": "Continue"
+            "name": "Continue",
+            "exact": false
           }
         },
         {
           "type": "WAIT",
-          "milliseconds": 700
+          "milliseconds": 800
         }
       ],
       "expected": {
@@ -1178,7 +1329,19 @@
         },
         {
           "type": "WAIT",
-          "milliseconds": 500
+          "milliseconds": 700
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "radio",
+            "name": "1111",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 300
         }
       ],
       "expected": {
@@ -1204,19 +1367,28 @@
           "route": "/#/payment/shop"
         },
         {
+          "type": "CLICK",
+          "target": {
+            "role": "radio",
+            "name": "1111",
+            "exact": false
+          }
+        },
+        {
           "type": "WAIT",
-          "milliseconds": 500
+          "milliseconds": 300
         },
         {
           "type": "CLICK",
           "target": {
             "role": "button",
-            "name": "Continue"
+            "name": "Continue",
+            "exact": false
           }
         },
         {
           "type": "WAIT",
-          "milliseconds": 700
+          "milliseconds": 900
         }
       ],
       "expected": {
@@ -1270,12 +1442,13 @@
           "type": "CLICK",
           "target": {
             "role": "button",
-            "name": "Place your order and pay"
+            "name": "Place your order and pay",
+            "exact": false
           }
         },
         {
           "type": "WAIT",
-          "milliseconds": 900
+          "milliseconds": 1200
         }
       ],
       "expected": {
@@ -1334,8 +1507,8 @@
         {
           "type": "CLICK",
           "target": {
-            "role": "text",
-            "name": "Other payment options"
+            "text": "Other payment options",
+            "exact": false
           }
         },
         {
@@ -1346,12 +1519,13 @@
           "type": "CLICK",
           "target": {
             "role": "link",
-            "name": "donation"
+            "name": "donation",
+            "exact": false
           }
         },
         {
           "type": "WAIT",
-          "milliseconds": 500
+          "milliseconds": 700
         }
       ],
       "expected": {
@@ -1377,8 +1551,8 @@
         {
           "type": "CLICK",
           "target": {
-            "role": "text",
-            "name": "Other payment options"
+            "text": "Other payment options",
+            "exact": false
           }
         },
         {
@@ -1389,12 +1563,13 @@
           "type": "CLICK",
           "target": {
             "role": "link",
-            "name": "merchandise"
+            "name": "merchandise",
+            "exact": false
           }
         },
         {
           "type": "WAIT",
-          "milliseconds": 500
+          "milliseconds": 700
         }
       ],
       "expected": {
@@ -1420,13 +1595,22 @@
         {
           "type": "FILL",
           "target": {
-            "label": "Coupon"
+            "label": "Coupon",
+            "exact": false
           },
-          "value": ""
+          "value": "WMNSDY2019"
+        },
+        {
+          "type": "PRESS",
+          "target": {
+            "label": "Coupon",
+            "exact": false
+          },
+          "key": "Enter"
         },
         {
           "type": "WAIT",
-          "milliseconds": 300
+          "milliseconds": 800
         }
       ],
       "expected": {
@@ -1453,12 +1637,13 @@
           "type": "CLICK",
           "target": {
             "role": "button",
-            "name": "Print Order Confirmation"
+            "name": "Print Order Confirmation",
+            "exact": false
           }
         },
         {
           "type": "WAIT",
-          "milliseconds": 800
+          "milliseconds": 1000
         }
       ],
       "expected": {
@@ -1536,19 +1721,16 @@
           "route": "/#/order-history"
         },
         {
-          "type": "WAIT",
-          "milliseconds": 700
-        },
-        {
           "type": "CLICK",
           "target": {
             "role": "link",
-            "name": "Track Order"
+            "name": "Track Order",
+            "exact": false
           }
         },
         {
           "type": "WAIT",
-          "milliseconds": 700
+          "milliseconds": 900
         }
       ],
       "expected": {
@@ -1573,7 +1755,7 @@
         },
         {
           "type": "WAIT",
-          "milliseconds": 700
+          "milliseconds": 1000
         }
       ],
       "expected": {
@@ -1599,19 +1781,16 @@
           "route": "/#/order-history"
         },
         {
-          "type": "WAIT",
-          "milliseconds": 700
-        },
-        {
           "type": "CLICK",
           "target": {
             "role": "button",
-            "name": "Print Order"
+            "name": "Print Order",
+            "exact": false
           }
         },
         {
           "type": "WAIT",
-          "milliseconds": 700
+          "milliseconds": 1000
         }
       ],
       "expected": {
@@ -1663,7 +1842,7 @@
         },
         {
           "type": "WAIT",
-          "milliseconds": 500
+          "milliseconds": 700
         }
       ],
       "expected": {
@@ -1809,7 +1988,8 @@
           "type": "CLICK",
           "target": {
             "role": "button",
-            "name": "Checkout"
+            "name": "Checkout",
+            "exact": false
           }
         },
         {
@@ -1817,47 +1997,76 @@
           "milliseconds": 500
         },
         {
-          "type": "NAVIGATE",
-          "route": "/#/address/select"
-        },
-        {
-          "type": "WAIT",
-          "milliseconds": 400
-        },
-        {
-          "type": "NAVIGATE",
-          "route": "/#/delivery-method"
-        },
-        {
-          "type": "WAIT",
-          "milliseconds": 400
-        },
-        {
-          "type": "NAVIGATE",
-          "route": "/#/payment/shop"
-        },
-        {
-          "type": "WAIT",
-          "milliseconds": 400
-        },
-        {
-          "type": "NAVIGATE",
-          "route": "/#/order-summary"
-        },
-        {
-          "type": "WAIT",
-          "milliseconds": 400
+          "type": "CLICK",
+          "target": {
+            "role": "radio",
+            "name": "Address",
+            "exact": false
+          }
         },
         {
           "type": "CLICK",
           "target": {
             "role": "button",
-            "name": "Place your order and pay"
+            "name": "Continue",
+            "exact": false
           }
         },
         {
           "type": "WAIT",
-          "milliseconds": 900
+          "milliseconds": 500
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "radio",
+            "name": "Standard Delivery",
+            "exact": false
+          }
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Continue",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 500
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "radio",
+            "name": "1111",
+            "exact": false
+          }
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Continue",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 700
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Place your order and pay",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 1200
         }
       ],
       "expected": {
@@ -1883,35 +2092,40 @@
         {
           "type": "FILL",
           "target": {
-            "label": "Email address"
+            "label": "Email address",
+            "exact": false
           },
           "value": "teste@example.com"
         },
         {
           "type": "FILL",
           "target": {
-            "label": "Password"
+            "label": "Password",
+            "exact": false
           },
           "value": "Teste@12345"
         },
         {
           "type": "FILL",
           "target": {
-            "label": "Repeat Password"
+            "label": "Repeat Password",
+            "exact": false
           },
           "value": "Teste@12345"
         },
         {
           "type": "SELECT",
           "target": {
-            "label": "Security Question"
+            "label": "Security Question",
+            "exact": false
           },
           "value": "Your favorite book?"
         },
         {
           "type": "FILL",
           "target": {
-            "label": "Answer"
+            "label": "Answer",
+            "exact": false
           },
           "value": "a"
         },
@@ -1919,12 +2133,13 @@
           "type": "CLICK",
           "target": {
             "role": "button",
-            "name": "Register"
+            "name": "Register",
+            "exact": false
           }
         },
         {
           "type": "WAIT",
-          "milliseconds": 900
+          "milliseconds": 1000
         }
       ],
       "expected": {
@@ -2130,7 +2345,7 @@
         },
         {
           "type": "WAIT",
-          "milliseconds": 500
+          "milliseconds": 700
         }
       ],
       "expected": {
@@ -2156,8 +2371,24 @@
           "route": "/#/profile"
         },
         {
+          "type": "FILL",
+          "target": {
+            "label": "Username",
+            "exact": false
+          },
+          "value": "cliente_teste"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Save",
+            "exact": false
+          }
+        },
+        {
           "type": "WAIT",
-          "milliseconds": 500
+          "milliseconds": 700
         }
       ],
       "expected": {
@@ -2183,13 +2414,45 @@
           "route": "/#/change-password"
         },
         {
+          "type": "FILL",
+          "target": {
+            "label": "Current Password",
+            "exact": false
+          },
+          "value": "Teste@12345"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "New Password",
+            "exact": false
+          },
+          "value": "Teste@123456"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Repeat New Password",
+            "exact": false
+          },
+          "value": "Teste@123456"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Change",
+            "exact": false
+          }
+        },
+        {
           "type": "WAIT",
-          "milliseconds": 500
+          "milliseconds": 800
         }
       ],
       "expected": {
         "text_contains": [
-          "Change Password"
+          "Password"
         ]
       }
     },
@@ -2239,7 +2502,8 @@
         {
           "type": "FILL",
           "target": {
-            "label": "Email"
+            "label": "Email",
+            "exact": false
           },
           "value": "teste@example.com"
         },
@@ -2247,12 +2511,13 @@
           "type": "CLICK",
           "target": {
             "role": "button",
-            "name": "Submit"
+            "name": "Submit",
+            "exact": false
           }
         },
         {
           "type": "WAIT",
-          "milliseconds": 500
+          "milliseconds": 800
         }
       ],
       "expected": {
@@ -2333,7 +2598,7 @@
         },
         {
           "type": "WAIT",
-          "milliseconds": 500
+          "milliseconds": 700
         }
       ],
       "expected": {
@@ -2361,38 +2626,54 @@
         {
           "type": "FILL",
           "target": {
-            "label": "Email address"
+            "label": "Email address",
+            "exact": false
           },
           "value": "teste@example.com"
         },
         {
           "type": "FILL",
           "target": {
-            "label": "Password"
+            "label": "Password",
+            "exact": false
           },
           "value": "Teste@12345"
         },
         {
           "type": "FILL",
           "target": {
-            "label": "Repeat Password"
+            "label": "Repeat Password",
+            "exact": false
           },
           "value": "Teste@12345"
         },
         {
-          "type": "WAIT",
-          "milliseconds": 300
+          "type": "SELECT",
+          "target": {
+            "label": "Security Question",
+            "exact": false
+          },
+          "value": "Your favorite book?"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Answer",
+            "exact": false
+          },
+          "value": "a"
         },
         {
           "type": "CLICK",
           "target": {
             "role": "button",
-            "name": "Register"
+            "name": "Register",
+            "exact": false
           }
         },
         {
           "type": "WAIT",
-          "milliseconds": 500
+          "milliseconds": 700
         }
       ],
       "expected": {
@@ -2421,12 +2702,13 @@
           "type": "CLICK",
           "target": {
             "role": "button",
-            "name": "Register"
+            "name": "Register",
+            "exact": false
           }
         },
         {
           "type": "WAIT",
-          "milliseconds": 400
+          "milliseconds": 700
         }
       ],
       "expected": {
