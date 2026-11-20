@@ -1342,7 +1342,7 @@
             "label": "Card Number",
             "exact": false
           },
-          "value": "5555444433332222"
+          "value": "4000000000000002"
         },
         {
           "type": "SELECT",
@@ -1376,7 +1376,7 @@
       "expected": {
         "text_contains": [
           "My Payment Options",
-          "5555"
+          "4000"
         ]
       }
     },
