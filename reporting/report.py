@@ -6,13 +6,20 @@ from pathlib import Path
 from reporting.templates import SCENARIO_SHEET
 
 
+def _safe(value: object) -> str:
+    return str(value or "").replace("|", "\\|").replace("\n", " ").strip()
+
+
 def build_report(scenario: dict, execution: dict) -> str:
     step_rows = []
-    for item in execution["steps"]:
-        response = item["observed_result"].replace("|", "\\|").replace("\n", " ")
+    for item in execution.get("steps", []):
         step_rows.append(
-            f"| {item['step']} | {item['action']} | {item['data']} | {response[:500]} |"
+            f"| {item['step']} | {_safe(item.get('user_action', item.get('action')))} "
+            f"| {_safe(item.get('data'))} | {_safe(item.get('observed_result'))[:500]} |"
         )
+
+    messages = execution.get("messages") or []
+    message_text = "\n".join(f"- {item}" for item in messages[:10])
 
     return SCENARIO_SHEET.format(
         id=scenario["id"],
@@ -22,7 +29,7 @@ def build_report(scenario: dict, execution: dict) -> str:
         flow=scenario.get("flow", ""),
         precondition=scenario.get("precondition", ""),
         result=execution.get("final_result", ""),
-        messages=execution.get("messages", ""),
+        messages=message_text,
         data=scenario.get("data", ""),
         coherent=scenario.get("coherent", ""),
         justification=scenario.get("justification", ""),
