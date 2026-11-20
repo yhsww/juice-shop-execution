@@ -493,9 +493,12 @@ async def prepare_precondition(page, scenario: dict) -> tuple[bool, str]:
             if not await ensure_address(page, select=True):
                 return False, "Pré-condição de endereço selecionado não pôde ser preparada."
 
+        if "método de entrega selecionado" in precondition or "entrega selecionada" in precondition:
+            if not await ensure_delivery(page):
+                return False, "Pré-condição de entrega não pôde ser preparada."
+
         if (
-            "método de entrega selecionado" in precondition
-            or "entrega selecionada" in precondition
+            "etapa de pagamento" in precondition
             or "etapa de pagamento" in precondition
             or "pagamento acessível" in precondition
             or "cartão de teste cadastrado" in precondition
