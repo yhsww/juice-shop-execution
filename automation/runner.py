@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import time
 from pathlib import Path
 from uuid import uuid4
 
@@ -61,7 +62,7 @@ def _materialize_action(action: dict, scenario: dict) -> dict:
     return replace(action)
 
 
-async def run_scenario(scenario: dict) -> dict:
+async def _run_scenario(scenario: dict) -> dict:
     execution = {
         "scenario_id": scenario["id"],
         "status": "ERROR",
@@ -85,8 +86,24 @@ async def run_scenario(scenario: dict) -> dict:
 
         previous_action = None
         repeated = 0
+        timed_out = False
+        scenario_started = time.monotonic()
+        scenario_timeout = max(1, settings.scenario_timeout_seconds)
+
+        print(f"[START] {scenario['id']} | limite: {scenario_timeout}s")
 
         for number, raw_action in enumerate(scenario.get("actions", []), start=1):
+            elapsed = time.monotonic() - scenario_started
+            if elapsed >= scenario_timeout:
+                timed_out = True
+                execution["final_result"] = (
+                    f"Tempo limite do cenário atingido ({scenario_timeout}s)."
+                )
+                print(
+                    f"[TIMEOUT] {scenario['id']} | "
+                    f"{scenario_timeout}s atingidos antes do passo {number}."
+                )
+                break
             action = _materialize_action(raw_action, scenario)
             if number > settings.max_steps:
                 execution["final_result"] = "Execução interrompida pelo limite máximo de passos."
@@ -109,6 +126,10 @@ async def run_scenario(scenario: dict) -> dict:
                 break
 
             result = await execute(page, action)
+
+            if time.monotonic() - scenario_started >= scenario_timeout:
+                timed_out = True
+
             screenshot = await capture(
                 page,
                 settings.screenshot_dir,
@@ -173,15 +194,22 @@ async def run_scenario(scenario: dict) -> dict:
             )
             print(f"[VALIDATION] URL final: {final_state.url}")
 
-        execution["status"] = (
-            "PASSED"
-            if execution["steps"]
-            and all(item["success"] for item in execution["steps"])
-            and valid
-            else "FAILED"
-        )
+        if timed_out:
+            execution["status"] = "TIMEOUT"
+        else:
+            execution["status"] = (
+                "PASSED"
+                if execution["steps"]
+                and all(item["success"] for item in execution["steps"])
+                and valid
+                else "FAILED"
+            )
 
-        if not execution["final_result"]:
+        if timed_out and not execution["final_result"]:
+            execution["final_result"] = (
+                f"Tempo limite do cenário atingido ({scenario_timeout}s)."
+            )
+        elif not execution["final_result"]:
             execution["final_result"] = (
                 execution["steps"][-1]["observed_result"]
                 if execution["steps"]
@@ -192,6 +220,11 @@ async def run_scenario(scenario: dict) -> dict:
     save_execution(out.with_suffix(".json"), execution)
     save_report(out.with_suffix(".md"), scenario, execution)
     return execution
+
+
+async def run_scenario(scenario: dict) -> dict:
+    """Execute one scenario with a cancellation-safe, soft time budget."""
+    return await _run_scenario(scenario)
 
 
 async def run_selected(ids: set[str] | None = None) -> list[dict]:
