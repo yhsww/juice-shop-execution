@@ -1000,7 +1000,7 @@
       "name": "Adicionar endereço de entrega",
       "actor": "Cliente",
       "flow": "Cadastrar um novo endereço para entrega.",
-      "precondition": "Checkout iniciado.",
+      "precondition": "Cliente autenticado; carrinho contém produto.",
       "data": "Nome, país, estado, CEP, cidade, endereço e complemento de teste.",
       "coherent": "Sim.",
       "justification": "O endereço é necessário para entrega do pedido.",
@@ -1008,7 +1008,19 @@
       "actions": [
         {
           "type": "NAVIGATE",
-          "route": "/#/address/select"
+          "route": "/#/basket"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Checkout",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 700
         },
         {
           "type": "CLICK",
@@ -1111,7 +1123,15 @@
       "actions": [
         {
           "type": "NAVIGATE",
-          "route": "/#/address/select"
+          "route": "/#/basket"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Checkout",
+            "exact": false
+          }
         },
         {
           "type": "WAIT",
@@ -1124,10 +1144,6 @@
             "name": "Address",
             "exact": false
           }
-        },
-        {
-          "type": "WAIT",
-          "milliseconds": 300
         },
         {
           "type": "CLICK",
@@ -1160,7 +1176,19 @@
       "actions": [
         {
           "type": "NAVIGATE",
-          "route": "/#/address/select"
+          "route": "/#/basket"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Checkout",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 700
         },
         {
           "type": "CLICK",
@@ -1169,10 +1197,6 @@
             "name": "Address",
             "exact": false
           }
-        },
-        {
-          "type": "WAIT",
-          "milliseconds": 300
         },
         {
           "type": "CLICK",
@@ -1296,18 +1320,63 @@
         {
           "type": "CLICK",
           "target": {
-            "role": "button",
-            "name": "Add new card"
+            "text": "Add new card",
+            "exact": false
           }
         },
         {
           "type": "WAIT",
-          "milliseconds": 500
+          "milliseconds": 300
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Name",
+            "exact": false
+          },
+          "value": "Cliente Teste"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Card Number",
+            "exact": false
+          },
+          "value": "5555444433332222"
+        },
+        {
+          "type": "SELECT",
+          "target": {
+            "label": "Expiry Month",
+            "exact": false
+          },
+          "value": "12"
+        },
+        {
+          "type": "SELECT",
+          "target": {
+            "label": "Expiry Year",
+            "exact": false
+          },
+          "value": "2030"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Submit",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 800
         }
       ],
       "expected": {
         "text_contains": [
-          "Card"
+          "My Payment Options",
+          "5555"
         ]
       }
     },
@@ -1838,11 +1907,23 @@
       "actions": [
         {
           "type": "NAVIGATE",
-          "route": "/#/address/select"
+          "route": "/#/basket"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Checkout",
+            "exact": false
+          }
         },
         {
           "type": "WAIT",
           "milliseconds": 700
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 500
         }
       ],
       "expected": {
@@ -2079,7 +2160,7 @@
       "name": "Cadastro de novo cliente",
       "actor": "Cliente",
       "flow": "Abrir o cadastro, preencher os dados e concluir o registro.",
-      "precondition": "Usuário de teste ainda não cadastrado.",
+      "precondition": "Não é necessária autenticação prévia; o e-mail usado para o cadastro deve estar disponível.",
       "data": "E-mail: teste@example.com; senha: Teste@12345; pergunta de segurança e resposta de teste.",
       "coherent": "Sim.",
       "justification": "O cadastro é essencial para identificação do cliente.",
@@ -2095,7 +2176,7 @@
             "label": "Email address",
             "exact": false
           },
-          "value": "teste@example.com"
+          "value": "${SCENARIO_EMAIL}"
         },
         {
           "type": "FILL",
@@ -2200,7 +2281,7 @@
       "name": "Login com credenciais válidas",
       "actor": "Cliente",
       "flow": "Informar e-mail e senha válidos e entrar na aplicação.",
-      "precondition": "Usuário de teste cadastrado.",
+      "precondition": "Conta de teste disponível para autenticação.",
       "data": "E-mail: teste@example.com; senha: Teste@12345.",
       "coherent": "Sim.",
       "justification": "A autenticação identifica o cliente para acessar recursos protegidos.",
@@ -2215,7 +2296,7 @@
           "target": {
             "label": "Email"
           },
-          "value": "teste@example.com"
+          "value": "${SCENARIO_EMAIL}"
         },
         {
           "type": "FILL",
@@ -2246,7 +2327,7 @@
       "name": "Login com senha inválida",
       "actor": "Cliente",
       "flow": "Informar e-mail válido com senha incorreta.",
-      "precondition": "Usuário cadastrado.",
+      "precondition": "Conta de teste disponível para autenticação.",
       "data": "Senha incorreta: SenhaErrada@123.",
       "coherent": "Sim.",
       "justification": "O sistema deve rejeitar credenciais inválidas.",
@@ -2261,7 +2342,7 @@
           "target": {
             "label": "Email"
           },
-          "value": "teste@example.com"
+          "value": "${SCENARIO_EMAIL}"
         },
         {
           "type": "FILL",
@@ -2333,7 +2414,7 @@
       "name": "Acesso ao perfil",
       "actor": "Cliente",
       "flow": "Abrir a área de perfil após autenticação.",
-      "precondition": "Usuário autenticado.",
+      "precondition": "Conta de teste disponível para autenticação.",
       "data": "Nenhum dado adicional.",
       "coherent": "Sim.",
       "justification": "O perfil concentra informações da conta.",
@@ -2360,7 +2441,7 @@
       "name": "Alteração de dados do perfil",
       "actor": "Cliente",
       "flow": "Alterar um dado editável do perfil e salvar.",
-      "precondition": "Usuário autenticado.",
+      "precondition": "Conta de teste disponível para autenticação.",
       "data": "Dado de teste atualizado.",
       "coherent": "Sim.",
       "justification": "O cliente precisa poder atualizar dados permitidos da conta.",
@@ -2403,7 +2484,7 @@
       "name": "Alteração de senha",
       "actor": "Cliente",
       "flow": "Abrir a área de alteração de senha e informar os dados de teste.",
-      "precondition": "Usuário autenticado.",
+      "precondition": "Conta de teste disponível para autenticação.",
       "data": "Senha atual e nova senha de teste.",
       "coherent": "Sim.",
       "justification": "A alteração periódica de senha é função de gerenciamento de conta.",
@@ -2411,7 +2492,7 @@
       "actions": [
         {
           "type": "NAVIGATE",
-          "route": "/#/change-password"
+          "route": "/#/privacy-security/change-password"
         },
         {
           "type": "FILL",
@@ -2489,7 +2570,7 @@
       "name": "Pergunta de segurança na recuperação",
       "actor": "Cliente",
       "flow": "Informar e-mail e verificar a solicitação da pergunta de segurança.",
-      "precondition": "Usuário possui pergunta cadastrada.",
+      "precondition": "Conta de teste do cenário cadastrada com pergunta e resposta de segurança.",
       "data": "E-mail: teste@example.com.",
       "coherent": "Sim.",
       "justification": "A pergunta integra o mecanismo de recuperação configurado no aplicativo.",
@@ -2505,7 +2586,7 @@
             "label": "Email",
             "exact": false
           },
-          "value": "teste@example.com"
+          "value": "${SCENARIO_EMAIL}"
         },
         {
           "type": "CLICK",
@@ -2532,7 +2613,7 @@
       "name": "Exportação de dados pessoais",
       "actor": "Cliente",
       "flow": "Abrir a área de privacidade e solicitar exportação de dados.",
-      "precondition": "Usuário autenticado.",
+      "precondition": "Conta de teste disponível para autenticação.",
       "data": "Nenhum dado adicional.",
       "coherent": "Sim.",
       "justification": "O cliente deve conseguir consultar seus dados pessoais exportáveis.",
@@ -2559,7 +2640,7 @@
       "name": "Solicitação de exclusão de dados",
       "actor": "Cliente",
       "flow": "Abrir a área de privacidade e verificar a opção de exclusão.",
-      "precondition": "Usuário autenticado.",
+      "precondition": "Conta de teste disponível para autenticação.",
       "data": "Nenhum dado adicional.",
       "coherent": "Sim.",
       "justification": "A gestão de privacidade deve permitir iniciar uma solicitação de exclusão.",
@@ -2586,7 +2667,7 @@
       "name": "Acesso à privacidade e segurança",
       "actor": "Cliente",
       "flow": "Abrir a área de privacidade e segurança da conta.",
-      "precondition": "Usuário autenticado.",
+      "precondition": "Conta de teste disponível para autenticação.",
       "data": "Nenhum dado adicional.",
       "coherent": "Sim.",
       "justification": "A área reúne controles relacionados aos dados pessoais.",
@@ -2629,7 +2710,7 @@
             "label": "Email address",
             "exact": false
           },
-          "value": "teste@example.com"
+          "value": "${BASE_TEST_EMAIL}"
         },
         {
           "type": "FILL",
