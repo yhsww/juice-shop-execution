@@ -6,7 +6,6 @@ from uuid import uuid4
 
 from automation.browser import browser_session, open_juice_shop
 from automation.executor import execute
-from automation.locator import resolve
 from automation.observer import observe
 from automation.validator import validate
 from automation.preconditions import (
@@ -32,47 +31,6 @@ def load_scenarios(path: Path) -> list[dict]:
     if duplicates:
         raise ValueError(f"IDs de cenário duplicados: {', '.join(duplicates)}")
     return scenarios
-
-
-def _requires_authentication(scenario: dict) -> bool:
-    precondition = str(scenario.get("precondition", "")).lower()
-    actor = str(scenario.get("actor", "")).lower()
-    return "autenticad" in precondition or "administrador" in actor
-
-
-def _is_admin(scenario: dict) -> bool:
-    return str(scenario.get("actor", "")).lower().startswith("administrador")
-
-
-async def _login(page, scenario: dict) -> str | None:
-    if not _requires_authentication(scenario):
-        return None
-
-    email = settings.admin_email if _is_admin(scenario) else settings.user_email
-    password = settings.admin_password if _is_admin(scenario) else settings.user_password
-
-    await page.goto(f"{settings.base_url}/#/login", wait_until="domcontentloaded")
-    email_field = await resolve(page, {"label": "Email", "exact": False})
-    password_field = await resolve(page, {"label": "Password", "exact": False})
-
-    if email_field is None or password_field is None:
-        return "Não foi possível localizar os campos de autenticação."
-
-    await email_field.fill(email, timeout=settings.action_timeout_ms)
-    await password_field.fill(password, timeout=settings.action_timeout_ms)
-
-    login_button = await resolve(page, {"role": "button", "name": "Login", "exact": False})
-    if login_button is None:
-        return "Botão de login não encontrado."
-
-    await login_button.click(timeout=settings.action_timeout_ms)
-    await page.wait_for_timeout(700)
-
-    if "/#/login" in page.url:
-        return "A autenticação não foi concluída; a aplicação permaneceu na tela de login."
-
-    return None
-
 
 
 
@@ -101,6 +59,7 @@ def _materialize_action(action: dict, scenario: dict) -> dict:
         return value
 
     return replace(action)
+
 
 async def run_scenario(scenario: dict) -> dict:
     execution = {
