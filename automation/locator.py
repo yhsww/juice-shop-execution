@@ -890,4 +890,17 @@ async def resolve(page: Page, target: dict) -> Locator | None:
             if first_radio is not None:
                 candidates.append(first_radio)
 
-    return await first_visible(candidates)
+    result = await first_visible(candidates)
+    if result is not None:
+        return result
+
+    # Some legacy Juice Shop routes render their native controls after the
+    # initial navigation event. Retry the same semantic resolution briefly
+    # instead of declaring a missing control.
+    for _ in range(10):
+        await page.wait_for_timeout(100)
+        result = await first_visible(candidates)
+        if result is not None:
+            return result
+
+    return None
