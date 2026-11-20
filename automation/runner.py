@@ -170,10 +170,14 @@ async def _run_scenario(scenario: dict) -> dict:
                     execution["messages"].append(message)
 
             if result.error:
+                # A locator/action failure means the scenario could not be
+                # exercised. It must not be reported as a functional failure
+                # of the Juice Shop application.
                 execution["final_result"] = result.observed_result or result.error
+                execution["status"] = "AUTOMATION_ERROR"
 
                 print(
-                    f"[ERROR] {scenario['id']} | passo {number} | "
+                    f"[AUTOMATION_ERROR] {scenario['id']} | passo {number} | "
                     f"{result.user_action}"
                 )
                 print(f"[ERROR] {result.error}")
@@ -208,14 +212,16 @@ async def _run_scenario(scenario: dict) -> dict:
 
         if timed_out:
             execution["status"] = "TIMEOUT"
+        elif any(not item["success"] for item in execution["steps"]):
+            # The UI action itself could not be executed. Keep this distinct
+            # from a functional assertion failure.
+            execution["status"] = "AUTOMATION_ERROR"
+        elif not valid:
+            # Actions completed, but the observed application state did not
+            # satisfy the scenario expectation.
+            execution["status"] = "FAILED"
         else:
-            execution["status"] = (
-                "PASSED"
-                if execution["steps"]
-                and all(item["success"] for item in execution["steps"])
-                and valid
-                else "FAILED"
-            )
+            execution["status"] = "PASSED"
 
         if timed_out and not execution["final_result"]:
             execution["final_result"] = (
