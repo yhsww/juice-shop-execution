@@ -570,7 +570,69 @@ async def resolve(page: Page, target: dict) -> Locator | None:
             except Exception:
                 continue
 
+    # 8. Native form fallback using label/control relationships.
+    # This deliberately works from the target text rather than scenario IDs,
+    # and also covers legacy pages where Playwright's get_by_label() does not
+    # infer the association reliably.
+    for value in (label, name, text):
+        if not value:
+            continue
+        wanted = _norm(str(value))
+        if not wanted:
+            continue
+
+        inputs = page.locator("input, textarea, select")
+        try:
+            count = await inputs.count()
+        except Exception:
+            count = 0
+
+        for index in range(count):
+            control = inputs.nth(index)
+            try:
+                if not await control.is_visible():
+                    continue
+
+                control_id = await control.get_attribute("id")
+                control_name = await control.get_attribute("name")
+                placeholder_value = await control.get_attribute("placeholder")
+
+                # Semantic attributes are authoritative.
+                if any(
+                    _semantic_text_match(wanted, candidate)
+                    for candidate in (control_id, control_name, placeholder_value)
+                    if candidate
+                ):
+                    candidates.append(control)
+                    continue
+
+                # Explicit label[for] -> control relationship.
+                if control_id:
+                    linked_label = page.locator(
+                        f"label[for='{control_id}']"
+                    )
+                    if await linked_label.count():
+                        label_text = _norm(
+                            await linked_label.first.inner_text()
+                        )
+                        if _semantic_text_match(wanted, label_text):
+                            candidates.append(control)
+                            continue
+
+                # Sibling/ancestor label relationship used by legacy forms.
+                parent = control.locator(
+                    "xpath=ancestor::*[self::form or contains(@class, 'field')][1]"
+                )
+                if await parent.count():
+                    parent_text = _norm(await parent.inner_text())
+                    if _semantic_text_match(wanted, parent_text):
+                        candidates.append(control)
+                        continue
+            except Exception:
+                continue
+
     # 8. Attribute fallbacks for Angular-generated controls.
+
     # has_text() inspects descendants, not attribute values, so aria-label
     # and title must be checked explicitly.
     for value in (name, label, text):
