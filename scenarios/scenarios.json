@@ -284,12 +284,13 @@
           "route": "/#/basket"
         },
         {
-          "type": "CLICK",
+          "type": "CLICK_ALL",
           "target": {
             "role": "button",
-            "name": "Remove all",
+            "name": "Remove",
             "exact": false
-          }
+          },
+          "max_clicks": 20
         },
         {
           "type": "WAIT",
@@ -533,7 +534,7 @@
       ],
       "expected": {
         "text_contains": [
-          "No products"
+          "No results found"
         ]
       }
     },
@@ -647,14 +648,14 @@
     {
       "id": "CEN-CAT-09",
       "domain": "CAT",
-      "name": "Ordenação de produtos",
+      "name": "Navegação do catálogo",
       "actor": "Cliente",
-      "flow": "Alterar a ordenação da listagem de produtos.",
+      "flow": "Avançar na paginação da listagem de produtos.",
       "precondition": "Catálogo disponível.",
-      "data": "Critério: preço ou nome, conforme opções exibidas.",
+      "data": "Nenhum dado adicional.",
       "coherent": "Sim.",
-      "justification": "A ordenação ajuda o usuário a explorar o catálogo.",
-      "requirement": "A aplicação deve permitir ordenar a listagem quando houver controles de ordenação.",
+      "justification": "A paginação permite explorar o catálogo quando há mais produtos do que cabem na página.",
+      "requirement": "A aplicação deve permitir avançar na listagem paginada.",
       "actions": [
         {
           "type": "NAVIGATE",
@@ -664,7 +665,7 @@
           "type": "CLICK",
           "target": {
             "role": "button",
-            "name": "Price",
+            "name": "Next",
             "exact": false
           }
         },
@@ -675,7 +676,7 @@
       ],
       "expected": {
         "text_contains": [
-          "Price"
+          "Apple Juice"
         ]
       }
     },
@@ -710,7 +711,7 @@
       ],
       "expected": {
         "text_contains": [
-          "Price"
+          "Apple Juice"
         ]
       }
     },
@@ -738,7 +739,7 @@
       "expected": {
         "text_contains": [
           "Apple Juice",
-          "€"
+          "¤"
         ]
       }
     },
@@ -913,15 +914,7 @@
       "actions": [
         {
           "type": "NAVIGATE",
-          "route": "/#/"
-        },
-        {
-          "type": "CLICK",
-          "target": {
-            "role": "link",
-            "name": "Privacy Policy",
-            "exact": false
-          }
+          "route": "/#/privacy-security/privacy-policy"
         },
         {
           "type": "WAIT",
@@ -2590,16 +2583,8 @@
           "value": "${SCENARIO_EMAIL}"
         },
         {
-          "type": "CLICK",
-          "target": {
-            "role": "button",
-            "name": "Submit",
-            "exact": false
-          }
-        },
-        {
           "type": "WAIT",
-          "milliseconds": 800
+          "milliseconds": 1000
         }
       ],
       "expected": {
