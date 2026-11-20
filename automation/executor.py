@@ -20,6 +20,7 @@ class ActionResult:
     observed_result: str
     changed: bool
     success: bool
+    messages: tuple[str, ...] = ()
     error: str | None = None
 
 
