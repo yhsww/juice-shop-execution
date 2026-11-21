@@ -9,6 +9,11 @@ from config.settings import settings
 
 
 
+def _normalize_text(value: object) -> str:
+    """Normalize visible UI text for precondition checks."""
+    return " ".join(str(value or "").split()).strip()
+
+
 def scenario_email(scenario: dict) -> str:
     return f"cen-{scenario['id'].lower()}@example.com"
 
@@ -391,7 +396,7 @@ async def _add_address_if_needed(page) -> bool:
                 if not await radio.is_visible():
                     continue
                 if await radio.is_enabled():
-                    row_text = _norm(await radio.inner_text())
+                    row_text = _normalize_text(await radio.inner_text())
                     if row_text:
                         return True
             except Exception:
@@ -413,7 +418,7 @@ async def _add_address_if_needed(page) -> bool:
                 radios = page.locator("mat-radio-button, [role='radio']")
                 for index in range(await radios.count()):
                     radio = radios.nth(index)
-                    if await radio.is_visible() and _norm(await radio.inner_text()):
+                    if await radio.is_visible() and _normalize_text(await radio.inner_text()):
                         return True
             except Exception:
                 pass
