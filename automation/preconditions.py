@@ -754,9 +754,10 @@ async def prepare_precondition(page, scenario: dict) -> tuple[bool, str]:
             return False, "Pré-condição de carrinho não pôde ser preparada."
 
     if domain == "CHK":
-        # Every checkout scenario that starts with a populated basket needs
-        # that state independently; OWASP documents that checkout starts from
-        # the basket and then proceeds through address, delivery and payment.
+        # Checkout preconditions describe the minimum state needed to reach
+        # the scenario. They must not execute the behavior under test.
+        # In particular, a scenario about adding/selecting a card must not
+        # silently create/select a card before its own actions run.
         if "carrinho" in precondition or "produto no carrinho" in precondition:
             if not await ensure_basket(page):
                 return False, "Pré-condição de carrinho não pôde ser preparada."
@@ -765,28 +766,33 @@ async def prepare_precondition(page, scenario: dict) -> tuple[bool, str]:
             if not await ensure_address(page, select=False):
                 return False, "Pré-condição de endereço cadastrado não pôde ser preparada."
 
-        if "endereço de entrega selecionado" in precondition:
+        needs_selected_address = (
+            "endereço de entrega selecionado" in precondition
+            or "endereço selecionado" in precondition
+        )
+        if needs_selected_address:
             if not await ensure_address(page, select=True):
                 return False, "Pré-condição de endereço selecionado não pôde ser preparada."
 
-        if "método de entrega selecionado" in precondition or "entrega selecionada" in precondition:
-            if not await ensure_delivery(page):
-                return False, "Pré-condição de entrega não pôde ser preparada."
-
-        if (
-            "etapa de pagamento" in precondition
+        needs_delivery = (
+            "método de entrega selecionado" in precondition
+            or "entrega selecionada" in precondition
+            or "checkout acessível" in precondition
+            or "checkout na etapa de pagamento" in precondition
+            or "etapa de pagamento" in precondition
             or "pagamento acessível" in precondition
-            or "cartão de teste cadastrado" in precondition and "checkout na etapa de pagamento" in precondition
-            or "cartão selecionado" in precondition
             or "seção de outras opções" in precondition
-            or "endereço, entrega e pagamento disponíveis" in precondition
-            or ("checkout iniciado" in precondition and "/#/payment/shop" in str(scenario.get("actions", [{}])[0].get("route", "")))
-        ):
-            if not await ensure_payment(page):
-                return False, "Pré-condição de pagamento não pôde ser preparada."
+            or "checkout iniciado" in precondition
+        )
+        if needs_delivery:
+            if not await ensure_delivery(page):
+                return False, "Pré-condição de entrega/pagamento não pôde ser preparada."
 
-        if "cartão de teste cadastrado" in precondition and "checkout na etapa de pagamento" not in precondition:
-            if not await _ensure_card_via_api(page):
+        # Only scenarios that explicitly require an existing card should
+        # prepare the payment method. This preserves the intended behavior
+        # of CHK-07 (add card) and CHK-25 (payment without selection).
+        if "cartão de teste cadastrado" in precondition:
+            if not await ensure_card(page):
                 return False, "Pré-condição de cartão cadastrado não pôde ser preparada."
 
         if (
@@ -795,12 +801,17 @@ async def prepare_precondition(page, scenario: dict) -> tuple[bool, str]:
             or "resumo do pedido acessível" in precondition
             or "checkout preparados" in precondition
             or "checkout parcialmente preenchido" in precondition
+            or "endereço, entrega e pagamento definidos" in precondition
+            or "endereço, entrega e pagamento disponíveis" in precondition
         ):
             if not await ensure_order_summary(page):
                 return False, "Pré-condição de resumo do pedido não pôde ser preparada."
 
-        if "pedido concluído" in precondition or "pedido no histórico" in precondition or "há pelo menos um pedido no histórico" in precondition:
+        if (
+            "pedido concluído" in precondition
+            or "pedido no histórico" in precondition
+            or "há pelo menos um pedido no histórico" in precondition
+        ):
             if not await ensure_completed_order(page):
                 return False, "Pré-condição de pedido concluído não pôde ser preparada."
-
     return True, ""
