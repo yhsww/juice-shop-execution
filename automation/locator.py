@@ -508,10 +508,29 @@ async def _resolve_once(page: Page, target: dict) -> Locator | None:
     # radio whose requested name is a table header.
     if text or name:
         wanted_text = text or name
-        if str(role or "").casefold() == "radio":
-            candidates.extend(await _table_radio_by_header(page, str(wanted_text)))
-        elif role and role.lower() not in _VALID_ROLES:
-            candidates.extend(await _table_radio_by_header(page, str(wanted_text)))
+        role_normalized = str(role or "").casefold()
+
+        # First resolve unnamed radios through their table semantics.
+        # This prevents "Address" from resolving to "Add New Address".
+        if role_normalized == "radio":
+            candidates.extend(
+                await _table_radio_by_header(page, str(wanted_text))
+            )
+        elif role and role_normalized not in _VALID_ROLES:
+            candidates.extend(
+                await _table_radio_by_header(page, str(wanted_text))
+            )
+
+        # For text-only targets, prefer an actual interactive control over a
+        # nested <span>. Angular Material buttons commonly expose their label
+        # as a child span, and get_by_text() otherwise returns that span.
+        # This is generic and prevents disabled/incorrect click targets.
+        if not role_normalized:
+            candidates.extend(
+                await _visible_text_control(page, str(wanted_text))
+            )
+
+        # Raw text remains a fallback for assertions/non-interactive content.
         candidates.append(page.get_by_text(wanted_text, exact=exact))
         if exact:
             candidates.append(page.get_by_text(wanted_text, exact=False))
