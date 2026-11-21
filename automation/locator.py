@@ -67,22 +67,6 @@ async def first_visible(candidates: list[Locator]) -> Locator | None:
                 if not await item.is_visible():
                     continue
 
-                # Prefer actionable controls that are actually enabled. This
-                # prevents a disabled Angular Material button (for example
-                # "Continue" before an address/radio is selected) from being
-                # returned merely because it is visible. Non-interactive text
-                # nodes are left untouched.
-                try:
-                    tag_name = (await item.evaluate("(el) => el.tagName")).lower()
-                    aria_role = (await item.get_attribute("role") or "").lower()
-                    if tag_name in {"button", "input", "select", "textarea", "a"} or aria_role in {
-                        "button", "radio", "checkbox", "combobox", "option"
-                    }:
-                        if not await item.is_enabled():
-                            continue
-                except Exception:
-                    pass
-
                 # Avoid repeatedly returning the same DOM node when multiple
                 # semantic strategies resolve to it.
                 try:
