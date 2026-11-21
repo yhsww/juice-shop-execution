@@ -333,27 +333,19 @@ async def _auth_headers(page) -> dict:
 
 
 async def _ensure_address_via_api(page) -> bool:
-    """Seed a valid address through the same REST API used by the UI.
-    
-    This is a precondition helper, not the behavior under test. It is used only
-    when the UI form cannot persist the required fixture, keeping checkout
-    scenarios independent from the current address-form presentation.
-    """
+    """Ensure one valid address exists for the authenticated fixture user."""
     headers = await _auth_headers(page)
+    headers["Content-Type"] = "application/json"
     payload = {
-        "country": "Brazil",
         "fullName": "Cliente Teste",
-        "mobileNum": 8599999999,
+        "mobileNum": "8599999999",
         "zipCode": "60000000",
         "streetAddress": "Rua Teste, 100",
         "city": "Fortaleza",
         "state": "CE",
+        "country": "Brazil",
     }
     try:
-        # Use the browser context so the request shares the same session as
-        # the Angular application (cookie + localStorage + auth headers).
-        # Every request is independently bounded so a stalled backend cannot
-        # block the whole CHK domain.
         result = await page.evaluate(
             """async ({ url, payload, headers }) => {
                 const request = async (options) => {
@@ -361,7 +353,7 @@ async def _ensure_address_via_api(page) -> bool:
                     const timer = setTimeout(() => controller.abort(), 5000);
                     try {
                         return await fetch(url, {
-                            credentials: "include",
+                            credentials: 'include',
                             ...options,
                             signal: controller.signal
                         });
@@ -369,39 +361,27 @@ async def _ensure_address_via_api(page) -> bool:
                         clearTimeout(timer);
                     }
                 };
-
                 try {
-                    const getResponse = await request({
-                        method: "GET",
-                        headers
-                    });
-
+                    const getResponse = await request({ method: 'GET', headers });
                     if (getResponse.ok) {
                         const body = await getResponse.json();
-                        const addresses = body && Array.isArray(body.data)
-                            ? body.data
-                            : [];
-                        if (addresses.length > 0) {
-                            return { ok: true };
-                        }
+                        const addresses = body && Array.isArray(body.data) ? body.data : [];
+                        if (addresses.length > 0) return { ok: true, count: addresses.length };
                     }
-
                     const postResponse = await request({
-                        method: "POST",
-                        headers: {
-                            ...headers,
-                            "Content-Type": "application/json"
-                        },
+                        method: 'POST',
+                        headers,
                         body: JSON.stringify(payload)
                     });
-
-                    return { ok: postResponse.ok };
-                } catch (_) {
-                    return { ok: false };
+                    let body = null;
+                    try { body = await postResponse.json(); } catch (_) {}
+                    return { ok: postResponse.ok, status: postResponse.status, body };
+                } catch (error) {
+                    return { ok: false, error: String(error && error.message || error) };
                 }
             }""",
             {
-                "url": f"{settings.base_url}/api/Addresss/",
+                "url": f"{settings.base_url}/api/Addresss",
                 "payload": payload,
                 "headers": headers,
             },
@@ -409,7 +389,6 @@ async def _ensure_address_via_api(page) -> bool:
         return bool(result and result.get("ok"))
     except Exception:
         return False
-
 
 async def _add_address_if_needed(page) -> bool:
     """Ensure an address is persisted using the real address UI first.
