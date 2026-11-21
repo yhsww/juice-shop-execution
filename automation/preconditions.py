@@ -512,6 +512,41 @@ async def ensure_basket(page) -> bool:
     return True
 
 
+async def _wait_for_address_option(page, timeout_ms: int | None = None):
+    """Wait until the checkout address selector exposes at least one address."""
+    timeout = timeout_ms or settings.action_timeout_ms
+    deadline = __import__("time").monotonic() + timeout / 1000
+    while __import__("time").monotonic() < deadline:
+        radio = await resolve(
+            page,
+            {"role": "radio", "name": "Address", "exact": False},
+        )
+        if radio is not None:
+            return radio
+        await page.wait_for_timeout(150)
+    return None
+
+
+async def _restore_address_selection_ui(page) -> bool:
+    """Recover a missing checkout address option without selecting it.
+
+    The API fixture guarantees persistence, but the checkout component can
+    still be rendered before Angular refreshes its address collection. When
+    that happens, reload the real selector route and wait for the UI state
+    instead of assuming that API success means the page is ready.
+    """
+    for _ in range(2):
+        await page.goto(
+            f"{settings.base_url}/#/address/select",
+            wait_until="domcontentloaded",
+        )
+        radio = await _wait_for_address_option(page)
+        if radio is not None:
+            return True
+        await page.reload(wait_until="domcontentloaded")
+    return False
+
+
 async def ensure_address(page, select: bool = False) -> bool:
     await page.goto(
         f"{settings.base_url}/#/address/select",
@@ -520,22 +555,21 @@ async def ensure_address(page, select: bool = False) -> bool:
     if not await _add_address_if_needed(page):
         return False
 
+    # A persisted address is not enough for checkout automation: the Angular
+    # address selector must also be able to render it. This verification is
+    # deliberately independent from scenario IDs and from the action under
+    # test. If the selector is still empty, refresh the selector route rather
+    # than letting Checkout redirect later to /#/address/create.
+    if not await _restore_address_selection_ui(page):
+        return False
+
     if not select:
         return True
 
     # Angular stores the selected address id in component state and enables
     # Continue only after that state changes. Prefer the real radio, then
     # use its table row as the generic interaction fallback.
-    radio = None
-    for _ in range(20):
-        radio = await resolve(
-            page,
-            {"role": "radio", "name": "Address", "exact": False},
-        )
-        if radio is not None:
-            break
-        await page.wait_for_timeout(150)
-
+    radio = await _wait_for_address_option(page)
     if radio is None:
         return False
 
