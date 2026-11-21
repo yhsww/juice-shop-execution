@@ -688,9 +688,9 @@ async def ensure_address(page, select: bool = False) -> bool:
 
     await _click(radio)
 
-    # Current Juice Shop wires selection through the radio click and the
-    # containing Material table row. Verify the component state via Continue;
-    # if Angular has not propagated it yet, re-click the row once.
+    # The radio's own click handler is the authoritative selection event.
+    # Do not click the containing row as a second interaction: Angular
+    # SelectionModel can toggle the same row twice and clear addressId().
     continue_button = None
     for _ in range(20):
         continue_button = await resolve(
@@ -708,17 +708,9 @@ async def ensure_address(page, select: bool = False) -> bool:
     if continue_button is None:
         return False
 
-    try:
-        if not await continue_button.is_enabled():
-            row = radio.locator(
-                "xpath=ancestor::*[self::mat-row or self::tr or @role='row'][1]"
-            )
-            if await row.count() and await row.first.is_visible():
-                await row.first.click(timeout=1500)
-                await page.wait_for_timeout(150)
-    except Exception:
-        pass
-
+    # No row fallback here. If Continue is still disabled, the selection
+    # did not reach the component state and reporting the precondition as
+    # unavailable is safer than toggling the selection back off.
     continue_button = await resolve(
         page,
         {"role": "button", "name": "Continue", "exact": False},
