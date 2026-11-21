@@ -888,7 +888,7 @@ async def ensure_order_summary(page) -> bool:
 
     card = await resolve(
         page,
-        {"role": "radio", "name": "0002", "exact": False},
+        {"role": "radio", "text": "0002", "exact": False},
     )
     if card is None:
         return False
