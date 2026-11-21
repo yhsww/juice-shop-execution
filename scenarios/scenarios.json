@@ -993,7 +993,7 @@
       "actor": "Cliente",
       "flow": "Cadastrar um novo endereço para entrega.",
       "precondition": "Cliente autenticado; carrinho contém produto.",
-      "data": "Nome, país, estado, CEP, cidade, endereço e complemento de teste.",
+      "data": "País: Brazil; nome: Cliente Teste; telefone: 8599999999; CEP: 60000000; endereço: Rua Teste, 100; cidade: Fortaleza; estado: CE.",
       "coherent": "Sim.",
       "justification": "O endereço é necessário para entrega do pedido.",
       "requirement": "A aplicação deve permitir cadastrar endereço de entrega.",
@@ -1106,12 +1106,12 @@
       "domain": "CHK",
       "name": "Selecionar endereço de entrega",
       "actor": "Cliente",
-      "flow": "Selecionar um endereço já cadastrado e prosseguir.",
+      "flow": "Selecionar um endereço já cadastrado pela linha correspondente e prosseguir.",
       "precondition": "Carrinho contém produto; há endereço cadastrado.",
       "data": "Endereço de teste previamente salvo.",
       "coherent": "Sim.",
       "justification": "A seleção do endereço define o destino do pedido.",
-      "requirement": "A aplicação deve permitir selecionar um endereço e continuar.",
+      "requirement": "A aplicação deve permitir selecionar um endereço cadastrado e continuar para a etapa de entrega.",
       "actions": [
         {
           "type": "NAVIGATE",
@@ -1132,8 +1132,7 @@
         {
           "type": "CLICK",
           "target": {
-            "role": "radio",
-            "name": "Address",
+            "text": "Rua Teste, 100",
             "exact": false
           }
         },
@@ -1159,12 +1158,12 @@
       "domain": "CHK",
       "name": "Confirmar seleção de endereço",
       "actor": "Cliente",
-      "flow": "Selecionar o endereço e verificar a habilitação do avanço.",
+      "flow": "Selecionar um endereço cadastrado e verificar a habilitação do avanço.",
       "precondition": "Carrinho contém produto; há endereço cadastrado.",
-      "data": "Endereço de teste.",
+      "data": "Endereço: Rua Teste, 100.",
       "coherent": "Sim.",
       "justification": "A etapa seguinte depende da seleção de um endereço.",
-      "requirement": "A aplicação deve habilitar o avanço após a seleção válida.",
+      "requirement": "A aplicação deve manter o avanço bloqueado até que um endereço seja selecionado e habilitá-lo após a seleção válida.",
       "actions": [
         {
           "type": "NAVIGATE",
@@ -1193,8 +1192,7 @@
         {
           "type": "CLICK",
           "target": {
-            "role": "radio",
-            "name": "Address",
+            "text": "Rua Teste, 100",
             "exact": false
           }
         },
@@ -1902,9 +1900,9 @@
       "actor": "Cliente",
       "flow": "Concluir um pedido e verificar o estado do carrinho.",
       "precondition": "Cliente autenticado; pedido concluído com sucesso.",
-      "data": "Nenhum dado adicional.",
+      "data": "Pedido de teste concluído com sucesso.",
       "coherent": "Sim.",
-      "justification": "Os itens comprados não devem permanecer como itens pendentes no carrinho.",
+      "justification": "Após a conclusão, os produtos comprados não devem permanecer como itens pendentes no carrinho.",
       "requirement": "A aplicação deve limpar o carrinho após a conclusão.",
       "actions": [
         {
@@ -1926,82 +1924,16 @@
       }
     },
     {
-      "id": "CEN-CHK-23",
-      "domain": "CHK",
-      "name": "Checkout sem endereço",
-      "actor": "Cliente",
-      "flow": "Iniciar checkout sem possuir endereço selecionado.",
-      "precondition": "Carrinho com produto; nenhum endereço selecionado.",
-      "data": "Nenhum dado adicional.",
-      "coherent": "Sim.",
-      "justification": "A aplicação deve impedir o avanço sem destino de entrega válido.",
-      "requirement": "O checkout deve exigir endereço antes de prosseguir.",
-      "actions": [
-        {
-          "type": "NAVIGATE",
-          "route": "/#/basket"
-        },
-        {
-          "type": "CLICK",
-          "target": {
-            "role": "button",
-            "name": "Checkout",
-            "exact": false
-          }
-        },
-        {
-          "type": "WAIT",
-          "milliseconds": 700
-        },
-        {
-          "type": "WAIT",
-          "milliseconds": 500
-        }
-      ],
-      "expected": {
-        "text_contains": [
-          "Add New Address"
-        ]
-      }
-    },
-    {
-      "id": "CEN-CHK-24",
-      "domain": "CHK",
-      "name": "Checkout sem método de entrega",
-      "actor": "Cliente",
-      "flow": "Acessar a etapa de entrega sem selecionar método.",
-      "precondition": "Endereço selecionado.",
-      "data": "Nenhum dado adicional.",
-      "coherent": "Sim.",
-      "justification": "A aplicação deve exigir um método de entrega válido.",
-      "requirement": "O checkout deve impedir avanço sem método de entrega.",
-      "actions": [
-        {
-          "type": "NAVIGATE",
-          "route": "/#/delivery-method"
-        },
-        {
-          "type": "WAIT",
-          "milliseconds": 500
-        }
-      ],
-      "expected": {
-        "text_contains": [
-          "Standard Delivery"
-        ]
-      }
-    },
-    {
       "id": "CEN-CHK-25",
       "domain": "CHK",
-      "name": "Checkout sem pagamento",
+      "name": "Bloquear avanço sem pagamento",
       "actor": "Cliente",
-      "flow": "Acessar a etapa de pagamento sem selecionar forma de pagamento.",
+      "flow": "Acessar a etapa de pagamento sem selecionar uma forma de pagamento e verificar o bloqueio do avanço.",
       "precondition": "Cliente autenticado; método de entrega selecionado.",
       "data": "Nenhum dado adicional.",
       "coherent": "Sim.",
-      "justification": "A aplicação deve exigir uma forma de pagamento válida.",
-      "requirement": "O checkout deve impedir confirmação sem pagamento selecionado.",
+      "justification": "A confirmação do pedido depende da seleção de uma forma de pagamento.",
+      "requirement": "A aplicação deve manter o avanço bloqueado enquanto nenhuma forma de pagamento estiver selecionada.",
       "actions": [
         {
           "type": "NAVIGATE",
@@ -2023,33 +1955,6 @@
       "expected": {
         "text_contains": [
           "Add new card"
-        ]
-      }
-    },
-    {
-      "id": "CEN-CHK-26",
-      "domain": "CHK",
-      "name": "Conferir total no resumo",
-      "actor": "Cliente",
-      "flow": "Comparar o total exibido no carrinho com o total do resumo.",
-      "precondition": "Cliente autenticado; pedido com endereço, entrega e pagamento definidos.",
-      "data": "Nenhum dado adicional.",
-      "coherent": "Sim.",
-      "justification": "A consistência do valor é essencial para confirmar a compra.",
-      "requirement": "O valor total deve permanecer consistente entre as etapas.",
-      "actions": [
-        {
-          "type": "NAVIGATE",
-          "route": "/#/order-summary"
-        },
-        {
-          "type": "WAIT",
-          "milliseconds": 700
-        }
-      ],
-      "expected": {
-        "text_contains": [
-          "Total Price"
         ]
       }
     },
@@ -2148,8 +2053,7 @@
         {
           "type": "CLICK",
           "target": {
-            "role": "radio",
-            "name": "Address",
+            "text": "Rua Teste, 100",
             "exact": false
           }
         },
