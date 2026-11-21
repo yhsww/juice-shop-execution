@@ -864,39 +864,92 @@ async def _resolve_once(page: Page, target: dict) -> Locator | None:
             except Exception:
                 continue
 
-    # Address selection is represented by an unnamed radio in a table:
-    # the row contains the actual address values, while the column header
-    # contains the semantic word "Address". If the target names that
-    # selection column and no radio matched by row text, use the first
-    # visible selection control. This remains generic for any table whose
-    # selection column is identified by the requested semantic label.
+    # Angular Material tables can expose unnamed radios whose semantic
+    # meaning comes from the column header rather than the radio itself.
+    # Resolve the requested column first and then select a radio from the
+    # first visible data row in that same column. This is generic for address,
+    # delivery, payment and any future table-backed selection.
     if role and role.lower() == "radio" and name and not candidates:
         wanted = _norm(str(name))
-        headers = page.locator("th, mat-header-cell")
+        tables = page.locator("table, mat-table")
         try:
-            header_count = await headers.count()
+            table_count = await tables.count()
         except Exception:
-            header_count = 0
+            table_count = 0
 
-        header_matches = False
-        for index in range(header_count):
-            header = headers.nth(index)
+        for table_index in range(table_count):
+            table = tables.nth(table_index)
             try:
-                if await header.is_visible() and _semantic_text_match(
-                    wanted, _norm(await header.inner_text())
-                ):
-                    header_matches = True
+                if not await table.is_visible():
+                    continue
+
+                headers = table.locator("th, mat-header-cell")
+                header_count = await headers.count()
+                matched_column = None
+
+                for header_index in range(header_count):
+                    header = headers.nth(header_index)
+                    if not await header.is_visible():
+                        continue
+                    if _semantic_text_match(wanted, _norm(await header.inner_text())):
+                        matched_column = header_index
+                        break
+
+                if matched_column is None:
+                    continue
+
+                rows = table.locator("tbody tr, mat-row, [role='row']")
+                row_count = await rows.count()
+                for row_index in range(row_count):
+                    row = rows.nth(row_index)
+                    if not await row.is_visible():
+                        continue
+
+                    cells = row.locator("td, mat-cell, [role='cell']")
+                    cell_count = await cells.count()
+                    if matched_column >= cell_count:
+                        continue
+
+                    cell = cells.nth(matched_column)
+                    radios = cell.locator("mat-radio-button, [role='radio']")
+                    radio = await first_visible([radios])
+                    if radio is not None:
+                        candidates.append(radio)
+                        break
+
+                if candidates:
                     break
             except Exception:
                 continue
 
-        if header_matches:
-            first_radio = await first_visible([
-                page.locator("mat-radio-button"),
-                page.locator("[role='radio']"),
-            ])
-            if first_radio is not None:
-                candidates.append(first_radio)
+        # Some Angular Material variants omit table semantics entirely.
+        # Only then fall back to the first visible radio, and only when the
+        # target name matches a visible header somewhere on the page.
+        if not candidates:
+            headers = page.locator("th, mat-header-cell")
+            try:
+                header_count = await headers.count()
+            except Exception:
+                header_count = 0
+            header_matches = False
+            for index in range(header_count):
+                header = headers.nth(index)
+                try:
+                    if await header.is_visible() and _semantic_text_match(
+                        wanted, _norm(await header.inner_text())
+                    ):
+                        header_matches = True
+                        break
+                except Exception:
+                    continue
+
+            if header_matches:
+                first_radio = await first_visible([
+                    page.locator("mat-radio-button"),
+                    page.locator("[role='radio']"),
+                ])
+                if first_radio is not None:
+                    candidates.append(first_radio)
 
     result = await first_visible(candidates)
     if result is not None:
