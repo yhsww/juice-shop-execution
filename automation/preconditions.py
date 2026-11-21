@@ -404,8 +404,21 @@ async def _add_address_if_needed(page) -> bool:
     # the real address UI when its actions explicitly do so.
     if await _ensure_address_via_api(page):
         await page.reload(wait_until="domcontentloaded")
-        await page.wait_for_timeout(300)
-        return True
+        # Do not treat the REST response as sufficient: the checkout UI must
+        # actually expose the persisted address before the precondition is
+        # considered satisfied.
+        deadline = __import__("time").monotonic() + settings.action_timeout_ms / 1000
+        while __import__("time").monotonic() < deadline:
+            try:
+                radios = page.locator("mat-radio-button, [role='radio']")
+                for index in range(await radios.count()):
+                    radio = radios.nth(index)
+                    if await radio.is_visible() and _norm(await radio.inner_text()):
+                        return True
+            except Exception:
+                pass
+            await page.wait_for_timeout(150)
+        return False
 
     add = await resolve(
         page,
