@@ -6,7 +6,7 @@ from time import monotonic
 from playwright.async_api import Page, TimeoutError as PlaywrightTimeoutError
 
 from automation.locator import resolve
-from automation.observer import UIState, describe_change, meaningful_change, observe
+from automation.observer import UIState, describe_change, meaningful_change, observe, wait_for_stable_ui
 from config.settings import settings
 
 
@@ -363,7 +363,15 @@ async def execute(page: Page, action: dict) -> ActionResult:
     except Exception as exc:
         error = str(exc)
 
+    # Angular/Material can finish rendering after the action returns. Wait for
+    # a generic settled UI state before recording the observation.
     after = await _safe_observe(page, before)
+    after = await wait_for_stable_ui(
+        page,
+        initial=after,
+        timeout_ms=1200,
+        sample_interval_ms=120,
+    )
 
     return ActionResult(
         action=kind,
