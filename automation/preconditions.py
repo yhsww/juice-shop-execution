@@ -614,17 +614,57 @@ async def ensure_delivery(page) -> bool:
 
     await _click(delivery)
 
+    continue_button = None
+    for _ in range(20):
+        continue_button = await resolve(
+            page,
+            {"role": "button", "name": "Continue", "exact": False},
+        )
+        if continue_button is not None:
+            try:
+                if await continue_button.is_enabled():
+                    break
+            except Exception:
+                pass
+        await page.wait_for_timeout(150)
+
+    if continue_button is None:
+        return False
+
+    # Angular Material can render the radio host before its selection state
+    # reaches the checkout component. Re-click its row only when Continue
+    # remains disabled; this is a generic state-recovery mechanism.
+    try:
+        if not await continue_button.is_enabled():
+            row = delivery.locator(
+                "xpath=ancestor::*[self::mat-row or self::tr or @role='row'][1]"
+            )
+            if await row.count() and await row.first.is_visible():
+                await row.first.click(timeout=1500)
+                await page.wait_for_timeout(150)
+    except Exception:
+        pass
+
     continue_button = await resolve(
         page,
         {"role": "button", "name": "Continue", "exact": False},
     )
     if continue_button is None:
         return False
+    try:
+        if not await continue_button.is_enabled():
+            return False
+    except Exception:
+        return False
 
     await _click(continue_button)
-    await page.wait_for_timeout(500)
-    return "/#/payment/shop" in page.url
+    deadline = __import__("time").monotonic() + settings.action_timeout_ms / 1000
+    while __import__("time").monotonic() < deadline:
+        if "/#/payment/shop" in page.url:
+            return True
+        await page.wait_for_timeout(100)
 
+    return False
 
 async def ensure_card(page) -> bool:
     if "/#/payment/shop" not in page.url:
