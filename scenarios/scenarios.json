@@ -1180,7 +1180,15 @@
         },
         {
           "type": "WAIT",
-          "milliseconds": 700
+          "milliseconds": 500
+        },
+        {
+          "type": "ASSERT_DISABLED",
+          "target": {
+            "role": "button",
+            "name": "Continue",
+            "exact": false
+          }
         },
         {
           "type": "CLICK",
@@ -1191,20 +1199,19 @@
           }
         },
         {
-          "type": "CLICK",
+          "type": "ASSERT_ENABLED",
           "target": {
             "role": "button",
             "name": "Continue",
             "exact": false
           }
-        },
-        {
-          "type": "WAIT",
-          "milliseconds": 800
         }
       ],
       "expected": {
-        "url_contains": "/#/delivery-method"
+        "url_contains": "/#/address/select",
+        "text_contains": [
+          "Cliente Teste"
+        ]
       }
     },
     {
@@ -1269,10 +1276,26 @@
           "route": "/#/delivery-method"
         },
         {
+          "type": "ASSERT_DISABLED",
+          "target": {
+            "role": "button",
+            "name": "Continue",
+            "exact": false
+          }
+        },
+        {
           "type": "CLICK",
           "target": {
             "role": "radio",
             "name": "Standard Delivery",
+            "exact": false
+          }
+        },
+        {
+          "type": "ASSERT_ENABLED",
+          "target": {
+            "role": "button",
+            "name": "Continue",
             "exact": false
           }
         },
@@ -1286,7 +1309,7 @@
         },
         {
           "type": "WAIT",
-          "milliseconds": 800
+          "milliseconds": 600
         }
       ],
       "expected": {
@@ -1582,7 +1605,8 @@
             "role": "button",
             "name": "Credit Card",
             "exact": false
-          }
+          },
+          "expect_new_page": true
         },
         {
           "type": "WAIT",
@@ -1590,7 +1614,7 @@
         }
       ],
       "expected": {
-        "url_contains": "https://pwning.owasp-juice.shop"
+        "external_url_contains": "/companion-guide/latest/part3/donations.html"
       }
     },
     {
@@ -1626,7 +1650,8 @@
             "role": "button",
             "name": "Spreadshirt (US)",
             "exact": false
-          }
+          },
+          "expect_new_page": true
         },
         {
           "type": "WAIT",
@@ -1634,7 +1659,7 @@
         }
       ],
       "expected": {
-        "url_contains": "https://shop.spreadshirt.com"
+        "external_url_contains": "shop.spreadshirt.com/juiceshop"
       }
     },
     {
@@ -1642,12 +1667,12 @@
       "domain": "CHK",
       "name": "Aplicar cupom no checkout",
       "actor": "Cliente",
-      "flow": "Informar um cupom no checkout e verificar a atualização do pedido.",
+      "flow": "Informar um cupom inválido no checkout e verificar a mensagem de rejeição.",
       "precondition": "Cliente autenticado; checkout na etapa de pagamento.",
       "data": "Cupom inválido de teste: TESTE1234.",
       "coherent": "Sim.",
       "justification": "Cupons fazem parte da etapa de compra quando habilitados.",
-      "requirement": "A aplicação deve aceitar um cupom válido e atualizar o pedido.",
+      "requirement": "A aplicação deve informar que um cupom inválido não pode ser resgatado.",
       "actions": [
         {
           "type": "NAVIGATE",
@@ -1698,7 +1723,8 @@
             "role": "button",
             "name": "Print Order Confirmation",
             "exact": false
-          }
+          },
+          "expect_new_page": true
         },
         {
           "type": "WAIT",
@@ -1706,10 +1732,7 @@
         }
       ],
       "expected": {
-        "text_contains": [
-          "Order Summary",
-          "Thank you for your purchase"
-        ]
+        "external_url_contains": ".pdf"
       }
     },
     {
@@ -1819,11 +1842,20 @@
           "route": "/#/order-history"
         },
         {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Track Your Order",
+            "exact": false
+          }
+        },
+        {
           "type": "WAIT",
-          "milliseconds": 1000
+          "milliseconds": 700
         }
       ],
       "expected": {
+        "url_contains": "/#/track-result",
         "text_contains": [
           "In Transit"
         ]
@@ -1851,7 +1883,8 @@
             "role": "button",
             "name": "Print order confirmation",
             "exact": false
-          }
+          },
+          "expect_new_page": true
         },
         {
           "type": "WAIT",
@@ -1859,9 +1892,7 @@
         }
       ],
       "expected": {
-        "text_contains": [
-          "Order History"
-        ]
+        "external_url_contains": ".pdf"
       }
     },
     {
@@ -1888,6 +1919,9 @@
       "expected": {
         "text_contains": [
           "Your Basket"
+        ],
+        "text_not_contains": [
+          "Apple Juice"
         ]
       }
     },
@@ -1974,8 +2008,16 @@
           "route": "/#/payment/shop"
         },
         {
+          "type": "ASSERT_DISABLED",
+          "target": {
+            "role": "button",
+            "name": "Continue",
+            "exact": false
+          }
+        },
+        {
           "type": "WAIT",
-          "milliseconds": 500
+          "milliseconds": 300
         }
       ],
       "expected": {
@@ -2007,7 +2049,7 @@
       ],
       "expected": {
         "text_contains": [
-          "Total"
+          "Total Price"
         ]
       }
     },
@@ -2057,11 +2099,22 @@
         },
         {
           "type": "WAIT",
-          "milliseconds": 700
+          "milliseconds": 500
+        },
+        {
+          "type": "ASSERT_SELECTED",
+          "target": {
+            "role": "radio",
+            "name": "Standard Delivery",
+            "exact": false
+          }
         }
       ],
       "expected": {
-        "url_contains": "/#/delivery-method"
+        "url_contains": "/#/delivery-method",
+        "text_contains": [
+          "Standard Delivery"
+        ]
       }
     },
     {
@@ -2070,7 +2123,7 @@
       "name": "Fluxo completo de compra",
       "actor": "Cliente",
       "flow": "Executar o fluxo de compra desde o carrinho até a confirmação.",
-      "precondition": "Cliente autenticado; carrinho contém produto; endereço cadastrado; cartão de teste cadastrado.",
+      "precondition": "Cliente autenticado; carrinho contém produto; endereço cadastrado; cartão de teste cadastrado; checkout acessível.",
       "data": "Produto: Apple Juice; cartão de teste terminado em 0002.",
       "coherent": "Sim.",
       "justification": "O fluxo completo valida a integração entre catálogo, carrinho e checkout.",
