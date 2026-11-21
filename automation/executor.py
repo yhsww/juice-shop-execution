@@ -154,20 +154,19 @@ async def _select_option(locator, value: str) -> None:
                 raise first_error
 
     if tag_name == "MAT-SELECT" or role == "combobox":
-        await locator.click(timeout=settings.action_timeout_ms)
-
         options = locator.page.locator(
             "[role='option'], .mat-mdc-option"
         )
         wanted = " ".join(str(value).split()).strip().casefold()
 
-        deadline = monotonic() + settings.action_timeout_ms / 1000
-        while monotonic() < deadline:
-            count = await options.count()
+        async def find_visible_option():
+            try:
+                count = await options.count()
+            except Exception:
+                return None
 
             for index in range(count):
                 option = options.nth(index)
-
                 try:
                     if not await option.is_visible():
                         continue
@@ -175,7 +174,6 @@ async def _select_option(locator, value: str) -> None:
                     text = " ".join(
                         (await option.inner_text()).split()
                     ).strip()
-
                     data_value = await option.get_attribute("data-value")
                     aria_label = await option.get_attribute("aria-label")
 
@@ -190,20 +188,58 @@ async def _select_option(locator, value: str) -> None:
                         for candidate in candidates
                         if candidate
                     ):
-                        await _scroll_into_view(option)
-                        await option.click(
-                            timeout=settings.action_timeout_ms
-                        )
-                        return
-
+                        return option
                 except Exception:
                     continue
 
-            await locator.page.wait_for_timeout(100)
+            return None
 
-        raise RuntimeError(
-            f"Opção de seleção não encontrada: {value!r}"
-        )
+        # Angular Material renders mat-select options in a CDK overlay. If
+        # another overlay is already open, clicking the trigger again is
+        # incorrect: the backdrop intercepts the click. Reuse an already
+        # visible matching option first, then open the select only when needed.
+        option = await find_visible_option()
+
+        if option is None:
+            try:
+                await locator.click(timeout=settings.action_timeout_ms)
+            except Exception as first_error:
+                # A stale/open overlay can make the trigger unclickable. Give
+                # Angular a brief chance to settle and inspect the overlay again
+                # before failing the whole action.
+                await locator.page.wait_for_timeout(150)
+                option = await find_visible_option()
+                if option is None:
+                    try:
+                        await locator.press("Escape", timeout=1000)
+                    except Exception:
+                        pass
+                    await locator.page.wait_for_timeout(100)
+                    await locator.click(timeout=settings.action_timeout_ms)
+                else:
+                    pass
+
+        if option is None:
+            deadline = monotonic() + settings.action_timeout_ms / 1000
+            while monotonic() < deadline:
+                option = await find_visible_option()
+                if option is not None:
+                    break
+                await locator.page.wait_for_timeout(100)
+
+        if option is None:
+            raise RuntimeError(
+                f"Opção de seleção não encontrada: {value!r}"
+            )
+
+        await _scroll_into_view(option)
+
+        # The option lives inside the CDK overlay, not inside the mat-select
+        # element. Clicking the option is therefore the correct interaction
+        # point and also closes the overlay through Angular Material's normal
+        # selection lifecycle.
+        await option.click(timeout=settings.action_timeout_ms)
+        return
 
     raise RuntimeError(
         f"Controle não suporta SELECT de forma semântica: "
