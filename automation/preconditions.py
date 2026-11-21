@@ -484,6 +484,16 @@ async def _add_address_if_needed(page) -> bool:
     deadline = __import__("time").monotonic() + settings.action_timeout_ms / 1000
     while __import__("time").monotonic() < deadline:
         if await _ensure_address_via_api(page):
+            # The Signal Forms save uses Location.back(), but browser history
+            # can leave the SPA on /#/address/create when the fallback was
+            # entered from a redirected checkout state. The fixture contract is
+            # only "address persisted"; return explicitly to the checkout
+            # selection route so the scenario starts from a deterministic UI
+            # state without depending on history behavior.
+            await page.goto(
+                f"{settings.base_url}/#/address/select",
+                wait_until="domcontentloaded",
+            )
             return True
         await page.wait_for_timeout(150)
 
