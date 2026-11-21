@@ -1106,9 +1106,9 @@
       "domain": "CHK",
       "name": "Selecionar endereço de entrega",
       "actor": "Cliente",
-      "flow": "Selecionar um endereço já cadastrado pela linha correspondente e prosseguir.",
+      "flow": "Selecionar a linha do endereço previamente cadastrado (Rua Teste, 100) e prosseguir para a etapa de entrega.",
       "precondition": "Carrinho contém produto; há endereço cadastrado.",
-      "data": "Endereço de teste previamente salvo.",
+      "data": "Endereço: Rua Teste, 100; cidade: Fortaleza; estado: CE.",
       "coherent": "Sim.",
       "justification": "A seleção do endereço define o destino do pedido.",
       "requirement": "A aplicação deve permitir selecionar um endereço cadastrado e continuar para a etapa de entrega.",
@@ -1217,9 +1217,9 @@
       "domain": "CHK",
       "name": "Escolher método de entrega",
       "actor": "Cliente",
-      "flow": "Selecionar um método de entrega disponível.",
+      "flow": "Selecionar a opção de entrega 'Standard Delivery' e prosseguir para a etapa de pagamento.",
       "precondition": "Cliente autenticado; endereço de entrega selecionado.",
-      "data": "Método: Standard Delivery.",
+      "data": "Método de entrega exibido: Standard Delivery.",
       "coherent": "Sim.",
       "justification": "A entrega é uma etapa necessária do pedido.",
       "requirement": "A aplicação deve permitir selecionar o método de entrega.",
@@ -1231,8 +1231,7 @@
         {
           "type": "CLICK",
           "target": {
-            "role": "radio",
-            "name": "Standard Delivery",
+            "text": "Standard Delivery",
             "exact": false
           }
         },
@@ -1262,9 +1261,9 @@
       "domain": "CHK",
       "name": "Confirmar método de entrega",
       "actor": "Cliente",
-      "flow": "Confirmar o método de entrega e avançar para pagamento.",
+      "flow": "Verificar que o avanço está bloqueado sem método de entrega, selecionar 'Standard Delivery' e confirmar o avanço para pagamento.",
       "precondition": "Cliente autenticado; endereço de entrega selecionado.",
-      "data": "Standard Delivery.",
+      "data": "Método de entrega exibido: Standard Delivery.",
       "coherent": "Sim.",
       "justification": "A confirmação conecta entrega à etapa de pagamento.",
       "requirement": "A aplicação deve avançar para a seleção de pagamento.",
@@ -1276,8 +1275,7 @@
         {
           "type": "ASSERT_DISABLED",
           "target": {
-            "role": "button",
-            "name": "Continue",
+            "text": "Standard Delivery",
             "exact": false
           }
         },
@@ -1398,9 +1396,9 @@
       "domain": "CHK",
       "name": "Selecionar cartão de crédito",
       "actor": "Cliente",
-      "flow": "Selecionar um cartão já cadastrado.",
+      "flow": "Selecionar a linha do cartão de teste cadastrado, identificada pelos quatro últimos dígitos 0002.",
       "precondition": "Cliente autenticado; método de entrega selecionado; cartão de teste cadastrado.",
-      "data": "Cartão terminado em 0002.",
+      "data": "Cartão de teste cadastrado terminado em 0002.",
       "coherent": "Sim.",
       "justification": "A seleção define a forma de pagamento do pedido.",
       "requirement": "A aplicação deve permitir selecionar um cartão.",
@@ -1416,8 +1414,7 @@
         {
           "type": "CLICK",
           "target": {
-            "role": "radio",
-            "name": "0002",
+            "text": "0002",
             "exact": false
           }
         },
@@ -1437,9 +1434,9 @@
       "domain": "CHK",
       "name": "Avançar da etapa de pagamento",
       "actor": "Cliente",
-      "flow": "Selecionar a forma de pagamento e prosseguir.",
+      "flow": "Selecionar a linha do cartão terminado em 0002 e prosseguir para o resumo do pedido.",
       "precondition": "Cliente autenticado; método de entrega selecionado; cartão de teste cadastrado.",
-      "data": "Cartão terminado em 0002.",
+      "data": "Cartão de teste cadastrado terminado em 0002.",
       "coherent": "Sim.",
       "justification": "A etapa de pagamento deve levar ao resumo do pedido.",
       "requirement": "A aplicação deve habilitar o avanço após uma forma de pagamento válida.",
@@ -1451,8 +1448,7 @@
         {
           "type": "CLICK",
           "target": {
-            "role": "radio",
-            "name": "0002",
+            "text": "0002",
             "exact": false
           }
         },
@@ -1543,7 +1539,7 @@
       "name": "Visualizar outras opções de pagamento",
       "actor": "Cliente",
       "flow": "Expandir a seção de outras opções de pagamento.",
-      "precondition": "Cliente autenticado; método de entrega selecionado.",
+      "precondition": "Cliente autenticado; etapa de pagamento acessível; seção 'Other payment options' disponível.",
       "data": "Nenhum dado adicional.",
       "coherent": "Sim.",
       "justification": "A loja oferece alternativas além do cartão no fluxo apresentado.",
@@ -1576,7 +1572,7 @@
       "name": "Acessar doação pelas outras opções",
       "actor": "Cliente",
       "flow": "Abrir a opção de doação disponibilizada na etapa de pagamento.",
-      "precondition": "Cliente autenticado; método de entrega selecionado.",
+      "precondition": "Cliente autenticado; etapa de pagamento acessível; seção 'Other payment options' disponível.",
       "data": "Nenhum pagamento real.",
       "coherent": "Sim.",
       "justification": "A opção integra as alternativas apresentadas pela aplicação.",
@@ -1621,7 +1617,7 @@
       "name": "Acessar merchandise pelas outras opções",
       "actor": "Cliente",
       "flow": "Abrir a opção de merchandise disponibilizada.",
-      "precondition": "Cliente autenticado; método de entrega selecionado.",
+      "precondition": "Cliente autenticado; etapa de pagamento acessível; seção 'Other payment options' disponível.",
       "data": "Nenhum pagamento real.",
       "coherent": "Sim.",
       "justification": "A opção integra as alternativas apresentadas pela aplicação.",
@@ -1665,8 +1661,8 @@
       "domain": "CHK",
       "name": "Aplicar cupom no checkout",
       "actor": "Cliente",
-      "flow": "Informar um cupom inválido no checkout e verificar a mensagem de rejeição.",
-      "precondition": "Cliente autenticado; método de entrega selecionado.",
+      "flow": "Informar o código TESTE1234 no campo de cupom, solicitar o resgate e verificar a rejeição do cupom inválido.",
+      "precondition": "Cliente autenticado; etapa de pagamento acessível; campo de cupom disponível.",
       "data": "Cupom inválido de teste: TESTE1234.",
       "coherent": "Sim.",
       "justification": "Cupons fazem parte da etapa de compra quando habilitados.",
@@ -1708,13 +1704,17 @@
       "domain": "CHK",
       "name": "Imprimir confirmação do pedido",
       "actor": "Cliente",
-      "flow": "Abrir a confirmação imprimível após concluir a compra.",
+      "flow": "Acessar a confirmação de um pedido concluído e abrir a opção de impressão da confirmação.",
       "precondition": "Cliente autenticado; pedido concluído.",
-      "data": "Nenhum dado adicional.",
+      "data": "Pedido concluído de teste.",
       "coherent": "Sim.",
       "justification": "A confirmação fornece registro do pedido.",
       "requirement": "A aplicação deve abrir a confirmação imprimível em nova página ou aba.",
       "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/order-completion"
+        },
         {
           "type": "CLICK",
           "target": {
@@ -1864,9 +1864,9 @@
       "domain": "CHK",
       "name": "Acessar PDF de pedido pelo histórico",
       "actor": "Cliente",
-      "flow": "Abrir o PDF associado a um pedido.",
+      "flow": "Abrir o histórico de pedidos e acionar a impressão da confirmação associada ao pedido de teste.",
       "precondition": "Cliente autenticado; pedido concluído.",
-      "data": "Pedido de teste.",
+      "data": "Pedido concluído disponível no histórico.",
       "coherent": "Sim.",
       "justification": "O PDF permite obter uma confirmação documental.",
       "requirement": "A aplicação deve disponibilizar o PDF do pedido.",
@@ -1898,9 +1898,9 @@
       "domain": "CHK",
       "name": "Verificar carrinho após conclusão",
       "actor": "Cliente",
-      "flow": "Concluir um pedido e verificar o estado do carrinho.",
+      "flow": "Abrir o carrinho após a conclusão do pedido e verificar que o produto comprado não permanece como item pendente.",
       "precondition": "Cliente autenticado; pedido concluído com sucesso.",
-      "data": "Pedido de teste concluído com sucesso.",
+      "data": "Pedido de teste concluído; o produto utilizado no pedido foi Apple Juice.",
       "coherent": "Sim.",
       "justification": "Após a conclusão, os produtos comprados não devem permanecer como itens pendentes no carrinho.",
       "requirement": "A aplicação deve limpar o carrinho após a conclusão.",
@@ -1963,9 +1963,9 @@
       "domain": "CHK",
       "name": "Retornar de uma etapa do checkout",
       "actor": "Cliente",
-      "flow": "Voltar a uma etapa anterior e verificar a preservação dos dados.",
+      "flow": "Selecionar 'Standard Delivery', avançar para pagamento, retornar à etapa de entrega e verificar se a seleção permanece preservada.",
       "precondition": "Cliente autenticado; endereço de entrega selecionado.",
-      "data": "Nenhum dado adicional.",
+      "data": "Método selecionado: Standard Delivery.",
       "coherent": "Sim.",
       "justification": "O usuário precisa corrigir dados antes de concluir a compra.",
       "requirement": "A navegação de retorno deve preservar o estado necessário do checkout.",
@@ -1977,8 +1977,7 @@
         {
           "type": "CLICK",
           "target": {
-            "role": "radio",
-            "name": "Standard Delivery",
+            "text": "Standard Delivery",
             "exact": false
           }
         },
@@ -2004,7 +2003,11 @@
         },
         {
           "type": "WAIT",
-          "milliseconds": 500
+          "milliseconds": 500,
+          "target": {
+            "text": "Standard Delivery",
+            "exact": false
+          }
         },
         {
           "type": "ASSERT_SELECTED",
@@ -2028,8 +2031,8 @@
       "name": "Fluxo completo de compra",
       "actor": "Cliente",
       "flow": "Executar o fluxo de compra desde o carrinho até a confirmação.",
-      "precondition": "Cliente autenticado; carrinho contém produto; endereço cadastrado.",
-      "data": "Produto: Apple Juice; cartão de teste terminado em 0002.",
+      "precondition": "Cliente autenticado; carrinho contém produto; endereço Rua Teste, 100 cadastrado; método de entrega disponível; cartão de teste terminado em 0002 cadastrado.",
+      "data": "Produto: Apple Juice; endereço: Rua Teste, 100, Fortaleza/CE; entrega: Standard Delivery; cartão de teste terminado em 0002.",
       "coherent": "Sim.",
       "justification": "O fluxo completo valida a integração entre catálogo, carrinho e checkout.",
       "requirement": "A aplicação deve permitir concluir uma compra pelo fluxo da interface.",
@@ -2080,8 +2083,7 @@
         {
           "type": "CLICK",
           "target": {
-            "role": "button",
-            "name": "Continue",
+            "text": "Standard Delivery",
             "exact": false
           }
         },
@@ -2100,8 +2102,7 @@
         {
           "type": "CLICK",
           "target": {
-            "role": "button",
-            "name": "Continue",
+            "text": "0002",
             "exact": false
           }
         },
