@@ -72,6 +72,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description='Executa cenários do OWASP Juice Shop.')
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('--scenario', action='append', help='ID do cenário. Pode ser repetido.')
+    group.add_argument('--domain', action='append', help='Domínio dos cenários. Pode ser repetido (ex.: CHK, IDT).')
     group.add_argument('--all', action='store_true', help='Executa todos os cenários cadastrados.')
     parser.add_argument('--start-app', action='store_true', help='Inicia o Juice Shop pelo Docker Compose incorporado se a aplicação ainda não estiver disponível.')
     parser.add_argument('--wait-app', type=int, default=90, help='Tempo máximo em segundos para aguardar a aplicação (padrão: 90).')
@@ -86,7 +87,8 @@ def main() -> int:
     try:
         ensure_juice_shop(start_if_needed=args.start_app, wait_seconds=args.wait_app)
         ids = None if args.all else set(args.scenario or [])
-        results = asyncio.run(run_selected(ids))
+        domains = None if args.all or args.scenario else {item.upper() for item in (args.domain or [])}
+        results = asyncio.run(run_selected(ids=ids, domains=domains))
         for result in results:
             print(f"[{result['status']}] {result['scenario_id']}")
         failed = sum(result.get('status') != 'PASSED' for result in results)
