@@ -388,7 +388,7 @@ async def _visible_text_control(page: Page, value: str) -> list[Locator]:
     return candidates
 
 
-async def resolve(page: Page, target: dict) -> Locator | None:
+async def _resolve_once(page: Page, target: dict) -> Locator | None:
     """
     Resolve a scenario target against the real Juice Shop DOM.
 
@@ -902,15 +902,6 @@ async def resolve(page: Page, target: dict) -> Locator | None:
     if result is not None:
         return result
 
-    # Some legacy Juice Shop routes render their native controls after the
-    # initial navigation event. Retry the same semantic resolution briefly
-    # instead of declaring a missing control.
-    for _ in range(30):
-        await page.wait_for_timeout(100)
-        result = await first_visible(candidates)
-        if result is not None:
-            return result
-
     # Final retry for legacy native forms whose DOM attributes are
     # normalized differently from the scenario wording (e.g. Username -> username).
     values = [label, name, text]
@@ -936,5 +927,25 @@ async def resolve(page: Page, target: dict) -> Locator | None:
                     return control
         except Exception:
             continue
+
+    return None
+
+
+async def resolve(page: Page, target: dict) -> Locator | None:
+    """
+    Resolve a target with short, fresh DOM retries.
+
+    The important distinction from the previous implementation is that each
+    retry rebuilds the semantic candidate set. Angular can replace controls
+    after navigation, data loading or change detection; retaining the original
+    Locator list can therefore keep searching a stale DOM representation.
+    """
+    attempts = 8
+    for attempt in range(attempts):
+        result = await _resolve_once(page, target)
+        if result is not None:
+            return result
+        if attempt < attempts - 1:
+            await page.wait_for_timeout(150)
 
     return None
