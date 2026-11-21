@@ -34,6 +34,25 @@ Para executar um cenário e iniciar o Docker automaticamente quando o serviço a
 python run.py --start-app --scenario CEN-IDT-01
 ```
 
+Para executar um domínio inteiro e facilitar a investigação por área:
+
+```powershell
+python run.py --start-app --domain CHK
+python run.py --start-app --domain IDT
+```
+
+É possível repetir `--domain` para executar mais de um domínio:
+
+```powershell
+python run.py --start-app --domain CHK --domain IDT
+```
+
+Para executar um cenário específico:
+
+```powershell
+python run.py --start-app --scenario CEN-CHK-03
+```
+
 Para iniciar o ambiente e executar todos os cenários cadastrados:
 
 ```powershell
