@@ -86,7 +86,7 @@ def main() -> int:
 
     try:
         ensure_juice_shop(start_if_needed=args.start_app, wait_seconds=args.wait_app)
-        ids = None if args.all else set(args.scenario or [])
+        ids = None if args.all or args.domain else set(args.scenario or [])
         domains = None if args.all or args.scenario else {item.upper() for item in (args.domain or [])}
         results = asyncio.run(run_selected(ids=ids, domains=domains))
         for result in results:
