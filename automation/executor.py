@@ -329,7 +329,28 @@ async def execute(page: Page, action: dict) -> ActionResult:
             locator = await resolve(page, action.get("target", {}))
             if locator is None:
                 raise RuntimeError("Elemento alvo não encontrado ou não visível.")
-            await _click(locator)
+
+            if action.get("expect_new_page"):
+                new_page = None
+                try:
+                    async with page.context.expect_page(timeout=2500) as page_info:
+                        await _click(locator)
+                    new_page = await page_info.value
+                    try:
+                        await new_page.wait_for_load_state(
+                            "domcontentloaded",
+                            timeout=settings.navigation_timeout_ms,
+                        )
+                    except Exception:
+                        pass
+                    await new_page.wait_for_timeout(150)
+                    action["_new_page_url"] = new_page.url
+                except Exception as exc:
+                    raise RuntimeError(
+                        f"A ação esperava abrir uma nova página/aba, mas isso não ocorreu: {exc}"
+                    )
+            else:
+                await _click(locator)
         elif kind == "CLICK_ALL":
             # Generic repeated-click primitive for actions whose semantics are
             # explicitly plural (for example, clearing a basket). The target
@@ -462,12 +483,20 @@ async def execute(page: Page, action: dict) -> ActionResult:
         sample_interval_ms=120,
     )
 
+    url_after = str(action.get("_new_page_url") or after.url)
+    if action.get("_new_page_url"):
+        after = UIState(
+            url=url_after,
+            visible_text=after.visible_text,
+            title=after.title,
+        )
+
     return ActionResult(
         action=kind,
         user_action=_user_action(action),
         data=data,
         url_before=before.url,
-        url_after=after.url,
+        url_after=url_after,
         observed_result=describe_change(before, after),
         changed=meaningful_change(before, after),
         success=error is None,
