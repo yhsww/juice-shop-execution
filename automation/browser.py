@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 from contextlib import asynccontextmanager
 from typing import AsyncIterator
 
@@ -25,8 +26,17 @@ async def browser_session() -> AsyncIterator[tuple[Browser, BrowserContext, Page
         try:
             yield browser, context, page
         finally:
-            await context.close()
-            await browser.close()
+            # Browser teardown must never hang the domain runner after a
+            # precondition/action failure. Preserve the original failure and
+            # let the next scenario start cleanly.
+            try:
+                await asyncio.wait_for(context.close(), timeout=5)
+            except Exception:
+                pass
+            try:
+                await asyncio.wait_for(browser.close(), timeout=5)
+            except Exception:
+                pass
 
 
 async def open_juice_shop(page: Page) -> None:
