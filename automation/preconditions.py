@@ -247,6 +247,58 @@ async def ensure_base_user(page) -> bool:
     )
 
 
+
+async def _ensure_card_via_api(page) -> bool:
+    """Ensure a reusable test card exists without exercising the card-creation UI."""
+    headers = await _auth_headers(page)
+    payload = {
+        "fullName": "Cliente Teste",
+        "cardNum": 4000000000000002,
+        "expMonth": 12,
+        "expYear": 2030,
+    }
+    try:
+        result = await page.evaluate(
+            """async ({ url, payload, headers }) => {
+                try {
+                    const getResponse = await fetch(url, {
+                        method: "GET",
+                        credentials: "include",
+                        headers
+                    });
+                    if (getResponse.ok) {
+                        const body = await getResponse.json();
+                        const cards = body && Array.isArray(body.data) ? body.data : [];
+                        if (cards.some(card => String(card.cardNum).endsWith("0002"))) {
+                            return { ok: true };
+                        }
+                    }
+
+                    const postResponse = await fetch(url, {
+                        method: "POST",
+                        credentials: "include",
+                        headers: {
+                            ...headers,
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(payload)
+                    });
+                    return { ok: postResponse.ok };
+                } catch (_) {
+                    return { ok: false };
+                }
+            }""",
+            {
+                "url": f"{settings.base_url}/api/Cards",
+                "payload": payload,
+                "headers": headers,
+            },
+        )
+        return bool(result and result.get("ok"))
+    except Exception:
+        return False
+
+
 async def _auth_headers(page) -> dict:
     token = await page.evaluate(
         """() => localStorage.getItem('token') || null"""
@@ -660,9 +712,8 @@ async def prepare_precondition(page, scenario: dict) -> tuple[bool, str]:
 
         if (
             "etapa de pagamento" in precondition
-            or "etapa de pagamento" in precondition
             or "pagamento acessível" in precondition
-            or "cartão de teste cadastrado" in precondition
+            or "cartão de teste cadastrado" in precondition and "checkout na etapa de pagamento" in precondition
             or "cartão selecionado" in precondition
             or "seção de outras opções" in precondition
             or "endereço, entrega e pagamento disponíveis" in precondition
@@ -671,16 +722,21 @@ async def prepare_precondition(page, scenario: dict) -> tuple[bool, str]:
             if not await ensure_payment(page):
                 return False, "Pré-condição de pagamento não pôde ser preparada."
 
+        if "cartão de teste cadastrado" in precondition and "checkout na etapa de pagamento" not in precondition:
+            if not await _ensure_card_via_api(page):
+                return False, "Pré-condição de cartão cadastrado não pôde ser preparada."
+
         if (
             "pedido com endereço" in precondition
             or "pedido pronto para confirmação" in precondition
+            or "resumo do pedido acessível" in precondition
             or "checkout preparados" in precondition
             or "checkout parcialmente preenchido" in precondition
         ):
             if not await ensure_order_summary(page):
                 return False, "Pré-condição de resumo do pedido não pôde ser preparada."
 
-        if "pedido concluído" in precondition:
+        if "pedido concluído" in precondition or "pedido no histórico" in precondition or "há pelo menos um pedido no histórico" in precondition:
             if not await ensure_completed_order(page):
                 return False, "Pré-condição de pedido concluído não pôde ser preparada."
 
