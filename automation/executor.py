@@ -84,48 +84,64 @@ async def _scroll_into_view(locator) -> None:
         pass
 
 
+async def _dismiss_blocking_overlay(page) -> bool:
+    """Dismiss only a clearly blocking, dismissible overlay."""
+    candidates = page.locator("[role='dialog']:visible, .cdk-overlay-pane:visible, .mat-mdc-dialog-container:visible")
+    try:
+        count = await candidates.count()
+    except Exception:
+        return False
+    for index in range(count):
+        dialog = candidates.nth(index)
+        try:
+            if not await dialog.is_visible():
+                continue
+            close = dialog.get_by_role("button", name="Dismiss", exact=True)
+            if not await close.count():
+                close = dialog.get_by_role("button", name="Close", exact=True)
+            if not await close.count():
+                close = dialog.locator("[aria-label='Dismiss'], [aria-label='Close']")
+            if await close.count() and await close.first.is_visible():
+                await close.first.click(timeout=1200)
+                await page.wait_for_timeout(120)
+                return True
+        except Exception:
+            continue
+    return False
+
 async def _click(locator) -> None:
-    """Click a control and recover generic Angular Material radio activation.
-
-    Juice Shop renders several radio controls without an accessible name. In
-    table-based checkout screens, the visible row is also a click target and
-    can be more reliable than the inner radio host. After clicking a radio,
-    verify its checked state; if Angular did not commit the selection, click
-    the containing row once. This is generic and applies to all radio actions.
-    """
+    """Click a control with generic overlay and Angular Material recovery."""
     await _scroll_into_view(locator)
-
+    first_error = None
     try:
         await locator.click(timeout=settings.action_timeout_ms)
-    except Exception as first_error:
-        await locator.page.wait_for_timeout(150)
+    except Exception as exc:
+        first_error = exc
+        if await _dismiss_blocking_overlay(locator.page):
+            await locator.page.wait_for_timeout(120)
         try:
             await locator.click(timeout=settings.action_timeout_ms)
         except Exception:
             try:
-                await locator.click(timeout=1500, force=True)
+                visible_dialog = locator.page.locator("[role='dialog']:visible, .cdk-overlay-pane:visible, .mat-mdc-dialog-container:visible")
+                if await visible_dialog.count() == 0:
+                    await locator.click(timeout=1500, force=True)
+                else:
+                    raise first_error
             except Exception:
                 raise first_error
-
     try:
         role = (await locator.get_attribute("role") or "").casefold()
         tag = (await locator.evaluate("(el) => el.tagName")).casefold()
-
         if role == "radio" or tag == "mat-radio-button":
-            checked = await locator.get_attribute("aria-checked")
+            checked = (await locator.get_attribute("aria-checked") or "").casefold()
             if checked != "true":
-                row = locator.locator(
-                    "xpath=ancestor::*[self::mat-row or self::tr or @role='row'][1]"
-                )
+                row = locator.locator("xpath=ancestor::*[self::mat-row or self::tr or @role='row'][1]")
                 if await row.count() and await row.first.is_visible():
                     await row.first.click(timeout=1500)
                     await locator.page.wait_for_timeout(120)
     except Exception:
-        # The primary click already succeeded. The fallback is best-effort and
-        # must never turn a successful radio interaction into a failure merely
-        # because a legacy/alternate DOM has no row ancestor.
         pass
-
 
 async def _fill(locator, value: str) -> None:
     """Fill native text controls while transparently handling native selects.
@@ -384,6 +400,30 @@ async def execute(page: Page, action: dict) -> ActionResult:
                     action.get("key", "Enter"),
                     timeout=settings.action_timeout_ms,
                 )
+        elif kind == "ASSERT_ENABLED":
+            locator = await resolve(page, action.get("target", {}))
+            if locator is None:
+                raise RuntimeError("Elemento alvo não encontrado para ASSERT_ENABLED.")
+            if not await locator.is_enabled():
+                raise AssertionError("O controle deveria estar habilitado, mas está desabilitado.")
+        elif kind == "ASSERT_DISABLED":
+            locator = await resolve(page, action.get("target", {}))
+            if locator is None:
+                raise RuntimeError("Elemento alvo não encontrado para ASSERT_DISABLED.")
+            if await locator.is_enabled():
+                raise AssertionError("O controle deveria estar desabilitado, mas está habilitado.")
+        elif kind == "ASSERT_SELECTED":
+            locator = await resolve(page, action.get("target", {}))
+            if locator is None:
+                raise RuntimeError("Elemento alvo não encontrado para ASSERT_SELECTED.")
+            selected = (await locator.get_attribute("aria-checked") or "").casefold()
+            if selected != "true":
+                try:
+                    checked = await locator.is_checked()
+                except Exception:
+                    checked = False
+                if not checked:
+                    raise AssertionError("O controle deveria estar selecionado.")
         elif kind == "WAIT":
             await page.wait_for_timeout(int(action.get("milliseconds", 500)))
         else:
