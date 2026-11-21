@@ -1014,34 +1014,14 @@ async def _resolve_once(page: Page, target: dict) -> Locator | None:
             except Exception:
                 continue
 
-        # Some Angular Material variants omit table semantics entirely.
-        # Only then fall back to the first visible radio, and only when the
-        # target name matches a visible header somewhere on the page.
-        if not candidates:
-            headers = page.locator("th, mat-header-cell")
-            try:
-                header_count = await headers.count()
-            except Exception:
-                header_count = 0
-            header_matches = False
-            for index in range(header_count):
-                header = headers.nth(index)
-                try:
-                    if await header.is_visible() and _semantic_text_match(
-                        wanted, _norm(await header.inner_text())
-                    ):
-                        header_matches = True
-                        break
-                except Exception:
-                    continue
-
-            if header_matches:
-                first_radio = await first_visible([
-                    page.locator("mat-radio-button"),
-                    page.locator("[role='radio']"),
-                ])
-                if first_radio is not None:
-                    candidates.append(first_radio)
+        # Do not fall back to an arbitrary visible radio merely because a
+        # matching header exists. The address table can be rendered before its
+        # data rows are available, and another radio elsewhere on the page is
+        # not evidence that the requested semantic control exists.
+        #
+        # This distinction is important for checkout preconditions: resolving
+        # a phantom "Address" radio would make the fixture look valid and let
+        # the scenario proceed until Checkout redirects to /#/address/create.
 
     result = await first_visible(candidates)
     if result is not None:
