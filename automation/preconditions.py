@@ -487,7 +487,24 @@ async def _add_address_if_needed(page) -> bool:
     if not await _ensure_address_via_api(page):
         return False
 
-    return True
+    # Saving the address can leave the SPA on /#/address/create. The
+    # precondition is not "address was saved"; it is "the checkout address
+    # selection state is ready for the scenario". Always return to the
+    # selection component and verify that the persisted address is rendered.
+    await page.goto(
+        f"{settings.base_url}/#/address/select",
+        wait_until="domcontentloaded",
+    )
+    for _ in range(20):
+        radio = await resolve(
+            page,
+            {"role": "radio", "name": "Address", "exact": False},
+        )
+        if radio is not None:
+            return True
+        await page.wait_for_timeout(150)
+
+    return False
 
 async def ensure_basket(page) -> bool:
     await page.goto(f"{settings.base_url}/#/", wait_until="domcontentloaded")
