@@ -386,7 +386,48 @@ async def _ensure_address_via_api(page) -> bool:
                     });
                     let body = null;
                     try { body = await postResponse.json(); } catch (_) {}
-                    return { ok: postResponse.ok, status: postResponse.status, body };
+
+                    // A successful POST response alone is not enough to satisfy
+                    // the fixture precondition. The checkout UI depends on the
+                    // address being persisted and returned by GET /api/Addresss.
+                    // Verify persistence before reporting success, otherwise the
+                    // scenario can legitimately land on /#/address/create with
+                    // Continue disabled.
+                    if (!postResponse.ok) {
+                        return { ok: false, status: postResponse.status, body };
+                    }
+
+                    const deadline = Date.now() + 3000;
+                    while (Date.now() < deadline) {
+                        const verifyResponse = await request({
+                            method: 'GET',
+                            headers
+                        });
+                        if (verifyResponse.ok) {
+                            let verifyBody = null;
+                            try { verifyBody = await verifyResponse.json(); } catch (_) {}
+                            const verifyAddresses =
+                                verifyBody && Array.isArray(verifyBody.data)
+                                    ? verifyBody.data
+                                    : [];
+                            if (verifyAddresses.length > 0) {
+                                return {
+                                    ok: true,
+                                    status: postResponse.status,
+                                    count: verifyAddresses.length,
+                                    body
+                                };
+                            }
+                        }
+                        await new Promise(resolve => setTimeout(resolve, 150));
+                    }
+
+                    return {
+                        ok: false,
+                        status: postResponse.status,
+                        body,
+                        error: 'Endereço não apareceu na consulta após o POST.'
+                    };
                 } catch (error) {
                     return { ok: false, error: String(error && error.message || error) };
                 }
