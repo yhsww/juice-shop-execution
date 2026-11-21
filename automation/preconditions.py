@@ -294,7 +294,7 @@ async def _ensure_card_via_api(page) -> bool:
                 }
             }""",
             {
-                "url": f"{settings.base_url}/api/Cards",
+                "url": f"{settings.base_url}/api/Cards/",
                 "payload": payload,
                 "headers": headers,
             },
@@ -373,7 +373,7 @@ async def _ensure_address_via_api(page) -> bool:
                 }
             }""",
             {
-                "url": f"{settings.base_url}/api/Addresss",
+                "url": f"{settings.base_url}/api/Addresss/",
                 "payload": payload,
                 "headers": headers,
             },
