@@ -85,21 +85,46 @@ async def _scroll_into_view(locator) -> None:
 
 
 async def _click(locator) -> None:
+    """Click a control and recover generic Angular Material radio activation.
+
+    Juice Shop renders several radio controls without an accessible name. In
+    table-based checkout screens, the visible row is also a click target and
+    can be more reliable than the inner radio host. After clicking a radio,
+    verify its checked state; if Angular did not commit the selection, click
+    the containing row once. This is generic and applies to all radio actions.
+    """
     await _scroll_into_view(locator)
+
     try:
         await locator.click(timeout=settings.action_timeout_ms)
-        return
     except Exception as first_error:
         await locator.page.wait_for_timeout(150)
         try:
             await locator.click(timeout=settings.action_timeout_ms)
-            return
         except Exception:
             try:
                 await locator.click(timeout=1500, force=True)
-                return
             except Exception:
                 raise first_error
+
+    try:
+        role = (await locator.get_attribute("role") or "").casefold()
+        tag = (await locator.evaluate("(el) => el.tagName")).casefold()
+
+        if role == "radio" or tag == "mat-radio-button":
+            checked = await locator.get_attribute("aria-checked")
+            if checked != "true":
+                row = locator.locator(
+                    "xpath=ancestor::*[self::mat-row or self::tr or @role='row'][1]"
+                )
+                if await row.count() and await row.first.is_visible():
+                    await row.first.click(timeout=1500)
+                    await locator.page.wait_for_timeout(120)
+    except Exception:
+        # The primary click already succeeded. The fallback is best-effort and
+        # must never turn a successful radio interaction into a failure merely
+        # because a legacy/alternate DOM has no row ancestor.
+        pass
 
 
 async def _fill(locator, value: str) -> None:
