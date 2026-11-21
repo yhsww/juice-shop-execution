@@ -565,7 +565,11 @@ async def _resolve_once(page: Page, target: dict) -> Locator | None:
             pass
 
     # 6. Common native/Angular Material semantic fallbacks.
-    if name:
+    # For explicit radio/checkbox targets, NEVER add buttons/links that merely
+    # contain the same text. Checkout uses a radio whose semantic label is the
+    # table header "Address", while the page also contains an "Add New Address"
+    # button. Mixing those controls can navigate to /#/address/create.
+    if name and control_role not in {"radio", "checkbox"}:
         # Buttons and links often have a visible label but no stable accessible
         # name because of nested icons.
         candidates.extend([
