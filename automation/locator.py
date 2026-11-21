@@ -499,12 +499,19 @@ async def _resolve_once(page: Page, target: dict) -> Locator | None:
                 page.get_by_placeholder(placeholder, exact=False)
             )
 
-    # 4. Visible text. Before broad text matching, prefer an unnamed radio
-    # whose table column has the requested semantic header. This prevents
-    # targets such as "Address" from resolving to "Add New Address".
-    if text or (role and role.lower() not in _VALID_ROLES and name):
+    # 4. Visible text / semantic table controls.
+    # Juice Shop address radios have no accessible name of their own: the
+    # semantic word "Address" belongs to the table header, while the same
+    # word also appears inside the "Add New Address" button. When a scenario
+    # asks for a radio by name/text, resolve the radio from its table column
+    # before broad text matching. This applies generically to any unnamed
+    # radio whose requested name is a table header.
+    if text or name:
         wanted_text = text or name
-        candidates.extend(await _table_radio_by_header(page, str(wanted_text)))
+        if str(role or "").casefold() == "radio":
+            candidates.extend(await _table_radio_by_header(page, str(wanted_text)))
+        elif role and role.lower() not in _VALID_ROLES:
+            candidates.extend(await _table_radio_by_header(page, str(wanted_text)))
         candidates.append(page.get_by_text(wanted_text, exact=exact))
         if exact:
             candidates.append(page.get_by_text(wanted_text, exact=False))
