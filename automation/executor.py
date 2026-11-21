@@ -130,18 +130,11 @@ async def _click(locator) -> None:
                     raise first_error
             except Exception:
                 raise first_error
-    try:
-        role = (await locator.get_attribute("role") or "").casefold()
-        tag = (await locator.evaluate("(el) => el.tagName")).casefold()
-        if role == "radio" or tag == "mat-radio-button":
-            checked = (await locator.get_attribute("aria-checked") or "").casefold()
-            if checked != "true":
-                row = locator.locator("xpath=ancestor::*[self::mat-row or self::tr or @role='row'][1]")
-                if await row.count() and await row.first.is_visible():
-                    await row.first.click(timeout=1500)
-                    await locator.page.wait_for_timeout(120)
-    except Exception:
-        pass
+    # Radio components must be clicked only once. Angular Material may also
+    # emit a row click handler, but clicking the containing row after the radio
+    # can toggle the same SelectionModel a second time and leave Continue
+    # disabled. The resolver/precondition layer is responsible for locating
+    # the semantic radio; do not add a second interaction here.
 
 async def _fill(locator, value: str) -> None:
     """Fill native text controls while transparently handling native selects.
