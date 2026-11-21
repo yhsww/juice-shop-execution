@@ -1275,7 +1275,8 @@
         {
           "type": "ASSERT_DISABLED",
           "target": {
-            "text": "Standard Delivery",
+            "role": "button",
+            "name": "Continue",
             "exact": false
           }
         },
@@ -1283,7 +1284,7 @@
           "type": "CLICK",
           "target": {
             "role": "radio",
-            "name": "Standard Delivery",
+            "text": "Standard Delivery",
             "exact": false
           }
         },
@@ -1369,7 +1370,7 @@
             "label": "Expiry Year",
             "exact": false
           },
-          "value": "2030"
+          "value": "2090"
         },
         {
           "type": "CLICK",
