@@ -484,12 +484,6 @@ async def execute(page: Page, action: dict) -> ActionResult:
     )
 
     url_after = str(action.get("_new_page_url") or after.url)
-    if action.get("_new_page_url"):
-        after = UIState(
-            url=url_after,
-            visible_text=after.visible_text,
-            title=after.title,
-        )
 
     return ActionResult(
         action=kind,
