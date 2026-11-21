@@ -344,18 +344,25 @@ async def _auth_headers(page) -> dict:
 
 
 async def _ensure_address_via_api(page) -> bool:
-    """Ensure one valid address exists for the authenticated fixture user."""
+    """Ensure one persisted address exists for the authenticated fixture user.
+
+    The checkout UI reads addresses from GET /api/Addresss. The official
+    Juice Shop API creates an address with POST /api/Addresss and returns the
+    created record with HTTP 201. Therefore this fixture only reports success
+    after verifying that exact persisted record can be read back by the same
+    authenticated browser session.
+    """
     headers = await _auth_headers(page)
-    headers["Content-Type"] = "application/json"
     payload = {
         "fullName": "Cliente Teste",
-        "mobileNum": "8599999999",
+        "mobileNum": 8599999999,
         "zipCode": "60000000",
         "streetAddress": "Rua Teste, 100",
         "city": "Fortaleza",
         "state": "CE",
         "country": "Brazil",
     }
+
     try:
         result = await page.evaluate(
             """async ({ url, payload, headers }) => {
@@ -364,7 +371,7 @@ async def _ensure_address_via_api(page) -> bool:
                     const timer = setTimeout(() => controller.abort(), 5000);
                     try {
                         return await fetch(url, {
-                            credentials: 'include',
+                            credentials: "include",
                             ...options,
                             signal: controller.signal
                         });
@@ -372,72 +379,137 @@ async def _ensure_address_via_api(page) -> bool:
                         clearTimeout(timer);
                     }
                 };
-                try {
-                    const getResponse = await request({ method: 'GET', headers });
-                    if (getResponse.ok) {
-                        const body = await getResponse.json();
-                        const addresses = body && Array.isArray(body.data) ? body.data : [];
-                        if (addresses.length > 0) return { ok: true, count: addresses.length };
+
+                const readAddresses = async () => {
+                    const response = await request({
+                        method: "GET",
+                        headers
+                    });
+                    if (!response.ok) {
+                        return {
+                            ok: false,
+                            status: response.status,
+                            addresses: []
+                        };
                     }
+
+                    let body = null;
+                    try {
+                        body = await response.json();
+                    } catch (_) {}
+
+                    return {
+                        ok: true,
+                        status: response.status,
+                        addresses:
+                            body && Array.isArray(body.data)
+                                ? body.data
+                                : []
+                    };
+                };
+
+                try {
+                    // Reuse an already persisted address. The checkout
+                    // precondition is satisfied by existence of at least one
+                    // address owned by the authenticated user.
+                    const existing = await readAddresses();
+                    if (existing.ok && existing.addresses.length > 0) {
+                        return {
+                            ok: true,
+                            reused: true,
+                            id: existing.addresses[0].id
+                        };
+                    }
+
                     const postResponse = await request({
-                        method: 'POST',
-                        headers,
+                        method: "POST",
+                        headers: {
+                            ...headers,
+                            "Content-Type": "application/json"
+                        },
                         body: JSON.stringify(payload)
                     });
-                    let body = null;
-                    try { body = await postResponse.json(); } catch (_) {}
 
-                    // A successful POST response alone is not enough to satisfy
-                    // the fixture precondition. The checkout UI depends on the
-                    // address being persisted and returned by GET /api/Addresss.
-                    // Verify persistence before reporting success, otherwise the
-                    // scenario can legitimately land on /#/address/create with
-                    // Continue disabled.
-                    if (!postResponse.ok) {
-                        return { ok: false, status: postResponse.status, body };
+                    let postBody = null;
+                    try {
+                        postBody = await postResponse.json();
+                    } catch (_) {}
+
+                    // Juice Shop's address API creates the record with 201.
+                    // A generic 2xx response is not sufficient evidence that
+                    // the address is available to the checkout component.
+                    if (postResponse.status !== 201) {
+                        return {
+                            ok: false,
+                            status: postResponse.status,
+                            body: postBody
+                        };
                     }
 
-                    const deadline = Date.now() + 3000;
+                    const created =
+                        postBody &&
+                        postBody.data &&
+                        postBody.data.id != null
+                            ? postBody.data
+                            : null;
+
+                    if (!created) {
+                        return {
+                            ok: false,
+                            status: postResponse.status,
+                            body: postBody,
+                            error: "A API não retornou o id do endereço criado."
+                        };
+                    }
+
+                    const createdId = String(created.id);
+                    const deadline = Date.now() + 4000;
+
                     while (Date.now() < deadline) {
-                        const verifyResponse = await request({
-                            method: 'GET',
-                            headers
-                        });
-                        if (verifyResponse.ok) {
-                            let verifyBody = null;
-                            try { verifyBody = await verifyResponse.json(); } catch (_) {}
-                            const verifyAddresses =
-                                verifyBody && Array.isArray(verifyBody.data)
-                                    ? verifyBody.data
-                                    : [];
-                            if (verifyAddresses.length > 0) {
+                        const verification = await readAddresses();
+
+                        if (verification.ok) {
+                            const persisted = verification.addresses.some(
+                                address =>
+                                    address &&
+                                    address.id != null &&
+                                    String(address.id) === createdId
+                            );
+
+                            if (persisted) {
                                 return {
                                     ok: true,
-                                    status: postResponse.status,
-                                    count: verifyAddresses.length,
-                                    body
+                                    created: true,
+                                    id: created.id
                                 };
                             }
                         }
+
                         await new Promise(resolve => setTimeout(resolve, 150));
                     }
 
                     return {
                         ok: false,
                         status: postResponse.status,
-                        body,
-                        error: 'Endereço não apareceu na consulta após o POST.'
+                        body: postBody,
+                        error:
+                            "O endereço foi aceito pelo POST, mas o mesmo id " +
+                            "não apareceu no GET /api/Addresss."
                     };
                 } catch (error) {
-                    return { ok: false, error: String(error && error.message || error) };
+                    return {
+                        ok: false,
+                        error: String(error && error.message || error)
+                    };
                 }
             }""",
             {
-                "url": f"{settings.base_url}/api/Addresss",
+                "url": f"{settings.base_url}/api/Addresss/",
                 "payload": payload,
                 "headers": headers,
             },
         )
+
         return bool(result and result.get("ok"))
     except Exception:
         return False
