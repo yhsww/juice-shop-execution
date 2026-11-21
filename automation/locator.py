@@ -320,6 +320,67 @@ async def _semantic_control_candidates(page: Page, value: str) -> list[Locator]:
     return candidates
 
 
+
+async def _table_radio_by_header(page: Page, value: str) -> list[Locator]:
+    """Resolve an unnamed radio from a table column header."""
+    wanted = _norm(value)
+    if not wanted:
+        return []
+
+    candidates: list[Locator] = []
+    tables = page.locator("table, mat-table")
+    try:
+        table_count = await tables.count()
+    except Exception:
+        return []
+
+    for table_index in range(table_count):
+        table = tables.nth(table_index)
+        try:
+            if not await table.is_visible():
+                continue
+
+            headers = table.locator("th, mat-header-cell")
+            matched_column = None
+            for header_index in range(await headers.count()):
+                header = headers.nth(header_index)
+                if (
+                    await header.is_visible()
+                    and _semantic_text_match(
+                        wanted, _norm(await header.inner_text())
+                    )
+                ):
+                    matched_column = header_index
+                    break
+
+            if matched_column is None:
+                continue
+
+            rows = table.locator("tbody tr, mat-row, [role='row']")
+            for row_index in range(await rows.count()):
+                row = rows.nth(row_index)
+                if not await row.is_visible():
+                    continue
+
+                cells = row.locator("td, mat-cell, [role='cell']")
+                if matched_column >= await cells.count():
+                    continue
+
+                cell = cells.nth(matched_column)
+                radio = await first_visible([
+                    cell.locator("mat-radio-button"),
+                    cell.locator("[role='radio']"),
+                ])
+                if radio is not None:
+                    candidates.append(radio)
+
+            if candidates:
+                break
+        except Exception:
+            continue
+
+    return candidates
+
 async def _visible_text_control(page: Page, value: str) -> list[Locator]:
     """
     Resolve controls represented by visible text, including Angular Material
@@ -438,10 +499,12 @@ async def _resolve_once(page: Page, target: dict) -> Locator | None:
                 page.get_by_placeholder(placeholder, exact=False)
             )
 
-    # 4. Visible text. This is also the fallback for invalid pseudo-roles
-    # such as "text" used by some scenario definitions.
+    # 4. Visible text. Before broad text matching, prefer an unnamed radio
+    # whose table column has the requested semantic header. This prevents
+    # targets such as "Address" from resolving to "Add New Address".
     if text or (role and role.lower() not in _VALID_ROLES and name):
         wanted_text = text or name
+        candidates.extend(await _table_radio_by_header(page, str(wanted_text)))
         candidates.append(page.get_by_text(wanted_text, exact=exact))
         if exact:
             candidates.append(page.get_by_text(wanted_text, exact=False))
