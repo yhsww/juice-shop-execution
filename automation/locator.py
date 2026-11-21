@@ -897,10 +897,36 @@ async def resolve(page: Page, target: dict) -> Locator | None:
     # Some legacy Juice Shop routes render their native controls after the
     # initial navigation event. Retry the same semantic resolution briefly
     # instead of declaring a missing control.
-    for _ in range(10):
+    for _ in range(30):
         await page.wait_for_timeout(100)
         result = await first_visible(candidates)
         if result is not None:
             return result
+
+    # Final retry for legacy native forms whose DOM attributes are
+    # normalized differently from the scenario wording (e.g. Username -> username).
+    values = [label, name, text]
+    for value in values:
+        if not value:
+            continue
+        wanted = _norm(str(value))
+        if not wanted:
+            continue
+        try:
+            controls = page.locator("input, textarea, select")
+            for index in range(await controls.count()):
+                control = controls.nth(index)
+                if not await control.is_visible():
+                    continue
+                attrs = [
+                    await control.get_attribute("id"),
+                    await control.get_attribute("name"),
+                    await control.get_attribute("aria-label"),
+                    await control.get_attribute("placeholder"),
+                ]
+                if any(_semantic_text_match(wanted, attr) for attr in attrs if attr):
+                    return control
+        except Exception:
+            continue
 
     return None
