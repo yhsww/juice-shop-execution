@@ -1227,7 +1227,7 @@
           "type": "CLICK",
           "target": {
             "role": "radio",
-            "name": "Standard",
+            "name": "Standard Delivery",
             "exact": false
           }
         },
