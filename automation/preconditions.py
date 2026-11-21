@@ -265,16 +265,26 @@ async def _ensure_card_via_api(page) -> bool:
     try:
         result = await page.evaluate(
             """async ({ url, payload, headers }) => {
-                try {
+                const request = async (options) => {
                     const controller = new AbortController();
-                    const timeout = setTimeout(() => controller.abort(), 5000);
-                    const getResponse = await fetch(url, {
+                    const timer = setTimeout(() => controller.abort(), 5000);
+                    try {
+                        return await fetch(url, {
+                            credentials: "include",
+                            ...options,
+                            signal: controller.signal
+                        });
+                    } finally {
+                        clearTimeout(timer);
+                    }
+                };
+
+                try {
+                    const getResponse = await request({
                         method: "GET",
-                        credentials: "include",
-                        headers,
-                        signal: controller.signal
+                        headers
                     });
-                    clearTimeout(timeout);
+
                     if (getResponse.ok) {
                         const body = await getResponse.json();
                         const cards = body && Array.isArray(body.data) ? body.data : [];
@@ -283,19 +293,14 @@ async def _ensure_card_via_api(page) -> bool:
                         }
                     }
 
-                    const controller = new AbortController();
-                    const timeout = setTimeout(() => controller.abort(), 5000);
-                    const postResponse = await fetch(url, {
+                    const postResponse = await request({
                         method: "POST",
-                        credentials: "include",
                         headers: {
                             ...headers,
                             "Content-Type": "application/json"
                         },
-                        body: JSON.stringify(payload),
-                        signal: controller.signal
+                        body: JSON.stringify(payload)
                     });
-                    clearTimeout(timeout);
                     return { ok: postResponse.ok };
                 } catch (_) {
                     return { ok: false };
@@ -347,14 +352,30 @@ async def _ensure_address_via_api(page) -> bool:
     try:
         # Use the browser context so the request shares the same session as
         # the Angular application (cookie + localStorage + auth headers).
+        # Every request is independently bounded so a stalled backend cannot
+        # block the whole CHK domain.
         result = await page.evaluate(
             """async ({ url, payload, headers }) => {
+                const request = async (options) => {
+                    const controller = new AbortController();
+                    const timer = setTimeout(() => controller.abort(), 5000);
+                    try {
+                        return await fetch(url, {
+                            credentials: "include",
+                            ...options,
+                            signal: controller.signal
+                        });
+                    } finally {
+                        clearTimeout(timer);
+                    }
+                };
+
                 try {
-                    const getResponse = await fetch(url, {
+                    const getResponse = await request({
                         method: "GET",
-                        credentials: "include",
                         headers
                     });
+
                     if (getResponse.ok) {
                         const body = await getResponse.json();
                         const addresses = body && Array.isArray(body.data)
@@ -365,9 +386,8 @@ async def _ensure_address_via_api(page) -> bool:
                         }
                     }
 
-                    const postResponse = await fetch(url, {
+                    const postResponse = await request({
                         method: "POST",
-                        credentials: "include",
                         headers: {
                             ...headers,
                             "Content-Type": "application/json"
