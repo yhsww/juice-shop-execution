@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 import json
 import time
 from pathlib import Path
@@ -77,7 +78,20 @@ async def _run_scenario(scenario: dict) -> dict:
     async with browser_session() as (_, _, page):
         await open_juice_shop(page)
 
-        prepared, preparation_error = await prepare_precondition(page, scenario)
+        # Preconditions are part of the scenario budget. A stalled browser
+        # request or Angular wait must not block the whole domain run.
+        remaining = max(0.5, scenario_timeout - (time.monotonic() - scenario_started))
+        try:
+            prepared, preparation_error = await asyncio.wait_for(
+                prepare_precondition(page, scenario),
+                timeout=remaining,
+            )
+        except asyncio.TimeoutError:
+            prepared = False
+            preparation_error = (
+                f"Tempo limite de pré-condição atingido ({scenario_timeout}s)."
+            )
+
         if not prepared:
             execution["final_result"] = preparation_error
             execution["status"] = "FAILED"
