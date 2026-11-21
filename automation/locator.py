@@ -508,9 +508,14 @@ async def _resolve_once(page: Page, target: dict) -> Locator | None:
         wanted_text = text or name
         role_normalized = str(role or "").casefold()
 
-        # First resolve unnamed radios through their table semantics.
-        # This prevents "Address" from resolving to "Add New Address".
+        # Unnamed Angular Material radios can expose their semantic
+        # identity only through the text of the containing table row (for
+        # example an address, delivery method, or card number). Prefer the
+        # row-semantic resolver before falling back to column-header semantics.
         if role_normalized == "radio":
+            candidates.extend(
+                await _visible_text_control(page, str(wanted_text))
+            )
             candidates.extend(
                 await _table_radio_by_header(page, str(wanted_text))
             )
