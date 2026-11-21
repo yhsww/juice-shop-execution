@@ -15,7 +15,18 @@ def _normalize_text(value: object) -> str:
 
 
 def scenario_email(scenario: dict) -> str:
-    return f"cen-{scenario['id'].lower()}@example.com"
+    """Return an email unique to this scenario execution.
+
+    The runtime fixture is intentionally scoped to the scenario object, so
+    one scenario never reuses the account created by another scenario or by a
+    previous execution. This keeps authentication-dependent tests isolated
+    without hard-coding scenario-specific behavior.
+    """
+    runtime = scenario.setdefault("_runtime_data", {})
+    return runtime.setdefault(
+        "scenario_email",
+        f"cen-{scenario['id'].lower()}-{uuid.uuid4().hex[:10]}@example.com",
+    )
 
 
 def scenario_password(scenario: dict) -> str:
