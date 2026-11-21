@@ -211,7 +211,23 @@ async def _run_scenario(scenario: dict) -> dict:
         execution["final_url"] = final_state.url
         execution["final_visible_text"] = final_state.visible_text
 
-        valid, validation_message = validate(final_state, scenario.get("expected", {}))
+        expected = scenario.get("expected", {})
+        valid, validation_message = validate(final_state, expected)
+
+        # Some Juice Shop actions intentionally open a new browser page (for
+        # example the donation/merchandise links and printable confirmation).
+        # The original page remains on the checkout screen, so validate the
+        # captured popup URL as part of the same generic scenario contract.
+        external_expected = expected.get("external_url_contains")
+        if valid and external_expected:
+            observed_urls = [step.get("url_after", "") for step in execution["steps"]]
+            if not any(external_expected.casefold() in str(url).casefold() for url in observed_urls):
+                valid = False
+                validation_message = (
+                    f"Nenhuma nova página/aba observada com URL contendo "
+                    f"'{external_expected}'. URLs observadas: {observed_urls}"
+                )
+
         execution["validation"] = {
             "passed": valid,
             "message": validation_message,
