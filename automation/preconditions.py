@@ -402,35 +402,28 @@ async def _ensure_address_via_api(page) -> bool:
         return False
 
 async def _add_address_if_needed(page) -> bool:
-    """Ensure an address exists for this scenario's isolated test user.
+    """Ensure a persisted address exists for the current authenticated user.
 
-    Fixture creation is deterministic: first verify/create the address through
-    the authenticated application API, then verify that the address is rendered
-    by the real checkout UI. The UI form remains the fallback when the API is
-    unavailable, so the precondition never depends on another scenario having
-    created the address previously.
+    This helper prepares the DATA precondition only. It deliberately does not
+    require the checkout radio/table to be rendered here, because scenarios
+    such as CHK-03 test the address-selection UI themselves. Requiring a radio
+    during fixture provisioning made the precondition depend on a particular
+    Angular checkout rendering state and could leave the SPA on /#/address/create.
     """
-    # 1) Deterministic fixture provisioning for this authenticated user.
-    # API success alone is not enough: the checkout UI must be able to render
-    # the persisted address. Re-open the selection route and verify the real
-    # radio/table state before considering the fixture ready.
+    # 1) Prefer the authenticated REST API. A persisted address is the actual
+    # precondition; rendering/selection is handled later by ensure_address().
     if await _ensure_address_via_api(page):
-        await page.goto(
-            f"{settings.base_url}/#/address/select",
-            wait_until="domcontentloaded",
-        )
-        for _ in range(20):
-            radio = await resolve(
-                page,
-                {"role": "radio", "name": "Address", "exact": False},
-            )
-            if radio is not None:
-                return True
-            await page.wait_for_timeout(150)
+        return True
 
-    # 2) UI fallback for environments where the REST fixture is unavailable
-    # or the API-created record is not yet renderable by the Angular checkout.
-    # This still creates the address in the current user's session.
+    # 2) UI fallback for environments where the REST fixture is unavailable.
+    # The current Juice Shop address form uses Angular Signal Forms and the
+    # submit control is #submitButton. Do not infer success from a route change:
+    # verify that the authenticated API can read the saved address afterwards.
+    await page.goto(
+        f"{settings.base_url}/#/address/select",
+        wait_until="domcontentloaded",
+    )
+
     add = await resolve(
         page,
         {"role": "button", "name": "Add New Address", "exact": False},
@@ -440,7 +433,6 @@ async def _add_address_if_needed(page) -> bool:
             page,
             {"role": "button", "name": "Add a new address", "exact": False},
         )
-
     if add is None:
         return False
 
@@ -463,44 +455,35 @@ async def _add_address_if_needed(page) -> bool:
             return False
         await _fill(field, value)
 
-    submit = await resolve(
-        page,
-        {"role": "button", "name": "Submit", "exact": False},
-    )
+    submit = await resolve(page, {"css": "#submitButton"})
     if submit is None:
-        submit = await resolve(page, {"css": "#submitButton"})
+        submit = await resolve(
+            page,
+            {"role": "button", "name": "Submit", "exact": False},
+        )
     if submit is None:
         return False
 
     deadline = __import__("time").monotonic() + settings.action_timeout_ms / 1000
+    clicked = False
     while __import__("time").monotonic() < deadline:
         try:
             if await submit.is_enabled():
                 await _click(submit)
+                clicked = True
                 break
         except Exception:
             pass
         await page.wait_for_timeout(100)
 
-    # Verify persistence through the authenticated API instead of assuming
-    # that a route transition means the address was saved.
-    if not await _ensure_address_via_api(page):
+    if not clicked:
         return False
 
-    # Saving the address can leave the SPA on /#/address/create. The
-    # precondition is not "address was saved"; it is "the checkout address
-    # selection state is ready for the scenario". Always return to the
-    # selection component and verify that the persisted address is rendered.
-    await page.goto(
-        f"{settings.base_url}/#/address/select",
-        wait_until="domcontentloaded",
-    )
-    for _ in range(20):
-        radio = await resolve(
-            page,
-            {"role": "radio", "name": "Address", "exact": False},
-        )
-        if radio is not None:
+    # Signal Forms submit asynchronously through AddressService.save(). Give
+    # the SPA time to finish the request, then verify persistence directly.
+    deadline = __import__("time").monotonic() + settings.action_timeout_ms / 1000
+    while __import__("time").monotonic() < deadline:
+        if await _ensure_address_via_api(page):
             return True
         await page.wait_for_timeout(150)
 
