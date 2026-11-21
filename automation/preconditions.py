@@ -280,27 +280,48 @@ async def _ensure_address_via_api(page) -> bool:
         "state": "CE",
     }
     try:
-        response = await page.request.get(
-            f"{settings.base_url}/api/Addresss",
-            headers=headers,
-            timeout=settings.action_timeout_ms,
-        )
-        if response.ok:
-            body = await response.json()
-            addresses = body.get("data", []) if isinstance(body, dict) else []
-            if addresses:
-                return True
+        # Use the browser context so the request shares the same session as
+        # the Angular application (cookie + localStorage + auth headers).
+        result = await page.evaluate(
+            """async ({ url, payload, headers }) => {
+                try {
+                    const getResponse = await fetch(url, {
+                        method: "GET",
+                        credentials: "include",
+                        headers
+                    });
+                    if (getResponse.ok) {
+                        const body = await getResponse.json();
+                        const addresses = body && Array.isArray(body.data)
+                            ? body.data
+                            : [];
+                        if (addresses.length > 0) {
+                            return { ok: true };
+                        }
+                    }
 
-        response = await page.request.post(
-            f"{settings.base_url}/api/Addresss/",
-            headers=headers,
-            data=payload,
-            timeout=settings.action_timeout_ms,
-        )
-        if not response.ok:
-            return False
+                    const postResponse = await fetch(url + "/", {
+                        method: "POST",
+                        credentials: "include",
+                        headers: {
+                            ...headers,
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(payload)
+                    });
 
-        return True
+                    return { ok: postResponse.ok };
+                } catch (_) {
+                    return { ok: false };
+                }
+            }""",
+            {
+                "url": f"{settings.base_url}/api/Addresss",
+                "payload": payload,
+                "headers": headers,
+            },
+        )
+        return bool(result and result.get("ok"))
     except Exception:
         return False
 
@@ -350,6 +371,24 @@ async def _add_address_if_needed(page) -> bool:
             {"role": "button", "name": "Submit", "exact": False},
         )
         if submit is None:
+            submit = await resolve(page, {"css": "#submitButton"})
+        if submit is None:
+            return False
+
+        # The current Angular form disables submission while invalid.
+        deadline = __import__("time").monotonic() + settings.action_timeout_ms / 1000
+        while __import__("time").monotonic() < deadline:
+            try:
+                if await submit.is_enabled():
+                    break
+            except Exception:
+                pass
+            await page.wait_for_timeout(100)
+
+        try:
+            if not await submit.is_enabled():
+                return False
+        except Exception:
             return False
 
         await _click(submit)
@@ -397,10 +436,15 @@ async def ensure_address(page, select: bool = False) -> bool:
         return False
 
     if select:
-        radio = await resolve(
-            page,
-            {"role": "radio", "name": "Address", "exact": False},
-        )
+        radio = None
+        for _ in range(20):
+            radio = await resolve(
+                page,
+                {"role": "radio", "name": "Address", "exact": False},
+            )
+            if radio is not None:
+                break
+            await page.wait_for_timeout(150)
         if radio is None:
             return False
         await _click(radio)
