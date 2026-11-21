@@ -245,14 +245,28 @@ async def run_scenario(scenario: dict) -> dict:
     return await _run_scenario(scenario)
 
 
-async def run_selected(ids: set[str] | None = None) -> list[dict]:
+async def run_selected(ids: set[str] | None = None, domains: set[str] | None = None) -> list[dict]:
     scenarios = load_scenarios(
         Path(__file__).resolve().parents[1] / "scenarios"
     )
-    selected = [s for s in scenarios if ids is None or s["id"] in ids]
+    normalized_domains = {domain.upper() for domain in domains} if domains else None
+    available_domains = {s.get("domain", s["id"].split("-")[1]).upper() for s in scenarios}
+    if normalized_domains:
+        unknown_domains = normalized_domains - available_domains
+        if unknown_domains:
+            raise ValueError(
+                f"Domínios não encontrados: {', '.join(sorted(unknown_domains))}. "
+                f"Disponíveis: {', '.join(sorted(available_domains))}"
+            )
+
+    selected = [
+        s for s in scenarios
+        if (ids is None or s["id"] in ids)
+        and (normalized_domains is None or s.get("domain", s["id"].split("-")[1]).upper() in normalized_domains)
+    ]
 
     if ids:
-        missing = ids - {s["id"] for s in selected}
+        missing = ids - {s["id"] for s in scenarios}
         if missing:
             raise ValueError(
                 f"Cenários não encontrados: {', '.join(sorted(missing))}"
