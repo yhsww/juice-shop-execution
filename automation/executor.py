@@ -257,7 +257,7 @@ async def execute(page: Page, action: dict) -> ActionResult:
             # Angular pages can expose the route before the form controls have
             # finished rendering. Resolve generically with a short retry window
             # instead of baking page/scenario-specific waits into the scenarios.
-            for attempt in range(8):
+            for attempt in range(20):
                 locator = await resolve(page, action.get("target", {}))
                 if locator is not None:
                     break
