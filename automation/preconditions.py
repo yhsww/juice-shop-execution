@@ -332,10 +332,28 @@ async def _add_address_if_needed(page) -> bool:
     # precondition preparation.
     existing = page.locator("mat-radio-button, [role='radio']")
     try:
-        if await existing.count() > 0:
-            return True
+        existing_count = await existing.count()
+        for index in range(existing_count):
+            radio = existing.nth(index)
+            try:
+                if not await radio.is_visible():
+                    continue
+                if await radio.is_enabled():
+                    row_text = _norm(await radio.inner_text())
+                    if row_text:
+                        return True
+            except Exception:
+                continue
     except Exception:
         pass
+
+    # Prefer the REST fixture when the checkout page has no persisted address.
+    # This is generic precondition setup; the scenario itself still exercises
+    # the real address UI when its actions explicitly do so.
+    if await _ensure_address_via_api(page):
+        await page.reload(wait_until="domcontentloaded")
+        await page.wait_for_timeout(300)
+        return True
 
     add = await resolve(
         page,
