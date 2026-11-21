@@ -266,11 +266,15 @@ async def _ensure_card_via_api(page) -> bool:
         result = await page.evaluate(
             """async ({ url, payload, headers }) => {
                 try {
+                    const controller = new AbortController();
+                    const timeout = setTimeout(() => controller.abort(), 5000);
                     const getResponse = await fetch(url, {
                         method: "GET",
                         credentials: "include",
-                        headers
+                        headers,
+                        signal: controller.signal
                     });
+                    clearTimeout(timeout);
                     if (getResponse.ok) {
                         const body = await getResponse.json();
                         const cards = body && Array.isArray(body.data) ? body.data : [];
@@ -279,6 +283,8 @@ async def _ensure_card_via_api(page) -> bool:
                         }
                     }
 
+                    const controller = new AbortController();
+                    const timeout = setTimeout(() => controller.abort(), 5000);
                     const postResponse = await fetch(url, {
                         method: "POST",
                         credentials: "include",
@@ -286,8 +292,10 @@ async def _ensure_card_via_api(page) -> bool:
                             ...headers,
                             "Content-Type": "application/json"
                         },
-                        body: JSON.stringify(payload)
+                        body: JSON.stringify(payload),
+                        signal: controller.signal
                     });
+                    clearTimeout(timeout);
                     return { ok: postResponse.ok };
                 } catch (_) {
                     return { ok: false };
@@ -384,46 +392,23 @@ async def _ensure_address_via_api(page) -> bool:
 
 
 async def _add_address_if_needed(page) -> bool:
-    # The selection screen exposes one radio per saved address. Reuse an
-    # existing address instead of opening the creation form on every
-    # precondition preparation.
+    """Ensure an address is persisted using the real address UI first.
+
+    The checkout precondition must exercise the application's own address
+    form whenever possible. REST is retained only as a bounded fallback for
+    environments where the form cannot persist the fixture.
+    """
     existing = page.locator("mat-radio-button, [role='radio']")
     try:
-        existing_count = await existing.count()
-        for index in range(existing_count):
+        for index in range(await existing.count()):
             radio = existing.nth(index)
-            try:
-                if not await radio.is_visible():
-                    continue
-                if await radio.is_enabled():
-                    row_text = _normalize_text(await radio.inner_text())
-                    if row_text:
-                        return True
-            except Exception:
+            if not await radio.is_visible():
                 continue
+            text = _normalize_text(await radio.inner_text())
+            if text:
+                return True
     except Exception:
         pass
-
-    # Prefer the REST fixture when the checkout page has no persisted address.
-    # This is generic precondition setup; the scenario itself still exercises
-    # the real address UI when its actions explicitly do so.
-    if await _ensure_address_via_api(page):
-        await page.reload(wait_until="domcontentloaded")
-        # Do not treat the REST response as sufficient: the checkout UI must
-        # actually expose the persisted address before the precondition is
-        # considered satisfied.
-        deadline = __import__("time").monotonic() + settings.action_timeout_ms / 1000
-        while __import__("time").monotonic() < deadline:
-            try:
-                radios = page.locator("mat-radio-button, [role='radio']")
-                for index in range(await radios.count()):
-                    radio = radios.nth(index)
-                    if await radio.is_visible() and _normalize_text(await radio.inner_text()):
-                        return True
-            except Exception:
-                pass
-            await page.wait_for_timeout(150)
-        return False
 
     add = await resolve(
         page,
@@ -437,7 +422,7 @@ async def _add_address_if_needed(page) -> bool:
 
     if add is not None:
         await _click(add)
-        await page.wait_for_timeout(300)
+        await page.wait_for_timeout(250)
 
         values = [
             ("Country", "Brazil"),
@@ -448,62 +433,79 @@ async def _add_address_if_needed(page) -> bool:
             ("City", "Fortaleza"),
             ("State", "CE"),
         ]
+
         for label, value in values:
             field = await resolve(page, {"label": label, "exact": False})
             if field is None:
-                return False
+                break
             await _fill(field, value)
+        else:
+            submit = await resolve(
+                page,
+                {"role": "button", "name": "Submit", "exact": False},
+            )
+            if submit is None:
+                submit = await resolve(page, {"css": "#submitButton"})
 
-        submit = await resolve(
-            page,
-            {"role": "button", "name": "Submit", "exact": False},
+            if submit is not None:
+                deadline = __import__("time").monotonic() + settings.action_timeout_ms / 1000
+                while __import__("time").monotonic() < deadline:
+                    try:
+                        if await submit.is_enabled():
+                            break
+                    except Exception:
+                        pass
+                    await page.wait_for_timeout(100)
+
+                try:
+                    if await submit.is_enabled():
+                        await _click(submit)
+                        deadline = __import__("time").monotonic() + settings.action_timeout_ms / 1000
+                        while __import__("time").monotonic() < deadline:
+                            if "/#/address/create" not in page.url:
+                                break
+                            await page.wait_for_timeout(100)
+
+                        # The real AddressComponent reloads the saved-address
+                        # list after navigation. Verify the row, not merely the
+                        # route transition.
+                        if "/#/address/create" not in page.url:
+                            try:
+                                radios = page.locator("mat-radio-button, [role='radio']")
+                                for index in range(await radios.count()):
+                                    radio = radios.nth(index)
+                                    if await radio.is_visible() and _normalize_text(await radio.inner_text()):
+                                        return True
+                            except Exception:
+                                pass
+                        # Some versions return to the selection screen with
+                        # Angular still loading. Reload only after the form has
+                        # actually left /address/create.
+                        if "/#/address/create" not in page.url:
+                            await page.wait_for_timeout(250)
+                except Exception:
+                    pass
+
+    # Bounded fallback: use the same REST resource AddressService uses.
+    # This is only fixture recovery and never the primary interaction.
+    if await _ensure_address_via_api(page):
+        await page.goto(
+            f"{settings.base_url}/#/address/select",
+            wait_until="domcontentloaded",
         )
-        if submit is None:
-            submit = await resolve(page, {"css": "#submitButton"})
-        if submit is None:
-            return False
-
-        # The current Angular form disables submission while invalid.
         deadline = __import__("time").monotonic() + settings.action_timeout_ms / 1000
         while __import__("time").monotonic() < deadline:
             try:
-                if await submit.is_enabled():
-                    break
+                radios = page.locator("mat-radio-button, [role='radio']")
+                for index in range(await radios.count()):
+                    radio = radios.nth(index)
+                    if await radio.is_visible() and _normalize_text(await radio.inner_text()):
+                        return True
             except Exception:
                 pass
-            await page.wait_for_timeout(100)
+            await page.wait_for_timeout(150)
 
-        try:
-            if not await submit.is_enabled():
-                return False
-        except Exception:
-            return False
-
-        await _click(submit)
-
-        # Saving an address is asynchronous. Do not return while the SPA is
-        # still on /address/create, otherwise the next scenario action can
-        # race the form submission.
-        deadline = __import__("time").monotonic() + settings.action_timeout_ms / 1000
-        while __import__("time").monotonic() < deadline:
-            if "/#/address/create" not in page.url:
-                break
-            await page.wait_for_timeout(100)
-
-        if "/#/address/create" in page.url:
-            # The form is only a fixture setup. If the current frontend form
-            # rejects the synthetic fixture, create it through the REST resource
-            # used by the same AddressService, then let the checkout UI select it.
-            if not await _ensure_address_via_api(page):
-                return False
-            await page.goto(
-                f"{settings.base_url}/#/address/select",
-                wait_until="domcontentloaded",
-            )
-            await page.wait_for_timeout(250)
-
-    return True
-
+    return False
 
 async def ensure_basket(page) -> bool:
     await page.goto(f"{settings.base_url}/#/", wait_until="domcontentloaded")
@@ -547,6 +549,9 @@ async def ensure_address(page, select: bool = False) -> bool:
 
     await _click(radio)
 
+    # Current Juice Shop wires selection through the radio click and the
+    # containing Material table row. Verify the component state via Continue;
+    # if Angular has not propagated it yet, re-click the row once.
     continue_button = None
     for _ in range(20):
         continue_button = await resolve(
@@ -619,6 +624,9 @@ async def ensure_delivery(page) -> bool:
 
     await _click(delivery)
 
+    # DeliveryMethodComponent updates deliveryMethodId from the radio click
+    # and from the containing mat-row. The row is the generic recovery path
+    # for Angular Material event propagation delays.
     continue_button = None
     for _ in range(20):
         continue_button = await resolve(
