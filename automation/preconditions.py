@@ -271,7 +271,7 @@ async def _ensure_card_via_api(page) -> bool:
         "fullName": "Cliente Teste",
         "cardNum": 4000000000000002,
         "expMonth": 12,
-        "expYear": 2030,
+        "expYear": 2090,
     }
     try:
         result = await page.evaluate(
@@ -859,7 +859,7 @@ async def ensure_card(page) -> bool:
         return False
 
     await _select_option(month, "12")
-    await _select_option(year, "2030")
+    await _select_option(year, "2090")
 
     submit = await resolve(
         page,
@@ -872,7 +872,7 @@ async def ensure_card(page) -> bool:
 
     return await resolve(
         page,
-        {"role": "radio", "name": "0002", "exact": False},
+        {"role": "radio", "text": "0002", "exact": False},
     ) is not None
 
 
