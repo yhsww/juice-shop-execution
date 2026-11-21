@@ -411,11 +411,26 @@ async def _add_address_if_needed(page) -> bool:
     created the address previously.
     """
     # 1) Deterministic fixture provisioning for this authenticated user.
+    # API success alone is not enough: the checkout UI must be able to render
+    # the persisted address. Re-open the selection route and verify the real
+    # radio/table state before considering the fixture ready.
     if await _ensure_address_via_api(page):
-        return True
+        await page.goto(
+            f"{settings.base_url}/#/address/select",
+            wait_until="domcontentloaded",
+        )
+        for _ in range(20):
+            radio = await resolve(
+                page,
+                {"role": "radio", "name": "Address", "exact": False},
+            )
+            if radio is not None:
+                return True
+            await page.wait_for_timeout(150)
 
-    # 2) UI fallback for environments where the REST fixture endpoint is not
-    # available. This still creates the address in the current user's session.
+    # 2) UI fallback for environments where the REST fixture is unavailable
+    # or the API-created record is not yet renderable by the Angular checkout.
+    # This still creates the address in the current user's session.
     add = await resolve(
         page,
         {"role": "button", "name": "Add New Address", "exact": False},
