@@ -626,19 +626,26 @@ async def ensure_basket(page) -> bool:
 
 
 async def _wait_for_address_option(page, timeout_ms: int | None = None):
-    """Wait until the checkout address selector exposes at least one address."""
+    """Wait until the checkout address table exposes a selectable radio."""
     timeout = timeout_ms or settings.action_timeout_ms
     deadline = __import__("time").monotonic() + timeout / 1000
     while __import__("time").monotonic() < deadline:
-        radio = await resolve(
-            page,
-            {"role": "radio", "name": "Address", "exact": False},
+        # The real address radio has no accessible name. Its identity is the
+        # address row, so resolve the first visible radio in the checkout table
+        # instead of inventing a name from the column header.
+        radios = page.locator(
+            "table mat-radio-button, table [role='radio'], "
+            "mat-table mat-radio-button, mat-table [role='radio']"
         )
-        if radio is not None:
-            return radio
+        try:
+            for index in range(await radios.count()):
+                radio = radios.nth(index)
+                if await radio.is_visible():
+                    return radio
+        except Exception:
+            pass
         await page.wait_for_timeout(150)
     return None
-
 
 async def _restore_address_selection_ui(page) -> bool:
     """Recover a missing checkout address option without selecting it.
@@ -743,12 +750,12 @@ async def ensure_delivery(page) -> bool:
 
     delivery = await resolve(
         page,
-        {"role": "radio", "name": "Standard Delivery", "exact": False},
+        {"role": "radio", "text": "Standard Delivery", "exact": False},
     )
     if delivery is None:
         delivery = await resolve(
             page,
-            {"role": "radio", "name": "Standard", "exact": False},
+            {"role": "radio", "text": "Standard", "exact": False},
         )
     if delivery is None:
         return False
@@ -816,7 +823,7 @@ async def ensure_card(page) -> bool:
 
     existing = await resolve(
         page,
-        {"role": "radio", "name": "0002", "exact": False},
+        {"role": "radio", "text": "0002", "exact": False},
     )
     if existing is not None:
         return True
