@@ -352,7 +352,7 @@ async def _ensure_address_via_api(page) -> bool:
                         }
                     }
 
-                    const postResponse = await fetch(url + "/", {
+                    const postResponse = await fetch(url, {
                         method: "POST",
                         credentials: "include",
                         headers: {
@@ -514,34 +514,84 @@ async def ensure_basket(page) -> bool:
 
 
 async def ensure_address(page, select: bool = False) -> bool:
-    await page.goto(f"{settings.base_url}/#/address/select", wait_until="domcontentloaded")
+    await page.goto(
+        f"{settings.base_url}/#/address/select",
+        wait_until="domcontentloaded",
+    )
     if not await _add_address_if_needed(page):
         return False
 
-    if select:
-        radio = None
-        for _ in range(20):
-            radio = await resolve(
-                page,
-                {"role": "radio", "name": "Address", "exact": False},
-            )
-            if radio is not None:
-                break
-            await page.wait_for_timeout(150)
-        if radio is None:
-            return False
-        await _click(radio)
+    if not select:
+        return True
+
+    # Angular stores the selected address id in component state and enables
+    # Continue only after that state changes. Prefer the real radio, then
+    # use its table row as the generic interaction fallback.
+    radio = None
+    for _ in range(20):
+        radio = await resolve(
+            page,
+            {"role": "radio", "name": "Address", "exact": False},
+        )
+        if radio is not None:
+            break
+        await page.wait_for_timeout(150)
+
+    if radio is None:
+        return False
+
+    await _click(radio)
+
+    continue_button = None
+    for _ in range(20):
         continue_button = await resolve(
             page,
             {"role": "button", "name": "Continue", "exact": False},
         )
-        if continue_button is None:
+        if continue_button is not None:
+            try:
+                if await continue_button.is_enabled():
+                    break
+            except Exception:
+                pass
+        await page.wait_for_timeout(150)
+
+    if continue_button is None:
+        return False
+
+    try:
+        if not await continue_button.is_enabled():
+            row = radio.locator(
+                "xpath=ancestor::*[self::mat-row or self::tr or @role='row'][1]"
+            )
+            if await row.count() and await row.first.is_visible():
+                await row.first.click(timeout=1500)
+                await page.wait_for_timeout(150)
+    except Exception:
+        pass
+
+    continue_button = await resolve(
+        page,
+        {"role": "button", "name": "Continue", "exact": False},
+    )
+    if continue_button is None:
+        return False
+
+    try:
+        if not await continue_button.is_enabled():
             return False
-        await _click(continue_button)
-        await page.wait_for_timeout(500)
+    except Exception:
+        return False
 
-    return True
+    await _click(continue_button)
 
+    deadline = __import__("time").monotonic() + settings.action_timeout_ms / 1000
+    while __import__("time").monotonic() < deadline:
+        if "/#/delivery-method" in page.url:
+            return True
+        await page.wait_for_timeout(100)
+
+    return False
 
 async def ensure_delivery(page) -> bool:
     if not await ensure_address(page, select=True):
