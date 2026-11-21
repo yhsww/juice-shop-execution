@@ -448,14 +448,22 @@ async def resolve(page: Page, target: dict) -> Locator | None:
 
     # 5. Generic semantic control fallback. It is independent of
     # individual scenario IDs and complements the primary ARIA/label lookup.
+    #
+    # For radio/checkbox targets, do not mix generic button/link text into the
+    # candidate pool. Some Juice Shop tables contain a visible "Add ..." button
+    # whose text includes the same word as the selection column (for example
+    # "Address"). Mixing those controls can make a radio target resolve to the
+    # navigation button instead of the selection control.
+    control_role = str(role or "").lower()
     for value in (label, placeholder, name, text):
         if value:
             candidates.extend(
                 await _semantic_control_candidates(page, str(value))
             )
-            candidates.extend(
-                await _visible_text_control(page, str(value))
-            )
+            if control_role not in {"radio", "checkbox"}:
+                candidates.extend(
+                    await _visible_text_control(page, str(value))
+                )
 
     # 5. Explicit CSS.
     if css:
