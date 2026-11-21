@@ -1590,7 +1590,7 @@
         }
       ],
       "expected": {
-        "url_contains": "/#/"
+        "url_contains": "https://pwning.owasp-juice.shop"
       }
     },
     {
@@ -1634,7 +1634,7 @@
         }
       ],
       "expected": {
-        "url_contains": "/#/"
+        "url_contains": "https://shop.spreadshirt.com"
       }
     },
     {
@@ -1644,7 +1644,7 @@
       "actor": "Cliente",
       "flow": "Informar um cupom no checkout e verificar a atualização do pedido.",
       "precondition": "Cliente autenticado; checkout na etapa de pagamento.",
-      "data": "Cupom de teste válido fornecido pelo ambiente.",
+      "data": "Cupom inválido de teste: TESTE1234.",
       "coherent": "Sim.",
       "justification": "Cupons fazem parte da etapa de compra quando habilitados.",
       "requirement": "A aplicação deve aceitar um cupom válido e atualizar o pedido.",
@@ -1675,7 +1675,9 @@
         }
       ],
       "expected": {
-        "url_contains": "/#/payment/shop"
+        "text_contains": [
+          "Invalid coupon"
+        ]
       }
     },
     {
@@ -1740,14 +1742,14 @@
     {
       "id": "CEN-CHK-18",
       "domain": "CHK",
-      "name": "Visualizar detalhes do pedido no histórico",
+      "name": "Visualizar pedido e produtos no histórico",
       "actor": "Cliente",
-      "flow": "Selecionar um pedido no histórico e verificar seus detalhes.",
+      "flow": "Abrir o histórico e verificar os dados apresentados do pedido.",
       "precondition": "Cliente autenticado; há pelo menos um pedido no histórico.",
       "data": "Pedido de teste.",
       "coherent": "Sim.",
       "justification": "O detalhamento permite conferir a compra realizada.",
-      "requirement": "A aplicação deve apresentar informações do pedido selecionado.",
+      "requirement": "A aplicação deve apresentar o histórico e os dados dos pedidos realizados.",
       "actions": [
         {
           "type": "NAVIGATE",
@@ -1760,7 +1762,10 @@
       ],
       "expected": {
         "text_contains": [
-          "Order"
+          "Order History",
+          "Product",
+          "Quantity",
+          "Total Price"
         ]
       }
     },
@@ -2012,7 +2017,7 @@
       "name": "Retornar de uma etapa do checkout",
       "actor": "Cliente",
       "flow": "Voltar a uma etapa anterior e verificar a preservação dos dados.",
-      "precondition": "Cliente autenticado; resumo do pedido acessível.",
+      "precondition": "Cliente autenticado; endereço de entrega selecionado.",
       "data": "Nenhum dado adicional.",
       "coherent": "Sim.",
       "justification": "O usuário precisa corrigir dados antes de concluir a compra.",
@@ -2020,7 +2025,23 @@
       "actions": [
         {
           "type": "NAVIGATE",
-          "route": "/#/order-summary"
+          "route": "/#/delivery-method"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "radio",
+            "name": "Standard Delivery",
+            "exact": false
+          }
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Continue",
+            "exact": false
+          }
         },
         {
           "type": "WAIT",
