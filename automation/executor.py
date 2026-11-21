@@ -128,7 +128,31 @@ async def _click(locator) -> None:
 
 
 async def _fill(locator, value: str) -> None:
+    """Fill native text controls while transparently handling native selects.
+
+    Scenario data sometimes models a form field semantically as FILL even when
+    a Juice Shop version renders that field as an Angular Material select.
+    Keep the scenario language stable and adapt the interaction to the real
+    control type instead of adding page-specific selectors.
+    """
     await _scroll_into_view(locator)
+
+    try:
+        tag_name = (await locator.evaluate("(el) => el.tagName")).upper()
+    except Exception:
+        tag_name = ""
+
+    if tag_name == "MAT-SELECT":
+        await _select_option(locator, value)
+        return
+
+    if tag_name == "SELECT":
+        try:
+            await locator.select_option(value, timeout=settings.action_timeout_ms)
+        except Exception:
+            await locator.select_option(label=value, timeout=settings.action_timeout_ms)
+        return
+
     try:
         await locator.fill(value, timeout=settings.action_timeout_ms)
         return
