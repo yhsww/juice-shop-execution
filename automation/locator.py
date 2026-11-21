@@ -500,12 +500,10 @@ async def _resolve_once(page: Page, target: dict) -> Locator | None:
             )
 
     # 4. Visible text / semantic table controls.
-    # Juice Shop address radios have no accessible name of their own: the
-    # semantic word "Address" belongs to the table header, while the same
-    # word also appears inside the "Add New Address" button. When a scenario
-    # asks for a radio by name/text, resolve the radio from its table column
-    # before broad text matching. This applies generically to any unnamed
-    # radio whose requested name is a table header.
+    # Some Angular Material controls do not expose their visible label as an
+    # accessible name. For example, the checkout address radio is unnamed and
+    # its semantic label comes from the table column header. Resolve those
+    # controls semantically before falling back to generic text.
     if text or name:
         wanted_text = text or name
         role_normalized = str(role or "").casefold()
@@ -524,16 +522,21 @@ async def _resolve_once(page: Page, target: dict) -> Locator | None:
         # For text-only targets, prefer an actual interactive control over a
         # nested <span>. Angular Material buttons commonly expose their label
         # as a child span, and get_by_text() otherwise returns that span.
-        # This is generic and prevents disabled/incorrect click targets.
         if not role_normalized:
             candidates.extend(
-                await _visible_text_control(page, str(wanted_text))
+                await _visible_text_control(page, str(wanted_text)
+                )
             )
 
-        # Raw text remains a fallback for assertions/non-interactive content.
-        candidates.append(page.get_by_text(wanted_text, exact=exact))
-        if exact:
-            candidates.append(page.get_by_text(wanted_text, exact=False))
+        # Do not use raw visible-text locators for explicitly requested
+        # radio/checkbox targets. If the semantic control is temporarily not
+        # rendered, get_by_text() can resolve an unrelated button such as
+        # "Add New Address", causing a click to navigate away from checkout.
+        # The resolver retries, so it is safer to wait for the actual control.
+        if role_normalized not in {"radio", "checkbox"}:
+            candidates.append(page.get_by_text(wanted_text, exact=exact))
+            if exact:
+                candidates.append(page.get_by_text(wanted_text, exact=False))
 
     # 5. Generic semantic control fallback. It is independent of
     # individual scenario IDs and complements the primary ARIA/label lookup.
