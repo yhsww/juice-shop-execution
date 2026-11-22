@@ -674,8 +674,8 @@
         }
       ],
       "expected": {
-        "text_contains": [
-          "Apple Juice"
+        "step_changed": [
+          2
         ]
       }
     },
@@ -709,8 +709,8 @@
         }
       ],
       "expected": {
-        "text_contains": [
-          "Apple Juice"
+        "step_changed": [
+          2
         ]
       }
     },
@@ -2076,21 +2076,9 @@
         {
           "type": "CLICK",
           "target": {
-            "role": "radio",
-            "name": "Standard Delivery",
-            "exact": false
-          }
-        },
-        {
-          "type": "CLICK",
-          "target": {
             "text": "Standard Delivery",
             "exact": false
           }
-        },
-        {
-          "type": "WAIT",
-          "milliseconds": 500
         },
         {
           "type": "CLICK",
