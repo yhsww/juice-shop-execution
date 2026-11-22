@@ -105,6 +105,7 @@ async def _dismiss_blocking_overlay(page) -> bool:
             if not await container.is_visible():
                 continue
             buttons = container.locator(
+                ".cc-btn.cc-allow, .cc-btn.cc-dismiss, "
                 ".cc-btn, .cc-compliance button, button, [role='button']"
             )
             for button_index in range(await buttons.count()):
@@ -186,7 +187,13 @@ async def _click(locator) -> None:
     # second row interaction that can toggle the same SelectionModel.
 
 async def _fill(locator, value: str) -> None:
-    """Fill a control and synchronize native/framework state generically."""
+    """Fill native text controls while transparently handling native selects.
+
+    Scenario data sometimes models a form field semantically as FILL even when
+    a Juice Shop version renders that field as an Angular Material select.
+    Keep the scenario language stable and adapt the interaction to the real
+    control type instead of adding page-specific selectors.
+    """
     await _scroll_into_view(locator)
 
     try:
@@ -205,77 +212,20 @@ async def _fill(locator, value: str) -> None:
             await locator.select_option(label=value, timeout=settings.action_timeout_ms)
         return
 
-    async def verified() -> bool:
-        try:
-            return str(await locator.input_value()) == str(value)
-        except Exception:
-            try:
-                return str(await locator.get_attribute("value") or "") == str(value)
-            except Exception:
-                return False
-
-    # Strategy 1: standard Playwright interaction.
     try:
         await locator.fill(value, timeout=settings.action_timeout_ms)
-        await locator.dispatch_event("input")
-        await locator.dispatch_event("change")
-        await locator.blur()
-        if await verified():
+        return
+    except Exception as first_error:
+        try:
+            await _click(locator)
+            await locator.press("ControlOrMeta+A", timeout=1500)
+            await locator.press("Backspace", timeout=1500)
+            await locator.type(value, timeout=settings.action_timeout_ms)
             return
-    except Exception:
-        pass
+        except Exception:
+            raise first_error
 
-    # Strategy 2: native setter + composed events. This is particularly useful
-    # for Angular/Signal Forms that observe the native value property.
-    try:
-        await locator.evaluate(
-            """(el, value) => {
-                const proto = Object.getPrototypeOf(el);
-                const descriptor =
-                    Object.getOwnPropertyDescriptor(proto, 'value') ||
-                    Object.getOwnPropertyDescriptor(
-                        HTMLInputElement.prototype, 'value'
-                    ) ||
-                    Object.getOwnPropertyDescriptor(
-                        HTMLTextAreaElement.prototype, 'value'
-                    );
-                if (descriptor && descriptor.set) {
-                    descriptor.set.call(el, value);
-                } else {
-                    el.value = value;
-                }
-                el.dispatchEvent(new InputEvent('input', {
-                    bubbles: true, composed: true,
-                    inputType: 'insertText', data: value
-                }));
-                el.dispatchEvent(new Event('change', {
-                    bubbles: true, composed: true
-                }));
-                el.dispatchEvent(new Event('blur', { bubbles: true }));
-            }""",
-            value,
-        )
-        await locator.page.wait_for_timeout(80)
-        if await verified():
-            return
-    except Exception:
-        pass
 
-    # Strategy 3: closest-to-user keyboard interaction.
-    try:
-        await _click(locator)
-        await locator.press("ControlOrMeta+A", timeout=1500)
-        await locator.press("Backspace", timeout=1500)
-        await locator.type(value, timeout=settings.action_timeout_ms)
-        await locator.press("Tab", timeout=1500)
-        if await verified():
-            return
-    except Exception as exc:
-        raise RuntimeError(
-            f"Não foi possível sincronizar o valor do campo {value!r}: {exc}"
-        ) from exc
-
-    raise RuntimeError(f"Não foi possível sincronizar o valor do campo: {value!r}")
 
 async def _select_option(locator, value: str) -> None:
     """
@@ -406,6 +356,24 @@ async def _select_option(locator, value: str) -> None:
     )
 
 
+async def _click_target(page: Page, target: dict, attempts: int = 4) -> None:
+    """Resolve and click a semantic target, retrying after SPA re-rendering."""
+    last_error: Exception | None = None
+    for _ in range(max(1, attempts)):
+        locator = await resolve(page, target)
+        if locator is None:
+            await page.wait_for_timeout(150)
+            continue
+        try:
+            await _click(locator)
+            return
+        except Exception as exc:
+            last_error = exc
+            await page.wait_for_timeout(180)
+    if last_error is not None:
+        raise last_error
+    raise RuntimeError("Elemento alvo não encontrado ou não visível.")
+
 async def execute(page: Page, action: dict) -> ActionResult:
     before = await observe(page)
     kind = action["type"].upper()
@@ -420,9 +388,7 @@ async def execute(page: Page, action: dict) -> ActionResult:
                 timeout=settings.navigation_timeout_ms,
             )
         elif kind == "CLICK":
-            locator = await resolve(page, action.get("target", {}))
-            if locator is None:
-                raise RuntimeError("Elemento alvo não encontrado ou não visível.")
+            target = action.get("target", {})
 
             if action.get("expect_new_page"):
                 # The scenario expresses an observable external-navigation
@@ -431,7 +397,7 @@ async def execute(page: Page, action: dict) -> ActionResult:
                 original_url = page.url
                 try:
                     async with page.context.expect_page(timeout=2500) as page_info:
-                        await _click(locator)
+                        await _click_target(page, target)
                     new_page = await page_info.value
                     try:
                         await new_page.wait_for_load_state(
@@ -452,7 +418,7 @@ async def execute(page: Page, action: dict) -> ActionResult:
                             "nova página nem mudança de URL foi observada."
                         )
             else:
-                await _click(locator)
+                await _click_target(page, target)
 
         elif kind == "CLICK_ALL":
             # Generic repeated-click primitive for actions whose semantics are
@@ -537,9 +503,36 @@ async def execute(page: Page, action: dict) -> ActionResult:
             if await locator.is_enabled():
                 raise AssertionError("O controle deveria estar desabilitado, mas está habilitado.")
         elif kind == "ASSERT_SELECTED":
-            locator = await resolve(page, action.get("target", {}))
+            target = action.get("target", {})
+            locator = await resolve(page, target)
+
+            if locator is None and target.get("role") == "radio":
+                name = str(target.get("name") or target.get("text") or "").strip()
+                if name:
+                    rows = page.locator(
+                        "mat-row, tr, [role='row'], "
+                        ".mat-mdc-list-item, .mat-mdc-radio-button"
+                    )
+                    for index in range(await rows.count()):
+                        row = rows.nth(index)
+                        try:
+                            if not await row.is_visible():
+                                continue
+                            row_text = " ".join((await row.inner_text()).split())
+                            if name.casefold() not in row_text.casefold():
+                                continue
+                            radio = row.locator(
+                                "[role='radio'], input[type='radio'], mat-radio-button"
+                            )
+                            if await radio.count():
+                                locator = radio.first
+                                break
+                        except Exception:
+                            continue
+
             if locator is None:
                 raise RuntimeError("Elemento alvo não encontrado para ASSERT_SELECTED.")
+
             selected = (await locator.get_attribute("aria-checked") or "").casefold()
             if selected != "true":
                 try:
