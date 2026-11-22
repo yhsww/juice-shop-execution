@@ -1679,7 +1679,7 @@
             "label": "Coupon",
             "exact": false
           },
-          "value": "TESTE1234"
+          "value": "TESTE12345"
         },
         {
           "type": "CLICK",
@@ -1717,7 +1717,7 @@
           "target": {
             "role": "button",
             "name": "Print Order Confirmation",
-            "exact": false
+            "exact": true
           },
           "expect_new_page": true
         },
@@ -1877,7 +1877,7 @@
           "target": {
             "role": "button",
             "name": "Print order confirmation",
-            "exact": false
+            "exact": true
           },
           "expect_new_page": true
         },
@@ -1974,7 +1974,8 @@
         {
           "type": "CLICK",
           "target": {
-            "text": "Standard Delivery",
+            "role": "radio",
+            "name": "Standard Delivery",
             "exact": false
           }
         },
@@ -2053,7 +2054,8 @@
         {
           "type": "CLICK",
           "target": {
-            "text": "Rua Teste, 100",
+            "role": "radio",
+            "name": "Rua Teste, 100",
             "exact": false
           }
         },
@@ -2345,7 +2347,7 @@
           "type": "CLICK",
           "target": {
             "role": "button",
-            "name": "Account"
+            "name": "Logout"
           }
         },
         {
