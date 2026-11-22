@@ -47,6 +47,10 @@ def _materialize_action(action: dict, scenario: dict) -> dict:
         "${SCENARIO_PASSWORD}": scenario_password(scenario),
         "${BASE_TEST_EMAIL}": "teste@example.com",
         "${UNIQUE_EMAIL}": runtime["unique_email"],
+        "${ORDER_COMPLETION_ROUTE}": runtime.get(
+            "order_completion_route",
+            "/#/order-completion",
+        ),
     }
 
     def replace(value):
@@ -99,6 +103,16 @@ async def _run_scenario(scenario: dict) -> dict:
             preparation_error = (
                 f"Erro ao preparar pré-condição: {type(exc).__name__}: {exc}"
             )
+
+        if prepared:
+            try:
+                runtime_route = await page.evaluate(
+                    "() => window.__ambolsOrderCompletionRoute || null"
+                )
+                if runtime_route:
+                    scenario.setdefault("_runtime_data", {})["order_completion_route"] = runtime_route
+            except Exception:
+                pass
 
         if not prepared:
             execution["final_result"] = preparation_error
