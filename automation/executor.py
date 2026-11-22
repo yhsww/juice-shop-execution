@@ -175,17 +175,64 @@ async def _click(locator) -> None:
     # disabled. The resolver/precondition layer is responsible for locating
     # the semantic radio; do not add a second interaction here.
 
-async def _verify_text_value(locator, expected: str) -> bool:
-    """Verify the value actually reached the browser control."""
-    try:
-        actual = await locator.input_value(timeout=1200)
-        return str(actual) == str(expected)
-    except Exception:
+async def _verify_text_value(locator, expected: str, timeout_ms: int = 1800) -> bool:
+    """Verify the rendered control value, tolerating Angular re-renders."""
+    expected_text = str(expected)
+    deadline = monotonic() + max(0.2, timeout_ms / 1000)
+
+    while monotonic() < deadline:
         try:
-            actual = await locator.get_attribute("value")
-            return str(actual or "") == str(expected)
+            actual = await locator.input_value(timeout=400)
+            if str(actual) == expected_text:
+                return True
         except Exception:
-            return False
+            pass
+
+        try:
+            actual = await locator.evaluate(
+                "(el) => typeof el.value === 'string' ? el.value : ''"
+            )
+            if str(actual) == expected_text:
+                return True
+        except Exception:
+            pass
+
+        await locator.page.wait_for_timeout(100)
+
+    return False
+
+
+async def _force_text_value(locator, value: str) -> bool:
+    """Synchronize a native input value and Angular's input/change lifecycle."""
+    try:
+        return bool(await locator.evaluate(
+            """(el, value) => {
+                const prototype = Object.getPrototypeOf(el);
+                const descriptor =
+                    Object.getOwnPropertyDescriptor(prototype, 'value') ||
+                    Object.getOwnPropertyDescriptor(
+                        HTMLInputElement.prototype,
+                        'value'
+                    ) ||
+                    Object.getOwnPropertyDescriptor(
+                        HTMLTextAreaElement.prototype,
+                        'value'
+                    );
+
+                if (descriptor && descriptor.set) {
+                    descriptor.set.call(el, value);
+                } else {
+                    el.value = value;
+                }
+
+                el.dispatchEvent(new Event('input', { bubbles: true }));
+                el.dispatchEvent(new Event('change', { bubbles: true }));
+                return el.value === value;
+            }""",
+            value,
+        ))
+    except Exception:
+        return False
 
 
 async def _fill(locator, value: str) -> None:
@@ -218,6 +265,15 @@ async def _fill(locator, value: str) -> None:
             return
     except Exception as exc:
         first_error = exc
+
+    try:
+        if await _force_text_value(locator, value):
+            await locator.page.wait_for_timeout(100)
+            if await _verify_text_value(locator, value):
+                return
+    except Exception as exc:
+        if first_error is None:
+            first_error = exc
 
     try:
         await _click(locator)
