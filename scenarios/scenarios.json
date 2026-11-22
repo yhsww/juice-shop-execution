@@ -1717,7 +1717,7 @@
       "actions": [
         {
           "type": "NAVIGATE",
-          "route": "/#/order-completion"
+          "route": "${ORDER_COMPLETION_ROUTE}"
         },
         {
           "type": "CLICK",
