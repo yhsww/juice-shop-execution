@@ -345,27 +345,6 @@ async def execute(page: Page, action: dict) -> ActionResult:
             else:
                 await _click(locator)
 
-                # Some Juice Shop builds can briefly land on the address
-                # creation route when checkout is entered before the
-                # address-selection component has settled. The scenario
-                # precondition already guarantees that a persisted address
-                # exists, so recover to the canonical checkout selection
-                # route instead of letting the next action fail on /address/create.
-                target = action.get("target", {}) or {}
-                target_name = str(
-                    target.get("name") or target.get("label") or target.get("text") or ""
-                ).casefold()
-                if (
-                    kind == "CLICK"
-                    and "checkout" in target_name
-                    and "/#/address/create" in page.url
-                ):
-                    await page.goto(
-                        f"{settings.base_url}/#/address/select",
-                        wait_until="domcontentloaded",
-                        timeout=settings.navigation_timeout_ms,
-                    )
-                    await page.wait_for_timeout(150)
         elif kind == "CLICK_ALL":
             # Generic repeated-click primitive for actions whose semantics are
             # explicitly plural (for example, clearing a basket). The target
