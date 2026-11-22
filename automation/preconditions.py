@@ -58,7 +58,7 @@ async def _register_user(page, email: str, password: str) -> bool:
         locator = await resolve(page, target)
         if locator is None:
             return False
-        await _fill(locator, value)
+        await _fill(page, target, value)
 
     question = await resolve(page, {"label": "Security Question", "exact": False})
     if question is None:
