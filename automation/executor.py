@@ -325,6 +325,53 @@ async def _fill(page: Page, target: dict, value: str) -> None:
         if first_error is None:
             first_error = exc
 
+    # Final framework-level strategy. Angular Material/Reactive Forms can
+    # replace the input node during change detection. Re-resolve the semantic
+    # target, set the native value, emit a real InputEvent/change event and
+    # blur so framework listeners receive the same lifecycle as a user edit.
+    try:
+        current = await fresh_locator()
+        synced = bool(await current.evaluate(
+            """(el, value) => {
+                const proto = Object.getPrototypeOf(el);
+                const descriptor =
+                    Object.getOwnPropertyDescriptor(proto, 'value') ||
+                    Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value') ||
+                    Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, 'value');
+
+                if (descriptor && descriptor.set) {
+                    descriptor.set.call(el, value);
+                } else {
+                    el.value = value;
+                }
+
+                el.dispatchEvent(new InputEvent('input', {
+                    bubbles: true,
+                    composed: true,
+                    inputType: 'insertText',
+                    data: value
+                }));
+                el.dispatchEvent(new Event('change', {
+                    bubbles: true,
+                    composed: true
+                }));
+                el.dispatchEvent(new Event('blur', {
+                    bubbles: true,
+                    composed: true
+                }));
+                return el.value === value;
+            }""",
+            value,
+        ))
+        if synced:
+            await page.wait_for_timeout(180)
+            current = await fresh_locator()
+            if await _verify_text_value(current, value, timeout_ms=2200):
+                return
+    except Exception as exc:
+        if first_error is None:
+            first_error = exc
+
     try:
         current = await fresh_locator()
         actual = await current.input_value(timeout=500)
