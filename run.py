@@ -89,7 +89,7 @@ def main() -> int:
         ensure_juice_shop(start_if_needed=args.start_app, wait_seconds=args.wait_app)
         if args.discover:
             from recovery.pipeline import main as recovery_main
-            return recovery_main()
+            return recovery_main([])
         ids = None if args.all or args.domain else set(args.scenario or [])
         domains = None if args.all or args.scenario else {item.upper() for item in (args.domain or [])}
         results = asyncio.run(run_selected(ids=ids, domains=domains))
