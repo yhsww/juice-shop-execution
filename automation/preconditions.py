@@ -531,6 +531,7 @@ async def _ensure_address_via_api(page, required_street: str | None = None) -> b
                 "url": f"{settings.base_url}/api/Addresss/",
                 "payload": payload,
                 "headers": headers,
+                "requiredStreet": required_street,
             },
         )
 
