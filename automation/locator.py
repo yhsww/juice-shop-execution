@@ -606,129 +606,54 @@ async def _resolve_once(page: Page, target: dict) -> Locator | None:
         if associated is not None:
             candidates.append(associated)
 
-    # 7. Generic DOM attribute fallbacks for legacy/Angular controls.
-    # These attributes are stable semantic metadata, not scenario-specific selectors.
-    # Legacy Juice Shop screens can expose native inputs through id/name while
-    # the label relationship is not recognized by Playwright's get_by_label().
+    # 7. Generic DOM attribute fallback for legacy/Angular controls.
+    # Keep this lookup inside the browser. The previous implementation made
+    # one Playwright RPC per element/attribute and could scan hundreds of
+    # nodes before reaching the real control.
     for value in (name, label, text, placeholder):
         if not value:
             continue
         wanted = _norm(str(value))
         if not wanted:
             continue
-
-        # Exact semantic attributes first. This is generic and derived from
-        # the scenario target rather than from any scenario ID.
-        for attr in ("name", "id", "formcontrolname"):
-            try:
-                candidates.append(
-                    page.locator(
-                        f"input[{attr}='{str(value)}'], "
-                        f"textarea[{attr}='{str(value)}'], "
-                        f"select[{attr}='{str(value)}']"
-                    )
-                )
-            except Exception:
-                pass
-
-        nodes = page.locator(
-            "input, textarea, select, mat-select, "
-            "[role='textbox'], [role='combobox']"
-        )
         try:
-            count = await nodes.count()
+            selector = (
+                "button, a, input, textarea, select, mat-select, "
+                "[role='button'], [role='link'], [role='textbox'], "
+                "[role='combobox'], [role='radio'], [role='checkbox']"
+            )
+            matches = await page.locator(selector).evaluate_all(
+                """(nodes, wanted) => {
+                    const normalize = (v) => String(v || '')
+                        .normalize('NFKC').toLowerCase().replace(/\s+/g, ' ').trim();
+                    const target = normalize(wanted);
+                    const semantic = (v) => {
+                        const n = normalize(v);
+                        return n === target || n.includes(target) || target.includes(n);
+                    };
+                    return nodes.map((el, index) => {
+                        const visible = !!(
+                            el.offsetWidth || el.offsetHeight || el.getClientRects().length
+                        );
+                        if (!visible) return null;
+                        const attrs = [
+                            el.getAttribute('aria-label'),
+                            el.getAttribute('title'),
+                            el.getAttribute('name'),
+                            el.getAttribute('id'),
+                            el.getAttribute('formcontrolname'),
+                            el.getAttribute('placeholder')
+                        ];
+                        return attrs.some(semantic) ? index : null;
+                    }).filter(index => index !== null);
+                }""",
+                wanted,
+            )
+            controls = page.locator(selector)
+            for index in matches[:8]:
+                candidates.append(controls.nth(int(index)))
         except Exception:
-            count = 0
-
-        for index in range(count):
-            node = nodes.nth(index)
-            try:
-                if not await node.is_visible():
-                    continue
-
-                attrs = [
-                    await node.get_attribute("id"),
-                    await node.get_attribute("name"),
-                    await node.get_attribute("formcontrolname"),
-                    await node.get_attribute("aria-label"),
-                    await node.get_attribute("placeholder"),
-                    await node.get_attribute("title"),
-                ]
-                if any(_semantic_text_match(wanted, attr) for attr in attrs if attr):
-                    candidates.append(node)
-                    break
-            except Exception:
-                continue
-
-    # Some Juice Shop screens expose native inputs with id/name but no accessible
-    # label that Playwright can resolve directly.
-    for value in (name, label, text, placeholder):
-        if not value:
-            continue
-        wanted = _norm(str(value))
-        if not wanted:
-            continue
-
-        nodes = page.locator("input, textarea, select, mat-select, [role='textbox'], [role='combobox']")
-        try:
-            count = await nodes.count()
-        except Exception:
-            continue
-
-        for index in range(count):
-            node = nodes.nth(index)
-            try:
-                if not await node.is_visible():
-                    continue
-
-                attrs = [
-                    await node.get_attribute("id"),
-                    await node.get_attribute("name"),
-                    await node.get_attribute("formcontrolname"),
-                    await node.get_attribute("aria-label"),
-                    await node.get_attribute("placeholder"),
-                    await node.get_attribute("title"),
-                ]
-                if any(_semantic_text_match(wanted, attr) for attr in attrs if attr):
-                    candidates.append(node)
-                    break
-            except Exception:
-                continue
-
-    # Generic semantic attribute fallback for controls whose accessible
-    # name is exposed only through aria-label/title. This is intentionally
-    # independent of any page, route, or scenario.
-    for value in (name, label, text, placeholder):
-        if not value:
-            continue
-        wanted = _norm(str(value))
-        if not wanted:
-            continue
-        for selector in (
-            "button", "a", "input", "textarea", "select",
-            "[role='button']", "[role='link']", "[role='textbox']",
-            "[role='radio']", "[role='checkbox']",
-        ):
-            nodes = page.locator(selector)
-            try:
-                count = await nodes.count()
-            except Exception:
-                continue
-            for index in range(count):
-                node = nodes.nth(index)
-                try:
-                    if not await node.is_visible():
-                        continue
-                    attrs = [
-                        await node.get_attribute("aria-label"),
-                        await node.get_attribute("title"),
-                        await node.get_attribute("name"),
-                        await node.get_attribute("id"),
-                    ]
-                    if any(_semantic_text_match(wanted, attr) for attr in attrs if attr):
-                        candidates.append(node)
-                except Exception:
-                    continue
+            pass
 
     # 8. Native form fallback using label/control relationships.
     # This deliberately works from the target text rather than scenario IDs,
