@@ -559,7 +559,7 @@ async def execute(page: Page, action: dict) -> ActionResult:
         data=data,
         url_before=before.url,
         url_after=url_after,
-        observed_result=describe_change(before, after),
+        observed_result=observed_result,
         changed=meaningful_change(before, after),
         success=error is None,
         error=error,
