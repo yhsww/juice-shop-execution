@@ -235,9 +235,17 @@ async def _force_text_value(locator, value: str) -> bool:
         return False
 
 
-async def _fill(locator, value: str) -> None:
-    """Fill a text control and verify the value reached the rendered control."""
-    await _scroll_into_view(locator)
+async def _fill(page: Page, target: dict, value: str) -> None:
+    """Fill a semantic control while surviving Angular DOM replacement.
+
+    The locator is deliberately re-resolved after every attempt. Angular
+    reactive forms can replace the input node immediately after an input/change
+    event; keeping the original Playwright Locator then verifies a detached
+    or stale control and produces a false automation error.
+    """
+    locator = await resolve(page, target)
+    if locator is None:
+        raise RuntimeError("Campo alvo não encontrado ou não visível.")
 
     try:
         tag_name = (await locator.evaluate("(el) => el.tagName")).upper()
@@ -259,34 +267,74 @@ async def _fill(locator, value: str) -> None:
         return
 
     first_error = None
+
+    async def fresh_locator():
+        current = await resolve(page, target)
+        if current is None:
+            raise RuntimeError("Campo alvo desapareceu após a interação.")
+        await _scroll_into_view(current)
+        return current
+
     try:
-        await locator.fill(value, timeout=settings.action_timeout_ms)
-        if await _verify_text_value(locator, value):
+        current = await fresh_locator()
+        await current.fill(value, timeout=settings.action_timeout_ms)
+        await page.wait_for_timeout(80)
+        current = await fresh_locator()
+        if await _verify_text_value(current, value):
             return
     except Exception as exc:
         first_error = exc
 
     try:
-        if await _force_text_value(locator, value):
-            await locator.page.wait_for_timeout(100)
-            if await _verify_text_value(locator, value):
+        current = await fresh_locator()
+        if await _force_text_value(current, value):
+            await page.wait_for_timeout(120)
+            current = await fresh_locator()
+            if await _verify_text_value(current, value):
                 return
     except Exception as exc:
         if first_error is None:
             first_error = exc
 
     try:
-        await _click(locator)
-        await locator.press("ControlOrMeta+A", timeout=1500)
-        await locator.press("Backspace", timeout=1500)
-        await locator.type(value, timeout=settings.action_timeout_ms)
-        if await _verify_text_value(locator, value):
+        current = await fresh_locator()
+        await current.click(timeout=1500)
+        await current.press("ControlOrMeta+A", timeout=1500)
+        await current.press("Backspace", timeout=1500)
+        await current.type(value, timeout=settings.action_timeout_ms)
+        await page.wait_for_timeout(100)
+        current = await fresh_locator()
+        if await _verify_text_value(current, value):
             return
     except Exception as exc:
         if first_error is None:
             first_error = exc
 
-    raise RuntimeError(f"Campo não recebeu o valor esperado: {value!r}") from first_error
+    try:
+        current = await fresh_locator()
+        await current.click(timeout=1500)
+        await current.press("ControlOrMeta+A", timeout=1500)
+        await current.press("Backspace", timeout=1500)
+        await current.type(value, timeout=settings.action_timeout_ms)
+        await current.press("Tab", timeout=1500)
+        await page.wait_for_timeout(150)
+        current = await fresh_locator()
+        if await _verify_text_value(current, value):
+            return
+    except Exception as exc:
+        if first_error is None:
+            first_error = exc
+
+    try:
+        current = await fresh_locator()
+        actual = await current.input_value(timeout=500)
+    except Exception:
+        actual = "<indisponível>"
+
+    raise RuntimeError(
+        f"Campo não recebeu o valor esperado: {value!r}; "
+        f"valor observado após as tentativas: {actual!r}"
+    ) from first_error
 
 
 async def _select_option(locator, value: str) -> None:
@@ -515,7 +563,7 @@ async def execute(page: Page, action: dict) -> ActionResult:
 
             if locator is None:
                 raise RuntimeError("Campo alvo não encontrado ou não visível.")
-            await _fill(locator, str(action["value"]))
+            await _fill(page, action.get("target", {}), str(action["value"]))
         elif kind == "SELECT":
             locator = await resolve(page, action.get("target", {}))
             if locator is None:
