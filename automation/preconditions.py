@@ -930,6 +930,145 @@ async def ensure_order_summary(page) -> bool:
     return "/#/order-summary" in page.url
 
 
+async def _complete_order_via_api(page) -> bool:
+    """Create a completed-order fixture through Juice Shop's authenticated API."""
+    headers = await _auth_headers(page)
+    try:
+        result = await page.evaluate(
+            """async ({ baseUrl, headers }) => {
+                const request = async (url, options = {}) => {
+                    const response = await fetch(url, {
+                        credentials: 'include',
+                        ...options,
+                        headers: { ...headers, ...(options.headers || {}) }
+                    });
+                    let body = null;
+                    try { body = await response.json(); } catch (_) {}
+                    return { response, body };
+                };
+
+                try {
+                    const who = await request(baseUrl + '/rest/user/whoami');
+                    if (!who.response.ok || !who.body) return { ok: false, stage: 'whoami' };
+                    const user = who.body.data || who.body;
+                    const userId = user && user.id;
+                    if (userId == null) return { ok: false, stage: 'user' };
+
+                    const basketResult = await request(
+                        baseUrl + '/rest/basket/' + encodeURIComponent(userId)
+                    );
+                    if (!basketResult.response.ok || !basketResult.body) {
+                        return { ok: false, stage: 'basket' };
+                    }
+                    const basket = basketResult.body.data || basketResult.body;
+                    const basketId = basket && basket.id;
+                    if (basketId == null) return { ok: false, stage: 'basket-id' };
+
+                    const addresses = await request(baseUrl + '/api/Addresss/');
+                    const cards = await request(baseUrl + '/api/Cards');
+                    const deliveries = await request(baseUrl + '/api/Deliverys');
+
+                    const addressData = addresses.body && Array.isArray(addresses.body.data)
+                        ? addresses.body.data : [];
+                    const cardData = cards.body && Array.isArray(cards.body.data)
+                        ? cards.body.data : [];
+                    const deliveryData = deliveries.body && Array.isArray(deliveries.body.data)
+                        ? deliveries.body.data : [];
+
+                    const address = addressData[0];
+                    const card = cardData.find(item =>
+                        String(item.cardNum || '').endsWith('0002')
+                    ) || cardData[0];
+                    const delivery = deliveryData[0];
+
+                    if (!address || !card || !delivery) {
+                        return {
+                            ok: false,
+                            stage: 'payment-data',
+                            counts: {
+                                addresses: addressData.length,
+                                cards: cardData.length,
+                                deliveries: deliveryData.length
+                            }
+                        };
+                    }
+
+                    const checkout = await request(
+                        baseUrl + '/rest/basket/' +
+                        encodeURIComponent(basketId) + '/checkout',
+                        {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                paymentId: card.id,
+                                addressId: address.id,
+                                deliveryMethodId: delivery.id
+                            })
+                        }
+                    );
+
+                    const confirmation = checkout.body &&
+                        (checkout.body.orderConfirmation ||
+                         checkout.body.data?.orderConfirmation ||
+                         checkout.body.data ||
+                         checkout.body);
+
+                    const orderId = confirmation && (
+                        confirmation.orderId ||
+                        confirmation.orderNo ||
+                        confirmation.id ||
+                        confirmation.cid
+                    );
+
+                    if (!checkout.response.ok || !orderId) {
+                        return {
+                            ok: false,
+                            stage: 'checkout',
+                            status: checkout.response.status
+                        };
+                    }
+
+                    return { ok: true, orderId: String(orderId) };
+                } catch (error) {
+                    return {
+                        ok: false,
+                        stage: 'exception',
+                        error: String(error && error.message || error)
+                    };
+                }
+            }""",
+            { "baseUrl": settings.base_url, "headers": headers },
+        )
+
+        if not result or not result.get("ok"):
+            return False
+
+        route = f"/#/order-completion/{result['orderId']}"
+        await page.goto(
+            f"{settings.base_url}{route}",
+            wait_until="domcontentloaded",
+        )
+
+        deadline = __import__("time").monotonic() + max(
+            5.0, settings.action_timeout_ms / 1000
+        )
+        while __import__("time").monotonic() < deadline:
+            printable = await resolve(
+                page,
+                {"role": "button", "name": "Print order confirmation", "exact": False},
+            )
+            if printable is not None and await printable.is_visible():
+                await page.evaluate(
+                    "(value) => { window.__ambolsOrderCompletionRoute = value }",
+                    route,
+                )
+                return True
+            await page.wait_for_timeout(150)
+        return False
+    except Exception:
+        return False
+
+
 async def ensure_completed_order(page) -> bool:
     if not await ensure_order_summary(page):
         return False
@@ -938,48 +1077,40 @@ async def ensure_completed_order(page) -> bool:
         page,
         {"role": "button", "name": "Place your order and pay", "exact": False},
     )
-    if place is None:
-        return False
-    await _click(place)
+    if place is not None:
+        try:
+            await _click(place)
+        except Exception:
+            pass
 
-    # Preserve the concrete route generated by Juice Shop. Do not invent an
-    # order id: the application creates it only after the real payment action.
-    # Different versions may render the route with or without a trailing slash.
+    # Prefer the real UI completion. If the current build does not reach the
+    # completion route, recover the fixture through the same authenticated
+    # application API and verify the resulting confirmation UI.
     deadline = __import__("time").monotonic() + max(
-        5.0,
-        settings.action_timeout_ms / 1000,
+        5.0, settings.action_timeout_ms / 1000
     )
     while __import__("time").monotonic() < deadline:
-        url = page.url
-        if "/#/order-completion" in url:
+        if "/#/order-completion/" in page.url:
             try:
                 await page.evaluate(
                     "(route) => { window.__ambolsOrderCompletionRoute = route }",
-                    url,
+                    page.url,
                 )
             except Exception:
                 pass
             return True
-
         try:
             printable = await resolve(
                 page,
                 {"role": "button", "name": "Print order confirmation", "exact": False},
             )
             if printable is not None and await printable.is_visible():
-                route = page.url
-                if "/#/order-completion" in route:
-                    await page.evaluate(
-                        "(value) => { window.__ambolsOrderCompletionRoute = value }",
-                        route,
-                    )
-                    return True
+                return True
         except Exception:
             pass
-
         await page.wait_for_timeout(150)
 
-    return False
+    return await _complete_order_via_api(page)
 
 
 async def prepare_precondition(page, scenario: dict) -> tuple[bool, str]:
