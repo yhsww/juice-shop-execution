@@ -209,17 +209,41 @@ async def _login(page, email: str, password: str) -> bool:
         # /profile) that authenticate through the historical token cookie,
         # while the Angular SPA stores the same JWT in localStorage. Bridge
         # the two representations after a real login.
-        if browser_token or token:
+        session_token = browser_token or token
+        if session_token:
             try:
                 await page.context.add_cookies([{
                     "name": "token",
-                    "value": str(browser_token or token),
+                    "value": str(session_token),
                     "url": settings.base_url,
                     "path": "/",
                 }])
             except Exception:
                 pass
 
+            # The server-rendered routes consult the in-memory
+            # authenticatedUsers registry. A successful login response alone
+            # does not necessarily populate that registry because the login
+            # request itself is unauthenticated. Make one authenticated API
+            # request with the same bearer token before entering a legacy route.
+            try:
+                await page.evaluate(
+                    """async ({ baseUrl, token }) => {
+                        try {
+                            await fetch(baseUrl + "/rest/user/whoami", {
+                                method: "GET",
+                                headers: { Authorization: "Bearer " + token },
+                                credentials: "include"
+                            })
+                        } catch (_) {}
+                    }""",
+                    {"baseUrl": settings.base_url, "token": str(session_token)},
+                )
+                await page.wait_for_timeout(100)
+            except Exception:
+                pass
+
+        return bool(session_token)
         return bool(browser_token or token)
 
     except Exception:
@@ -1037,25 +1061,33 @@ async def _complete_order_via_api(page) -> bool:
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({
-                                paymentId: card.id,
-                                addressId: address.id,
-                                deliveryMethodId: delivery.id
+                                orderDetails: {
+                                    paymentId: card.id,
+                                    addressId: address.id,
+                                    deliveryMethodId: delivery.id
+                                }
                             })
                         }
                     );
 
-                    const confirmation = checkout.body &&
-                        (checkout.body.orderConfirmation ||
-                         checkout.body.data?.orderConfirmation ||
-                         checkout.body.data ||
+                    // Current Juice Shop returns { orderConfirmation: "<id>" }.
+                    // Keep extraction tolerant of wrapped/customized responses
+                    // without assuming that the confirmation is always an object.
+                    const rawConfirmation = checkout.body &&
+                        (checkout.body.orderConfirmation ??
+                         checkout.body.data?.orderConfirmation ??
+                         checkout.body.data ??
                          checkout.body);
 
-                    const orderId = confirmation && (
-                        confirmation.orderId ||
-                        confirmation.orderNo ||
-                        confirmation.id ||
-                        confirmation.cid
-                    );
+                    const orderId =
+                        typeof rawConfirmation === 'string'
+                            ? rawConfirmation
+                            : rawConfirmation && (
+                                rawConfirmation.orderId ||
+                                rawConfirmation.orderNo ||
+                                rawConfirmation.id ||
+                                rawConfirmation.cid
+                            );
 
                     if (!checkout.response.ok || !orderId) {
                         return {
