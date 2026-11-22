@@ -91,6 +91,14 @@ async def _run_scenario(scenario: dict) -> dict:
             preparation_error = (
                 f"Tempo limite de pré-condição atingido ({scenario_timeout}s)."
             )
+        except Exception as exc:
+            # A fixture/precondition failure is an automation problem, not a
+            # crash of the whole domain run. Keep the scenario isolated so a
+            # bad fixture cannot prevent the remaining scenarios from running.
+            prepared = False
+            preparation_error = (
+                f"Erro ao preparar pré-condição: {type(exc).__name__}: {exc}"
+            )
 
         if not prepared:
             execution["final_result"] = preparation_error
