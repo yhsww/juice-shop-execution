@@ -1388,7 +1388,7 @@
       "expected": {
         "text_contains": [
           "My Payment Options",
-          "4000"
+          "0002"
         ]
       }
     },
@@ -1664,7 +1664,7 @@
       "actor": "Cliente",
       "flow": "Informar o código TESTE1234 no campo de cupom, solicitar o resgate e verificar a rejeição do cupom inválido.",
       "precondition": "Cliente autenticado; etapa de pagamento acessível; campo de cupom disponível.",
-      "data": "Cupom inválido de teste: TESTE1234.",
+      "data": "Cupom inválido de teste: TESTE12345.",
       "coherent": "Sim.",
       "justification": "Cupons fazem parte da etapa de compra quando habilitados.",
       "requirement": "A aplicação deve informar que um cupom inválido não pode ser resgatado.",
@@ -1679,7 +1679,7 @@
             "label": "Coupon",
             "exact": false
           },
-          "value": "TESTE1234"
+          "value": "TESTE12345"
         },
         {
           "type": "CLICK",
@@ -1720,7 +1720,7 @@
           "type": "CLICK",
           "target": {
             "role": "button",
-            "name": "Print Order Confirmation",
+            "name": "Print order confirmation",
             "exact": false
           },
           "expect_new_page": true
