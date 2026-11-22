@@ -46,11 +46,14 @@ def validate(state: UIState, expected: dict, execution: dict | None = None) -> t
         steps = execution.get("steps", [])
         visible = ""
         if 0 <= index < len(steps):
-            after = steps[index].get("state_after") or {}
-            visible = str(after.get("visible_text", ""))
-            if not visible:
-                observed = str(steps[index].get("observed_result") or "")
-                visible = observed
+            step = steps[index]
+            after = step.get("state_after") or {}
+            visible_parts = [
+                str(after.get("visible_text", "")),
+                str(step.get("observed_result") or ""),
+                " ".join(str(item) for item in (step.get("messages") or [])),
+            ]
+            visible = " ".join(part for part in visible_parts if part)
         ok = bool(phrase) and phrase.casefold() in visible.casefold()
         checks.append((ok, f"passo {step_number} contém texto '{phrase}'"))
 

@@ -199,7 +199,16 @@ async def _run_scenario(scenario: dict) -> dict:
                 error=result.error,
                 timestamp=timestamp(),
             )
-            execution["steps"].append(evidence.__dict__)
+            step_evidence = evidence.__dict__
+            if result.messages:
+                step_evidence["messages"] = list(result.messages)
+            if result.state_after is not None:
+                step_evidence["state_after"] = {
+                    "url": result.state_after.url,
+                    "visible_text": result.state_after.visible_text,
+                    "messages": list(result.state_after.messages),
+                }
+            execution["steps"].append(step_evidence)
 
             for message in result.messages:
                 if message not in execution["messages"]:

@@ -175,14 +175,21 @@ async def _click(locator) -> None:
     # disabled. The resolver/precondition layer is responsible for locating
     # the semantic radio; do not add a second interaction here.
 
-async def _fill(locator, value: str) -> None:
-    """Fill native text controls while transparently handling native selects.
+async def _verify_text_value(locator, expected: str) -> bool:
+    """Verify the value actually reached the browser control."""
+    try:
+        actual = await locator.input_value(timeout=1200)
+        return str(actual) == str(expected)
+    except Exception:
+        try:
+            actual = await locator.get_attribute("value")
+            return str(actual or "") == str(expected)
+        except Exception:
+            return False
 
-    Scenario data sometimes models a form field semantically as FILL even when
-    a Juice Shop version renders that field as an Angular Material select.
-    Keep the scenario language stable and adapt the interaction to the real
-    control type instead of adding page-specific selectors.
-    """
+
+async def _fill(locator, value: str) -> None:
+    """Fill a text control and verify the value reached the rendered control."""
     await _scroll_into_view(locator)
 
     try:
@@ -197,22 +204,33 @@ async def _fill(locator, value: str) -> None:
     if tag_name == "SELECT":
         try:
             await locator.select_option(value, timeout=settings.action_timeout_ms)
-        except Exception:
-            await locator.select_option(label=value, timeout=settings.action_timeout_ms)
+        except Exception as first_error:
+            try:
+                await locator.select_option(label=value, timeout=settings.action_timeout_ms)
+            except Exception:
+                raise first_error
         return
 
+    first_error = None
     try:
         await locator.fill(value, timeout=settings.action_timeout_ms)
-        return
-    except Exception as first_error:
-        try:
-            await _click(locator)
-            await locator.press("ControlOrMeta+A", timeout=1500)
-            await locator.press("Backspace", timeout=1500)
-            await locator.type(value, timeout=settings.action_timeout_ms)
+        if await _verify_text_value(locator, value):
             return
-        except Exception:
-            raise first_error
+    except Exception as exc:
+        first_error = exc
+
+    try:
+        await _click(locator)
+        await locator.press("ControlOrMeta+A", timeout=1500)
+        await locator.press("Backspace", timeout=1500)
+        await locator.type(value, timeout=settings.action_timeout_ms)
+        if await _verify_text_value(locator, value):
+            return
+    except Exception as exc:
+        if first_error is None:
+            first_error = exc
+
+    raise RuntimeError(f"Campo não recebeu o valor esperado: {value!r}") from first_error
 
 
 async def _select_option(locator, value: str) -> None:
@@ -551,6 +569,11 @@ async def execute(page: Page, action: dict) -> ActionResult:
             f"{immediate_observation} | Estado estável: {stable_observation}"
         )[:1200]
 
+    messages = tuple(dict.fromkeys(
+        list(getattr(after, "messages", ()) or ())
+        + list(getattr(before, "messages", ()) or ())
+    ))
+
     url_after = str(action.get("_new_page_url") or after.url)
 
     return ActionResult(
@@ -562,6 +585,7 @@ async def execute(page: Page, action: dict) -> ActionResult:
         observed_result=observed_result,
         changed=meaningful_change(before, after),
         success=error is None,
+        messages=messages,
         error=error,
         state_before=before,
         state_after=after,
