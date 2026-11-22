@@ -76,6 +76,25 @@ docker compose -f juice-shop/docker-compose.yml logs -f
 docker compose -f juice-shop/docker-compose.yml down
 ```
 
+## Engenharia reversa AMBOLS
+
+Esta branch adiciona uma etapa determinística de descoberta antes da especificação de cenários. Ela observa a interface real, registra estados, rotas e transições e produz requisitos candidatos vinculados à evidência observada. A separação entre observação, requisito candidato e cenário executável evita tratar cenários previamente escritos como prova de recuperação de requisitos.
+
+Execução da descoberta:
+
+```powershell
+python run.py --discover
+```
+
+Artefatos gerados em `reports/recovery/`:
+
+- `ui-states.json`: estados observados da interface.
+- `behaviors.json`: transições observadas entre rotas.
+- `candidate-requirements.json`: requisitos candidatos com evidência de origem.
+- `discovery-summary.json`: resumo reprodutível da execução.
+
+A abordagem é deliberadamente determinística e conservadora: ela não inventa comportamento ausente da evidência e não substitui a etapa posterior de análise/validação humana.
+
 ## Catálogo de cenários
 
 O catálogo contém 69 cenários definidos nos domínios ADM, CAR, CAT, CHK e IDT. A existência no inventário não significa que o cenário já tenha sido validado. Somente a execução real pode produzir resultado PASSED.
