@@ -8,6 +8,7 @@ from uuid import uuid4
 
 from automation.browser import browser_session, open_juice_shop
 from automation.executor import execute
+from automation.behavior import build_behavior_event
 from automation.observer import observe
 from automation.validator import validate
 from automation.preconditions import (
@@ -77,6 +78,7 @@ async def _run_scenario(scenario: dict) -> dict:
         "steps": [],
         "final_result": "",
         "messages": [],
+        "behavior_events": [],
     }
 
     async with browser_session() as (_, _, page):
@@ -200,6 +202,19 @@ async def _run_scenario(scenario: dict) -> dict:
                 timestamp=timestamp(),
             )
             step_evidence = evidence.__dict__
+
+            # Behavior evidence is the primary AMBOLS artifact. It records
+            # observable application behavior independently of the scenario's
+            # expected assertion, so a failed assertion can still produce a
+            # useful recovered requirement.
+            behavior_event = build_behavior_event(
+                scenario["id"],
+                number,
+                result,
+                action.get("target", {}),
+            ).to_dict()
+            behavior_event["screenshot"] = screenshot
+            execution["behavior_events"].append(behavior_event)
             if result.messages:
                 step_evidence["messages"] = list(result.messages)
             if result.state_after is not None:
