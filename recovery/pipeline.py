@@ -6,12 +6,12 @@ import asyncio
 from recovery.discover import DiscoveryConfig, discover
 
 
-def main() -> int:
+def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="AMBOLS deterministic reverse-engineering pipeline")
     parser.add_argument("--max-pages", type=int, default=30)
     parser.add_argument("--max-depth", type=int, default=2)
     parser.add_argument("--timeout", type=int, default=120)
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     result = asyncio.run(discover(DiscoveryConfig(args.max_pages, args.max_depth, args.timeout)))
     print(f"[recovery] páginas: {result['pages_observed']}")
     print(f"[recovery] transições: {result['transitions_observed']}")
