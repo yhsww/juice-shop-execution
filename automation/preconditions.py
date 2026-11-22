@@ -263,11 +263,34 @@ async def ensure_authentication(page, scenario: dict) -> bool:
             scenario_password(scenario),
         )
 
-    return await ensure_user(
+    authenticated = await ensure_user(
         page,
         scenario_email(scenario),
         scenario_password(scenario),
     )
+    if not authenticated:
+        return False
+
+    # Legacy server-rendered routes use the token cookie rather than the SPA
+    # hash route. Verify the authenticated session can render /profile before
+    # the scenario starts; this is route-driven and reusable.
+    first_route = str((scenario.get("actions") or [{}])[0].get("route", ""))
+    if first_route == "/profile":
+        try:
+            response = await page.goto(
+                f"{settings.base_url}{first_route}",
+                wait_until="domcontentloaded",
+                timeout=settings.navigation_timeout_ms,
+            )
+            if response is None or response.status >= 400:
+                return False
+            username = page.locator("input#username, input[name='username']")
+            if not await username.is_visible():
+                return False
+        except Exception:
+            return False
+
+    return True
 
 
 async def ensure_base_user(page) -> bool:
@@ -591,7 +614,7 @@ async def _add_address_if_needed(page, required_street: str | None = None) -> bo
         field = await resolve(page, {"label": label, "exact": False})
         if field is None:
             return False
-        await _fill(page, target, value)
+        await _fill(page, {"label": label, "exact": False}, value)
 
     submit = await resolve(page, {"css": "#submitButton"})
     if submit is None:
@@ -1038,7 +1061,13 @@ async def _complete_order_via_api(page) -> bool:
                         return {
                             ok: false,
                             stage: 'checkout',
-                            status: checkout.response.status
+                            status: checkout.response.status,
+                            diagnostic:
+                                'Checkout recusado: HTTP ' +
+                                checkout.response.status +
+                                (checkout.body
+                                    ? ' | resposta: ' + JSON.stringify(checkout.body).slice(0, 1200)
+                                    : '')
                         };
                     }
 
@@ -1055,6 +1084,18 @@ async def _complete_order_via_api(page) -> bool:
         )
 
         if not result or not result.get("ok"):
+            diagnostic = (
+                result.get("diagnostic")
+                if isinstance(result, dict)
+                else None
+            )
+            try:
+                await page.evaluate(
+                    "(value) => { window.__ambolsFixtureDiagnostic = value }",
+                    diagnostic or "Fixture de pedido falhou sem diagnóstico.",
+                )
+            except Exception:
+                pass
             return False
 
         route = f"/#/order-completion/{result['orderId']}"
@@ -1222,5 +1263,17 @@ async def prepare_precondition(page, scenario: dict) -> tuple[bool, str]:
             or "há pelo menos um pedido no histórico" in precondition
         ):
             if not await ensure_completed_order(page):
+                diagnostic = None
+                try:
+                    diagnostic = await page.evaluate(
+                        "() => window.__ambolsFixtureDiagnostic || null"
+                    )
+                except Exception:
+                    pass
+                if diagnostic:
+                    return False, (
+                        "Pré-condição de pedido concluído não pôde ser preparada. "
+                        + str(diagnostic)
+                    )
                 return False, "Pré-condição de pedido concluído não pôde ser preparada."
     return True, ""
