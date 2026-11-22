@@ -102,8 +102,8 @@ async def _run_scenario(scenario: dict) -> dict:
 
         if not prepared:
             execution["final_result"] = preparation_error
-            execution["status"] = "FAILED"
-            print(f"[ERROR] {scenario['id']} | pré-condição | {preparation_error}")
+            execution["status"] = "AUTOMATION_ERROR"
+            print(f"[AUTOMATION_ERROR] {scenario['id']} | pré-condição | {preparation_error}")
             out = settings.report_dir / scenario["id"]
             save_execution(out.with_suffix(".json"), execution)
             save_report(out.with_suffix(".md"), scenario, execution)
