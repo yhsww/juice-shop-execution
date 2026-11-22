@@ -890,6 +890,13 @@ async def ensure_address(page, select: bool = False, required_street: str | None
     if not select:
         return True
 
+    # Re-resolve the real checkout control after Angular has settled. The
+    # precondition must leave the page in the same observable state a user
+    # would see before choosing the address.
+    radio = await _wait_for_address_option(page)
+    if radio is None:
+        return False
+
     # Angular stores the selected address id in component state and enables
     # Continue only after that state changes. Prefer the real radio, then
     # use its table row as the generic interaction fallback.
@@ -1072,12 +1079,21 @@ async def ensure_card(page) -> bool:
     if submit is None:
         return False
     await _click(submit)
-    await page.wait_for_timeout(700)
 
-    return await resolve(
-        page,
-        {"role": "radio", "text": "0002", "exact": False},
-    ) is not None
+    # Do not rely on a fixed sleep. Wait for the observable checkout state
+    # produced by the save operation and re-resolve the control after Angular
+    # replaces the form/table DOM.
+    deadline = __import__("time").monotonic() + settings.action_timeout_ms / 1000
+    while __import__("time").monotonic() < deadline:
+        card = await resolve(
+            page,
+            {"role": "radio", "text": "0002", "exact": False},
+        )
+        if card is not None and await card.is_visible():
+            return True
+        await page.wait_for_timeout(150)
+
+    return False
 
 
 async def ensure_payment(page) -> bool:
@@ -1105,8 +1121,19 @@ async def ensure_order_summary(page) -> bool:
     if continue_button is None:
         return False
     await _click(continue_button)
-    await page.wait_for_timeout(700)
-    return "/#/order-summary" in page.url
+
+    deadline = __import__("time").monotonic() + settings.action_timeout_ms / 1000
+    while __import__("time").monotonic() < deadline:
+        if "/#/order-summary" in page.url:
+            place = await resolve(
+                page,
+                {"role": "button", "name": "Place your order and pay", "exact": False},
+            )
+            if place is not None and await place.is_visible():
+                return True
+        await page.wait_for_timeout(150)
+
+    return False
 
 
 async def ensure_completed_order(page) -> bool:
