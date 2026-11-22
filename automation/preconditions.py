@@ -985,12 +985,28 @@ async def _complete_order_via_api(page) -> bool:
     """
     try:
         if not await ensure_basket(page):
+            await page.evaluate(
+                "() => { window.__ambolsFixtureDiagnostic = 'Fixture: não foi possível preparar o carrinho.' }"
+            )
             return False
         if not await _ensure_address_via_api(page):
+            await page.evaluate(
+                "() => { window.__ambolsFixtureDiagnostic = 'Fixture: não foi possível preparar o endereço via API.' }"
+            )
             return False
         if not await _ensure_card_via_api(page):
+            await page.evaluate(
+                "() => { window.__ambolsFixtureDiagnostic = 'Fixture: não foi possível preparar o cartão via API.' }"
+            )
             return False
-    except Exception:
+    except Exception as error:
+        try:
+            await page.evaluate(
+                "(value) => { window.__ambolsFixtureDiagnostic = value }",
+                "Fixture: exceção durante preparação: " + str(error),
+            )
+        except Exception:
+            pass
         return False
 
     headers = await _auth_headers(page)
@@ -1121,6 +1137,21 @@ async def _complete_order_via_api(page) -> bool:
                 if isinstance(result, dict)
                 else None
             )
+            if not diagnostic and isinstance(result, dict):
+                diagnostic = (
+                    "Fixture checkout falhou na etapa: "
+                    + str(result.get("stage") or "desconhecida")
+                    + (
+                        " | HTTP " + str(result.get("status"))
+                        if result.get("status") is not None
+                        else ""
+                    )
+                    + (
+                        " | erro: " + str(result.get("error"))
+                        if result.get("error")
+                        else ""
+                    )
+                )
             try:
                 await page.evaluate(
                     "(value) => { window.__ambolsFixtureDiagnostic = value }",
