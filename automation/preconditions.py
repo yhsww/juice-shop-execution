@@ -1191,12 +1191,18 @@ async def ensure_completed_order(page) -> bool:
                 pass
             return True
         try:
-            printable = await resolve(
-                page,
-                {"role": "button", "name": "Print order confirmation", "exact": False},
-            )
-            if printable is not None and await printable.is_visible():
-                return True
+            # A printable button can exist on the Angular shell even when the
+            # confirmation identifier was not resolved. Treat only the
+            # parameterized order-completion route as evidence of a completed
+            # order; otherwise the API fixture below must establish the
+            # persisted order and its confirmation id.
+            if "/#/order-completion/" in page.url:
+                printable = await resolve(
+                    page,
+                    {"role": "button", "name": "Print order confirmation", "exact": False},
+                )
+                if printable is not None and await printable.is_visible():
+                    return True
         except Exception:
             pass
         await page.wait_for_timeout(150)
