@@ -205,6 +205,21 @@ async def _login(page, email: str, password: str) -> bool:
             }"""
         )
 
+        # Juice Shop still exposes legacy server-rendered routes (for example
+        # /profile) that authenticate through the historical token cookie,
+        # while the Angular SPA stores the same JWT in localStorage. Bridge
+        # the two representations after a real login.
+        if browser_token or token:
+            try:
+                await page.context.add_cookies([{
+                    "name": "token",
+                    "value": str(browser_token or token),
+                    "url": settings.base_url,
+                    "path": "/",
+                }])
+            except Exception:
+                pass
+
         return bool(browser_token or token)
 
     except Exception:
@@ -343,7 +358,7 @@ async def _auth_headers(page) -> dict:
     return headers
 
 
-async def _ensure_address_via_api(page) -> bool:
+async def _ensure_address_via_api(page, required_street: str | None = None) -> bool:
     """Ensure one persisted address exists for the authenticated fixture user.
 
     The checkout UI reads addresses from GET /api/Addresss. The official
@@ -357,7 +372,7 @@ async def _ensure_address_via_api(page) -> bool:
         "fullName": "Cliente Teste",
         "mobileNum": 8599999999,
         "zipCode": "60000000",
-        "streetAddress": "Rua Teste, 100",
+        "streetAddress": requiredStreet || "Rua Teste, 100",
         "city": "Fortaleza",
         "state": "CE",
         "country": "Brazil",
@@ -414,11 +429,20 @@ async def _ensure_address_via_api(page) -> bool:
                     // address owned by the authenticated user.
                     const existing = await readAddresses();
                     if (existing.ok && existing.addresses.length > 0) {
-                        return {
-                            ok: true,
-                            reused: true,
-                            id: existing.addresses[0].id
-                        };
+                        const wantedStreet = String(requiredStreet || "").trim().toLowerCase();
+                        const match = wantedStreet
+                            ? existing.addresses.find(address =>
+                                String(address && address.streetAddress || "").trim().toLowerCase() === wantedStreet
+                              )
+                            : existing.addresses[0];
+
+                        if (match) {
+                            return {
+                                ok: true,
+                                reused: true,
+                                id: match.id
+                            };
+                        }
                     }
 
                     const postResponse = await request({
@@ -514,7 +538,7 @@ async def _ensure_address_via_api(page) -> bool:
     except Exception:
         return False
 
-async def _add_address_if_needed(page) -> bool:
+async def _add_address_if_needed(page, required_street: str | None = None) -> bool:
     """Ensure a persisted address exists for the current authenticated user.
 
     This helper prepares the DATA precondition only. It deliberately does not
@@ -525,7 +549,7 @@ async def _add_address_if_needed(page) -> bool:
     """
     # 1) Prefer the authenticated REST API. A persisted address is the actual
     # precondition; rendering/selection is handled later by ensure_address().
-    if await _ensure_address_via_api(page):
+    if await _ensure_address_via_api(page, required_street):
         return True
 
     # 2) UI fallback for environments where the REST fixture is unavailable.
@@ -667,12 +691,12 @@ async def _restore_address_selection_ui(page) -> bool:
     return False
 
 
-async def ensure_address(page, select: bool = False) -> bool:
+async def ensure_address(page, select: bool = False, required_street: str | None = None) -> bool:
     await page.goto(
         f"{settings.base_url}/#/address/select",
         wait_until="domcontentloaded",
     )
-    if not await _add_address_if_needed(page):
+    if not await _add_address_if_needed(page, required_street):
         return False
 
     # A persisted address is not enough for checkout automation: the Angular
@@ -953,8 +977,15 @@ async def prepare_precondition(page, scenario: dict) -> tuple[bool, str]:
             if not await ensure_basket(page):
                 return False, "Pré-condição de carrinho não pôde ser preparada."
 
+        # Concrete address names in the precondition are treated as
+        # data requirements, not scenario-specific automation rules.
+        required_street = None
+        street_match = __import__("re").search(r"endereço\s+([^;,.]+(?:,\s*\d+)?)", precondition, flags=__import__("re").IGNORECASE)
+        if street_match:
+            required_street = street_match.group(1).strip()
+
         if "há endereço cadastrado" in precondition:
-            if not await ensure_address(page, select=False):
+            if not await ensure_address(page, select=False, required_street=required_street):
                 return False, "Pré-condição de endereço cadastrado não pôde ser preparada."
 
         needs_selected_address = (
@@ -962,7 +993,7 @@ async def prepare_precondition(page, scenario: dict) -> tuple[bool, str]:
             or "endereço selecionado" in precondition
         )
         if needs_selected_address:
-            if not await ensure_address(page, select=True):
+            if not await ensure_address(page, select=True, required_street=required_street):
                 return False, "Pré-condição de endereço selecionado não pôde ser preparada."
 
         needs_delivery = (
