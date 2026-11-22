@@ -20,8 +20,13 @@ class UIState:
 
 MESSAGE_SELECTORS = (
     '[role="alert"]',
+    '[aria-live]:visible',
+    '[role="status"]',
     '.mat-mdc-snack-bar-label',
     '.mat-snack-bar-container',
+    '.mat-mdc-form-field-error',
+    'mat-error',
+    '.mat-error',
     '.cdk-overlay-container [role="status"]',
 )
 
@@ -64,6 +69,16 @@ async def _controls(page: Page) -> tuple[str, ...]:
                 aria = " ".join((await node.get_attribute("aria-label") or "").split())
                 title = " ".join((await node.get_attribute("title") or "").split())
                 value = " ".join((await node.get_attribute("value") or "").split())
+                # Form controls often expose important behavior only through
+                # their current value; input.value is not part of body.inner_text().
+                # Include it in the black-box control fingerprint so assertions
+                # can validate entered data without page-specific DOM hacks.
+                text_value = value
+                if not text_value:
+                    try:
+                        text_value = " ".join((await node.input_value()).split())
+                    except Exception:
+                        pass
                 checked = await node.get_attribute("aria-checked")
                 disabled = await node.get_attribute("disabled")
                 label = text or aria or title or value
@@ -72,6 +87,8 @@ async def _controls(page: Page) -> tuple[str, ...]:
                 if not label:
                     continue
                 state = []
+                if text_value and text_value.casefold() != label.casefold():
+                    state.append(f"value={text_value.casefold()}")
                 if checked is not None:
                     state.append(f"checked={checked}")
                 if disabled is not None:
