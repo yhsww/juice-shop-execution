@@ -184,6 +184,9 @@ async def _run_scenario(scenario: dict) -> dict:
                 screenshot=screenshot,
                 error=result.error,
                 timestamp=timestamp(),
+                visible_text_before=(result.state_before.visible_text if result.state_before else ""),
+                visible_text_after=(result.state_after.visible_text if result.state_after else ""),
+                messages=result.messages,
             )
             execution["steps"].append(evidence.__dict__)
 
