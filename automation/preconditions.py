@@ -205,7 +205,44 @@ async def _login(page, email: str, password: str) -> bool:
             }"""
         )
 
-        return bool(browser_token or token)
+        session_token = browser_token or token
+        if not session_token:
+            return False
+
+        # The Angular SPA authenticates with the bearer token, while the
+        # legacy /profile route authenticates through req.cookies.token.
+        # Bridge the two representations generically after every successful
+        # login so profile-dependent scenarios do not rely on a particular
+        # navigation timing.
+        try:
+            await page.context.add_cookies([{
+                "name": "token",
+                "value": str(session_token),
+                "url": settings.base_url,
+                "path": "/",
+            }])
+        except Exception:
+            pass
+
+        # Warm the protected API using the same token. In Juice Shop versions
+        # that maintain an in-memory authenticated-token registry, this gives
+        # the server a chance to synchronize the JWT before a legacy route is
+        # requested. Authentication remains successful if the endpoint itself
+        # is temporarily unavailable.
+        for _ in range(8):
+            try:
+                response = await page.request.get(
+                    f"{settings.base_url}/rest/user/whoami",
+                    headers={"Authorization": f"Bearer {session_token}"},
+                    timeout=1000,
+                )
+                if response.ok:
+                    break
+            except Exception:
+                pass
+            await page.wait_for_timeout(100)
+
+        return True
 
     except Exception:
         return False
