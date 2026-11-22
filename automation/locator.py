@@ -235,6 +235,59 @@ async def _associated_field(page: Page, label: str) -> Locator | None:
     return None
 
 
+async def _legacy_semantic_field(page: Page, label: str) -> Locator | None:
+    """Resolve legacy/native form controls from semantic field metadata."""
+    wanted = _norm(label)
+    if not wanted:
+        return None
+
+    controls = page.locator(
+        "input:not([type='hidden']), textarea, select, "
+        "[contenteditable='true'], [role='textbox'], [role='combobox']"
+    )
+    try:
+        count = await controls.count()
+    except Exception:
+        return None
+
+    for index in range(count):
+        control = controls.nth(index)
+        try:
+            if not await control.is_visible():
+                continue
+
+            attributes = [
+                await control.get_attribute("name"),
+                await control.get_attribute("id"),
+                await control.get_attribute("aria-label"),
+                await control.get_attribute("placeholder"),
+                await control.get_attribute("title"),
+            ]
+            if any(
+                _semantic_text_match(wanted, attribute)
+                for attribute in attributes
+                if attribute
+            ):
+                return control
+
+            context = await control.evaluate(
+                """(el) => {
+                    const field = el.closest(
+                        'form .form-group, form .form-field, '
+                        'fieldset, .mdl-textfield, [class*="field"], '
+                        '[class*="form-group"]'
+                    );
+                    return field ? field.textContent || '' : '';
+                }"""
+            )
+            if _semantic_text_match(wanted, context):
+                return control
+        except Exception:
+            continue
+
+    return None
+
+
 async def _semantic_control_candidates(page: Page, value: str) -> list[Locator]:
     """
     Generic fallback for Angular Material/native controls whose accessible
@@ -482,6 +535,12 @@ async def _resolve_once(page: Page, target: dict) -> Locator | None:
         associated = await _associated_field(page, str(label))
         if associated is not None:
             candidates.insert(0, associated)
+
+        # Legacy server-rendered forms can expose semantic identity through
+        # name/id/aria-label even when label association is incomplete.
+        legacy = await _legacy_semantic_field(page, str(label))
+        if legacy is not None:
+            candidates.insert(0, legacy)
 
     # 2. Label-based controls.
     if label:
