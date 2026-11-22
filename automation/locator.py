@@ -1074,7 +1074,10 @@ async def resolve(page: Page, target: dict) -> Locator | None:
     after navigation, data loading or change detection; retaining the original
     Locator list can therefore keep searching a stale DOM representation.
     """
-    attempts = 8
+    # SPA/Angular data-backed views can become semantically available after
+    # the route has already changed. Keep the retry budget bounded, but give
+    # the UI enough time to hydrate before declaring a locator unavailable.
+    attempts = 16
     for attempt in range(attempts):
         result = await _resolve_once(page, target)
         if result is not None:
