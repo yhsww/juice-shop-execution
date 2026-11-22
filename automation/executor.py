@@ -88,49 +88,64 @@ async def _scroll_into_view(locator) -> None:
 
 async def _dismiss_blocking_overlay(page) -> bool:
     """Dismiss only a clearly blocking, dismissible overlay."""
-    candidates = page.locator("[role='dialog']:visible, .cdk-overlay-pane:visible, .mat-mdc-dialog-container:visible")
+    candidates = page.locator(
+        "[role='dialog']:visible, .cdk-overlay-pane:visible, "
+        ".mat-mdc-dialog-container:visible"
+    )
     try:
         count = await candidates.count()
     except Exception:
         return False
+
     for index in range(count):
         dialog = candidates.nth(index)
         try:
             if not await dialog.is_visible():
                 continue
+
             close = dialog.get_by_role("button", name="Dismiss", exact=True)
             if not await close.count():
                 close = dialog.get_by_role("button", name="Close", exact=True)
             if not await close.count():
-                close = dialog.locator("[aria-label='Dismiss'], [aria-label='Close']")
+                close = dialog.locator(
+                    "[aria-label='Dismiss'], [aria-label='Close']"
+                )
+
             if await close.count() and await close.first.is_visible():
                 await close.first.click(timeout=1200)
                 await page.wait_for_timeout(120)
                 return True
-
-        # Juice Shop's cookie banner is a non-modal overlay and therefore is
-        # not exposed as role=dialog. Dismiss it only through its own semantic
-        # cookie-consent affordance.
-        cookie = page.locator(
-            "#cookieconsent, .cc-window, [class*='cookieconsent'], "
-            "[class*='cc-window']"
-        )
-        try:
-            for index in range(await cookie.count()):
-                banner = cookie.nth(index)
-                if not await banner.is_visible():
-                    continue
-                button = banner.get_by_role("button", name="Me want it!", exact=False)
-                if not await button.count():
-                    button = banner.locator("button, [role='button']").filter(has_text="Me want it")
-                if await button.count() and await button.first.is_visible():
-                    await button.first.click(timeout=1200)
-                    await page.wait_for_timeout(150)
-                    return True
-        except Exception:
-            pass
         except Exception:
             continue
+
+    # Cookie banner is a non-modal overlay.
+    cookie = page.locator(
+        "#cookieconsent, .cc-window, [class*='cookieconsent'], "
+        "[class*='cc-window']"
+    )
+    try:
+        for index in range(await cookie.count()):
+            banner = cookie.nth(index)
+            if not await banner.is_visible():
+                continue
+
+            button = banner.get_by_role(
+                "button",
+                name="Me want it!",
+                exact=False,
+            )
+            if not await button.count():
+                button = banner.locator(
+                    "button, [role='button']"
+                ).filter(has_text="Me want it")
+
+            if await button.count() and await button.first.is_visible():
+                await button.first.click(timeout=1200)
+                await page.wait_for_timeout(150)
+                return True
+    except Exception:
+        pass
+
     return False
 
 async def _click(locator) -> None:
