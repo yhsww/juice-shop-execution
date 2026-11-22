@@ -1968,10 +1968,6 @@
       "requirement": "A navegação de retorno deve preservar o estado necessário do checkout.",
       "actions": [
         {
-          "type": "NAVIGATE",
-          "route": "/#/delivery-method"
-        },
-        {
           "type": "CLICK",
           "target": {
             "role": "radio",
@@ -2001,11 +1997,7 @@
         },
         {
           "type": "WAIT",
-          "milliseconds": 500,
-          "target": {
-            "text": "Standard Delivery",
-            "exact": false
-          }
+          "milliseconds": 500
         },
         {
           "type": "ASSERT_SELECTED",
@@ -2347,13 +2339,6 @@
           "type": "CLICK",
           "target": {
             "role": "button",
-            "name": "Logout"
-          }
-        },
-        {
-          "type": "CLICK",
-          "target": {
-            "role": "link",
             "name": "Logout"
           }
         },
