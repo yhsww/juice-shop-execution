@@ -74,6 +74,7 @@ def main() -> int:
     group.add_argument('--scenario', action='append', help='ID do cenário. Pode ser repetido.')
     group.add_argument('--domain', action='append', help='Domínio dos cenários. Pode ser repetido (ex.: CHK, IDT).')
     group.add_argument('--all', action='store_true', help='Executa todos os cenários cadastrados.')
+    group.add_argument('--discover', action='store_true', help='Descobre rotas, estados e comportamentos observáveis e gera requisitos candidatos.')
     parser.add_argument('--start-app', action='store_true', help='Inicia o Juice Shop pelo Docker Compose incorporado se a aplicação ainda não estiver disponível.')
     parser.add_argument('--wait-app', type=int, default=90, help='Tempo máximo em segundos para aguardar a aplicação (padrão: 90).')
     parser.add_argument('--stop-app', action='store_true', help='Encerra o container após os testes; requer --start-app.')
@@ -86,6 +87,9 @@ def main() -> int:
 
     try:
         ensure_juice_shop(start_if_needed=args.start_app, wait_seconds=args.wait_app)
+        if args.discover:
+            from recovery.pipeline import main as recovery_main
+            return recovery_main()
         ids = None if args.all or args.domain else set(args.scenario or [])
         domains = None if args.all or args.scenario else {item.upper() for item in (args.domain or [])}
         results = asyncio.run(run_selected(ids=ids, domains=domains))
