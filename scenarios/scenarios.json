@@ -1662,7 +1662,7 @@
       "domain": "CHK",
       "name": "Aplicar cupom no checkout",
       "actor": "Cliente",
-      "flow": "Informar o código TESTE1234 no campo de cupom, solicitar o resgate e verificar a rejeição do cupom inválido.",
+      "flow": "Informar o código TESTE12345 no campo de cupom, solicitar o resgate e verificar a rejeição do cupom inválido.",
       "precondition": "Cliente autenticado; etapa de pagamento acessível; campo de cupom disponível.",
       "data": "Cupom inválido de teste: TESTE12345.",
       "coherent": "Sim.",
@@ -1695,8 +1695,11 @@
         }
       ],
       "expected": {
-        "text_contains": [
-          "Invalid coupon"
+        "step_text_contains": [
+          {
+            "step": 3,
+            "text": "Invalid coupon"
+          }
         ]
       }
     },
