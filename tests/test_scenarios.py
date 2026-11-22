@@ -7,11 +7,11 @@ def test_scenario_inventory_is_complete_and_unique():
     scenarios = load_scenarios(Path(__file__).resolve().parents[1] / "scenarios")
     ids = [scenario["id"] for scenario in scenarios]
 
-    assert len(scenarios) == 69
+    assert len(scenarios) == 75
     assert len(ids) == len(set(ids))
 
     domains = {scenario["domain"] for scenario in scenarios}
-    assert {"ADM", "CAR", "CAT", "CHK", "IDT"} <= domains
+    assert {"ADM", "CAR", "CAT", "CHK", "IDT", "PER"} <= domains
 
 
 def test_scenarios_have_manual_report_fields():
