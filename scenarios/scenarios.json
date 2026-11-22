@@ -2076,22 +2076,20 @@
         {
           "type": "CLICK",
           "target": {
-            "text": "Standard Delivery",
+            "role": "radio",
+            "name": "Standard Delivery",
             "exact": false
           }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 500
         },
         {
           "type": "CLICK",
           "target": {
             "role": "radio",
             "name": "0002",
-            "exact": false
-          }
-        },
-        {
-          "type": "CLICK",
-          "target": {
-            "text": "0002",
             "exact": false
           }
         },
