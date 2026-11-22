@@ -244,7 +244,6 @@ async def _login(page, email: str, password: str) -> bool:
                 pass
 
         return bool(session_token)
-        return bool(browser_token or token)
 
     except Exception:
         return False
@@ -461,7 +460,7 @@ async def _ensure_address_via_api(page, required_street: str | None = None) -> b
     headers = await _auth_headers(page)
     payload = {
         "fullName": "Cliente Teste",
-        "mobileNum": 8599999999,
+        "mobileNum": "8599999999",
         "zipCode": "60000000",
         "streetAddress": required_street or "Rua Teste, 100",
         "city": "Fortaleza",
@@ -626,8 +625,37 @@ async def _ensure_address_via_api(page, required_street: str | None = None) -> b
             },
         )
 
-        return bool(result and result.get("ok"))
-    except Exception:
+        if result and result.get("ok"):
+            return True
+
+        diagnostic = None
+        if isinstance(result, dict):
+            diagnostic = (
+                "Fixture endereço API falhou"
+                + (f" | HTTP {result.get('status')}" if result.get("status") is not None else "")
+                + (f" | erro: {result.get('error')}" if result.get("error") else "")
+                + (
+                    " | resposta: " + json.dumps(result.get("body"), ensure_ascii=False)[:1000]
+                    if result.get("body") is not None
+                    else ""
+                )
+            )
+        try:
+            await page.evaluate(
+                "(value) => { window.__ambolsFixtureDiagnostic = value }",
+                diagnostic or "Fixture endereço API falhou sem diagnóstico.",
+            )
+        except Exception:
+            pass
+        return False
+    except Exception as error:
+        try:
+            await page.evaluate(
+                "(value) => { window.__ambolsFixtureDiagnostic = value }",
+                "Fixture endereço API: exceção: " + str(error),
+            )
+        except Exception:
+            pass
         return False
 
 async def _add_address_if_needed(page, required_street: str | None = None) -> bool:
@@ -1085,7 +1113,7 @@ async def _complete_order_via_api(page) -> bool:
                     const basketId = basket && basket.id;
                     if (basketId == null) return { ok: false, stage: 'basket-id' };
 
-                    const addresses = await request(baseUrl + '/api/Addresss/');
+                    const addresses = await request(baseUrl + '/api/Addresss');
                     const cards = await request(baseUrl + '/api/Cards');
                     const deliveries = await request(baseUrl + '/api/Deliverys');
 
