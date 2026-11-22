@@ -695,6 +695,41 @@ async def _resolve_once(page: Page, target: dict) -> Locator | None:
             except Exception:
                 continue
 
+    # Generic semantic attribute fallback for controls whose accessible
+    # name is exposed only through aria-label/title. This is intentionally
+    # independent of any page, route, or scenario.
+    for value in (name, label, text, placeholder):
+        if not value:
+            continue
+        wanted = _norm(str(value))
+        if not wanted:
+            continue
+        for selector in (
+            "button", "a", "input", "textarea", "select",
+            "[role='button']", "[role='link']", "[role='textbox']",
+            "[role='radio']", "[role='checkbox']",
+        ):
+            nodes = page.locator(selector)
+            try:
+                count = await nodes.count()
+            except Exception:
+                continue
+            for index in range(count):
+                node = nodes.nth(index)
+                try:
+                    if not await node.is_visible():
+                        continue
+                    attrs = [
+                        await node.get_attribute("aria-label"),
+                        await node.get_attribute("title"),
+                        await node.get_attribute("name"),
+                        await node.get_attribute("id"),
+                    ]
+                    if any(_semantic_text_match(wanted, attr) for attr in attrs if attr):
+                        candidates.append(node)
+                except Exception:
+                    continue
+
     # 8. Native form fallback using label/control relationships.
     # This deliberately works from the target text rather than scenario IDs,
     # and also covers legacy pages where Playwright's get_by_label() does not
