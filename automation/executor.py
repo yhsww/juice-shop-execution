@@ -678,15 +678,55 @@ async def execute(page: Page, action: dict) -> ActionResult:
     except Exception as exc:
         error = str(exc)
 
-    # Angular/Material can finish rendering after the action returns. Wait for
-    # a generic settled UI state before recording the observation.
-    after = await _safe_observe(page, before)
+    # Capture the first post-action state separately from the eventual
+    # stable state. Angular Material snackbars/alerts are transient and can
+    # disappear during the stability window; waiting for stability before
+    # observing would therefore erase valid black-box evidence.
+    immediate_states: list[UIState] = []
+    first_after = await _safe_observe(page, before)
+    immediate_states.append(first_after)
+
+    # Observe a short generic post-action window. This is deliberately
+    # framework-level, not scenario-specific: it gives transient feedback a
+    # chance to become observable without turning every action into a long
+    # fixed sleep.
+    transient_deadline = monotonic() + 0.8
+    while monotonic() < transient_deadline:
+        await page.wait_for_timeout(120)
+        snapshot = await _safe_observe(page, before)
+        immediate_states.append(snapshot)
+
     after = await wait_for_stable_ui(
         page,
-        initial=after,
+        initial=immediate_states[-1],
         timeout_ms=1200,
         sample_interval_ms=120,
     )
+
+    transient_messages: list[str] = []
+    transient_text: list[str] = []
+    for snapshot in immediate_states:
+        for message in snapshot.messages:
+            if message and message not in transient_messages:
+                transient_messages.append(message)
+        if snapshot.visible_text and snapshot.visible_text not in transient_text:
+            transient_text.append(snapshot.visible_text)
+
+    observed = describe_change(before, after)
+    if transient_messages:
+        observed = (
+            observed + " "
+            + "Mensagem transitória: "
+            + " | ".join(transient_messages[:5])
+        )
+    elif transient_text:
+        # Keep a compact transient-text signal for feedback rendered outside
+        # the standard alert/snackbar selectors.
+        observed = (
+            observed + " "
+            + "Texto observado durante a ação: "
+            + " | ".join(transient_text[-2:])[:900]
+        )
 
     url_after = str(action.get("_new_page_url") or after.url)
 
@@ -696,10 +736,11 @@ async def execute(page: Page, action: dict) -> ActionResult:
         data=data,
         url_before=before.url,
         url_after=url_after,
-        observed_result=describe_change(before, after),
+        observed_result=observed,
         changed=meaningful_change(before, after),
         success=error is None,
         error=error,
+        messages=tuple(transient_messages[:20]),
         state_before=before,
         state_after=after,
     )
