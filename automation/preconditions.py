@@ -227,19 +227,12 @@ async def _login(page, email: str, password: str) -> bool:
             # request itself is unauthenticated. Make one authenticated API
             # request with the same bearer token before entering a legacy route.
             try:
-                await page.evaluate(
-                    """async ({ baseUrl, token }) => {
-                        try {
-                            await fetch(baseUrl + "/rest/user/whoami", {
-                                method: "GET",
-                                headers: { Authorization: "Bearer " + token },
-                                credentials: "include"
-                            })
-                        } catch (_) {}
-                    }""",
-                    {"baseUrl": settings.base_url, "token": str(session_token)},
-                )
-                await page.wait_for_timeout(100)
+                # Do not merely fire whoami once: Juice Shop registers the JWT
+                # in its in-memory authenticated-user map asynchronously. The
+                # first protected API request can therefore legitimately race
+                # that registration and receive 401. Warm the authenticated
+                # backend session until whoami confirms the token is usable.
+                await _wait_for_authenticated_api(page, session_token)
             except Exception:
                 pass
 
@@ -247,6 +240,41 @@ async def _login(page, email: str, password: str) -> bool:
 
     except Exception:
         return False
+
+async def _wait_for_authenticated_api(page, token: str, timeout_ms: int = 3000) -> bool:
+    """Wait until the backend has registered the current JWT.
+
+    Juice Shop updates its in-memory authenticated-user registry asynchronously
+    from the JWT middleware. A successful login response/localStorage token is
+    therefore not sufficient evidence that the next protected REST call is
+    ready. Polling the same protected endpoint makes the fixture setup
+    deterministic without depending on a scenario-specific delay.
+    """
+    deadline = __import__("time").monotonic() + timeout_ms / 1000
+    while __import__("time").monotonic() < deadline:
+        try:
+            status = await page.evaluate(
+                """async ({ baseUrl, token }) => {
+                    try {
+                        const response = await fetch(baseUrl + "/rest/user/whoami", {
+                            method: "GET",
+                            headers: { Authorization: "Bearer " + token },
+                            credentials: "include"
+                        });
+                        return response.status;
+                    } catch (_) {
+                        return 0;
+                    }
+                }""",
+                {"baseUrl": settings.base_url, "token": str(token)},
+            )
+            if status == 200:
+                return True
+        except Exception:
+            pass
+        await page.wait_for_timeout(100)
+    return False
+
 
 async def ensure_user(page, email: str, password: str) -> bool:
     if await _login(page, email, password):
@@ -482,17 +510,34 @@ async def _ensure_address_via_api(page, required_street: str | None = None) -> b
         result = await page.evaluate(
             """async ({ url, payload, headers }) => {
                 const request = async (options) => {
-                    const controller = new AbortController();
-                    const timer = setTimeout(() => controller.abort(), 5000);
-                    try {
-                        return await fetch(url, {
-                            credentials: "include",
-                            ...options,
-                            signal: controller.signal
-                        });
-                    } finally {
-                        clearTimeout(timer);
+                    let lastResponse = null;
+
+                    // Protected Juice Shop resources can briefly return 401
+                    // immediately after login while the server registers the
+                    // JWT in authenticatedUsers. Retry only that transient
+                    // authentication state; other HTTP errors remain visible
+                    // to the fixture diagnostic.
+                    for (let attempt = 0; attempt < 5; attempt += 1) {
+                        const controller = new AbortController();
+                        const timer = setTimeout(() => controller.abort(), 5000);
+                        try {
+                            lastResponse = await fetch(url, {
+                                credentials: "include",
+                                ...options,
+                                signal: controller.signal
+                            });
+                        } finally {
+                            clearTimeout(timer);
+                        }
+
+                        if (lastResponse.status !== 401 || attempt === 4) {
+                            return lastResponse;
+                        }
+
+                        await new Promise(resolve => setTimeout(resolve, 150));
                     }
+
+                    return lastResponse;
                 };
 
                 const readAddresses = async () => {
