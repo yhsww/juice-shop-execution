@@ -204,6 +204,33 @@ async def _associated_field(page: Page, label: str) -> Locator | None:
         except Exception:
             continue
 
+    # Legacy Juice Shop profile forms expose the semantic field through
+    # aria-label even when the visible <label> relationship is not exposed
+    # consistently by Playwright. Match the requested semantic label against
+    # the control's accessible metadata before broader fallbacks.
+    controls = page.locator("input, textarea, select, [role='textbox'], [role='combobox']")
+    try:
+        control_count = await controls.count()
+    except Exception:
+        control_count = 0
+
+    for index in range(control_count):
+        control = controls.nth(index)
+        try:
+            if not await control.is_visible():
+                continue
+            attrs = [
+                await control.get_attribute("aria-label"),
+                await control.get_attribute("placeholder"),
+                await control.get_attribute("name"),
+                await control.get_attribute("id"),
+                await control.get_attribute("title"),
+            ]
+            if any(_semantic_text_match(wanted, attr) for attr in attrs if attr):
+                return control
+        except Exception:
+            continue
+
     # Angular Material fields may expose the label through a mat-label.
     labels = page.locator("mat-label")
     try:
