@@ -118,8 +118,8 @@ async def _login(page, email: str, password: str) -> bool:
         if email_field is None or password_field is None or login is None:
             return False
 
-        await _fill(email_field, email)
-        await _fill(password_field, password)
+        await _fill(page, {"label": "Email", "exact": False}, email)
+        await _fill(page, {"label": "Password", "exact": False}, password)
 
         # The login request is the authoritative UI->backend authentication
         # boundary. Do not infer authentication merely from a URL transition.
@@ -591,7 +591,7 @@ async def _add_address_if_needed(page, required_street: str | None = None) -> bo
         field = await resolve(page, {"label": label, "exact": False})
         if field is None:
             return False
-        await _fill(field, value)
+        await _fill(page, target, value)
 
     submit = await resolve(page, {"css": "#submitButton"})
     if submit is None:
@@ -876,7 +876,7 @@ async def ensure_card(page) -> bool:
         field = await resolve(page, {"label": label, "exact": False})
         if field is None:
             return False
-        await _fill(field, value)
+        await _fill(page, {"label": label, "exact": False}, value)
 
     month = await resolve(page, {"label": "Expiry Month", "exact": False})
     year = await resolve(page, {"label": "Expiry Year", "exact": False})
