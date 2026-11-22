@@ -24,13 +24,26 @@ def validate(
     """
     checks: list[tuple[bool, str]] = []
 
-    successful_observations = [
-        str(item.get("observed_result") or "")
-        for item in (evidence or [])
+    successful_evidence = [
+        item for item in (evidence or [])
         if item.get("success") is not False
     ]
+
+    # Keep both the final DOM and the state captured immediately after each
+    # action. This is important for transient Angular/Material feedback such
+    # as snackbars, confirmation text, and controls that disappear after a
+    # subsequent render. The stable final state alone is not sufficient.
+    evidence_text: list[str] = []
+    for item in successful_evidence:
+        evidence_text.extend([
+            str(item.get("observed_result") or ""),
+            str(item.get("visible_text_before") or ""),
+            str(item.get("visible_text_after") or ""),
+            " ".join(str(message) for message in (item.get("messages") or [])),
+        ])
+
     observed_text = "\n".join(
-        [state.visible_text, *successful_observations]
+        [state.visible_text, *evidence_text]
     ).casefold()
 
     if expected.get("url_contains"):
