@@ -220,7 +220,11 @@ async def _run_scenario(scenario: dict) -> dict:
         execution["final_visible_text"] = final_state.visible_text
 
         expected = scenario.get("expected", {})
-        valid, validation_message = validate(final_state, expected)
+        valid, validation_message = validate(
+            final_state,
+            expected,
+            evidence=execution["steps"],
+        )
 
         # Some Juice Shop actions intentionally open a new browser page (for
         # example the donation/merchandise links and printable confirmation).
