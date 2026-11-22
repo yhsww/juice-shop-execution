@@ -530,12 +530,26 @@ async def execute(page: Page, action: dict) -> ActionResult:
     # Angular/Material can finish rendering after the action returns. Wait for
     # a generic settled UI state before recording the observation.
     after = await _safe_observe(page, before)
+
+    # Preserve the first post-action observation before waiting for Angular to
+    # settle. This matters for transient UI feedback such as snackbar/toast
+    # messages: they are valid evidence of the action even when they disappear
+    # before the final stable snapshot.
+    immediate_observation = describe_change(before, after)
+
     after = await wait_for_stable_ui(
         page,
         initial=after,
         timeout_ms=1200,
         sample_interval_ms=120,
     )
+
+    stable_observation = describe_change(before, after)
+    observed_result = stable_observation
+    if immediate_observation != stable_observation:
+        observed_result = (
+            f"{immediate_observation} | Estado estável: {stable_observation}"
+        )[:1200]
 
     url_after = str(action.get("_new_page_url") or after.url)
 
