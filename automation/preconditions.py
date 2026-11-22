@@ -380,7 +380,10 @@ async def _auth_headers(page) -> dict:
     return headers
 
 
-async def _ensure_address_via_api(page) -> bool:
+async def _ensure_address_via_api(
+    page,
+    required_street: str | None = None,
+) -> bool:
     """Ensure one persisted address exists for the authenticated fixture user.
 
     The checkout UI reads addresses from GET /api/Addresss. The official
@@ -390,11 +393,12 @@ async def _ensure_address_via_api(page) -> bool:
     authenticated browser session.
     """
     headers = await _auth_headers(page)
+    street = str(required_street or "Rua Teste, 100").strip()
     payload = {
         "fullName": "Cliente Teste",
         "mobileNum": 8599999999,
         "zipCode": "60000000",
-        "streetAddress": "Rua Teste, 100",
+        "streetAddress": street,
         "city": "Fortaleza",
         "state": "CE",
         "country": "Brazil",
@@ -451,11 +455,24 @@ async def _ensure_address_via_api(page) -> bool:
                     // address owned by the authenticated user.
                     const existing = await readAddresses();
                     if (existing.ok && existing.addresses.length > 0) {
-                        return {
-                            ok: true,
-                            reused: true,
-                            id: existing.addresses[0].id
-                        };
+                        const normalizedStreet = String(payload.streetAddress || "")
+                            .trim()
+                            .toLowerCase();
+
+                        const matching = existing.addresses.find(address =>
+                            address &&
+                            String(address.streetAddress || "")
+                                .trim()
+                                .toLowerCase() === normalizedStreet
+                        );
+
+                        if (matching) {
+                            return {
+                                ok: true,
+                                reused: true,
+                                id: matching.id
+                            };
+                        }
                     }
 
                     const postResponse = await request({
@@ -551,7 +568,10 @@ async def _ensure_address_via_api(page) -> bool:
     except Exception:
         return False
 
-async def _add_address_if_needed(page) -> bool:
+async def _add_address_if_needed(
+    page,
+    required_street: str | None = None,
+) -> bool:
     """Ensure a persisted address exists for the current authenticated user.
 
     This helper prepares the DATA precondition only. It deliberately does not
@@ -562,7 +582,9 @@ async def _add_address_if_needed(page) -> bool:
     """
     # 1) Prefer the authenticated REST API. A persisted address is the actual
     # precondition; rendering/selection is handled later by ensure_address().
-    if await _ensure_address_via_api(page):
+    street = str(required_street or "Rua Teste, 100").strip()
+
+    if await _ensure_address_via_api(page, required_street=street):
         return True
 
     # 2) UI fallback for environments where the REST fixture is unavailable.
@@ -594,7 +616,7 @@ async def _add_address_if_needed(page) -> bool:
         ("Name", "Cliente Teste"),
         ("Mobile Number", "8599999999"),
         ("ZIP Code", "60000000"),
-        ("Address", "Rua Teste, 100"),
+        ("Address", street),
         ("City", "Fortaleza"),
         ("State", "CE"),
     ]
@@ -633,7 +655,7 @@ async def _add_address_if_needed(page) -> bool:
     # the SPA time to finish the request, then verify persistence directly.
     deadline = __import__("time").monotonic() + settings.action_timeout_ms / 1000
     while __import__("time").monotonic() < deadline:
-        if await _ensure_address_via_api(page):
+        if await _ensure_address_via_api(page, required_street=street):
             # The Signal Forms save uses Location.back(), but browser history
             # can leave the SPA on /#/address/create when the fallback was
             # entered from a redirected checkout state. The fixture contract is
@@ -704,12 +726,19 @@ async def _restore_address_selection_ui(page) -> bool:
     return False
 
 
-async def ensure_address(page, select: bool = False) -> bool:
+async def ensure_address(
+    page,
+    select: bool = False,
+    required_street: str | None = None,
+) -> bool:
     await page.goto(
         f"{settings.base_url}/#/address/select",
         wait_until="domcontentloaded",
     )
-    if not await _add_address_if_needed(page):
+    if not await _add_address_if_needed(
+        page,
+        required_street=required_street,
+    ):
         return False
 
     # A persisted address is not enough for checkout automation: the Angular
@@ -957,6 +986,21 @@ async def ensure_completed_order(page) -> bool:
     return "/#/order-completion" in page.url
 
 
+def _required_street_from_precondition(precondition: str) -> str | None:
+    """Extract a required street only when the scenario explicitly declares it."""
+    import re
+
+    match = re.search(
+        r"endereço\s+(.+?)\s+cadastrado",
+        precondition,
+        flags=re.IGNORECASE,
+    )
+    if not match:
+        return None
+    value = match.group(1).strip().rstrip(".,;")
+    return value or None
+
+
 async def prepare_precondition(page, scenario: dict) -> tuple[bool, str]:
     """
     Prepare only the state explicitly required by the scenario precondition.
@@ -968,7 +1012,9 @@ async def prepare_precondition(page, scenario: dict) -> tuple[bool, str]:
         return False, "Pré-condição de autenticação não pôde ser preparada."
 
     domain = str(scenario.get("domain", "")).upper()
-    precondition = str(scenario.get("precondition", "")).casefold()
+    precondition_raw = str(scenario.get("precondition", ""))
+    precondition = precondition_raw.casefold()
+    required_street = _required_street_from_precondition(precondition_raw)
 
     if domain == "IDT" and "e-mail informado" in precondition:
         if not await ensure_base_user(page):
@@ -991,7 +1037,11 @@ async def prepare_precondition(page, scenario: dict) -> tuple[bool, str]:
                 return False, "Pré-condição de carrinho não pôde ser preparada."
 
         if "há endereço cadastrado" in precondition:
-            if not await ensure_address(page, select=False):
+            if not await ensure_address(
+                page,
+                select=False,
+                required_street=required_street,
+            ):
                 return False, "Pré-condição de endereço cadastrado não pôde ser preparada."
 
         needs_selected_address = (
@@ -999,7 +1049,11 @@ async def prepare_precondition(page, scenario: dict) -> tuple[bool, str]:
             or "endereço selecionado" in precondition
         )
         if needs_selected_address:
-            if not await ensure_address(page, select=True):
+            if not await ensure_address(
+                page,
+                select=True,
+                required_street=required_street,
+            ):
                 return False, "Pré-condição de endereço selecionado não pôde ser preparada."
 
         needs_delivery = (
