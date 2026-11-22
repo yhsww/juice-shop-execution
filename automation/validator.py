@@ -5,7 +5,7 @@ import re
 from automation.observer import UIState
 
 
-def validate(state: UIState, expected: dict) -> tuple[bool, str]:
+def validate(state: UIState, expected: dict, execution: dict | None = None) -> tuple[bool, str]:
     checks: list[tuple[bool, str]] = []
 
     if expected.get("url_contains"):
@@ -19,6 +19,19 @@ def validate(state: UIState, expected: dict) -> tuple[bool, str]:
     for phrase in expected.get("text_not_contains", []):
         ok = phrase.lower() not in state.visible_text.lower()
         checks.append((ok, f"texto não contém '{phrase}'"))
+
+    for step_number in expected.get("step_changed", []):
+        if not execution:
+            checks.append((False, f"passo {step_number} não disponível para validação"))
+            continue
+        steps = execution.get("steps", [])
+        index = int(step_number) - 1
+        changed = (
+            0 <= index < len(steps)
+            and bool(steps[index].get("changed"))
+            and bool(steps[index].get("success"))
+        )
+        checks.append((changed, f"passo {step_number} produziu mudança observável"))
 
     if not checks:
         return True, "Nenhum critério explícito informado."
