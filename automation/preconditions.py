@@ -1124,9 +1124,22 @@ async def _complete_order_via_api(page) -> bool:
                 "() => { window.__ambolsFixtureDiagnostic = 'Fixture: não foi possível preparar o carrinho.' }"
             )
             return False
-        if not await _ensure_address_via_api(page):
+        # Address persistence is a fixture contract, not an API-specific
+        # implementation detail. Prefer the REST path, but fall back to the
+        # real address UI when the protected API is unavailable in the running
+        # Juice Shop version/session. The fallback is already generic and
+        # verifies persistence through the same address service afterwards.
+        if not await _add_address_if_needed(page):
+            diagnostic = None
+            try:
+                diagnostic = await page.evaluate(
+                    "() => window.__ambolsFixtureDiagnostic || null"
+                )
+            except Exception:
+                pass
             await page.evaluate(
-                "() => { window.__ambolsFixtureDiagnostic = 'Fixture: não foi possível preparar o endereço via API.' }"
+                "(value) => { window.__ambolsFixtureDiagnostic = value }",
+                diagnostic or "Fixture: não foi possível preparar o endereço (API e UI).",
             )
             return False
         if not await _ensure_card_via_api(page):
