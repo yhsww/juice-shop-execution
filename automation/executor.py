@@ -87,12 +87,49 @@ async def _scroll_into_view(locator) -> None:
 
 
 async def _dismiss_blocking_overlay(page) -> bool:
-    """Dismiss only a clearly blocking, dismissible overlay."""
-    candidates = page.locator("[role='dialog']:visible, .cdk-overlay-pane:visible, .mat-mdc-dialog-container:visible")
+    """Dismiss only known, clearly non-functional overlays that block input."""
+    cookie_containers = page.locator(
+        "[aria-label='cookieconsent']:visible, "
+        ".cc-window:visible, .cc-floating:visible, .cc-banner:visible"
+    )
+    try:
+        cookie_count = await cookie_containers.count()
+    except Exception:
+        cookie_count = 0
+
+    # CookieConsent labels are configurable/localized. Prefer the component's
+    # own compliance button rather than guessing its text.
+    for index in range(cookie_count):
+        container = cookie_containers.nth(index)
+        try:
+            if not await container.is_visible():
+                continue
+            buttons = container.locator(
+                ".cc-btn, .cc-compliance button, button, [role='button']"
+            )
+            for button_index in range(await buttons.count()):
+                button = buttons.nth(button_index)
+                if await button.is_visible():
+                    try:
+                        await button.click(timeout=1200)
+                    except Exception:
+                        await button.click(timeout=1200, force=True)
+                    await page.wait_for_timeout(120)
+                    return True
+        except Exception:
+            continue
+
+    # Application dialogs are handled only when an explicit dismiss/close
+    # affordance exists. Never click an arbitrary business-action button.
+    candidates = page.locator(
+        "[role='dialog']:visible, [role='alertdialog']:visible, "
+        ".cdk-overlay-pane:visible, .mat-mdc-dialog-container:visible"
+    )
     try:
         count = await candidates.count()
     except Exception:
         return False
+
     for index in range(count):
         dialog = candidates.nth(index)
         try:
@@ -102,7 +139,9 @@ async def _dismiss_blocking_overlay(page) -> bool:
             if not await close.count():
                 close = dialog.get_by_role("button", name="Close", exact=True)
             if not await close.count():
-                close = dialog.locator("[aria-label='Dismiss'], [aria-label='Close']")
+                close = dialog.locator(
+                    "[aria-label='Dismiss'], [aria-label='Close']"
+                )
             if await close.count() and await close.first.is_visible():
                 await close.first.click(timeout=1200)
                 await page.wait_for_timeout(120)
@@ -113,39 +152,41 @@ async def _dismiss_blocking_overlay(page) -> bool:
 
 async def _click(locator) -> None:
     """Click a control with generic overlay and Angular Material recovery."""
+    page = locator.page
     await _scroll_into_view(locator)
+
+    # Avoid spending the full action timeout on a consent/welcome layer that
+    # is known to be outside the behavior under test.
+    await _dismiss_blocking_overlay(page)
+
     first_error = None
     try:
         await locator.click(timeout=settings.action_timeout_ms)
     except Exception as exc:
         first_error = exc
-        if await _dismiss_blocking_overlay(locator.page):
-            await locator.page.wait_for_timeout(120)
+        if await _dismiss_blocking_overlay(page):
+            await page.wait_for_timeout(120)
         try:
             await locator.click(timeout=settings.action_timeout_ms)
         except Exception:
             try:
-                visible_dialog = locator.page.locator("[role='dialog']:visible, .cdk-overlay-pane:visible, .mat-mdc-dialog-container:visible")
+                visible_dialog = page.locator(
+                    "[role='dialog']:visible, [role='alertdialog']:visible, "
+                    ".cdk-overlay-pane:visible, .mat-mdc-dialog-container:visible"
+                )
                 if await visible_dialog.count() == 0:
                     await locator.click(timeout=1500, force=True)
                 else:
                     raise first_error
             except Exception:
                 raise first_error
-    # Radio components must be clicked only once. Angular Material may also
-    # emit a row click handler, but clicking the containing row after the radio
-    # can toggle the same SelectionModel a second time and leave Continue
-    # disabled. The resolver/precondition layer is responsible for locating
-    # the semantic radio; do not add a second interaction here.
+
+    # Radio components must be clicked only once. The resolver/precondition
+    # layer is responsible for locating the semantic radio; do not add a
+    # second row interaction that can toggle the same SelectionModel.
 
 async def _fill(locator, value: str) -> None:
-    """Fill native text controls while transparently handling native selects.
-
-    Scenario data sometimes models a form field semantically as FILL even when
-    a Juice Shop version renders that field as an Angular Material select.
-    Keep the scenario language stable and adapt the interaction to the real
-    control type instead of adding page-specific selectors.
-    """
+    """Fill a control and synchronize native/framework state generically."""
     await _scroll_into_view(locator)
 
     try:
@@ -164,19 +205,77 @@ async def _fill(locator, value: str) -> None:
             await locator.select_option(label=value, timeout=settings.action_timeout_ms)
         return
 
+    async def verified() -> bool:
+        try:
+            return str(await locator.input_value()) == str(value)
+        except Exception:
+            try:
+                return str(await locator.get_attribute("value") or "") == str(value)
+            except Exception:
+                return False
+
+    # Strategy 1: standard Playwright interaction.
     try:
         await locator.fill(value, timeout=settings.action_timeout_ms)
-        return
-    except Exception as first_error:
-        try:
-            await _click(locator)
-            await locator.press("ControlOrMeta+A", timeout=1500)
-            await locator.press("Backspace", timeout=1500)
-            await locator.type(value, timeout=settings.action_timeout_ms)
+        await locator.dispatch_event("input")
+        await locator.dispatch_event("change")
+        await locator.blur()
+        if await verified():
             return
-        except Exception:
-            raise first_error
+    except Exception:
+        pass
 
+    # Strategy 2: native setter + composed events. This is particularly useful
+    # for Angular/Signal Forms that observe the native value property.
+    try:
+        await locator.evaluate(
+            """(el, value) => {
+                const proto = Object.getPrototypeOf(el);
+                const descriptor =
+                    Object.getOwnPropertyDescriptor(proto, 'value') ||
+                    Object.getOwnPropertyDescriptor(
+                        HTMLInputElement.prototype, 'value'
+                    ) ||
+                    Object.getOwnPropertyDescriptor(
+                        HTMLTextAreaElement.prototype, 'value'
+                    );
+                if (descriptor && descriptor.set) {
+                    descriptor.set.call(el, value);
+                } else {
+                    el.value = value;
+                }
+                el.dispatchEvent(new InputEvent('input', {
+                    bubbles: true, composed: true,
+                    inputType: 'insertText', data: value
+                }));
+                el.dispatchEvent(new Event('change', {
+                    bubbles: true, composed: true
+                }));
+                el.dispatchEvent(new Event('blur', { bubbles: true }));
+            }""",
+            value,
+        )
+        await locator.page.wait_for_timeout(80)
+        if await verified():
+            return
+    except Exception:
+        pass
+
+    # Strategy 3: closest-to-user keyboard interaction.
+    try:
+        await _click(locator)
+        await locator.press("ControlOrMeta+A", timeout=1500)
+        await locator.press("Backspace", timeout=1500)
+        await locator.type(value, timeout=settings.action_timeout_ms)
+        await locator.press("Tab", timeout=1500)
+        if await verified():
+            return
+    except Exception as exc:
+        raise RuntimeError(
+            f"Não foi possível sincronizar o valor do campo {value!r}: {exc}"
+        ) from exc
+
+    raise RuntimeError(f"Não foi possível sincronizar o valor do campo: {value!r}")
 
 async def _select_option(locator, value: str) -> None:
     """
@@ -326,7 +425,10 @@ async def execute(page: Page, action: dict) -> ActionResult:
                 raise RuntimeError("Elemento alvo não encontrado ou não visível.")
 
             if action.get("expect_new_page"):
-                new_page = None
+                # The scenario expresses an observable external-navigation
+                # outcome, not a browser implementation detail. A link may
+                # open a new tab OR replace the current page.
+                original_url = page.url
                 try:
                     async with page.context.expect_page(timeout=2500) as page_info:
                         await _click(locator)
@@ -340,10 +442,15 @@ async def execute(page: Page, action: dict) -> ActionResult:
                         pass
                     await new_page.wait_for_timeout(150)
                     action["_new_page_url"] = new_page.url
-                except Exception as exc:
-                    raise RuntimeError(
-                        f"A ação esperava abrir uma nova página/aba, mas isso não ocorreu: {exc}"
-                    )
+                except Exception:
+                    await page.wait_for_timeout(150)
+                    if page.url != original_url:
+                        action["_new_page_url"] = page.url
+                    else:
+                        raise RuntimeError(
+                            "A ação esperava uma navegação externa, mas nenhuma "
+                            "nova página nem mudança de URL foi observada."
+                        )
             else:
                 await _click(locator)
 
