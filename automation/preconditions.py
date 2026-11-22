@@ -722,27 +722,28 @@ async def _ensure_address_via_api(page, required_street: str | None = None) -> b
         return False
 
 async def _add_address_if_needed(page, required_street: str | None = None) -> bool:
-    """Ensure a persisted address exists for the current authenticated user.
+    """Prepare an address through the observable address UI.
 
-    This helper prepares the DATA precondition only. It deliberately does not
-    require the checkout radio/table to be rendered here, because scenarios
-    such as CHK-03 test the address-selection UI themselves. Requiring a radio
-    during fixture provisioning made the precondition depend on a particular
-    Angular checkout rendering state and could leave the SPA on /#/address/create.
+    The fixture contract is the same one a user would observe: the address
+    form is reachable, the fields can be filled, submission succeeds, and the
+    address becomes visible in the selector. No REST endpoint, token registry,
+    database state, or implementation-specific API response is used here.
     """
-    # 1) Prefer the authenticated REST API. A persisted address is the actual
-    # precondition; rendering/selection is handled later by ensure_address().
-    if await _ensure_address_via_api(page, required_street):
-        return True
-
-    # 2) UI fallback for environments where the REST fixture is unavailable.
-    # The current Juice Shop address form uses Angular Signal Forms and the
-    # submit control is #submitButton. Do not infer success from a route change:
-    # verify that the authenticated API can read the saved address afterwards.
     await page.goto(
         f"{settings.base_url}/#/address/select",
         wait_until="domcontentloaded",
     )
+
+    # If the required address is already visible, the data precondition is
+    # already satisfied. Reuse it instead of creating duplicate fixture data.
+    wanted_street = _normalize_text(required_street or "").casefold()
+    if wanted_street:
+        try:
+            visible_text = _normalize_text(await page.locator("body").inner_text()).casefold()
+            if wanted_street in visible_text:
+                return True
+        except Exception:
+            pass
 
     add = await resolve(
         page,
@@ -759,12 +760,13 @@ async def _add_address_if_needed(page, required_street: str | None = None) -> bo
     await _click(add)
     await page.wait_for_timeout(250)
 
+    street = required_street or "Rua Teste, 100"
     values = [
         ("Country", "Brazil"),
         ("Name", "Cliente Teste"),
         ("Mobile Number", "8599999999"),
         ("ZIP Code", "60000000"),
-        ("Address", "Rua Teste, 100"),
+        ("Address", street),
         ("City", "Fortaleza"),
         ("State", "CE"),
     ]
@@ -785,36 +787,31 @@ async def _add_address_if_needed(page, required_street: str | None = None) -> bo
         return False
 
     deadline = __import__("time").monotonic() + settings.action_timeout_ms / 1000
-    clicked = False
     while __import__("time").monotonic() < deadline:
         try:
             if await submit.is_enabled():
                 await _click(submit)
-                clicked = True
                 break
         except Exception:
             pass
         await page.wait_for_timeout(100)
-
-    if not clicked:
+    else:
         return False
 
-    # Signal Forms submit asynchronously through AddressService.save(). Give
-    # the SPA time to finish the request, then verify persistence directly.
+    # Verify the result through the UI contract only. The selector must render
+    # the submitted address; this is stronger than relying on a URL transition.
+    await page.goto(
+        f"{settings.base_url}/#/address/select",
+        wait_until="domcontentloaded",
+    )
     deadline = __import__("time").monotonic() + settings.action_timeout_ms / 1000
     while __import__("time").monotonic() < deadline:
-        if await _ensure_address_via_api(page):
-            # The Signal Forms save uses Location.back(), but browser history
-            # can leave the SPA on /#/address/create when the fallback was
-            # entered from a redirected checkout state. The fixture contract is
-            # only "address persisted"; return explicitly to the checkout
-            # selection route so the scenario starts from a deterministic UI
-            # state without depending on history behavior.
-            await page.goto(
-                f"{settings.base_url}/#/address/select",
-                wait_until="domcontentloaded",
-            )
-            return True
+        try:
+            body = _normalize_text(await page.locator("body").inner_text()).casefold()
+            if _normalize_text(street).casefold() in body:
+                return True
+        except Exception:
+            pass
         await page.wait_for_timeout(150)
 
     return False
@@ -1112,282 +1109,80 @@ async def ensure_order_summary(page) -> bool:
     return "/#/order-summary" in page.url
 
 
-async def _complete_order_via_api(page) -> bool:
-    """Create a completed-order fixture through the authenticated application API.
+async def ensure_completed_order(page) -> bool:
+    """Prepare a completed order using only observable checkout behavior.
 
-    This prepares persisted fixture state only. The behavior under test remains
-    UI-driven in the scenario itself.
+    This is intentionally a UI-only fixture. The precondition is established
+    through the same checkout controls exposed to a user and confirmed by the
+    resulting order-completion route. Internal REST endpoints are not used to
+    manufacture or validate the order.
     """
     try:
         if not await ensure_basket(page):
-            await page.evaluate(
-                "() => { window.__ambolsFixtureDiagnostic = 'Fixture: não foi possível preparar o carrinho.' }"
-            )
             return False
-        # Address persistence is a fixture contract, not an API-specific
-        # implementation detail. Prefer the REST path, but fall back to the
-        # real address UI when the protected API is unavailable in the running
-        # Juice Shop version/session. The fallback is already generic and
-        # verifies persistence through the same address service afterwards.
-        if not await _add_address_if_needed(page):
-            diagnostic = None
-            try:
-                diagnostic = await page.evaluate(
-                    "() => window.__ambolsFixtureDiagnostic || null"
+
+        if not await ensure_order_summary(page):
+            return False
+
+        place = await resolve(
+            page,
+            {"role": "button", "name": "Place your order and pay", "exact": False},
+        )
+        if place is None:
+            return False
+
+        if not await place.is_enabled():
+            return False
+
+        await _click(place)
+
+        deadline = __import__("time").monotonic() + max(
+            8.0, settings.action_timeout_ms / 1000
+        )
+        while __import__("time").monotonic() < deadline:
+            if "/#/order-completion/" in page.url:
+                printable = await resolve(
+                    page,
+                    {
+                        "role": "button",
+                        "name": "Print order confirmation",
+                        "exact": False,
+                    },
                 )
+                if printable is not None and await printable.is_visible():
+                    return True
+
+            # Some Juice Shop versions render the completion content before
+            # Angular updates the URL. In that case, use the visible completion
+            # control as observable evidence and accept only if it is rendered
+            # on the completion page.
+            try:
+                printable = await resolve(
+                    page,
+                    {
+                        "role": "button",
+                        "name": "Print order confirmation",
+                        "exact": False,
+                    },
+                )
+                if printable is not None and await printable.is_visible():
+                    if "/#/order-completion" in page.url:
+                        return True
             except Exception:
                 pass
-            await page.evaluate(
-                "(value) => { window.__ambolsFixtureDiagnostic = value }",
-                diagnostic or "Fixture: não foi possível preparar o endereço (API e UI).",
-            )
-            return False
-        if not await _ensure_card_via_api(page):
-            await page.evaluate(
-                "() => { window.__ambolsFixtureDiagnostic = 'Fixture: não foi possível preparar o cartão via API.' }"
-            )
-            return False
+
+            await page.wait_for_timeout(150)
+
+        return False
     except Exception as error:
         try:
             await page.evaluate(
                 "(value) => { window.__ambolsFixtureDiagnostic = value }",
-                "Fixture: exceção durante preparação: " + str(error),
+                "Fixture UI de pedido concluído falhou: " + str(error),
             )
         except Exception:
             pass
         return False
-
-    headers = await _auth_headers(page)
-    try:
-        result = await page.evaluate(
-            """async ({ baseUrl, headers }) => {
-                const request = async (url, options = {}) => {
-                    const response = await fetch(url, {
-                        credentials: 'include',
-                        ...options,
-                        headers: { ...headers, ...(options.headers || {}) }
-                    });
-                    let body = null;
-                    try { body = await response.json(); } catch (_) {}
-                    return { response, body };
-                };
-
-                try {
-                    const who = await request(baseUrl + '/rest/user/whoami');
-                    if (!who.response.ok || !who.body) return { ok: false, stage: 'whoami' };
-                    const user = who.body.data || who.body;
-                    const userId = user && user.id;
-                    if (userId == null) return { ok: false, stage: 'user' };
-
-                    const basketResult = await request(
-                        baseUrl + '/rest/basket/' + encodeURIComponent(userId)
-                    );
-                    if (!basketResult.response.ok || !basketResult.body) {
-                        return { ok: false, stage: 'basket' };
-                    }
-                    const basket = basketResult.body.data || basketResult.body;
-                    const basketId = basket && basket.id;
-                    if (basketId == null) return { ok: false, stage: 'basket-id' };
-
-                    const addresses = await request(baseUrl + '/api/Addresss');
-                    const cards = await request(baseUrl + '/api/Cards');
-                    const deliveries = await request(baseUrl + '/api/Deliverys');
-
-                    const addressData = addresses.body && Array.isArray(addresses.body.data)
-                        ? addresses.body.data : [];
-                    const cardData = cards.body && Array.isArray(cards.body.data)
-                        ? cards.body.data : [];
-                    const deliveryData = deliveries.body && Array.isArray(deliveries.body.data)
-                        ? deliveries.body.data : [];
-
-                    const address = addressData[0];
-                    const card = cardData.find(item =>
-                        String(item.cardNum || '').endsWith('0002')
-                    ) || cardData[0];
-                    const delivery = deliveryData[0];
-
-                    if (!address || !card || !delivery) {
-                        return {
-                            ok: false,
-                            stage: 'payment-data',
-                            counts: {
-                                addresses: addressData.length,
-                                cards: cardData.length,
-                                deliveries: deliveryData.length
-                            }
-                        };
-                    }
-
-                    const checkout = await request(
-                        baseUrl + '/rest/basket/' +
-                        encodeURIComponent(basketId) + '/checkout',
-                        {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                orderDetails: {
-                                    paymentId: card.id,
-                                    addressId: address.id,
-                                    deliveryMethodId: delivery.id
-                                }
-                            })
-                        }
-                    );
-
-                    // Current Juice Shop returns { orderConfirmation: "<id>" }.
-                    // Keep extraction tolerant of wrapped/customized responses
-                    // without assuming that the confirmation is always an object.
-                    const rawConfirmation = checkout.body &&
-                        (checkout.body.orderConfirmation ??
-                         checkout.body.data?.orderConfirmation ??
-                         checkout.body.data ??
-                         checkout.body);
-
-                    const orderId =
-                        typeof rawConfirmation === 'string'
-                            ? rawConfirmation
-                            : rawConfirmation && (
-                                rawConfirmation.orderId ||
-                                rawConfirmation.orderNo ||
-                                rawConfirmation.id ||
-                                rawConfirmation.cid
-                            );
-
-                    if (!checkout.response.ok || !orderId) {
-                        return {
-                            ok: false,
-                            stage: 'checkout',
-                            status: checkout.response.status,
-                            diagnostic:
-                                'Checkout recusado: HTTP ' +
-                                checkout.response.status +
-                                (checkout.body
-                                    ? ' | resposta: ' + JSON.stringify(checkout.body).slice(0, 1200)
-                                    : '')
-                        };
-                    }
-
-                    return { ok: true, orderId: String(orderId) };
-                } catch (error) {
-                    return {
-                        ok: false,
-                        stage: 'exception',
-                        error: String(error && error.message || error)
-                    };
-                }
-            }""",
-            { "baseUrl": settings.base_url, "headers": headers },
-        )
-
-        if not result or not result.get("ok"):
-            diagnostic = (
-                result.get("diagnostic")
-                if isinstance(result, dict)
-                else None
-            )
-            if not diagnostic and isinstance(result, dict):
-                diagnostic = (
-                    "Fixture checkout falhou na etapa: "
-                    + str(result.get("stage") or "desconhecida")
-                    + (
-                        " | HTTP " + str(result.get("status"))
-                        if result.get("status") is not None
-                        else ""
-                    )
-                    + (
-                        " | erro: " + str(result.get("error"))
-                        if result.get("error")
-                        else ""
-                    )
-                )
-            try:
-                await page.evaluate(
-                    "(value) => { window.__ambolsFixtureDiagnostic = value }",
-                    diagnostic or "Fixture de pedido falhou sem diagnóstico.",
-                )
-            except Exception:
-                pass
-            return False
-
-        route = f"/#/order-completion/{result['orderId']}"
-        await page.goto(
-            f"{settings.base_url}{route}",
-            wait_until="domcontentloaded",
-        )
-
-        deadline = __import__("time").monotonic() + max(
-            5.0, settings.action_timeout_ms / 1000
-        )
-        while __import__("time").monotonic() < deadline:
-            printable = await resolve(
-                page,
-                {"role": "button", "name": "Print order confirmation", "exact": False},
-            )
-            if printable is not None and await printable.is_visible():
-                await page.evaluate(
-                    "(value) => { window.__ambolsOrderCompletionRoute = value }",
-                    route,
-                )
-                return True
-            await page.wait_for_timeout(150)
-        return False
-    except Exception:
-        return False
-
-
-async def ensure_completed_order(page) -> bool:
-    # Try the normal checkout UI first when it is already renderable.
-    # Rendering is not the fixture contract, so a UI-preparation problem must
-    # not prevent the independent persisted fixture fallback.
-    try:
-        if await ensure_order_summary(page):
-            place = await resolve(
-                page,
-                {"role": "button", "name": "Place your order and pay", "exact": False},
-            )
-            if place is not None:
-                try:
-                    await _click(place)
-                except Exception:
-                    pass
-    except Exception:
-        pass
-
-    # Prefer the real UI completion when available. Otherwise create the
-    # completed-order fixture through the authenticated application API and
-    # verify the resulting confirmation UI.
-    deadline = __import__("time").monotonic() + max(
-        5.0, settings.action_timeout_ms / 1000
-    )
-    while __import__("time").monotonic() < deadline:
-        if "/#/order-completion/" in page.url:
-            try:
-                await page.evaluate(
-                    "(route) => { window.__ambolsOrderCompletionRoute = route }",
-                    page.url,
-                )
-            except Exception:
-                pass
-            return True
-        try:
-            # A printable button can exist on the Angular shell even when the
-            # confirmation identifier was not resolved. Treat only the
-            # parameterized order-completion route as evidence of a completed
-            # order; otherwise the API fixture below must establish the
-            # persisted order and its confirmation id.
-            if "/#/order-completion/" in page.url:
-                printable = await resolve(
-                    page,
-                    {"role": "button", "name": "Print order confirmation", "exact": False},
-                )
-                if printable is not None and await printable.is_visible():
-                    return True
-        except Exception:
-            pass
-        await page.wait_for_timeout(150)
-
-    return await _complete_order_via_api(page)
-
 
 async def prepare_precondition(page, scenario: dict) -> tuple[bool, str]:
     """
