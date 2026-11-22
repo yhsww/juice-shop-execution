@@ -22,6 +22,9 @@ class Evidence:
     screenshot: str | None
     error: str | None
     timestamp: str
+    visible_text_before: str = ""
+    visible_text_after: str = ""
+    messages: tuple[str, ...] = ()
 
 
 async def capture(page: Page, directory: Path, scenario_id: str, step: int) -> str:
