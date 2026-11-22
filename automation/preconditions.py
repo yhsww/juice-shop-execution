@@ -931,7 +931,21 @@ async def ensure_order_summary(page) -> bool:
 
 
 async def _complete_order_via_api(page) -> bool:
-    """Create a completed-order fixture through Juice Shop's authenticated API."""
+    """Create a completed-order fixture through the authenticated application API.
+
+    This prepares persisted fixture state only. The behavior under test remains
+    UI-driven in the scenario itself.
+    """
+    try:
+        if not await ensure_basket(page):
+            return False
+        if not await _ensure_address_via_api(page):
+            return False
+        if not await _ensure_card_via_api(page):
+            return False
+    except Exception:
+        return False
+
     headers = await _auth_headers(page)
     try:
         result = await page.evaluate(
@@ -1070,22 +1084,26 @@ async def _complete_order_via_api(page) -> bool:
 
 
 async def ensure_completed_order(page) -> bool:
-    if not await ensure_order_summary(page):
-        return False
+    # Try the normal checkout UI first when it is already renderable.
+    # Rendering is not the fixture contract, so a UI-preparation problem must
+    # not prevent the independent persisted fixture fallback.
+    try:
+        if await ensure_order_summary(page):
+            place = await resolve(
+                page,
+                {"role": "button", "name": "Place your order and pay", "exact": False},
+            )
+            if place is not None:
+                try:
+                    await _click(place)
+                except Exception:
+                    pass
+    except Exception:
+        pass
 
-    place = await resolve(
-        page,
-        {"role": "button", "name": "Place your order and pay", "exact": False},
-    )
-    if place is not None:
-        try:
-            await _click(place)
-        except Exception:
-            pass
-
-    # Prefer the real UI completion. If the current build does not reach the
-    # completion route, recover the fixture through the same authenticated
-    # application API and verify the resulting confirmation UI.
+    # Prefer the real UI completion when available. Otherwise create the
+    # completed-order fixture through the authenticated application API and
+    # verify the resulting confirmation UI.
     deadline = __import__("time").monotonic() + max(
         5.0, settings.action_timeout_ms / 1000
     )
