@@ -22,6 +22,8 @@ class ActionResult:
     success: bool
     messages: tuple[str, ...] = ()
     error: str | None = None
+    state_before: UIState | None = None
+    state_after: UIState | None = None
 
 
 def _user_action(action: dict) -> str:
@@ -489,4 +491,6 @@ async def execute(page: Page, action: dict) -> ActionResult:
         changed=meaningful_change(before, after),
         success=error is None,
         error=error,
+        state_before=before,
+        state_after=after,
     )
