@@ -372,7 +372,7 @@ async def _ensure_address_via_api(page, required_street: str | None = None) -> b
         "fullName": "Cliente Teste",
         "mobileNum": 8599999999,
         "zipCode": "60000000",
-        "streetAddress": requiredStreet || "Rua Teste, 100",
+        "streetAddress": required_street or "Rua Teste, 100",
         "city": "Fortaleza",
         "state": "CE",
         "country": "Brazil",
