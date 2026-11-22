@@ -417,6 +417,20 @@ async def _click_target(page: Page, target: dict, attempts: int = 5) -> None:
             return
         except Exception as exc:
             last_error = exc
+
+            # Angular Material/CDK menus can replace the menu item between
+            # Playwright's actionability check and the native click. Re-resolve
+            # the semantic target and, only for a detached-node failure, use the
+            # DOM click handler as a last-resort event delivery mechanism.
+            if "detached from the DOM" in str(exc).casefold():
+                try:
+                    fresh = await resolve(page, target)
+                    if fresh is not None:
+                        await fresh.evaluate("(el) => el.click()")
+                        return
+                except Exception:
+                    pass
+
             await page.wait_for_timeout(180)
 
     if last_error is not None:
@@ -447,20 +461,38 @@ async def execute(page: Page, action: dict) -> ActionResult:
                 original_url = page.url
                 pages_before = set(page.context.pages)
                 downloads: list = []
+                pdf_responses: list = []
 
                 def on_download(download):
                     downloads.append(download)
 
+                async def inspect_pdf_response(response):
+                    try:
+                        content_type = (response.headers.get("content-type") or "").casefold()
+                        url = response.url.casefold()
+                        if ".pdf" in url or "application/pdf" in content_type:
+                            pdf_responses.append(response)
+                    except Exception:
+                        pass
+
                 page.on("download", on_download)
+                page.on("response", inspect_pdf_response)
                 try:
                     await _click_target(page, target)
                     await page.wait_for_timeout(1200)
+
+                    if pdf_responses:
+                        action["_new_page_url"] = pdf_responses[-1].url
 
                     new_pages = [
                         candidate for candidate in page.context.pages
                         if candidate not in pages_before
                     ]
-                    if new_pages:
+                    if pdf_responses:
+                        # Prefer an observed PDF response over unrelated popups
+                        # (for example a help/tutorial tab opened by the UI).
+                        action["_new_page_url"] = pdf_responses[-1].url
+                    elif new_pages:
                         new_page = new_pages[-1]
                         try:
                             await new_page.wait_for_load_state(
@@ -488,6 +520,10 @@ async def execute(page: Page, action: dict) -> ActionResult:
                 finally:
                     try:
                         page.remove_listener("download", on_download)
+                    except Exception:
+                        pass
+                    try:
+                        page.remove_listener("response", inspect_pdf_response)
                     except Exception:
                         pass
             else:
