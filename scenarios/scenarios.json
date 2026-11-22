@@ -1713,10 +1713,6 @@
       "requirement": "A aplicação deve abrir a confirmação imprimível em nova página ou aba.",
       "actions": [
         {
-          "type": "NAVIGATE",
-          "route": "/#/order-completion"
-        },
-        {
           "type": "CLICK",
           "target": {
             "role": "button",
@@ -2082,13 +2078,6 @@
           }
         },
         {
-          "type": "CLICK",
-          "target": {
-            "text": "Standard Delivery",
-            "exact": false
-          }
-        },
-        {
           "type": "WAIT",
           "milliseconds": 500
         },
@@ -2097,13 +2086,6 @@
           "target": {
             "role": "radio",
             "name": "0002",
-            "exact": false
-          }
-        },
-        {
-          "type": "CLICK",
-          "target": {
-            "text": "0002",
             "exact": false
           }
         },
