@@ -107,6 +107,28 @@ async def _dismiss_blocking_overlay(page) -> bool:
                 await close.first.click(timeout=1200)
                 await page.wait_for_timeout(120)
                 return True
+
+        # Juice Shop's cookie banner is a non-modal overlay and therefore is
+        # not exposed as role=dialog. Dismiss it only through its own semantic
+        # cookie-consent affordance.
+        cookie = page.locator(
+            "#cookieconsent, .cc-window, [class*='cookieconsent'], "
+            "[class*='cc-window']"
+        )
+        try:
+            for index in range(await cookie.count()):
+                banner = cookie.nth(index)
+                if not await banner.is_visible():
+                    continue
+                button = banner.get_by_role("button", name="Me want it!", exact=False)
+                if not await button.count():
+                    button = banner.locator("button, [role='button']").filter(has_text="Me want it")
+                if await button.count() and await button.first.is_visible():
+                    await button.first.click(timeout=1200)
+                    await page.wait_for_timeout(150)
+                    return True
+        except Exception:
+            pass
         except Exception:
             continue
     return False
@@ -321,12 +343,19 @@ async def execute(page: Page, action: dict) -> ActionResult:
                 timeout=settings.navigation_timeout_ms,
             )
         elif kind == "CLICK":
-            locator = await resolve(page, action.get("target", {}))
+            locator = None
+            # Angular/Material controls can exist only after the route settles.
+            for _ in range(40):
+                locator = await resolve(page, action.get("target", {}))
+                if locator is not None:
+                    break
+                await page.wait_for_timeout(250)
+
             if locator is None:
                 raise RuntimeError("Elemento alvo não encontrado ou não visível.")
 
             if action.get("expect_new_page"):
-                new_page = None
+                before_url = page.url
                 try:
                     async with page.context.expect_page(timeout=2500) as page_info:
                         await _click(locator)
@@ -340,10 +369,24 @@ async def execute(page: Page, action: dict) -> ActionResult:
                         pass
                     await new_page.wait_for_timeout(150)
                     action["_new_page_url"] = new_page.url
+                except PlaywrightTimeoutError:
+                    await page.wait_for_timeout(300)
+                    after_url = page.url
+                    if after_url != before_url:
+                        action["_new_page_url"] = after_url
+                    else:
+                        raise RuntimeError(
+                            "A ação esperava abrir uma nova página/aba, mas não houve nova página nem navegação na aba atual."
+                        )
                 except Exception as exc:
-                    raise RuntimeError(
-                        f"A ação esperava abrir uma nova página/aba, mas isso não ocorreu: {exc}"
-                    )
+                    await page.wait_for_timeout(200)
+                    after_url = page.url
+                    if after_url != before_url:
+                        action["_new_page_url"] = after_url
+                    else:
+                        raise RuntimeError(
+                            f"A ação esperava abrir uma nova página/aba, mas isso não ocorreu: {exc}"
+                        )
             else:
                 await _click(locator)
 
