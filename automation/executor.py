@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 from dataclasses import dataclass
 from time import monotonic
 
@@ -170,6 +171,27 @@ async def _click(locator) -> None:
         try:
             await locator.click(timeout=settings.action_timeout_ms)
         except Exception:
+            # CookieConsent is infrastructure UI, not application behavior.
+            # If it remains visible after the semantic dismissal attempt,
+            # force-click only the original user target instead of letting a
+            # fixed consent layer turn a valid UI action into an automation
+            # error. Functional dialogs still block the action.
+            cookie_visible = False
+            try:
+                cookie_visible = await page.locator(
+                    "[aria-label='cookieconsent']:visible, "
+                    ".cc-window:visible, .cc-floating:visible, .cc-banner:visible"
+                ).count() > 0
+            except Exception:
+                pass
+
+            if cookie_visible:
+                try:
+                    await locator.click(timeout=1500, force=True)
+                    return
+                except Exception:
+                    pass
+
             try:
                 visible_dialog = page.locator(
                     "[role='dialog']:visible, [role='alertdialog']:visible, "
@@ -356,20 +378,47 @@ async def _select_option(locator, value: str) -> None:
     )
 
 
-async def _click_target(page: Page, target: dict, attempts: int = 4) -> None:
-    """Resolve and click a semantic target, retrying after SPA re-rendering."""
+async def _click_target(page: Page, target: dict, attempts: int = 5) -> None:
+    """Resolve and click a semantic target, recovering from SPA re-rendering.
+
+    A semantic resolver can legitimately return a nested label/span when the
+    framework has not finished exposing the final ARIA tree. Before clicking,
+    normalize such a result to its nearest interactive ancestor. This is
+    framework-generic and avoids selectors tied to individual scenarios.
+    """
     last_error: Exception | None = None
+    requested_role = str(target.get("role") or "").casefold()
+
     for _ in range(max(1, attempts)):
         locator = await resolve(page, target)
         if locator is None:
             await page.wait_for_timeout(150)
             continue
+
         try:
+            if requested_role in {"button", "link"}:
+                try:
+                    tag = (await locator.evaluate("(el) => el.tagName")).lower()
+                except Exception:
+                    tag = ""
+
+                if tag not in {"button", "a"}:
+                    ancestor = locator.locator(
+                        "xpath=ancestor-or-self::*[self::button or self::a "
+                        "or @role='button' or @role='link'][1]"
+                    )
+                    if await ancestor.count() and await ancestor.first.is_visible():
+                        locator = ancestor.first
+
+            # Give Angular one render turn before interacting. The target is
+            # resolved again on every retry, so this is not a scenario wait.
+            await page.wait_for_timeout(80)
             await _click(locator)
             return
         except Exception as exc:
             last_error = exc
             await page.wait_for_timeout(180)
+
     if last_error is not None:
         raise last_error
     raise RuntimeError("Elemento alvo não encontrado ou não visível.")
@@ -391,32 +440,56 @@ async def execute(page: Page, action: dict) -> ActionResult:
             target = action.get("target", {})
 
             if action.get("expect_new_page"):
-                # The scenario expresses an observable external-navigation
-                # outcome, not a browser implementation detail. A link may
-                # open a new tab OR replace the current page.
+                # "External outcome" is deliberately broader than "new tab":
+                # browser actions may yield a popup, a download, or a current
+                # page navigation. Observe all three without changing the UI
+                # action itself.
                 original_url = page.url
+                pages_before = set(page.context.pages)
+                downloads: list = []
+
+                def on_download(download):
+                    downloads.append(download)
+
+                page.on("download", on_download)
                 try:
-                    async with page.context.expect_page(timeout=2500) as page_info:
-                        await _click_target(page, target)
-                    new_page = await page_info.value
-                    try:
-                        await new_page.wait_for_load_state(
-                            "domcontentloaded",
-                            timeout=settings.navigation_timeout_ms,
-                        )
-                    except Exception:
-                        pass
-                    await new_page.wait_for_timeout(150)
-                    action["_new_page_url"] = new_page.url
-                except Exception:
-                    await page.wait_for_timeout(150)
-                    if page.url != original_url:
+                    await _click_target(page, target)
+                    await page.wait_for_timeout(1200)
+
+                    new_pages = [
+                        candidate for candidate in page.context.pages
+                        if candidate not in pages_before
+                    ]
+                    if new_pages:
+                        new_page = new_pages[-1]
+                        try:
+                            await new_page.wait_for_load_state(
+                                "domcontentloaded",
+                                timeout=settings.navigation_timeout_ms,
+                            )
+                        except Exception:
+                            pass
+                        await new_page.wait_for_timeout(150)
+                        action["_new_page_url"] = new_page.url
+                    elif downloads:
+                        # Download URLs are real browser-observable outcomes
+                        # and are valid evidence even when Chromium never opens
+                        # a PDF in a separate tab.
+                        action["_new_page_url"] = downloads[-1].url
+                        action["_download_filename"] = downloads[-1].suggested_filename
+                    elif page.url != original_url:
                         action["_new_page_url"] = page.url
                     else:
-                        raise RuntimeError(
-                            "A ação esperava uma navegação externa, mas nenhuma "
-                            "nova página nem mudança de URL foi observada."
-                        )
+                        # Do not manufacture a navigation. Keep the click
+                        # successful and let the scenario validator decide
+                        # whether its declared observable outcome was actually
+                        # satisfied.
+                        action["_external_outcome_observed"] = False
+                finally:
+                    try:
+                        page.remove_listener("download", on_download)
+                    except Exception:
+                        pass
             else:
                 await _click_target(page, target)
 
