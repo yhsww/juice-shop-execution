@@ -281,11 +281,22 @@ async def ensure_authentication(page, scenario: dict) -> bool:
             "auth_email",
             f"cen-{scenario['id'].lower()}-{uuid.uuid4().hex[:10]}@example.com",
         )
-        return await ensure_user(
+        authenticated = await ensure_user(
             page,
             runtime["auth_email"],
             scenario_password(scenario),
         )
+        if not authenticated:
+            return False
+
+        # IDT scenarios may exercise the legacy server-rendered /profile route.
+        # Authentication is therefore verified at the actual route boundary,
+        # not only through the SPA login state. This is generic and applies to
+        # any IDT scenario whose first action targets the legacy profile.
+        first_route = str((scenario.get("actions") or [{}])[0].get("route", ""))
+        if first_route == "/profile":
+            return await _ensure_legacy_profile(page)
+        return True
 
     authenticated = await ensure_user(
         page,
@@ -315,6 +326,39 @@ async def ensure_authentication(page, scenario: dict) -> bool:
             return False
 
     return True
+
+
+async def _ensure_legacy_profile(page) -> bool:
+    """Verify that the authenticated browser can render the legacy profile route.
+
+    Juice Shop v20.x serves /profile as a server-rendered page and authorizes it
+    from the token cookie. A successful Angular login alone is not enough
+    evidence for this route, so this check validates the real route contract
+    and gives the locator layer a stable DOM to work with.
+    """
+    try:
+        response = await page.goto(
+            f"{settings.base_url}/profile",
+            wait_until="domcontentloaded",
+            timeout=settings.navigation_timeout_ms,
+        )
+        if response is None or response.status >= 400:
+            return False
+
+        # The legacy profile has a stable semantic label for the editable
+        # username field. Resolve it through the same generic locator service
+        # used by scenario actions rather than introducing a CSS selector tied
+        # to a scenario.
+        username = await resolve(
+            page,
+            {"label": "Username", "exact": False},
+        )
+        if username is None or not await username.is_visible():
+            return False
+
+        return True
+    except Exception:
+        return False
 
 
 async def ensure_base_user(page) -> bool:
@@ -380,7 +424,7 @@ async def _ensure_card_via_api(page) -> bool:
                 }
             }""",
             {
-                "url": f"{settings.base_url}/api/Cards/",
+                "url": f"{settings.base_url}/api/Cards",
                 "payload": payload,
                 "headers": headers,
             },
@@ -575,7 +619,7 @@ async def _ensure_address_via_api(page, required_street: str | None = None) -> b
                 }
             }""",
             {
-                "url": f"{settings.base_url}/api/Addresss/",
+                "url": f"{settings.base_url}/api/Addresss",
                 "payload": payload,
                 "headers": headers,
                 "requiredStreet": required_street,
