@@ -40,10 +40,15 @@ def validate(
             str(item.get("visible_text_before") or ""),
             str(item.get("visible_text_after") or ""),
             " ".join(str(message) for message in (item.get("messages") or [])),
+            " ".join(str(control) for control in (item.get("controls") or [])),
         ])
 
     observed_text = "\n".join(
-        [state.visible_text, *evidence_text]
+        [
+            state.visible_text,
+            " ".join(state.controls),
+            *evidence_text,
+        ]
     ).casefold()
 
     if expected.get("url_contains"):
