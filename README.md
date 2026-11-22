@@ -78,7 +78,7 @@ docker compose -f juice-shop/docker-compose.yml down
 
 ## Catálogo de cenários
 
-O catálogo contém 78 cenários definidos nos domínios ADM, CAR, CAT, CHK, IDT e PER. A existência no inventário não significa que o cenário já tenha sido validado. Somente a execução real pode produzir resultado PASSED.
+O catálogo contém 69 cenários definidos nos domínios ADM, CAR, CAT, CHK e IDT. A existência no inventário não significa que o cenário já tenha sido validado. Somente a execução real pode produzir resultado PASSED.
 
 | Domínio | Quantidade |
 |---|---:|
