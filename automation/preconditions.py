@@ -382,17 +382,27 @@ async def _ensure_card_via_api(page) -> bool:
         result = await page.evaluate(
             """async ({ url, payload, headers }) => {
                 const request = async (options) => {
-                    const controller = new AbortController();
-                    const timer = setTimeout(() => controller.abort(), 5000);
-                    try {
-                        return await fetch(url, {
-                            credentials: "include",
-                            ...options,
-                            signal: controller.signal
-                        });
-                    } finally {
-                        clearTimeout(timer);
+                    let lastResponse = null;
+                    for (let attempt = 0; attempt < 3; attempt += 1) {
+                        const controller = new AbortController();
+                        const timer = setTimeout(() => controller.abort(), 5000);
+                        try {
+                            lastResponse = await fetch(url, {
+                                credentials: "include",
+                                ...options,
+                                signal: controller.signal
+                            });
+                            if (lastResponse.status !== 401 || attempt === 2) {
+                                return lastResponse;
+                            }
+                        } catch (error) {
+                            if (attempt === 2) throw error;
+                        } finally {
+                            clearTimeout(timer);
+                        }
+                        await new Promise(resolve => setTimeout(resolve, 150));
                     }
+                    return lastResponse;
                 };
 
                 try {
@@ -518,6 +528,14 @@ async def _ensure_address_via_api(page, required_street: str | None = None) -> b
                     // precondition is satisfied by existence of at least one
                     // address owned by the authenticated user.
                     const existing = await readAddresses();
+                    if (!existing.ok) {
+                        return {
+                            ok: false,
+                            status: existing.status,
+                            error: "GET /api/Addresss não autorizado ou indisponível."
+                        };
+                    }
+
                     if (existing.ok && existing.addresses.length > 0) {
                         const wantedStreet = String(requiredStreet || "").trim().toLowerCase();
                         const match = wantedStreet
