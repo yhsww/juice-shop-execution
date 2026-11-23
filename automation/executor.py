@@ -80,6 +80,78 @@ def _norm_text(value: object) -> str:
     return " ".join(str(value or "").split()).strip().casefold()
 
 
+async def _install_mutation_observer(page: Page) -> None:
+    """Install a short-lived, page-generic mutation recorder.
+
+    This is black-box evidence collection: it does not target a scenario,
+    component or framework. It records visible text introduced/changed while
+    an action is executing, including transient Angular/Material feedback
+    that may disappear before the final stable snapshot.
+    """
+    try:
+        await page.evaluate("""
+            () => {
+                if (window.__ambolsMutationObserver) {
+                    try { window.__ambolsMutationObserver.disconnect(); } catch (_) {}
+                }
+                window.__ambolsMutationBuffer = [];
+                const visibleText = (node) => {
+                    if (!node || node.nodeType !== Node.ELEMENT_NODE) return '';
+                    const el = node;
+                    const style = window.getComputedStyle(el);
+                    if (style.display === 'none' || style.visibility === 'hidden') return '';
+                    return String(el.innerText || el.textContent || '').replace(/\\s+/g, ' ').trim();
+                };
+                const push = (text) => {
+                    if (!text) return;
+                    const item = text.slice(0, 1200);
+                    if (!window.__ambolsMutationBuffer.includes(item)) {
+                        window.__ambolsMutationBuffer.push(item);
+                    }
+                    if (window.__ambolsMutationBuffer.length > 80) {
+                        window.__ambolsMutationBuffer.shift();
+                    }
+                };
+                const observer = new MutationObserver((records) => {
+                    for (const record of records) {
+                        if (record.type === 'characterData') {
+                            push(visibleText(record.target.parentElement));
+                        }
+                        for (const node of record.addedNodes) {
+                            push(visibleText(node));
+                        }
+                    }
+                });
+                observer.observe(document.documentElement, {
+                    subtree: true,
+                    childList: true,
+                    characterData: true,
+                });
+                window.__ambolsMutationObserver = observer;
+            }
+        """)
+    except Exception:
+        pass
+
+
+async def _collect_mutation_text(page: Page) -> list[str]:
+    try:
+        values = await page.evaluate("""
+            () => {
+                const values = Array.isArray(window.__ambolsMutationBuffer)
+                    ? window.__ambolsMutationBuffer.slice()
+                    : [];
+                try { window.__ambolsMutationObserver?.disconnect(); } catch (_) {}
+                window.__ambolsMutationObserver = null;
+                window.__ambolsMutationBuffer = [];
+                return values;
+            }
+        """)
+        return [str(v).strip() for v in values if str(v).strip()]
+    except Exception:
+        return []
+
+
 async def _scroll_into_view(locator) -> None:
     try:
         await locator.scroll_into_view_if_needed(timeout=1500)
@@ -439,6 +511,7 @@ async def _click_target(page: Page, target: dict, attempts: int = 5) -> None:
 
 async def execute(page: Page, action: dict) -> ActionResult:
     before = await observe(page)
+    await _install_mutation_observer(page)
     kind = action["type"].upper()
     data = _action_data(action)
     error: str | None = None
@@ -678,28 +751,27 @@ async def execute(page: Page, action: dict) -> ActionResult:
     except Exception as exc:
         error = str(exc)
 
-    # Capture the first post-action state separately from the eventual
-    # stable state. Angular Material snackbars/alerts are transient and can
-    # disappear during the stability window; waiting for stability before
-    # observing would therefore erase valid black-box evidence.
+    # Capture transient evidence before stability can erase it. In addition
+    # to semantic UI snapshots, a short-lived MutationObserver records text
+    # that appeared and disappeared between snapshots.
     immediate_states: list[UIState] = []
     first_after = await _safe_observe(page, before)
     immediate_states.append(first_after)
 
-    # Observe a short generic post-action window. This is deliberately
-    # framework-level, not scenario-specific: it gives transient feedback a
-    # chance to become observable without turning every action into a long
-    # fixed sleep.
-    transient_deadline = monotonic() + 0.8
+    transient_deadline = monotonic() + 1.5
     while monotonic() < transient_deadline:
         await page.wait_for_timeout(120)
         snapshot = await _safe_observe(page, before)
         immediate_states.append(snapshot)
+        if snapshot.messages:
+            break
+
+    mutation_text = await _collect_mutation_text(page)
 
     after = await wait_for_stable_ui(
         page,
         initial=immediate_states[-1],
-        timeout_ms=1200,
+        timeout_ms=900,
         sample_interval_ms=120,
     )
 
@@ -713,6 +785,15 @@ async def execute(page: Page, action: dict) -> ActionResult:
             transient_text.append(snapshot.visible_text)
 
     observed = describe_change(before, after)
+    if mutation_text:
+        observed = (
+            observed + " "
+            + "Texto transitório capturado: "
+            + " | ".join(mutation_text[-5:])[:1200]
+        )
+        for item in mutation_text:
+            if item not in transient_messages:
+                transient_messages.append(item)
     if transient_messages:
         observed = (
             observed + " "
