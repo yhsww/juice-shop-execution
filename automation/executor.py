@@ -521,6 +521,35 @@ async def _click_target(page: Page, target: dict, attempts: int = 5) -> None:
         raise last_error
     raise RuntimeError("Elemento alvo não encontrado ou não visível.")
 
+
+async def _post_action_settle(page: Page, kind: str) -> None:
+    """Apply only the synchronization appropriate to the completed action.
+
+    Scenario WAIT actions are already explicit synchronization points and must
+    not be followed by another load/readiness wait. For navigation-like
+    actions, allow a short DOM-ready window; for ordinary interactions, one
+    render turn is enough. This keeps observation from consuming the action's
+    timeout budget.
+    """
+    if kind == "WAIT":
+        return
+
+    if kind == "NAVIGATE":
+        try:
+            await page.wait_for_load_state("domcontentloaded", timeout=700)
+        except PlaywrightTimeoutError:
+            pass
+        await page.wait_for_timeout(60)
+        return
+
+    if kind == "CLICK":
+        try:
+            await page.wait_for_load_state("domcontentloaded", timeout=700)
+        except PlaywrightTimeoutError:
+            pass
+
+    await page.wait_for_timeout(60)
+
 async def execute(page: Page, action: dict) -> ActionResult:
     before = await observe(page)
     await _install_mutation_observer(page)
