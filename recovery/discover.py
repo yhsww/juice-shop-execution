@@ -39,27 +39,6 @@ async def _internal_links(page: Page) -> list[str]:
             continue
     return list(dict.fromkeys(links))
 
-def _candidate_requirements(states: list[dict], transitions: list[dict]) -> list[dict]:
-    requirements = []
-    seen = set()
-    for state in states:
-        route = route_key(state['url'])
-        for control in state.get('controls', []):
-            key = (route, control)
-            if key in seen:
-                continue
-            seen.add(key)
-            requirements.append({
-                'id': f'REC-{len(requirements)+1:04d}',
-                'source': 'ui-observation',
-                'type': 'availability',
-                'route': route,
-                'behavior': f'A interface disponibilizou o controle observado: {control}.',
-                'evidence': {'url': state['url'], 'control': control},
-                'confidence': 'medium',
-            })
-    return requirements
-
 async def discover(config: DiscoveryConfig | None = None) -> dict:
     config = config or DiscoveryConfig(settings.recovery_max_pages, settings.recovery_max_depth, settings.recovery_timeout_seconds, settings.recovery_max_events, False)
     started = asyncio.get_running_loop().time()
