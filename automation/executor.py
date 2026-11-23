@@ -225,23 +225,35 @@ async def _dismiss_blocking_overlay(page) -> bool:
     return False
 
 async def _click(locator) -> None:
-    """Click a control with generic overlay and Angular Material recovery."""
+    """Click a control with bounded actionability recovery.
+
+    A click must not consume the entire global action budget merely waiting
+    for Playwright actionability. The executor already has a scenario-level
+    timeout, so this primitive uses a short retry budget and then applies a
+    generic force-click fallback only when no functional dialog is blocking.
+    """
     page = locator.page
     await _scroll_into_view(locator)
 
-    # Avoid spending the full action timeout on a consent/welcome layer that
-    # is known to be outside the behavior under test.
+    # Keep click actionability bounded. A blocked target is recoverable through
+    # overlay dismissal or a fresh semantic resolution; it should not consume
+    # the whole 20s action budget before those recovery paths run.
+    click_timeout = min(
+        3000,
+        max(800, int(settings.action_timeout_ms)),
+    )
+
     await _dismiss_blocking_overlay(page)
 
     first_error = None
     try:
-        await locator.click(timeout=settings.action_timeout_ms)
+        await locator.click(timeout=click_timeout)
     except Exception as exc:
         first_error = exc
         if await _dismiss_blocking_overlay(page):
             await page.wait_for_timeout(120)
         try:
-            await locator.click(timeout=settings.action_timeout_ms)
+            await locator.click(timeout=click_timeout)
         except Exception:
             # CookieConsent is infrastructure UI, not application behavior.
             # If it remains visible after the semantic dismissal attempt,
@@ -744,25 +756,7 @@ async def execute(page: Page, action: dict) -> ActionResult:
         else:
             raise ValueError(f"Tipo de ação não suportado: {kind}")
 
-        try:
-            await page.wait_for_load_state(
-                "domcontentloaded",
-                timeout=min(1500, settings.navigation_timeout_ms),
-            )
-        except PlaywrightTimeoutError:
-            pass
-
-        # Angular can finish rendering a control after DOMContentLoaded.
-        # A short generic settle prevents interacting with an intermediate
-        # state without replacing scenario-defined WAITs.
-        try:
-            await page.wait_for_function(
-                "() => document.readyState === 'complete'",
-                timeout=1200,
-            )
-        except Exception:
-            pass
-        await page.wait_for_timeout(120)
+        await _post_action_settle(page, kind)
 
     except Exception as exc:
         error = str(exc)
@@ -774,9 +768,13 @@ async def execute(page: Page, action: dict) -> ActionResult:
     first_after = await _safe_observe(page, before)
     immediate_states.append(first_after)
 
-    transient_deadline = monotonic() + 0.75
+    # WAIT is already a deliberate synchronization point. Keep evidence
+    # collection lightweight for it; other actions retain the short transient
+    # capture window needed for snackbars/toasts and Angular feedback.
+    transient_window = 0.15 if kind == "WAIT" else 0.45
+    transient_deadline = monotonic() + transient_window
     while monotonic() < transient_deadline:
-        await page.wait_for_timeout(120)
+        await page.wait_for_timeout(60)
         snapshot = await _safe_observe(page, before)
         immediate_states.append(snapshot)
         if snapshot.messages:
@@ -787,8 +785,8 @@ async def execute(page: Page, action: dict) -> ActionResult:
     after = await wait_for_stable_ui(
         page,
         initial=immediate_states[-1],
-        timeout_ms=650,
-        sample_interval_ms=100,
+        timeout_ms=250 if kind == "WAIT" else 450,
+        sample_interval_ms=80,
     )
 
     transient_messages: list[str] = []
