@@ -135,6 +135,18 @@ async def _read_body_text(page: Page, timeout_ms: int = 500) -> str:
             raise
 
 
+async def _read_page_title(page: Page) -> str:
+    """Read the page title without using an unsupported Playwright timeout argument."""
+    try:
+        return await page.title()
+    except Exception:
+        try:
+            value = await page.evaluate("() => document.title || ''")
+            return str(value or "")
+        except Exception:
+            return ""
+
+
 async def observe(page: Page) -> UIState:
     last_error: Exception | None = None
     text = ""
@@ -168,7 +180,7 @@ async def observe(page: Page) -> UIState:
     headings = list(dict.fromkeys(await _texts(page, HEADING_SELECTORS)))
     return UIState(
         url=page.url,
-        title=await page.title(timeout=500),
+        title=await _read_page_title(page),
         visible_text=normalized[:12000],
         body_hash=sha256(normalized.encode("utf-8")).hexdigest(),
         messages=tuple(messages[:20]),
