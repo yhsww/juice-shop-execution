@@ -70,8 +70,10 @@ def main() -> int:
     parser.add_argument("--zap", action="store_true")
     parser.add_argument("--recovery-domain", action="append", default=[])
     parser.add_argument("--recovery-scenario", action="append", default=[])
-    parser.add_argument("--recovery-timeout", type=int, default=180)
-    parser.add_argument("--recovery-max-steps", type=int, default=30)
+    parser.add_argument("--recovery-timeout", type=int, default=0,
+                        help="Tempo maximo por cenario de recuperacao; 0 = sem limite.")
+    parser.add_argument("--recovery-max-steps", type=int, default=0,
+                        help="Passos maximos por cenario de recuperacao; 0 = explorar ate esgotar.")
     parser.add_argument("--recovery-max-variants", type=int, default=6)
     args = parser.parse_args()
     if args.stop_app and not args.start_app:
