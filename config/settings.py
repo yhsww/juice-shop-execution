@@ -37,7 +37,7 @@ class Settings:
     recovery_timeout_seconds: int = int(os.getenv("AMBOLS_RECOVERY_TIMEOUT_SECONDS", "0"))
     recovery_max_events: int = int(os.getenv("AMBOLS_RECOVERY_MAX_NETWORK_EVENTS", "2000"))
     recovery_max_steps_per_scenario: int = int(os.getenv("AMBOLS_RECOVERY_MAX_STEPS_PER_SCENARIO", "0"))
-    recovery_max_variants_per_input: int = int(os.getenv("AMBOLS_RECOVERY_MAX_VARIANTS_PER_INPUT", "6"))
+    recovery_max_variants_per_input: int = int(os.getenv("AMBOLS_RECOVERY_MAX_VARIANTS_PER_INPUT", "0"))
 
 
 settings = Settings()
