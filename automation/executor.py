@@ -352,13 +352,37 @@ async def _click(locator) -> None:
     # layer is responsible for locating the semantic radio; do not add a
     # second row interaction that can toggle the same SelectionModel.
 
-async def _fill(locator, value: str) -> None:
-    """Fill native text controls while transparently handling native selects.
+async def _read_control_value(locator) -> str | None:
+    """Read the current value of a text-like control without assuming its DOM type."""
+    try:
+        tag_name = (await locator.evaluate("(el) => el.tagName")).upper()
+    except Exception:
+        return None
 
-    Scenario data sometimes models a form field semantically as FILL even when
-    a Juice Shop version renders that field as an Angular Material select.
-    Keep the scenario language stable and adapt the interaction to the real
-    control type instead of adding page-specific selectors.
+    if tag_name in {"INPUT", "TEXTAREA", "SELECT"}:
+        try:
+            return str(await locator.input_value())
+        except Exception:
+            return None
+
+    try:
+        value = await locator.get_attribute("value")
+        return str(value) if value is not None else None
+    except Exception:
+        return None
+
+
+async def _fill(locator, value: str) -> None:
+    """Fill native text controls and verify the value actually reached the control.
+
+    Angular Material forms can re-render a control during change detection.
+    A successful Playwright fill call therefore is not, by itself, sufficient
+    evidence that the intended value survived in the live DOM. The primitive
+    verifies the resulting value and retries through a generic focus/type path
+    when the framework replaced or reset the control.
+
+    Scenario definitions remain semantic; no page- or scenario-specific
+    selector is introduced here.
     """
     await _scroll_into_view(locator)
 
@@ -378,18 +402,36 @@ async def _fill(locator, value: str) -> None:
             await locator.select_option(label=value, timeout=settings.action_timeout_ms)
         return
 
+    async def verified() -> bool:
+        current = await _read_control_value(locator)
+        return current == value
+
     try:
         await locator.fill(value, timeout=settings.action_timeout_ms)
-        return
-    except Exception as first_error:
-        try:
-            await _click(locator)
-            await locator.press("ControlOrMeta+A", timeout=1500)
-            await locator.press("Backspace", timeout=1500)
-            await locator.type(value, timeout=settings.action_timeout_ms)
+        if await verified():
             return
-        except Exception:
-            raise first_error
+    except Exception as first_error:
+        pass
+
+    # The first fill may have targeted a control instance that Angular replaced
+    # immediately after the input event. Re-resolve the same semantic control
+    # is handled by the caller; here we recover using the live locator and a
+    # normal user-edit sequence before failing.
+    try:
+        await _click(locator)
+        await locator.press("ControlOrMeta+A", timeout=1500)
+        await locator.press("Backspace", timeout=1500)
+        await locator.type(value, timeout=settings.action_timeout_ms)
+        if await verified():
+            return
+    except Exception:
+        pass
+
+    current = await _read_control_value(locator)
+    raise RuntimeError(
+        f"O campo não reteve o valor informado. "
+        f"Esperado={value!r}; atual={current!r}."
+    )
 
 
 
