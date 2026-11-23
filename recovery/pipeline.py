@@ -4,6 +4,7 @@ import argparse
 import asyncio
 
 from recovery.discover import DiscoveryConfig, discover
+from recovery.report import save_stage1_report
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description='AMBOLS evidence-driven reverse engineering pipeline')
@@ -18,6 +19,7 @@ def main(argv: list[str] | None = None) -> int:
     print(f'[recovery] transições observadas: {result["transitions_observed"]}')
     print(f'[recovery] comportamentos observados: {result["behaviors_observed"]}')
     print(f'[recovery] eventos de rede: {result["network_events"]}')
+    save_stage1_report(__import__('pathlib').Path('reports/recovery'), result)
     print(f'[recovery] ZAP ativo: {"sim" if result["zap_proxy_active"] else "não"}')
     print('[recovery] artifacts: reports/recovery/')
     return 0
