@@ -17,7 +17,7 @@ from automation.preconditions import (
 )
 from config.settings import settings
 from reporting.evidence import Evidence, capture, save_execution, timestamp
-from reporting.report import save_report
+from reporting.report import save_domain_reports, save_report
 
 
 def load_scenarios(path: Path) -> list[dict]:
@@ -378,4 +378,13 @@ async def run_selected(ids: set[str] | None = None, domains: set[str] | None = N
     results = []
     for scenario in selected:
         results.append(await run_scenario(scenario))
+
+    # Domain consolidations are generated only after a complete successful
+    # execution set. This keeps partial/failed runs as diagnostic artifacts
+    # without presenting an incomplete domain report as final Stage 1 evidence.
+    if results and len(results) == len(selected) and all(
+        item.get("status") == "PASSED" for item in results
+    ):
+        save_domain_reports(settings.report_dir, selected, results)
+
     return results
