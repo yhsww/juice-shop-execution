@@ -5,7 +5,7 @@ import subprocess
 import time
 from dataclasses import dataclass
 from pathlib import Path
-from urllib.request import urlopen
+import socket
 
 
 @dataclass(frozen=True)
@@ -36,9 +36,9 @@ def ensure_zap(config: ZapConfig) -> str | None:
     deadline = time.monotonic() + 30
     while time.monotonic() < deadline:
         try:
-            with urlopen(proxy, timeout=1):
+            with socket.create_connection(('127.0.0.1', config.port), timeout=1):
                 return proxy
-        except Exception:
+        except OSError:
             time.sleep(1)
     return None
 
