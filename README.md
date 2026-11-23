@@ -78,22 +78,25 @@ docker compose -f juice-shop/docker-compose.yml down
 
 ## Engenharia reversa AMBOLS
 
-Esta branch adiciona uma etapa determinística de descoberta antes da especificação de cenários. Ela observa a interface real, registra estados, rotas e transições e produz requisitos candidatos vinculados à evidência observada. A separação entre observação, requisito candidato e cenário executável evita tratar cenários previamente escritos como prova de recuperação de requisitos.
+Esta branch adiciona uma etapa determinística de exploração comportamental. Ela usa os cenários AMBOLS como guia, executa o fluxo real na interface e, a partir do estado observado, explora controles, entradas e interações adicionais para descobrir comportamentos e cenários alternativos.
 
-Execução da descoberta:
+Execução da exploração:
 
 ```powershell
-python run.py --discover
+python run.py --reverse-engineer --start-app
+python run.py --reverse-engineer --start-app --recovery-domain CAT
+python run.py --reverse-engineer --start-app --recovery-scenario CEN-CAT-01
 ```
 
 Artefatos gerados em `reports/recovery/`:
 
-- `ui-states.json`: estados observados da interface.
-- `behaviors.json`: transições observadas entre rotas.
-- `candidate-requirements.json`: requisitos candidatos com evidência de origem.
-- `discovery-summary.json`: resumo reprodutível da execução.
+- `ETAPA_1.md` e `ETAPA_1.json`: relatório consolidado da Etapa 1.
+- `stage1-scenarios.json`: execução observacional por cenário.
+- `behaviors.json`: comportamentos derivados das mudanças observadas.
+- `discovered-scenarios.json`: caminhos alternativos descobertos.
+- `evidence-index.json`: índice metodológico das evidências.
 
-A abordagem é deliberadamente determinística e conservadora: ela não inventa comportamento ausente da evidência e não substitui a etapa posterior de análise/validação humana.
+A abordagem é deliberadamente determinística e conservadora: o campo `expected` do catálogo não é tratado como evidência. O comportamento relatado precisa ser sustentado por observação da UI. Network/ZAP podem complementar a evidência, mas não substituem a observação da interface. Esta etapa não produz END, COMP ou REQ.
 
 ## Catálogo de cenários
 
@@ -124,6 +127,6 @@ Resultados, mensagens e respostas da interface devem refletir o que foi observad
 
 O Juice Shop é intencionalmente vulnerável. A porta do container é vinculada somente a `127.0.0.1`. Não altere para exposição pública e utilize o ambiente apenas localmente ou em ambiente autorizado.
 
-## Sem IA
+## Uso de IA na Etapa 1
 
-O projeto não usa LLM, RAG, embeddings, ChromaDB, APIs de IA ou chaves de provedores. A execução usa regras determinísticas e observação da interface.
+A execução da Etapa 1 é determinística. Não depende de LLM para decidir o que foi observado, evitando que um modelo invente comportamentos ausentes da evidência. Modelos de IA podem ser usados posteriormente para revisão ou refinamento textual, mas a evidência primária permanece a execução real da UI.
