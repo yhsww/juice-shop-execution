@@ -19,15 +19,19 @@ class UIState:
 
 
 MESSAGE_SELECTORS = (
-    '[role="alert"]',
+    '[role="alert"]:visible',
     '[aria-live]:visible',
-    '[role="status"]',
-    '.mat-mdc-snack-bar-label',
-    '.mat-snack-bar-container',
-    '.mat-mdc-form-field-error',
-    'mat-error',
-    '.mat-error',
-    '.cdk-overlay-container [role="status"]',
+    '[role="status"]:visible',
+    '.mat-mdc-snack-bar-label:visible',
+    '.mat-snack-bar-container:visible',
+    '.mat-mdc-form-field-error:visible',
+    'mat-error:visible',
+    '.mat-error:visible',
+    '.cdk-overlay-container [role="status"]:visible',
+    '.cdk-overlay-container [role="alert"]:visible',
+    '[class*="snack"]:visible',
+    '[class*="toast"]:visible',
+    '[class*="notification"]:visible',
 )
 
 HEADING_SELECTORS = "h1,h2,h3,h4,[role='heading']"
@@ -42,11 +46,20 @@ CONTROL_SELECTORS = (
 
 async def _texts(page: Page, selector: str) -> list[str]:
     try:
-        return [
-            " ".join(value.split())
-            for value in await page.locator(selector).all_inner_texts()
-            if " ".join(value.split())
-        ]
+        values: list[str] = []
+        nodes = page.locator(selector)
+        count = await nodes.count()
+        for index in range(count):
+            node = nodes.nth(index)
+            try:
+                if not await node.is_visible():
+                    continue
+                value = " ".join((await node.inner_text()).split())
+                if value:
+                    values.append(value)
+            except Exception:
+                continue
+        return values
     except Exception:
         return []
 
@@ -106,6 +119,9 @@ async def observe(page: Page) -> UIState:
     messages: list[str] = []
     for selector in MESSAGE_SELECTORS:
         messages.extend(await _texts(page, selector))
+    # Angular Material/CDK feedback can be mounted in an overlay outside the
+    # page's normal content tree. Keep a small, semantic message corpus instead
+    # of depending on one concrete snackbar implementation.
     messages = list(dict.fromkeys(messages))
     headings = list(dict.fromkeys(await _texts(page, HEADING_SELECTORS)))
     return UIState(
