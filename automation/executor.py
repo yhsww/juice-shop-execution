@@ -83,10 +83,10 @@ def _norm_text(value: object) -> str:
 async def _install_mutation_observer(page: Page) -> None:
     """Install a short-lived, page-generic mutation recorder.
 
-    This is black-box evidence collection: it does not target a scenario,
-    component or framework. It records visible text introduced/changed while
-    an action is executing, including transient Angular/Material feedback
-    that may disappear before the final stable snapshot.
+    The collector is deliberately framework-agnostic. It records visible text
+    from changed nodes and their nearby visible ancestors so feedback rendered
+    by Angular Material/CDK is captured even when the message is inserted into
+    an existing overlay container instead of arriving as a new top-level node.
     """
     try:
         await page.evaluate("""
@@ -94,39 +94,89 @@ async def _install_mutation_observer(page: Page) -> None:
                 if (window.__ambolsMutationObserver) {
                     try { window.__ambolsMutationObserver.disconnect(); } catch (_) {}
                 }
+
                 window.__ambolsMutationBuffer = [];
-                const visibleText = (node) => {
-                    if (!node || node.nodeType !== Node.ELEMENT_NODE) return '';
-                    const el = node;
-                    const style = window.getComputedStyle(el);
-                    if (style.display === 'none' || style.visibility === 'hidden') return '';
-                    return String(el.innerText || el.textContent || '').replace(/\\s+/g, ' ').trim();
+                const normalize = (value) =>
+                    String(value || '').replace(/\\s+/g, ' ').trim();
+
+                const visible = (el) => {
+                    if (!el || el.nodeType !== Node.ELEMENT_NODE) return '';
+                    try {
+                        const style = window.getComputedStyle(el);
+                        if (
+                            style.display === 'none' ||
+                            style.visibility === 'hidden' ||
+                            style.opacity === '0'
+                        ) {
+                            return '';
+                        }
+                        const rect = el.getBoundingClientRect();
+                        if (rect.width === 0 || rect.height === 0) return '';
+                    } catch (_) {}
+                    return normalize(el.innerText || el.textContent);
                 };
-                const push = (text) => {
-                    if (!text) return;
-                    const item = text.slice(0, 1200);
-                    if (!window.__ambolsMutationBuffer.includes(item)) {
-                        window.__ambolsMutationBuffer.push(item);
+
+                const push = (value) => {
+                    const text = normalize(value);
+                    if (!text || text.length > 1600) return;
+                    if (!window.__ambolsMutationBuffer.includes(text)) {
+                        window.__ambolsMutationBuffer.push(text);
                     }
-                    if (window.__ambolsMutationBuffer.length > 80) {
+                    if (window.__ambolsMutationBuffer.length > 120) {
                         window.__ambolsMutationBuffer.shift();
                     }
                 };
+
+                const captureContext = (node) => {
+                    let current =
+                        node && node.nodeType === Node.ELEMENT_NODE
+                            ? node
+                            : node && node.parentElement;
+
+                    let depth = 0;
+                    while (current && depth < 5) {
+                        const text = visible(current);
+                        if (text) push(text);
+
+                        const role = String(current.getAttribute?.('role') || '').toLowerCase();
+                        const ariaLive = String(current.getAttribute?.('aria-live') || '').toLowerCase();
+                        const className = String(current.className || '').toLowerCase();
+
+                        if (
+                            role === 'alert' ||
+                            role === 'status' ||
+                            ariaLive === 'assertive' ||
+                            ariaLive === 'polite' ||
+                            /snack|toast|notification|alert|error/.test(className)
+                        ) {
+                            break;
+                        }
+
+                        current = current.parentElement;
+                        depth += 1;
+                    }
+                };
+
                 const observer = new MutationObserver((records) => {
                     for (const record of records) {
-                        if (record.type === 'characterData') {
-                            push(visibleText(record.target.parentElement));
-                        }
+                        captureContext(record.target);
+
                         for (const node of record.addedNodes) {
-                            push(visibleText(node));
+                            captureContext(node);
+                        }
+
+                        if (record.type === 'characterData') {
+                            captureContext(record.target);
                         }
                     }
                 });
+
                 observer.observe(document.documentElement, {
                     subtree: true,
                     childList: true,
                     characterData: true,
                 });
+
                 window.__ambolsMutationObserver = observer;
             }
         """)
@@ -804,7 +854,10 @@ async def execute(page: Page, action: dict) -> ActionResult:
     # feedback can be rendered asynchronously after the click event. WAIT is
     # already an explicit synchronization primitive, so it remains lightweight.
     # This is intentionally generic: no scenario or message text is special-cased.
-    transient_window = 0.08 if kind == "WAIT" else 0.95
+    # Keep the evidence window bounded, but long enough to cover asynchronous
+    # Angular/Material feedback that is rendered after the initiating click.
+    # This is an observation budget, not an action timeout.
+    transient_window = 0.08 if kind == "WAIT" else 1.5
     transient_deadline = monotonic() + transient_window
     while monotonic() < transient_deadline:
         await page.wait_for_timeout(60)
