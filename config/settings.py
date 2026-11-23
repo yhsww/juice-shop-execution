@@ -34,9 +34,9 @@ class Settings:
     recovery_output_dir: Path = ROOT / os.getenv("AMBOLS_RECOVERY_OUTPUT_DIR", "reports/recovery")
     recovery_max_pages: int = int(os.getenv("AMBOLS_RECOVERY_MAX_PAGES", "30"))
     recovery_max_depth: int = int(os.getenv("AMBOLS_RECOVERY_MAX_DEPTH", "2"))
-    recovery_timeout_seconds: int = int(os.getenv("AMBOLS_RECOVERY_TIMEOUT_SECONDS", "180"))
+    recovery_timeout_seconds: int = int(os.getenv("AMBOLS_RECOVERY_TIMEOUT_SECONDS", "0"))
     recovery_max_events: int = int(os.getenv("AMBOLS_RECOVERY_MAX_NETWORK_EVENTS", "2000"))
-    recovery_max_steps_per_scenario: int = int(os.getenv("AMBOLS_RECOVERY_MAX_STEPS_PER_SCENARIO", "30"))
+    recovery_max_steps_per_scenario: int = int(os.getenv("AMBOLS_RECOVERY_MAX_STEPS_PER_SCENARIO", "0"))
     recovery_max_variants_per_input: int = int(os.getenv("AMBOLS_RECOVERY_MAX_VARIANTS_PER_INPUT", "6"))
 
 
