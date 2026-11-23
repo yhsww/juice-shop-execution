@@ -797,7 +797,29 @@ async def execute(page: Page, action: dict) -> ActionResult:
 
             if locator is None:
                 raise RuntimeError("Campo alvo não encontrado ou não visível.")
-            await _fill(locator, str(action["value"]))
+
+            fill_error: Exception | None = None
+            for attempt in range(3):
+                try:
+                    await _fill(locator, str(action["value"]))
+                    fill_error = None
+                    break
+                except Exception as exc:
+                    fill_error = exc
+                    # Angular can replace a form control during change detection.
+                    # Re-resolve the same semantic target before retrying instead
+                    # of keeping a stale Locator instance.
+                    if attempt < 2:
+                        await page.wait_for_timeout(120)
+                        fresh = await resolve(
+                            page,
+                            action.get("target", {}),
+                        )
+                        if fresh is not None:
+                            locator = fresh
+
+            if fill_error is not None:
+                raise fill_error
         elif kind == "SELECT":
             locator = await resolve(page, action.get("target", {}))
             if locator is None:
