@@ -16,6 +16,7 @@ from automation.preconditions import (
     scenario_password,
 )
 from config.settings import settings
+from recovery.network import NetworkCollector, summarize_network
 from reporting.evidence import Evidence, capture, save_execution, timestamp
 from reporting.report import save_domain_reports, save_report
 
@@ -77,6 +78,8 @@ async def _run_scenario(scenario: dict) -> dict:
 
     async with browser_session() as (_, _, page):
         await open_juice_shop(page)
+        network = NetworkCollector(settings.recovery_max_events)
+        network.attach(page)
 
         # Preconditions are part of the scenario budget. A stalled browser
         # request or Angular wait must not block the whole domain run.
@@ -169,6 +172,9 @@ async def _run_scenario(scenario: dict) -> dict:
                 remaining,
                 max(20.0, settings.action_timeout_ms / 1000 * 2),
             )
+            action_id = f'{scenario["id"]}-A-{number:02d}'
+            network.set_action(action_id)
+            action_started = time.time()
             try:
                 result = await asyncio.wait_for(
                     execute(page, action),
@@ -210,6 +216,9 @@ async def _run_scenario(scenario: dict) -> dict:
                 number,
             )
 
+            action_ended = time.time()
+            network_evidence = network.correlate_window(action_started, action_ended, action_id)
+
             evidence = Evidence(
                 step=number,
                 action=result.action,
@@ -232,6 +241,9 @@ async def _run_scenario(scenario: dict) -> dict:
             # body.inner_text(), while keeping the evidence black-box and
             # framework-independent.
             step_payload = evidence.__dict__.copy()
+            step_payload["action_id"] = action_id
+            step_payload["network"] = network_evidence
+            step_payload["network_summary"] = summarize_network(network_evidence)
             step_payload["controls"] = (
                 list(result.state_after.controls)
                 if result.state_after
@@ -272,6 +284,7 @@ async def _run_scenario(scenario: dict) -> dict:
         # of allowing an observer timeout to crash the entire run.
         final_state = await safe_observe(page, fallback=last_state)
         execution["final_url"] = final_state.url
+        execution["network_summary"] = summarize_network(network.snapshot())
         execution["final_visible_text"] = final_state.visible_text
 
         expected = scenario.get("expected", {})
