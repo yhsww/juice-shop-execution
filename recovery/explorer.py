@@ -32,6 +32,8 @@ class BehavioralExplorer:
         self.observations: list[dict[str, Any]] = []
         self.discovered: list[dict[str, Any]] = []
         self.seen: set[str] = set()
+        self.baseline_url: str = ""
+        self.baseline_storage: dict[str, Any] | None = None
 
     async def run(self) -> dict[str, Any]:
         await open_juice_shop(self.page)
@@ -41,7 +43,10 @@ class BehavioralExplorer:
             await self._planned(index, action)
             if self.exhausted():
                 break
-        await self._explore_state()
+        if not self.exhausted():
+            self.baseline_url = self.page.url
+            self.baseline_storage = await self.page.context.storage_state()
+            await self._explore_state()
         return {
             "scenario_id": self.scenario["id"], "domain": self.scenario.get("domain"),
             "name": self.scenario.get("name"), "planned_flow": self.scenario.get("flow"),
@@ -84,6 +89,7 @@ class BehavioralExplorer:
                 await self._click(control)
 
     async def _variant(self, control: dict[str, Any], variant: Any) -> None:
+        await self._restore_baseline()
         before = await self.snapshot()
         action = {"type": "FILL", "control": control, "value": variant.value, "variant": variant.label}
         action_id = self.next_id("ALT")
@@ -106,6 +112,7 @@ class BehavioralExplorer:
             self.register_alternative(action, before, after, change)
 
     async def _select(self, control: dict[str, Any]) -> None:
+        await self._restore_baseline()
         before = await self.snapshot()
         action = {"type": "SELECT", "control": control}
         action_id = self.next_id("ALT")
@@ -123,6 +130,7 @@ class BehavioralExplorer:
             self.register_alternative(action, before, after, change)
 
     async def _click(self, control: dict[str, Any]) -> None:
+        await self._restore_baseline()
         before = await self.snapshot()
         action = {"type": "CLICK", "control": control}
         action_id = self.next_id("ALT")
@@ -138,6 +146,39 @@ class BehavioralExplorer:
                     "" if ok else "Não foi possível acionar o controle.")
         if ok and change["changed"]:
             self.register_alternative(action, before, after, change)
+
+    async def _restore_baseline(self) -> None:
+        if not self.baseline_storage or not self.baseline_url:
+            return
+
+        old_context = self.page.context
+        browser = old_context.browser
+        if browser is None:
+            return
+
+        try:
+            await old_context.close()
+        except Exception:
+            pass
+
+        context = await browser.new_context(
+            viewport={"width": 1440, "height": 900},
+            ignore_https_errors=True,
+            storage_state=self.baseline_storage,
+        )
+        page = await context.new_page()
+        page.set_default_timeout(settings.action_timeout_ms)
+        page.set_default_navigation_timeout(settings.navigation_timeout_ms)
+        await page.goto(
+            self.baseline_url,
+            wait_until="domcontentloaded",
+            timeout=settings.navigation_timeout_ms,
+        )
+        await self.settle()
+
+        self.page = page
+        self.network = NetworkCollector(settings.recovery_max_events)
+        self.network.attach(page)
 
     async def perform(self, action: dict[str, Any]) -> tuple[bool, str]:
         typ = str(action.get("type", "")).upper()
