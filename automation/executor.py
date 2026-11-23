@@ -800,7 +800,11 @@ async def execute(page: Page, action: dict) -> ActionResult:
     # WAIT is already a deliberate synchronization point. Keep evidence
     # collection lightweight for it; other actions retain the short transient
     # capture window needed for snackbars/toasts and Angular feedback.
-    transient_window = 0.15 if kind == "WAIT" else 0.45
+    # Capture a little longer for interaction actions because Angular/Material
+    # feedback can be rendered asynchronously after the click event. WAIT is
+    # already an explicit synchronization primitive, so it remains lightweight.
+    # This is intentionally generic: no scenario or message text is special-cased.
+    transient_window = 0.08 if kind == "WAIT" else 0.95
     transient_deadline = monotonic() + transient_window
     while monotonic() < transient_deadline:
         await page.wait_for_timeout(60)
@@ -814,7 +818,7 @@ async def execute(page: Page, action: dict) -> ActionResult:
     after = await wait_for_stable_ui(
         page,
         initial=immediate_states[-1],
-        timeout_ms=250 if kind == "WAIT" else 450,
+        timeout_ms=180 if kind == "WAIT" else 320,
         sample_interval_ms=80,
     )
 
