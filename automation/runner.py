@@ -296,6 +296,23 @@ async def _run_scenario(scenario: dict) -> dict:
             )
             print(f"[VALIDATION] URL final: {final_state.url}")
 
+            # Validation failures must expose the evidence corpus. This makes
+            # a failed functional assertion diagnosable without changing the
+            # scenario or weakening the validator.
+            for step in execution["steps"]:
+                print(
+                    f"[VALIDATION-EVIDENCE] {scenario['id']} | "
+                    f"passo {step.get('step')} | "
+                    f"success={step.get('success')} | "
+                    f"observado={step.get('observed_result', '')[:1200]}"
+                )
+                if step.get("messages"):
+                    print(
+                        f"[VALIDATION-MESSAGES] {scenario['id']} | "
+                        f"passo {step.get('step')} | "
+                        f"{' | '.join(step.get('messages', []))[:1200]}"
+                    )
+
         if timed_out:
             execution["status"] = "TIMEOUT"
         elif any(not item["success"] for item in execution["steps"]):
