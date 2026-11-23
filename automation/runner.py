@@ -8,7 +8,7 @@ from uuid import uuid4
 
 from automation.browser import browser_session, open_juice_shop
 from automation.executor import ActionResult, execute
-from automation.observer import UIState, observe, safe_observe
+from automation.observer import UIState, safe_observe
 from automation.validator import validate
 from automation.preconditions import (
     prepare_precondition,
