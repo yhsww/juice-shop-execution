@@ -34,7 +34,7 @@ SCENARIO_SHEET = """# Ficha de Cenário
 
 {justification}
 
-## Requisito candidato (opcional)
+## Descrição funcional do cenário
 
 {requirement}
 
