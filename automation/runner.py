@@ -8,7 +8,7 @@ from uuid import uuid4
 
 from automation.browser import browser_session, open_juice_shop
 from automation.executor import ActionResult, execute
-from automation.observer import observe
+from automation.observer import UIState, observe, safe_observe
 from automation.validator import validate
 from automation.preconditions import (
     prepare_precondition,
@@ -112,6 +112,7 @@ async def _run_scenario(scenario: dict) -> dict:
         previous_action = None
         repeated = 0
         timed_out = False
+        last_state: UIState | None = None
 
         print(f"[START] {scenario['id']} | limite: {scenario_timeout}s")
 
@@ -174,7 +175,11 @@ async def _run_scenario(scenario: dict) -> dict:
                     timeout=max(0.1, action_budget),
                 )
             except asyncio.TimeoutError:
-                current = await observe(page)
+                # The action timeout is already a classified automation event.
+                # Observation of the page is best-effort here; a transient
+                # navigation can temporarily make <body> unavailable, and that
+                # secondary failure must never abort the whole scenario suite.
+                current = await safe_observe(page, fallback=last_state)
                 result = ActionResult(
                     action=str(action.get("type", "")).upper(),
                     user_action=str(action.get("user_action") or action.get("type", "")),
@@ -191,6 +196,9 @@ async def _run_scenario(scenario: dict) -> dict:
                     state_after=current,
                 )
                 timed_out = True
+
+            if result.state_after is not None:
+                last_state = result.state_after
 
             if time.monotonic() - scenario_started >= scenario_timeout:
                 timed_out = True
@@ -259,7 +267,10 @@ async def _run_scenario(scenario: dict) -> dict:
 
                 break
 
-        final_state = await observe(page)
+        # Final observation is diagnostic infrastructure. If the browser is
+        # between documents, preserve the last successful UI snapshot instead
+        # of allowing an observer timeout to crash the entire run.
+        final_state = await safe_observe(page, fallback=last_state)
         execution["final_url"] = final_state.url
         execution["final_visible_text"] = final_state.visible_text
 
