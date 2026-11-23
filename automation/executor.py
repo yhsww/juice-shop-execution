@@ -67,12 +67,12 @@ def _action_data(action: dict) -> str:
 
 
 async def _safe_observe(page: Page, fallback: UIState) -> UIState:
-    deadline = monotonic() + 5
+    deadline = monotonic() + 1.8
     while monotonic() < deadline:
         try:
             return await observe(page)
         except Exception:
-            await page.wait_for_timeout(150)
+            await page.wait_for_timeout(80)
     return fallback
 
 
@@ -518,11 +518,27 @@ async def execute(page: Page, action: dict) -> ActionResult:
 
     try:
         if kind == "NAVIGATE":
-            await page.goto(
-                f"{settings.base_url}{action['route']}",
-                wait_until="domcontentloaded",
-                timeout=settings.navigation_timeout_ms,
-            )
+            route = str(action["route"])
+            target_url = f"{settings.base_url}{route}"
+
+            # Juice Shop is an Angular SPA. For hash routes, avoid a full
+            # document navigation: network activity is not the navigation
+            # condition and can cause false Playwright timeouts.
+            app_origin = settings.base_url.rstrip("/")
+            current_origin = page.url.split("#", 1)[0].rstrip("/")
+            if route.startswith("/#") and current_origin == app_origin:
+                target_hash = "#" + route.split("#", 1)[1]
+                await page.evaluate(
+                    "(hash) => { if (window.location.hash !== hash) window.location.hash = hash; }",
+                    target_hash,
+                )
+                await page.wait_for_timeout(180)
+            else:
+                await page.goto(
+                    target_url,
+                    wait_until="domcontentloaded",
+                    timeout=settings.navigation_timeout_ms,
+                )
         elif kind == "CLICK":
             target = action.get("target", {})
 
@@ -758,7 +774,7 @@ async def execute(page: Page, action: dict) -> ActionResult:
     first_after = await _safe_observe(page, before)
     immediate_states.append(first_after)
 
-    transient_deadline = monotonic() + 1.5
+    transient_deadline = monotonic() + 0.75
     while monotonic() < transient_deadline:
         await page.wait_for_timeout(120)
         snapshot = await _safe_observe(page, before)
@@ -771,8 +787,8 @@ async def execute(page: Page, action: dict) -> ActionResult:
     after = await wait_for_stable_ui(
         page,
         initial=immediate_states[-1],
-        timeout_ms=900,
-        sample_interval_ms=120,
+        timeout_ms=650,
+        sample_interval_ms=100,
     )
 
     transient_messages: list[str] = []
