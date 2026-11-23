@@ -161,6 +161,14 @@ async def _install_mutation_observer(page: Page) -> None:
                     for (const record of records) {
                         captureContext(record.target);
 
+                        // Some Angular Material feedback is revealed by a class
+                        // or style transition on an already-mounted overlay node.
+                        // Capture the current visible document text as a bounded
+                        // supplemental signal whenever the DOM changes.
+                        if (document.body) {
+                            push(document.body.innerText || document.body.textContent);
+                        }
+
                         for (const node of record.addedNodes) {
                             captureContext(node);
                         }
@@ -175,6 +183,8 @@ async def _install_mutation_observer(page: Page) -> None:
                     subtree: true,
                     childList: true,
                     characterData: true,
+                    attributes: true,
+                    attributeFilter: ['class', 'style', 'aria-live', 'role'],
                 });
 
                 window.__ambolsMutationObserver = observer;
