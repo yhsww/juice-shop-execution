@@ -101,7 +101,7 @@ async def _controls(page: Page) -> tuple[str, ...]:
 
 async def observe(page: Page) -> UIState:
     body = page.locator("body")
-    text = (await body.inner_text(timeout=5000)).strip()
+    text = (await body.inner_text(timeout=1200)).strip()
     normalized = " ".join(text.split())
     messages: list[str] = []
     for selector in MESSAGE_SELECTORS:
