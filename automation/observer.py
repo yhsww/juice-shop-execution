@@ -201,12 +201,19 @@ async def safe_observe(
                 break
     if fallback is not None:
         return fallback
-    if last_error is not None:
-        raise RuntimeError(
-            f"Observação da página indisponível após {timeout_ms}ms: {last_error}"
-        ) from last_error
-    raise RuntimeError(
-        f"Observação da página indisponível após {timeout_ms}ms."
+
+    # No prior snapshot exists (for example, a scenario failed during its
+    # first action). Return an explicitly empty diagnostic snapshot rather than
+    # allowing observation infrastructure to terminate the entire suite.
+    try:
+        url = page.url
+    except Exception:
+        url = ""
+    return UIState(
+        url=url,
+        title="",
+        visible_text="",
+        body_hash="",
     )
 
 
