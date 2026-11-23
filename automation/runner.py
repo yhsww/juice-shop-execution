@@ -7,7 +7,7 @@ from pathlib import Path
 from uuid import uuid4
 
 from automation.browser import browser_session, open_juice_shop
-from automation.executor import execute
+from automation.executor import ActionResult, execute
 from automation.observer import observe
 from automation.validator import validate
 from automation.preconditions import (
@@ -159,7 +159,38 @@ async def _run_scenario(scenario: dict) -> dict:
                 )
                 break
 
-            result = await execute(page, action)
+            # Hard budget: an individual action must never consume the
+            # remainder of the scenario indefinitely. This is especially
+            # important for semantic resolution retries, whose internal
+            # Playwright timeouts can otherwise stack up.
+            remaining = scenario_timeout - (time.monotonic() - scenario_started)
+            action_budget = min(
+                remaining,
+                max(20.0, settings.action_timeout_ms / 1000 * 2),
+            )
+            try:
+                result = await asyncio.wait_for(
+                    execute(page, action),
+                    timeout=max(0.1, action_budget),
+                )
+            except asyncio.TimeoutError:
+                current = await observe(page)
+                result = ActionResult(
+                    action=str(action.get("type", "")).upper(),
+                    user_action=str(action.get("user_action") or action.get("type", "")),
+                    data=str(action.get("data") or action.get("value") or action.get("route") or ""),
+                    url_before=current.url,
+                    url_after=current.url,
+                    observed_result=(
+                        f"Tempo limite da ação atingido ({action_budget:.1f}s)."
+                    ),
+                    changed=False,
+                    success=False,
+                    error=f"Timeout da ação após {action_budget:.1f}s.",
+                    state_before=current,
+                    state_after=current,
+                )
+                timed_out = True
 
             if time.monotonic() - scenario_started >= scenario_timeout:
                 timed_out = True
