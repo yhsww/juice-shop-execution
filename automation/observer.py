@@ -45,70 +45,86 @@ CONTROL_SELECTORS = (
 
 
 async def _texts(page: Page, selector: str) -> list[str]:
+    """Read visible text in one DOM round-trip.
+
+    The observer is called before and after every action. Iterating through
+    Playwright locators one node at a time can spend the whole action budget
+    waiting for nodes that Angular is replacing. A single DOM evaluation keeps
+    observation bounded and makes it diagnostic rather than a source of
+    automation failures.
+    """
     try:
-        values: list[str] = []
-        nodes = page.locator(selector)
-        count = await nodes.count()
-        for index in range(count):
-            node = nodes.nth(index)
-            try:
-                if not await node.is_visible():
-                    continue
-                value = " ".join((await node.inner_text()).split())
-                if value:
-                    values.append(value)
-            except Exception:
-                continue
-        return values
+        values = await page.locator(selector).evaluate_all(
+            """nodes => nodes
+                .filter(node => {
+                    const style = window.getComputedStyle(node);
+                    return style.display !== 'none' &&
+                           style.visibility !== 'hidden' &&
+                           !!(node.offsetWidth || node.offsetHeight ||
+                              node.getClientRects().length);
+                })
+                .map(node => (node.innerText || node.textContent || '')
+                    .replace(/\\s+/g, ' ').trim())
+                .filter(Boolean)"""
+        )
+        return [str(value) for value in values if str(value).strip()]
     except Exception:
         return []
 
 
 async def _controls(page: Page) -> tuple[str, ...]:
-    """Capture a compact semantic fingerprint of visible interactive controls."""
+    """Capture a compact semantic fingerprint of visible interactive controls.
+
+    Use one DOM evaluation per selector instead of multiple Playwright calls
+    per control. This is critical because observation runs around every
+    interaction and must remain cheaper than the action it is observing.
+    """
     values: list[str] = []
     for selector in CONTROL_SELECTORS:
         try:
-            nodes = page.locator(selector)
-            count = await nodes.count()
+            items = await page.locator(selector).evaluate_all(
+                """nodes => nodes.map(node => {
+                    const style = window.getComputedStyle(node);
+                    const visible = style.display !== 'none' &&
+                                    style.visibility !== 'hidden' &&
+                                    !!(node.offsetWidth || node.offsetHeight ||
+                                       node.getClientRects().length);
+                    if (!visible) return null;
+
+                    const text = (node.innerText || node.textContent || '')
+                        .replace(/\\s+/g, ' ').trim();
+                    const aria = (node.getAttribute('aria-label') || '')
+                        .replace(/\\s+/g, ' ').trim();
+                    const title = (node.getAttribute('title') || '')
+                        .replace(/\\s+/g, ' ').trim();
+                    const attrValue = (node.getAttribute('value') || '')
+                        .replace(/\\s+/g, ' ').trim();
+
+                    let liveValue = attrValue;
+                    if (!liveValue && ('value' in node)) {
+                        liveValue = String(node.value || '').replace(/\\s+/g, ' ').trim();
+                    }
+
+                    const checked = node.getAttribute('aria-checked');
+                    const disabled = node.getAttribute('disabled');
+                    const label = text || aria || title || attrValue ||
+                                  node.getAttribute('id') || '';
+                    if (!label) return null;
+
+                    const state = [];
+                    if (liveValue && liveValue.toLowerCase() !== label.toLowerCase()) {
+                        state.push('value=' + liveValue.toLowerCase());
+                    }
+                    if (checked !== null) state.push('checked=' + checked);
+                    if (disabled !== null) state.push('disabled');
+
+                    return selector + ':' + label.toLowerCase() + ':' + state.join('|');
+                }).filter(Boolean)"""
+            )
+            values.extend(str(item) for item in items)
         except Exception:
             continue
-        for index in range(count):
-            node = nodes.nth(index)
-            try:
-                if not await node.is_visible():
-                    continue
-                text = " ".join((await node.inner_text()).split())
-                aria = " ".join((await node.get_attribute("aria-label") or "").split())
-                title = " ".join((await node.get_attribute("title") or "").split())
-                value = " ".join((await node.get_attribute("value") or "").split())
-                # Form controls often expose important behavior only through
-                # their current value; input.value is not part of body.inner_text().
-                # Include it in the black-box control fingerprint so assertions
-                # can validate entered data without page-specific DOM hacks.
-                text_value = value
-                if not text_value:
-                    try:
-                        text_value = " ".join((await node.input_value()).split())
-                    except Exception:
-                        pass
-                checked = await node.get_attribute("aria-checked")
-                disabled = await node.get_attribute("disabled")
-                label = text or aria or title or value
-                if not label:
-                    label = await node.get_attribute("id") or ""
-                if not label:
-                    continue
-                state = []
-                if text_value and text_value.casefold() != label.casefold():
-                    state.append(f"value={text_value.casefold()}")
-                if checked is not None:
-                    state.append(f"checked={checked}")
-                if disabled is not None:
-                    state.append("disabled")
-                values.append(f"{selector}:{label.casefold()}:{'|'.join(state)}")
-            except Exception:
-                continue
+
     return tuple(sorted(set(values))[:200])
 
 
