@@ -455,17 +455,7 @@ async def _fill(locator, value: str) -> None:
     except Exception:
         pass
 
-    # One final semantic re-resolution prevents a stale Angular control
-    # instance from being treated as the source of truth after a re-render.
-    try:
-        fresh = await resolve(locator.page, {"label": value})
-        if fresh is not None:
-            current = await _read_control_value(fresh)
-        else:
-            current = await _read_control_value(locator)
-    except Exception:
-        current = await _read_control_value(locator)
-
+    current = await _read_control_value(locator)
     raise RuntimeError(
         f"O campo não reteve o valor informado. "
         f"Esperado={value!r}; atual={current!r}."
