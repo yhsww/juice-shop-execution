@@ -74,7 +74,8 @@ def main() -> int:
                         help="Tempo maximo por cenario de recuperacao; 0 = sem limite.")
     parser.add_argument("--recovery-max-steps", type=int, default=0,
                         help="Passos maximos por cenario de recuperacao; 0 = explorar ate esgotar.")
-    parser.add_argument("--recovery-max-variants", type=int, default=6)
+    parser.add_argument("--recovery-max-variants", type=int, default=0,
+                        help="Variantes por entrada; 0 = todas as variantes geradas.")
     args = parser.parse_args()
     if args.stop_app and not args.start_app:
         parser.error("--stop-app requer --start-app.")
