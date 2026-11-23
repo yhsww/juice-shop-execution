@@ -167,12 +167,12 @@ class BehavioralExplorer:
             storage_state=self.baseline_storage,
         )
         page = await context.new_page()
-        page.set_default_timeout(settings.action_timeout_ms)
-        page.set_default_navigation_timeout(settings.navigation_timeout_ms)
+        page.set_default_timeout(0)
+        page.set_default_navigation_timeout(0)
         await page.goto(
             self.baseline_url,
             wait_until="domcontentloaded",
-            timeout=settings.navigation_timeout_ms,
+            timeout=0,
         )
         await self.settle()
 
@@ -237,10 +237,12 @@ class BehavioralExplorer:
         }).join('\\n')""")
         path = self.output_dir / self.scenario["id"] / f"{self.step_counter + 1:03d}.png"
         path.parent.mkdir(parents=True, exist_ok=True)
+        screenshot_path = ""
         try:
             await self.page.screenshot(path=str(path), full_page=True)
-        except Exception:
             screenshot_path = str(path) if path.exists() else ""
+        except Exception:
+            screenshot_path = ""
         return {"url": state.url, "title": state.title, "visible_text": state.visible_text,
                 "messages": list(state.messages), "controls": controls,
                 "interactive_fingerprint": "|".join(sorted(
@@ -291,7 +293,10 @@ class BehavioralExplorer:
         return any(x in label for x in ("github", "twitter", "facebook", "linkedin"))
 
     def exhausted(self) -> bool:
-        return self.step_counter >= self.max_steps or time.monotonic() - self.started >= self.max_seconds
+        # Zero means unlimited. Exploration ends only when there is no more
+        # interaction work to execute (all discovered controls/variants have
+        # already been attempted) or when an explicit safety cap is configured.
+        return self.max_steps > 0 and self.step_counter >= self.max_steps
 
 
 async def explore_scenarios(scenarios: list[dict[str, Any]], *, output_dir: Path,
@@ -315,8 +320,11 @@ async def explore_scenarios(scenarios: list[dict[str, Any]], *, output_dir: Path
                 ignore_https_errors=True,
             )
             page = await context.new_page()
-            page.set_default_timeout(settings.action_timeout_ms)
-            page.set_default_navigation_timeout(settings.navigation_timeout_ms)
+            # Recovery is an exhaustion-driven exploration. Playwright itself
+            # must not introduce the old 10s/15s action/navigation ceilings.
+            # A zero timeout means no artificial Playwright timeout.
+            page.set_default_timeout(0)
+            page.set_default_navigation_timeout(0)
 
             network = NetworkCollector(settings.recovery_max_events)
             network.attach(page)
