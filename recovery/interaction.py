@@ -79,31 +79,43 @@ def locator_for(page: Page, control: dict[str, Any]):
 async def click_control(page: Page, control: dict[str, Any]) -> bool:
     try:
         loc = locator_for(page, control)
-        await loc.scroll_into_view_if_needed(timeout=1500)
-        await loc.click(timeout=2500)
+        await loc.scroll_into_view_if_needed(timeout=0)
+        await loc.click(timeout=0)
         return True
     except Exception:
         try:
-            await locator_for(page, control).click(timeout=2500, force=True)
+            await locator_for(page, control).click(timeout=0, force=True)
             return True
         except Exception:
             return False
 
 
 async def fill_control(page: Page, control: dict[str, Any], value: str) -> bool:
-    try:
+    # Angular can replace the input node immediately after input/change
+    # handling. Re-resolve the semantic control for every recovery attempt.
+    for _ in range(4):
         loc = locator_for(page, control)
-        await loc.fill(value, timeout=2500)
-        return True
-    except Exception:
+        try:
+            await loc.fill(value, timeout=0)
+            if await loc.input_value(timeout=0) == value:
+                return True
+        except Exception:
+            pass
+
         try:
             loc = locator_for(page, control)
-            await loc.click(timeout=1500)
-            await page.keyboard.press("Control+A")
-            await page.keyboard.type(value)
-            return True
+            await loc.click(timeout=0)
+            await loc.press("ControlOrMeta+A", timeout=0)
+            await loc.press("Backspace", timeout=0)
+            await loc.press_sequentially(value, timeout=0)
+            if await loc.input_value(timeout=0) == value:
+                return True
         except Exception:
-            return False
+            pass
+
+        await page.wait_for_timeout(120)
+
+    return False
 
 
 async def select_control(page: Page, control: dict[str, Any], option_index: int = 0) -> bool:
