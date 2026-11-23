@@ -129,7 +129,7 @@ def build_report(scenario: dict, execution: dict) -> str:
         data=_observed_data(execution, scenario),
         coherent=scenario.get("coherent", ""),
         justification=scenario.get("justification", ""),
-        requirement=scenario.get("requirement", ""),
+        requirement=_scenario_description(scenario, execution),
         steps="\n".join(step_rows) or "| — | — | — | Nenhum passo registrado. |",
     )
 
