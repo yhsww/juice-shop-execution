@@ -151,15 +151,17 @@ class BehavioralExplorer:
             if typ == "WAIT":
                 await asyncio.sleep(min(float(action.get("milliseconds", 500)) / 1000, 2.0))
                 return True, ""
-            if typ in {"FILL", "CLICK", "PRESS"}:
+            if typ in {"FILL", "CLICK", "PRESS", "SELECT"}:
                 target = action.get("target") or {}
                 control = {"label": target.get("name") or target.get("label") or "",
-                           "role": target.get("role") or "", "tag": "input" if typ == "FILL" else "button",
+                           "role": target.get("role") or "", "tag": "select" if typ == "SELECT" else ("input" if typ == "FILL" else "button"),
                            "placeholder": target.get("placeholder") or "", "index": 0}
                 if typ == "FILL":
                     return await fill_control(self.page, control, str(action.get("value", ""))), ""
                 if typ == "CLICK":
                     return await click_control(self.page, control), ""
+                if typ == "SELECT":
+                    return await select_control(self.page, control, 0), ""
                 loc = self._target_locator(target)
                 await loc.press(str(action.get("key") or "Enter"))
                 await self.settle()
@@ -197,14 +199,14 @@ class BehavioralExplorer:
         try:
             await self.page.screenshot(path=str(path), full_page=True)
         except Exception:
-            path = Path("")
+            screenshot_path = str(path) if path.exists() else ""
         return {"url": state.url, "title": state.title, "visible_text": state.visible_text,
                 "messages": list(state.messages), "controls": controls,
                 "interactive_fingerprint": "|".join(sorted(
                     f"{c.get('key')}:{c.get('disabled')}:{c.get('required')}:{c.get('checked')}:{c.get('selected')}:{c.get('value')}"
                     for c in controls)),
                 "visual_fingerprint": fingerprint({"visual_fingerprint": visual}),
-                "screenshot": str(path) if str(path) else ""}
+                "screenshot": screenshot_path}
 
     async def settle(self) -> None:
         try:
@@ -254,31 +256,76 @@ class BehavioralExplorer:
 async def explore_scenarios(scenarios: list[dict[str, Any]], *, output_dir: Path,
                             max_steps: int, max_seconds: int, max_variants: int) -> dict[str, Any]:
     results = []
-    async with browser_session() as (_, _, page):
+
+    # Each scenario receives a fresh BrowserContext. This prevents authentication,
+    # cart, form and navigation state from leaking between independent scenarios.
+    async with browser_session() as (browser, base_context, _):
+        try:
+            await base_context.close()
+        except Exception:
+            pass
+
         for scenario in scenarios:
             if not scenario.get("actions"):
                 continue
+
+            context = await browser.new_context(
+                viewport={"width": 1440, "height": 900},
+                ignore_https_errors=True,
+            )
+            page = await context.new_page()
+            page.set_default_timeout(settings.action_timeout_ms)
+            page.set_default_navigation_timeout(settings.navigation_timeout_ms)
+
             network = NetworkCollector(settings.recovery_max_events)
             network.attach(page)
-            explorer = BehavioralExplorer(page, network, scenario, output_dir,
-                                          max_steps, max_seconds, max_variants)
+            explorer = BehavioralExplorer(
+                page, network, scenario, output_dir,
+                max_steps, max_seconds, max_variants,
+            )
             try:
                 results.append(await explorer.run())
             except Exception as exc:
-                results.append({"scenario_id": scenario["id"], "domain": scenario.get("domain"),
-                                "name": scenario.get("name"), "status": "AUTOMATION_ERROR",
-                                "error": f"{type(exc).__name__}: {exc}", "observations": [],
-                                "discovered_scenarios": [], "steps_executed": explorer.step_counter})
+                results.append({
+                    "scenario_id": scenario["id"],
+                    "domain": scenario.get("domain"),
+                    "name": scenario.get("name"),
+                    "status": "AUTOMATION_ERROR",
+                    "error": f"{type(exc).__name__}: {exc}",
+                    "observations": [],
+                    "discovered_scenarios": [],
+                    "steps_executed": explorer.step_counter,
+                })
+            finally:
+                try:
+                    await asyncio.wait_for(context.close(), timeout=5)
+                except Exception:
+                    pass
+
     behaviors = []
     alternatives = []
     for result in results:
         for obs in result.get("observations", []):
-            behaviors.append({"behavior_id": f"BEH-{len(behaviors)+1:05d}",
-                              "scenario_id": result["scenario_id"], "domain": result.get("domain"),
-                              "kind": obs.get("kind"), "description": obs.get("observed_behavior"),
-                              "evidence": obs})
+            behaviors.append({
+                "behavior_id": f"BE-{len(behaviors) + 1:05d}",
+                "scenario_id": result["scenario_id"],
+                "domain": result.get("domain"),
+                "kind": obs.get("kind"),
+                "description": obs.get("observed_behavior"),
+                "evidence": obs,
+            })
         alternatives.extend(result.get("discovered_scenarios", []))
+
     for alt in alternatives:
         alt.pop("_key", None)
-    return {"scenarios": results, "behaviors": behaviors, "discovered_scenarios": alternatives,
-            "counts": {"scenarios": len(results), "behaviors": len(behaviors), "alternatives": len(alternatives)}}
+
+    return {
+        "scenarios": results,
+        "behaviors": behaviors,
+        "discovered_scenarios": alternatives,
+        "counts": {
+            "scenarios": len(results),
+            "behaviors": len(behaviors),
+            "alternatives": len(alternatives),
+        },
+    }
