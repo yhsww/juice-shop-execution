@@ -433,12 +433,39 @@ async def _fill(locator, value: str) -> None:
         await locator.press("ControlOrMeta+A", timeout=1500)
         await locator.press("Backspace", timeout=1500)
         await locator.type(value, timeout=settings.action_timeout_ms)
+
+        # Some Angular Material controls are backed by a FormControl whose
+        # validation/change detection is not synchronized by the automation
+        # primitive alone. Re-dispatch the standard DOM lifecycle events on
+        # the live control. This is framework-generic and does not depend on
+        # any scenario, field name, route or selector.
+        try:
+            await locator.evaluate(
+                """(el) => {
+                    el.dispatchEvent(new Event('input', { bubbles: true }));
+                    el.dispatchEvent(new Event('change', { bubbles: true }));
+                    el.dispatchEvent(new Event('blur', { bubbles: true }));
+                }"""
+            )
+        except Exception:
+            pass
+
         if await verified(stable=True):
             return
     except Exception:
         pass
 
-    current = await _read_control_value(locator)
+    # One final semantic re-resolution prevents a stale Angular control
+    # instance from being treated as the source of truth after a re-render.
+    try:
+        fresh = await resolve(locator.page, {"label": value})
+        if fresh is not None:
+            current = await _read_control_value(fresh)
+        else:
+            current = await _read_control_value(locator)
+    except Exception:
+        current = await _read_control_value(locator)
+
     raise RuntimeError(
         f"O campo não reteve o valor informado. "
         f"Esperado={value!r}; atual={current!r}."
