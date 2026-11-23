@@ -112,9 +112,51 @@ async def _controls(page: Page) -> tuple[str, ...]:
     return tuple(sorted(set(values))[:200])
 
 
-async def observe(page: Page) -> UIState:
+async def _read_body_text(page: Page, timeout_ms: int = 500) -> str:
+    """Read the current document without letting a transient navigation crash observation.
+
+    Angular can replace the document/body while Playwright is resolving a
+    locator. The observer is diagnostic infrastructure, so it retries the
+    read instead of treating that transient condition as an automation crash.
+    """
     body = page.locator("body")
-    text = (await body.inner_text(timeout=1200)).strip()
+    try:
+        return (await body.inner_text(timeout=timeout_ms)).strip()
+    except Exception:
+        # A DOM-backed locator can lose its document during SPA navigation.
+        # Reading the current document through the page context gives the
+        # observer a second, framework-independent path.
+        try:
+            value = await page.evaluate(
+                "() => document.body ? document.body.innerText : ''"
+            )
+            return str(value or "").strip()
+        except Exception:
+            raise
+
+
+async def observe(page: Page) -> UIState:
+    last_error: Exception | None = None
+    text = ""
+    for _ in range(4):
+        try:
+            text = await _read_body_text(page)
+            # An empty body is usually a transient navigation/rendering state.
+            # Give Angular one render turn before accepting it as the snapshot.
+            if text or page.url:
+                break
+        except Exception as exc:
+            last_error = exc
+            try:
+                await page.wait_for_timeout(80)
+            except Exception:
+                break
+
+    if last_error is not None and not text:
+        raise RuntimeError(
+            f"Não foi possível observar a página de forma estável: {last_error}"
+        ) from last_error
+
     normalized = " ".join(text.split())
     messages: list[str] = []
     for selector in MESSAGE_SELECTORS:
@@ -126,12 +168,45 @@ async def observe(page: Page) -> UIState:
     headings = list(dict.fromkeys(await _texts(page, HEADING_SELECTORS)))
     return UIState(
         url=page.url,
-        title=await page.title(),
+        title=await page.title(timeout=500),
         visible_text=normalized[:12000],
         body_hash=sha256(normalized.encode("utf-8")).hexdigest(),
         messages=tuple(messages[:20]),
         headings=tuple(headings[:20]),
         controls=await _controls(page),
+    )
+
+
+async def safe_observe(
+    page: Page,
+    fallback: UIState | None = None,
+    timeout_ms: int = 1800,
+) -> UIState:
+    """Best-effort observation boundary used by timeout/error recovery paths.
+
+    Observation must never turn an already-classified action timeout into a
+    process-level crash. When the page is temporarily unavailable, return the
+    last known state so the runner can preserve diagnostic evidence.
+    """
+    deadline = __import__("time").monotonic() + timeout_ms / 1000
+    last_error: Exception | None = None
+    while __import__("time").monotonic() < deadline:
+        try:
+            return await observe(page)
+        except Exception as exc:
+            last_error = exc
+            try:
+                await page.wait_for_timeout(80)
+            except Exception:
+                break
+    if fallback is not None:
+        return fallback
+    if last_error is not None:
+        raise RuntimeError(
+            f"Observação da página indisponível após {timeout_ms}ms: {last_error}"
+        ) from last_error
+    raise RuntimeError(
+        f"Observação da página indisponível após {timeout_ms}ms."
     )
 
 
