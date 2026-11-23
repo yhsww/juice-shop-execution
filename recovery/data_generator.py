@@ -47,5 +47,5 @@ def _dedupe(items: list[InputVariant], cap: int) -> list[InputVariant]:
         if item.value in seen: continue
         seen.add(item.value)
         out.append(item)
-        if len(out) >= cap: break
+        if cap > 0 and len(out) >= cap: break
     return out
