@@ -432,20 +432,37 @@ async def _fill(locator, value: str) -> None:
         await _click(locator)
         await locator.press("ControlOrMeta+A", timeout=1500)
         await locator.press("Backspace", timeout=1500)
-        await locator.type(value, timeout=settings.action_timeout_ms)
+        # Prefer Playwright's user-like sequential keyboard path for
+        # controls that attach custom Angular input handlers.
+        await locator.press_sequentially(
+            value,
+            timeout=settings.action_timeout_ms,
+        )
 
-        # Some Angular Material controls are backed by a FormControl whose
-        # validation/change detection is not synchronized by the automation
-        # primitive alone. Re-dispatch the standard DOM lifecycle events on
-        # the live control. This is framework-generic and does not depend on
-        # any scenario, field name, route or selector.
+        # Some Angular controls replace the native node during change
+        # detection. If the keyboard path still does not survive, update the
+        # live DOM property through its native setter and emit the normal input
+        # lifecycle. This remains generic and is only a recovery path.
         try:
             await locator.evaluate(
-                """(el) => {
+                """(el, nextValue) => {
+                    const proto = Object.getPrototypeOf(el);
+                    const descriptor =
+                        Object.getOwnPropertyDescriptor(proto, 'value') ||
+                        Object.getOwnPropertyDescriptor(
+                            Object.getPrototypeOf(proto),
+                            'value'
+                        );
+                    if (descriptor && descriptor.set) {
+                        descriptor.set.call(el, nextValue);
+                    } else {
+                        el.value = nextValue;
+                    }
                     el.dispatchEvent(new Event('input', { bubbles: true }));
                     el.dispatchEvent(new Event('change', { bubbles: true }));
                     el.dispatchEvent(new Event('blur', { bubbles: true }));
-                }"""
+                }""",
+                value,
             )
         except Exception:
             pass
