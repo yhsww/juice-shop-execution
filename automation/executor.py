@@ -402,27 +402,38 @@ async def _fill(locator, value: str) -> None:
             await locator.select_option(label=value, timeout=settings.action_timeout_ms)
         return
 
-    async def verified() -> bool:
+    async def verified(stable: bool = False) -> bool:
         current = await _read_control_value(locator)
+        if current != value:
+            return False
+
+        # Angular can accept the DOM mutation and then recreate the control
+        # during change detection. A single immediate read is therefore not
+        # enough evidence that the value survived. For a stable check, sample
+        # the live locator again after a short framework-settling interval.
+        if stable:
+            await locator.page.wait_for_timeout(120)
+            current = await _read_control_value(locator)
+
         return current == value
 
     try:
         await locator.fill(value, timeout=settings.action_timeout_ms)
-        if await verified():
+        if await verified(stable=True):
             return
-    except Exception as first_error:
+    except Exception:
         pass
 
     # The first fill may have targeted a control instance that Angular replaced
-    # immediately after the input event. Re-resolve the same semantic control
-    # is handled by the caller; here we recover using the live locator and a
-    # normal user-edit sequence before failing.
+    # immediately after the input event. Recover with a real keyboard sequence
+    # against the live locator so Angular receives the same input/change events
+    # a user would generate.
     try:
         await _click(locator)
         await locator.press("ControlOrMeta+A", timeout=1500)
         await locator.press("Backspace", timeout=1500)
         await locator.type(value, timeout=settings.action_timeout_ms)
-        if await verified():
+        if await verified(stable=True):
             return
     except Exception:
         pass
