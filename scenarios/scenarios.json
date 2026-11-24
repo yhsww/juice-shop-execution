@@ -2794,6 +2794,87 @@
       "expected": {
         "url_contains": "/#/register"
       }
+    },
+    {
+      "id": "CEN-CHK-23",
+      "domain": "CHK",
+      "name": "Checkout sem endereço",
+      "actor": "Cliente",
+      "flow": "Iniciar checkout sem possuir endereço selecionado.",
+      "precondition": "Carrinho com produto; nenhum endereço selecionado.",
+      "data": "Nenhum dado adicional.",
+      "coherent": "Sim.",
+      "justification": "A aplicação deve impedir o avanço sem destino de entrega válido.",
+      "requirement": "O checkout deve exigir endereço antes de prosseguir.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/address/select"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 700
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "Add New Address"
+        ]
+      }
+    },
+    {
+      "id": "CEN-CHK-24",
+      "domain": "CHK",
+      "name": "Checkout sem método de entrega",
+      "actor": "Cliente",
+      "flow": "Acessar a etapa de entrega sem selecionar método.",
+      "precondition": "Endereço selecionado.",
+      "data": "Nenhum dado adicional.",
+      "coherent": "Sim.",
+      "justification": "A aplicação deve exigir um método de entrega válido.",
+      "requirement": "O checkout deve impedir avanço sem método de entrega.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/delivery-method"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 500
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "Standard Delivery"
+        ]
+      }
+    },
+    {
+      "id": "CEN-CHK-26",
+      "domain": "CHK",
+      "name": "Conferir total no resumo",
+      "actor": "Cliente",
+      "flow": "Comparar o total exibido no carrinho com o total do resumo.",
+      "precondition": "Carrinho e checkout preparados.",
+      "data": "Nenhum dado adicional.",
+      "coherent": "Sim.",
+      "justification": "A consistência do valor é essencial para confirmar a compra.",
+      "requirement": "O valor total deve permanecer consistente entre as etapas.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/order-summary"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 700
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "Total"
+        ]
+      }
     }
   ]
 }
