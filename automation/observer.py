@@ -129,21 +129,38 @@ async def _controls(page: Page) -> tuple[str, ...]:
             continue
 
     # Capture semantic delivery status when the page exposes the Juice Shop
-    # tracking state through its confirmation icon. This avoids treating an
-    # internal status enum (e.g. Packing) as literal visible text when the
-    # UI intentionally renders that state as an icon.
+    # tracking state through its confirmation icon. The primary selector follows
+    # the component structure; the class-based fallback tolerates harmless DOM
+    # restructuring while remaining a black-box observation of the rendered UI.
+    status_selectors = (
+        ".delivery-status .confirmation",
+        ".delivery-status [class*='fa-truck-loading'], "
+        ".delivery-status [class*='fa-truck'], "
+        ".delivery-status [class*='fa-warehouse'], "
+        ".delivery-status [class*='fa-home']",
+        "[class*='fa-truck-loading']:visible, "
+        "[class*='fa-truck']:visible, "
+        "[class*='fa-warehouse']:visible, "
+        "[class*='fa-home']:visible",
+    )
     try:
-        status = await page.locator(".delivery-status .confirmation").evaluate_all(
-            """nodes => nodes.map(node => {
-                const classes = String(node.className || '').toLowerCase();
-                if (classes.includes('fa-truck-loading')) return 'status=packing';
-                if (classes.includes('fa-truck')) return 'status=transit';
-                if (classes.includes('fa-warehouse')) return 'status=new';
-                if (classes.includes('fa-home')) return 'status=delivered';
-                return null;
-            }).filter(Boolean)"""
-        )
-        values.extend(str(item) for item in status)
+        status = []
+        for selector in status_selectors:
+            items = await page.locator(selector).evaluate_all(
+                """nodes => nodes.map(node => {
+                    const classes = String(node.className || '').toLowerCase();
+                    if (classes.includes('fa-truck-loading')) return 'status=packing';
+                    if (classes.includes('fa-truck')) return 'status=transit';
+                    if (classes.includes('fa-warehouse')) return 'status=new';
+                    if (classes.includes('fa-home')) return 'status=delivered';
+                    return null;
+                }).filter(Boolean)""",
+                timeout=500,
+            )
+            status.extend(str(item) for item in items)
+            if status:
+                break
+        values.extend(status)
     except Exception:
         pass
 
