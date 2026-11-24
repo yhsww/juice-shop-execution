@@ -637,6 +637,18 @@ async def _click_target(page: Page, target: dict, attempts: int = 5) -> None:
             continue
 
         try:
+            if requested_role == "menuitem":
+                try:
+                    tag = (await locator.evaluate("(el) => el.tagName")).lower()
+                except Exception:
+                    tag = ""
+                if tag not in {"mat-menu-item"}:
+                    ancestor = locator.locator(
+                        "xpath=ancestor-or-self::*[self::mat-menu-item or @role='menuitem'][1]"
+                    )
+                    if await ancestor.count() and await ancestor.first.is_visible():
+                        locator = ancestor.first
+
             if requested_role in {"button", "link"}:
                 try:
                     tag = (await locator.evaluate("(el) => el.tagName")).lower()
@@ -712,6 +724,31 @@ async def _click_target(page: Page, target: dict, attempts: int = 5) -> None:
             # resolved again on every retry, so this is not a scenario wait.
             await page.wait_for_timeout(80)
             await _click(locator)
+
+            if requested_role == "row":
+                # Checkout rows own the Angular selection handler. If a ripple
+                # or translated wrapper swallowed the row event, recover only
+                # when the row's own radio is still unselected.
+                try:
+                    radios = locator.locator(
+                        "mat-radio-button, [role='radio'], input[type='radio']"
+                    )
+                    if await radios.count():
+                        radio = radios.first
+                        if await radio.is_visible():
+                            checked = (
+                                await radio.get_attribute("aria-checked") or ""
+                            ).casefold()
+                            if checked != "true":
+                                try:
+                                    native_checked = await radio.is_checked()
+                                except Exception:
+                                    native_checked = False
+                                if not native_checked:
+                                    await _click(radio)
+                                    await page.wait_for_timeout(100)
+                except Exception:
+                    pass
 
             return
         except Exception as exc:
