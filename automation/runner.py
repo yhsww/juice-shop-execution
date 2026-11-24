@@ -256,11 +256,16 @@ async def _run_scenario(scenario: dict) -> dict:
                     execution["messages"].append(message)
 
             if result.error:
-                # A locator/action failure means the scenario could not be
-                # exercised. It must not be reported as a functional failure
-                # of the Juice Shop application.
+                # Assertions evaluate application state after the interaction
+                # has completed. An assertion mismatch is therefore a
+                # functional scenario failure, not a locator/automation error.
+                is_functional_assertion = str(action.get("type", "")).upper().startswith(
+                    "ASSERT_"
+                )
                 execution["final_result"] = result.observed_result or result.error
-                execution["status"] = "AUTOMATION_ERROR"
+                execution["status"] = (
+                    "FAILED" if is_functional_assertion else "AUTOMATION_ERROR"
+                )
 
                 print(
                     f"[AUTOMATION_ERROR] {scenario['id']} | passo {number} | "
