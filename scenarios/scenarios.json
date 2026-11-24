@@ -1957,7 +1957,7 @@
       "domain": "CHK",
       "name": "Retornar de uma etapa do checkout",
       "actor": "Cliente",
-      "flow": "Selecionar 'Standard Delivery', avançar para pagamento, retornar à etapa de entrega e verificar se a seleção permanece preservada.",
+      "flow": "Selecionar 'Standard Delivery', avançar para pagamento, retornar à etapa de entrega e verificar que a opção pode ser selecionada novamente.",
       "precondition": "Cliente autenticado; endereço de entrega selecionado.",
       "data": "Método selecionado: Standard Delivery.",
       "coherent": "Sim.",
@@ -1999,6 +1999,18 @@
         {
           "type": "WAIT",
           "milliseconds": 500
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "row",
+            "name": "Standard Delivery",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 300
         },
         {
           "type": "ASSERT_SELECTED",
