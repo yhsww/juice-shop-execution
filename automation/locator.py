@@ -512,6 +512,17 @@ async def _resolve_once(page: Page, target: dict) -> Locator | None:
 
     # 2. Label-based controls.
     if label:
+        # Search inputs in Juice Shop can be exposed as a generic textbox or
+        # searchbox rather than a conventional label association. Prefer the
+        # semantic ARIA control before broad text fallbacks so FILL/PRESS do
+        # not accidentally resolve the search icon/container.
+        if _norm(str(label)) == "search":
+            candidates.extend([
+                page.get_by_role("searchbox", name=label, exact=exact),
+                page.get_by_role("textbox", name=label, exact=exact),
+                page.locator("input[aria-label*='Search' i]:visible"),
+                page.locator("input[placeholder*='Search' i]:visible"),
+            ])
         candidates.append(page.get_by_label(label, exact=exact))
         if exact:
             candidates.append(page.get_by_label(label, exact=False))
