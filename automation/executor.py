@@ -656,8 +656,10 @@ async def _click_target(page: Page, target: dict, attempts: int = 5) -> None:
                     selected = (await locator.get_attribute("aria-checked") or "").casefold()
                 except Exception:
                     selected = ""
-                if selected == "true":
-                    return
+                # A selected radio can still require a click to notify its
+                # parent component. Native radios do not toggle off when clicked
+                # while selected, so always deliver one host click and verify the
+                # resulting component state.
 
                 # Material radios are not native inputs from the scenario's
                 # point of view. Playwright.check() may update the nested input
