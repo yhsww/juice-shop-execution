@@ -500,10 +500,16 @@ async def _visible_text_control(page: Page, value: str) -> list[Locator]:
                 # sibling mat-cell while the actual radio control has no name.
                 row_match = False
                 if selector in ("mat-radio-button", "[role='radio']"):
-                    for ancestor in ("mat-row", "[role='row']", "tr"):
-                        parent = node.locator(
-                            f"xpath=ancestor::{ancestor}[1]"
-                        )
+                    # XPath requires element names or predicates after
+                    # ancestor::. A CSS selector such as [role='row'] is not
+                    # valid there and silently disables semantic row matching.
+                    # Keep the three supported row representations explicit.
+                    ancestor_locators = (
+                        "xpath=ancestor::mat-row[1]",
+                        "xpath=ancestor::*[@role='row'][1]",
+                        "xpath=ancestor::tr[1]",
+                    )
+                    for parent in (node.locator(selector) for selector in ancestor_locators):
                         if await parent.count():
                             row_match = _semantic_text_match(
                                 wanted,
@@ -529,7 +535,7 @@ async def _resolve_once(page: Page, target: dict) -> Locator | None:
     title attributes and controls whose accessible name differs slightly
     from the scenario text.
 
-    This is shared by all 78 scenarios; it must not contain scenario-specific
+    This is shared by all 72 scenarios; it must not contain scenario-specific
     selectors.
     """
     role = target.get("role")
