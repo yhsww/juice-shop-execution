@@ -104,11 +104,15 @@ def _safe_role_candidate(
     if role_normalized not in _VALID_ROLES:
         return []
 
+    # Prefer an exact accessible-name match even when the scenario allows
+    # fuzzy matching. This prevents targets such as "Back" from resolving to
+    # unrelated controls whose accessible name merely contains that word
+    # (for example the navbar button "Back to homepage").
     candidates = [
-        page.get_by_role(role_normalized, name=name, exact=exact)
+        page.get_by_role(role_normalized, name=name, exact=True)
     ]
 
-    if exact:
+    if not exact:
         candidates.append(
             page.get_by_role(role_normalized, name=name, exact=False)
         )
@@ -593,6 +597,18 @@ async def _resolve_once(page: Page, target: dict) -> Locator | None:
             candidates.extend(
                 await _table_radio_by_header(page, str(wanted_text))
             )
+
+        # Angular Material menu items can expose an aria-label that
+        # intentionally differs from the translated visible text. For example,
+        # Juice Shop renders Login as aria-label="Go to login page" while the
+        # visible menu item says "Login". When the scenario explicitly asks
+        # for a menuitem by its user-visible name, resolve the rendered control
+        # by its own text as a semantic fallback.
+        if role_normalized == "menuitem" and name:
+            candidates.extend([
+                page.locator("mat-menu-item").filter(has_text=str(name)),
+                page.locator("[role='menuitem']").filter(has_text=str(name)),
+            ])
 
         # For text-only targets, prefer an actual interactive control over a
         # nested <span>. Angular Material buttons commonly expose their label
