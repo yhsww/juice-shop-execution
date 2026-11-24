@@ -1452,7 +1452,7 @@
           "type": "CLICK",
           "target": {
             "role": "radio",
-            "name": "0002",
+            "name": "4000000000000002",
             "exact": false
           }
         },
