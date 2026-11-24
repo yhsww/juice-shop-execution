@@ -6,7 +6,7 @@ from playwright.async_api import Page
 
 
 async def discover_controls(page: Page) -> list[dict[str, Any]]:
-    script = """() => {
+    script = r"""() => {
       const visible = el => {
         const s = getComputedStyle(el);
         return s.display !== 'none' && s.visibility !== 'hidden' &&
