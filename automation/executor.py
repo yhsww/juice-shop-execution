@@ -641,18 +641,11 @@ async def _click_target(page: Page, target: dict, attempts: int = 5) -> None:
                     if await ancestor.count() and await ancestor.first.is_visible():
                         locator = ancestor.first
 
-            # Table-like checkout rows are semantic containers, not always the
-            # element that owns the selection event. Prefer their radio/button
-            # descendant when one exists so row targets remain actionable.
-            if requested_role == "row":
-                interactive = locator.locator(
-                    "mat-radio-button, input[type='radio'], [role='radio'], "
-                    "button, [role='button']"
-                )
-                if await interactive.count():
-                    visible_interactive = await first_visible([interactive])
-                    if visible_interactive is not None:
-                        locator = visible_interactive
+            # A row target is itself an interaction target in Juice Shop
+            # checkout tables: the application attaches the selection handler
+            # to the mat-row/tr. Descending into the radio is unsafe because the
+            # radio click also bubbles to the row and can toggle the same
+            # SelectionModel twice. Keep the semantic row as the click target.
 
             # Radio actions are selection intents, not toggle intents. If the
             # semantic radio is already selected, clicking it again is avoided.
@@ -665,36 +658,49 @@ async def _click_target(page: Page, target: dict, attempts: int = 5) -> None:
                     selected = ""
                 if selected == "true":
                     return
+
+                # Material radios are not native inputs from the scenario's
+                # point of view. Playwright.check() may update the nested input
+                # without delivering the host component's (click) handler,
+                # which is exactly how Juice Shop emits payment selection.
+                # Prefer the host click, then verify the component state.
+                await page.wait_for_timeout(60)
+                await _click(locator)
+                await page.wait_for_timeout(100)
+
+                try:
+                    selected = (await locator.get_attribute("aria-checked") or "").casefold()
+                except Exception:
+                    selected = ""
+
+                if selected == "true":
+                    return
+
                 native_radio = locator.locator("input[type='radio']")
                 if await native_radio.count() and await native_radio.first.is_visible():
                     try:
                         await native_radio.first.check(timeout=1500)
-                        return
+                        await page.wait_for_timeout(100)
                     except Exception:
                         pass
+
+                try:
+                    selected = (await locator.get_attribute("aria-checked") or "").casefold()
+                except Exception:
+                    selected = ""
+
+                if selected == "true":
+                    return
+
+                raise RuntimeError(
+                    "O radio foi acionado, mas o estado selecionado não foi refletido no componente."
+                )
 
             # Give Angular one render turn before interacting. The target is
             # resolved again on every retry, so this is not a scenario wait.
             await page.wait_for_timeout(80)
             await _click(locator)
 
-            # A radio click is complete only when Angular reflects the
-            # selection in the live control. If the host click was delivered
-            # but the component did not update its SelectionModel yet, retry
-            # through the containing row once. This is generic to Angular
-            # Material radios and does not depend on a scenario ID.
-            if requested_role == "radio":
-                try:
-                    checked = (await locator.get_attribute("aria-checked") or "").casefold()
-                except Exception:
-                    checked = ""
-                if checked != "true":
-                    row = locator.locator(
-                        "xpath=ancestor::*[self::mat-row or self::tr or @role='row'][1]"
-                    )
-                    if await row.count() and await row.first.is_visible():
-                        await row.first.click(timeout=1500)
-                        await page.wait_for_timeout(120)
             return
         except Exception as exc:
             last_error = exc
