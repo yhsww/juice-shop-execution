@@ -1716,6 +1716,14 @@
       "requirement": "A aplicação deve abrir a confirmação imprimível em nova página ou aba.",
       "actions": [
         {
+          "type": "NAVIGATE",
+          "route": "/#/order-history"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 500
+        },
+        {
           "type": "CLICK",
           "target": {
             "role": "button",
