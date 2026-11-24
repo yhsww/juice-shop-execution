@@ -456,6 +456,8 @@ async def _visible_text_control(page: Page, value: str) -> list[Locator]:
         "a",
         "[role='button']",
         "[role='link']",
+        "mat-menu-item",
+        "[role='menuitem']",
     ):
         nodes = page.locator(selector)
         try:
