@@ -408,6 +408,33 @@ async def _table_radio_by_header(page: Page, value: str) -> list[Locator]:
 
     return candidates
 
+async def _visible_text_row(page: Page, value: str) -> list[Locator]:
+    """Resolve table-like interactive rows by complete visible row text."""
+    wanted = _norm(value)
+    if not wanted:
+        return []
+
+    candidates: list[Locator] = []
+    for selector in ("mat-row", "tr", "[role='row']"):
+        rows = page.locator(selector)
+        try:
+            count = await rows.count()
+        except Exception:
+            continue
+
+        for index in range(count):
+            row = rows.nth(index)
+            try:
+                if not await row.is_visible():
+                    continue
+                if _semantic_text_match(wanted, await row.inner_text()):
+                    candidates.append(row)
+            except Exception:
+                continue
+
+    return candidates
+
+
 async def _visible_text_control(page: Page, value: str) -> list[Locator]:
     """
     Resolve controls represented by visible text, including Angular Material
@@ -572,6 +599,11 @@ async def _resolve_once(page: Page, target: dict) -> Locator | None:
             candidates.extend(
                 await _visible_text_control(page, str(wanted_text)
                 )
+            )
+
+        if role_normalized == "row":
+            candidates.extend(
+                await _visible_text_row(page, str(wanted_text))
             )
 
         # Do not use raw visible-text locators for explicitly requested
