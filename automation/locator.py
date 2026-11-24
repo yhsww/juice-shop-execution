@@ -1048,7 +1048,7 @@ async def _resolve_once(page: Page, target: dict) -> Locator | None:
         wanted = _norm(str(name))
         icon_patterns: list[tuple[tuple[str, ...], str]] = [
             (("print", "printer", "printing"),
-             "fa-print, print, printer, mat-icon"),
+             "fa-print, print, printer"),
             (("increase", "increment", "plus", "add"),
              "fa-plus-square, fa-plus, fa-circle-plus, mat-icon"),
             (("decrease", "decrement", "minus", "subtract"),
