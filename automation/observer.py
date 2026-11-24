@@ -66,7 +66,8 @@ async def _texts(page: Page, selector: str) -> list[str]:
                 })
                 .map(node => (node.innerText || node.textContent || '')
                     .replace(/\\s+/g, ' ').trim())
-                .filter(Boolean)"""
+                .filter(Boolean)""",
+            timeout=500,
         )
         return [str(value) for value in values if str(value).strip()]
     except Exception:
@@ -120,7 +121,8 @@ async def _controls(page: Page) -> tuple[str, ...]:
                     if (disabled !== null) state.push('disabled');
 
                     return selector + ':' + label.toLowerCase() + ':' + state.join('|');
-                }).filter(Boolean)"""
+                }).filter(Boolean)""",
+                timeout=500,
             )
             values.extend(str(item) for item in items)
         except Exception:
