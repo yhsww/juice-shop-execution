@@ -433,6 +433,20 @@ async def _visible_text_row(page: Page, value: str) -> list[Locator]:
                     continue
                 if _semantic_text_match(wanted, await row.inner_text()):
                     candidates.append(row)
+                    continue
+
+                # Some Angular Material tables render the semantic value in
+                # a cell whose normalized text differs from the row's exposed
+                # accessible name. Resolve the cell first, then climb to the
+                # same interactive row.
+                cells = row.locator("td, th, mat-cell, mat-header-cell, [role='cell'], [role='gridcell']")
+                for cell_index in range(await cells.count()):
+                    cell = cells.nth(cell_index)
+                    if not await cell.is_visible():
+                        continue
+                    if _semantic_text_match(wanted, await cell.inner_text()):
+                        candidates.append(row)
+                        break
             except Exception:
                 continue
 
@@ -1064,6 +1078,18 @@ async def _resolve_once(page: Page, target: dict) -> Locator | None:
                     row_text = _norm(await row.first.inner_text())
                     if _semantic_text_match(wanted, row_text):
                         candidates.append(radio)
+                        continue
+
+                    cells = row.first.locator(
+                        "td, mat-cell, [role='cell'], [role='gridcell']"
+                    )
+                    for cell_index in range(await cells.count()):
+                        cell = cells.nth(cell_index)
+                        if await cell.is_visible() and _semantic_text_match(
+                            wanted, await cell.inner_text()
+                        ):
+                            candidates.append(radio)
+                            break
             except Exception:
                 continue
 
