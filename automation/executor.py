@@ -6,7 +6,7 @@ from time import monotonic
 
 from playwright.async_api import Page, TimeoutError as PlaywrightTimeoutError
 
-from automation.locator import resolve
+from automation.locator import first_visible, resolve
 from automation.observer import UIState, describe_change, meaningful_change, observe, wait_for_stable_ui
 from config.settings import settings
 
@@ -677,6 +677,24 @@ async def _click_target(page: Page, target: dict, attempts: int = 5) -> None:
             # resolved again on every retry, so this is not a scenario wait.
             await page.wait_for_timeout(80)
             await _click(locator)
+
+            # A radio click is complete only when Angular reflects the
+            # selection in the live control. If the host click was delivered
+            # but the component did not update its SelectionModel yet, retry
+            # through the containing row once. This is generic to Angular
+            # Material radios and does not depend on a scenario ID.
+            if requested_role == "radio":
+                try:
+                    checked = (await locator.get_attribute("aria-checked") or "").casefold()
+                except Exception:
+                    checked = ""
+                if checked != "true":
+                    row = locator.locator(
+                        "xpath=ancestor::*[self::mat-row or self::tr or @role='row'][1]"
+                    )
+                    if await row.count() and await row.first.is_visible():
+                        await row.first.click(timeout=1500)
+                        await page.wait_for_timeout(120)
             return
         except Exception as exc:
             last_error = exc
