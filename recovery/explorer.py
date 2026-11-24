@@ -9,11 +9,12 @@ from typing import Any
 from playwright.async_api import Page
 
 from automation.browser import browser_session, open_juice_shop
+from automation.executor import ActionResult, execute
 from automation.observer import wait_for_stable_ui
 from config.settings import settings
 from recovery.change_detector import diff, fingerprint
 from recovery.data_generator import variants_for
-from recovery.interaction import click_control, discover_controls, fill_control, select_control
+from recovery.interaction import discover_controls
 from recovery.network import NetworkCollector
 
 
@@ -59,12 +60,12 @@ class BehavioralExplorer:
         action_id = f"{self.scenario['id']}-P{index:02d}"
         self.network.set_action(action_id)
         started = time.time()
-        ok, error = await self.perform(action)
+        result = await self.perform(action)
         after = await self.snapshot()
         network = self.network.correlate_window(started, time.time(), action_id)
         change = diff(before, after)
         self.step_counter += 1
-        self.record(action_id, "planned", action, before, after, change, network, ok, error)
+        self.record(action_id, "planned", action, before, after, change, network, result.success, result.error or "")
 
     async def _explore_state(self) -> None:
         controls = await discover_controls(self.page)
@@ -95,20 +96,14 @@ class BehavioralExplorer:
         action_id = self.next_id("ALT")
         self.network.set_action(action_id)
         started = time.time()
-        ok = await fill_control(self.page, control, variant.value)
-        if ok:
-            try:
-                await self.page.keyboard.press("Tab")
-            except Exception:
-                pass
+        result = await execute(self.page, {"type": "FILL", "target": self._action_target(control), "value": variant.value})
         await self.settle()
         after = await self.snapshot()
         network = self.network.correlate_window(started, time.time(), action_id)
         change = diff(before, after)
         self.step_counter += 1
-        self.record(action_id, "alternative", action, before, after, change, network, ok,
-                    "" if ok else "Não foi possível preencher o controle.")
-        if ok and change["changed"]:
+        self.record(action_id, "alternative", action, before, after, change, network, result.success, result.error or "")
+        if result.success and change["changed"]:
             self.register_alternative(action, before, after, change)
 
     async def _select(self, control: dict[str, Any]) -> None:
@@ -118,15 +113,18 @@ class BehavioralExplorer:
         action_id = self.next_id("ALT")
         self.network.set_action(action_id)
         started = time.time()
-        ok = await select_control(self.page, control)
+        options = control.get("options") or []
+        if not options:
+            return
+        option = options[0]
+        result = await execute(self.page, {"type": "SELECT", "target": self._action_target(control), "value": option.get("value") or option.get("label") or ""})
         await self.settle()
         after = await self.snapshot()
         network = self.network.correlate_window(started, time.time(), action_id)
         change = diff(before, after)
         self.step_counter += 1
-        self.record(action_id, "alternative", action, before, after, change, network, ok,
-                    "" if ok else "Não foi possível selecionar a opção.")
-        if ok and change["changed"]:
+        self.record(action_id, "alternative", action, before, after, change, network, result.success, result.error or "")
+        if result.success and change["changed"]:
             self.register_alternative(action, before, after, change)
 
     async def _click(self, control: dict[str, Any]) -> None:
@@ -136,15 +134,14 @@ class BehavioralExplorer:
         action_id = self.next_id("ALT")
         self.network.set_action(action_id)
         started = time.time()
-        ok = await click_control(self.page, control)
+        result = await execute(self.page, {"type": "CLICK", "target": self._action_target(control)})
         await self.settle()
         after = await self.snapshot()
         network = self.network.correlate_window(started, time.time(), action_id)
         change = diff(before, after)
         self.step_counter += 1
-        self.record(action_id, "alternative", action, before, after, change, network, ok,
-                    "" if ok else "Não foi possível acionar o controle.")
-        if ok and change["changed"]:
+        self.record(action_id, "alternative", action, before, after, change, network, result.success, result.error or "")
+        if result.success and change["changed"]:
             self.register_alternative(action, before, after, change)
 
     async def _restore_baseline(self) -> None:
@@ -180,54 +177,21 @@ class BehavioralExplorer:
         self.network = NetworkCollector(settings.recovery_max_events)
         self.network.attach(page)
 
-    async def perform(self, action: dict[str, Any]) -> tuple[bool, str]:
-        typ = str(action.get("type", "")).upper()
-        try:
-            if typ == "NAVIGATE":
-                route = str(action.get("route") or "/#/")
-                url = route if route.startswith("http") else settings.base_url + (route if route.startswith("/") else "/" + route)
-                await self.page.goto(url, wait_until="domcontentloaded", timeout=settings.navigation_timeout_ms)
-                await self.settle()
-                return True, ""
-            if typ == "WAIT":
-                await asyncio.sleep(min(float(action.get("milliseconds", 500)) / 1000, 2.0))
-                return True, ""
-            if typ in {"FILL", "CLICK", "PRESS", "SELECT"}:
-                target = action.get("target") or {}
-                control = {"label": target.get("name") or target.get("label") or "",
-                           "role": target.get("role") or "", "tag": "select" if typ == "SELECT" else ("input" if typ == "FILL" else "button"),
-                           "placeholder": target.get("placeholder") or "", "index": 0}
-                if typ == "FILL":
-                    return await fill_control(self.page, control, str(action.get("value", ""))), ""
-                if typ == "CLICK":
-                    return await click_control(self.page, control), ""
-                if typ == "SELECT":
-                    return await select_control(self.page, control, 0), ""
-                loc = self._target_locator(target)
-                await loc.press(str(action.get("key") or "Enter"))
-                await self.settle()
-                return True, ""
-            if typ == "CLICK_ALL":
-                target = action.get("target") or {}
-                label = str(target.get("name") or target.get("label") or "")
-                loc = self.page.get_by_role(str(target.get("role") or "button"), name=label, exact=False)
-                for _ in range(min(await loc.count(), int(action.get("max_clicks", 20)))):
-                    try:
-                        await loc.first.click(timeout=2000)
-                        await self.settle()
-                    except Exception:
-                        break
-                return True, ""
-            return False, f"Ação não suportada: {typ}"
-        except Exception as exc:
-            return False, f"{type(exc).__name__}: {exc}"
+    async def perform(self, action: dict[str, Any]) -> ActionResult:
+        """Use the same UI interaction engine as deterministic scenario execution."""
+        return await execute(self.page, action)
 
-    def _target_locator(self, target: dict[str, Any]):
-        label = str(target.get("label") or target.get("name") or "")
-        role = str(target.get("role") or "")
-        if role:
-            return self.page.get_by_role(role, name=label, exact=bool(target.get("exact", False))).first
-        return self.page.get_by_label(label, exact=False).first
+    @staticmethod
+    def _action_target(control: dict[str, Any]) -> dict[str, Any]:
+        """Convert observed DOM metadata into a semantic execution target."""
+        target: dict[str, Any] = {}
+        for key in ("role", "label", "name", "text", "placeholder", "id"):
+            value = control.get(key)
+            if value:
+                target[key] = value
+        if target.get("role") in {"input", "textarea", "select"}:
+            target.pop("role", None)
+        return target
 
     async def snapshot(self) -> dict[str, Any]:
         state = await wait_for_stable_ui(self.page, timeout_ms=1200)
