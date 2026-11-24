@@ -1211,7 +1211,20 @@ async def prepare_precondition(page, scenario: dict) -> tuple[bool, str]:
         # Only scenarios that explicitly require an existing card should
         # prepare the payment method. This preserves the intended behavior
         # of CHK-07 (add card) and CHK-25 (payment without selection).
-        if "cartão de teste cadastrado" in precondition:
+        # Accept the natural-language variants used by the scenario
+        # catalog when the precondition explicitly requires a persisted test
+        # card. The fixture must prepare the card before the scenario's own
+        # payment-selection action; otherwise the payment page legitimately
+        # exposes no selectable card.
+        requires_test_card = (
+            "cartão" in precondition
+            and "cadastrad" in precondition
+            and (
+                "teste" in precondition
+                or "0002" in precondition
+            )
+        )
+        if requires_test_card:
             if not await ensure_card(page):
                 return False, "Pré-condição de cartão cadastrado não pôde ser preparada."
 
