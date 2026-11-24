@@ -949,8 +949,21 @@ async def ensure_payment(page) -> bool:
 
 
 async def ensure_order_summary(page) -> bool:
-    if not await ensure_payment(page):
-        return False
+    """Prepare the order-summary state without depending on stale checkout history."""
+    if "/#/order-summary" in page.url:
+        return True
+
+    if "/#/payment/shop" not in page.url:
+        if not await ensure_payment(page):
+            try:
+                await page.goto(
+                    f"{settings.base_url}/#/payment/shop",
+                    wait_until="domcontentloaded",
+                )
+            except Exception:
+                return False
+            if not await ensure_payment(page):
+                return False
 
     card = await resolve(
         page,
@@ -958,7 +971,13 @@ async def ensure_order_summary(page) -> bool:
     )
     if card is None:
         return False
-    await _click(card)
+
+    try:
+        checked = await card.get_attribute("aria-checked")
+        if checked != "true":
+            await _click(card)
+    except Exception:
+        await _click(card)
 
     continue_button = await resolve(
         page,
@@ -966,10 +985,22 @@ async def ensure_order_summary(page) -> bool:
     )
     if continue_button is None:
         return False
-    await _click(continue_button)
-    await page.wait_for_timeout(700)
-    return "/#/order-summary" in page.url
 
+    try:
+        if not await continue_button.is_enabled():
+            return False
+    except Exception:
+        return False
+
+    await _click(continue_button)
+
+    deadline = __import__("time").monotonic() + settings.action_timeout_ms / 1000
+    while __import__("time").monotonic() < deadline:
+        if "/#/order-summary" in page.url:
+            return True
+        await page.wait_for_timeout(100)
+
+    return False
 
 async def ensure_completed_order(page) -> bool:
     if not await ensure_order_summary(page):
