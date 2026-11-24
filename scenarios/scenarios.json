@@ -2349,7 +2349,8 @@
         {
           "type": "CLICK",
           "target": {
-            "text": "Logout",
+            "role": "menuitem",
+            "name": "Logout",
             "exact": false
           }
         },
