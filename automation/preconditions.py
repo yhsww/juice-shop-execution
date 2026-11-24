@@ -814,8 +814,15 @@ async def ensure_address(
 
     return False
 
-async def ensure_delivery(page) -> bool:
-    if not await ensure_address(page, select=True):
+async def ensure_delivery(
+    page,
+    required_street: str | None = None,
+) -> bool:
+    if not await ensure_address(
+        page,
+        select=True,
+        required_street=required_street,
+    ):
         return False
 
     if "/#/delivery-method" not in page.url:
@@ -1111,7 +1118,10 @@ async def prepare_precondition(page, scenario: dict) -> tuple[bool, str]:
             or "checkout iniciado" in precondition
         )
         if needs_delivery:
-            if not await ensure_delivery(page):
+            if not await ensure_delivery(
+                page,
+                required_street=required_street,
+            ):
                 return False, "Pré-condição de entrega/pagamento não pôde ser preparada."
 
         # Only scenarios that explicitly require an existing card should
