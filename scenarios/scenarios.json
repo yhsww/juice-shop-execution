@@ -887,9 +887,9 @@
         {
           "type": "CLICK",
           "target": {
-            "role": "button",
+            "role": "menuitem",
             "name": "Login",
-            "exact": true
+            "exact": false
           }
         },
         {
