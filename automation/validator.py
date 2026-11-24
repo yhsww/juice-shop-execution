@@ -79,10 +79,17 @@ def validate(
         checks.append((ok, f"status semântico = '{expected['status']}'"))
 
     for phrase in expected.get("text_not_contains", []):
-        # Negative expectations must describe the final visible application
-        # state; transient evidence from earlier steps must not make a final
-        # absence assertion fail.
-        ok = str(phrase).casefold() not in state.visible_text.casefold()
+        # Negative expectations describe the final application state, not
+        # transient toast/snackbar overlays. The observer keeps those messages
+        # separately, so remove their exact visible text before evaluating
+        # absence. This prevents a successful basket-clear assertion from
+        # failing because an old "Placed Apple Juice..." notification is still
+        # rendered by the global notification layer.
+        application_text = state.visible_text
+        for message in state.messages:
+            if message:
+                application_text = application_text.replace(message, " ")
+        ok = str(phrase).casefold() not in application_text.casefold()
         checks.append((ok, f"texto não contém '{phrase}'"))
 
     if not checks:
