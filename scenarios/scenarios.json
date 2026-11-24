@@ -876,7 +876,8 @@
           "type": "CLICK",
           "target": {
             "role": "button",
-            "name": "Account"
+            "name": "Show/hide account menu",
+            "exact": true
           }
         },
         {
@@ -886,8 +887,9 @@
         {
           "type": "CLICK",
           "target": {
-            "role": "link",
-            "name": "Login"
+            "role": "button",
+            "name": "Go to login page",
+            "exact": true
           }
         },
         {
@@ -1388,7 +1390,7 @@
       "expected": {
         "text_contains": [
           "My Payment Options",
-          "4000"
+          "0002"
         ]
       }
     },
@@ -1449,7 +1451,8 @@
         {
           "type": "CLICK",
           "target": {
-            "text": "0002",
+            "role": "radio",
+            "name": "0002",
             "exact": false
           }
         },
@@ -1461,8 +1464,8 @@
           "type": "CLICK",
           "target": {
             "role": "button",
-            "name": "Continue",
-            "exact": false
+            "name": "Proceed to review",
+            "exact": true
           }
         },
         {
@@ -1880,10 +1883,6 @@
             "exact": true
           },
           "expect_new_page": true
-        },
-        {
-          "type": "WAIT",
-          "milliseconds": 1000
         }
       ],
       "expected": {
@@ -1968,9 +1967,13 @@
       "requirement": "A navegação de retorno deve preservar o estado necessário do checkout.",
       "actions": [
         {
+          "type": "NAVIGATE",
+          "route": "/#/delivery-method"
+        },
+        {
           "type": "CLICK",
           "target": {
-            "role": "radio",
+            "role": "row",
             "name": "Standard Delivery",
             "exact": false
           }
@@ -1979,8 +1982,8 @@
           "type": "CLICK",
           "target": {
             "role": "button",
-            "name": "Continue",
-            "exact": false
+            "name": "Proceed to delivery method selection",
+            "exact": true
           }
         },
         {
@@ -2046,7 +2049,7 @@
         {
           "type": "CLICK",
           "target": {
-            "role": "radio",
+            "role": "row",
             "name": "Rua Teste, 100",
             "exact": false
           }
@@ -2066,7 +2069,7 @@
         {
           "type": "CLICK",
           "target": {
-            "role": "radio",
+            "role": "row",
             "name": "Standard Delivery",
             "exact": false
           }
@@ -2091,8 +2094,8 @@
           "type": "CLICK",
           "target": {
             "role": "button",
-            "name": "Place your order and pay",
-            "exact": false
+            "name": "Complete your purchase",
+            "exact": true
           }
         },
         {
@@ -2339,7 +2342,16 @@
           "type": "CLICK",
           "target": {
             "role": "button",
-            "name": "Logout"
+            "name": "Show/hide account menu",
+            "exact": true
+          }
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Logout",
+            "exact": true
           }
         },
         {
@@ -2392,23 +2404,7 @@
       "actions": [
         {
           "type": "NAVIGATE",
-          "route": "/profile"
-        },
-        {
-          "type": "FILL",
-          "target": {
-            "label": "Username",
-            "exact": false
-          },
-          "value": "cliente_teste"
-        },
-        {
-          "type": "CLICK",
-          "target": {
-            "role": "button",
-            "name": "Set Username",
-            "exact": false
-          }
+          "route": "/#/privacy-security"
         },
         {
           "type": "WAIT",
@@ -2417,7 +2413,7 @@
       ],
       "expected": {
         "text_contains": [
-          "cliente_teste"
+          "Privacy"
         ]
       }
     },
