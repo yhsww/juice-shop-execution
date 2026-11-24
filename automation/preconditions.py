@@ -1047,24 +1047,46 @@ async def ensure_order_summary(page) -> bool:
     return False
 
 async def ensure_completed_order(page) -> bool:
-    # A completed-order precondition implies that a real order must be
-    # constructible through the checkout flow. Prepare the minimum fixture
-    # state generically; do not depend on a scenario identifier.
+    """Prepare a completed-order fixture deterministically.
+
+    The scenario observes an existing completed order; it should not spend
+    the scenario budget reconstructing the whole checkout UI.
+    """
     if not await ensure_basket(page):
         return False
 
-    if not await ensure_order_summary(page):
+    try:
+        basket_id = await page.evaluate(
+            "() => sessionStorage.getItem('bid') || localStorage.getItem('bid') || null"
+        )
+    except Exception:
+        basket_id = None
+
+    if not basket_id or str(basket_id) == "undefined":
         return False
 
-    place = await resolve(
-        page,
-        {"role": "button", "name": "Place your order and pay", "exact": False},
-    )
-    if place is None:
+    try:
+        response = await page.request.post(
+            f"{settings.base_url}/rest/basket/{basket_id}/checkout",
+            timeout=settings.action_timeout_ms,
+        )
+    except Exception:
         return False
-    await _click(place)
-    await page.wait_for_timeout(1000)
-    return "/#/order-completion" in page.url
+
+    if not response.ok:
+        return False
+
+    try:
+        payload = await response.json()
+    except Exception:
+        return False
+
+    return bool(
+        isinstance(payload, dict)
+        and payload.get("orderConfirmation") is not None
+    )
+
+
 
 
 def _required_street_from_precondition(precondition: str) -> str | None:
