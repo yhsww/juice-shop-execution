@@ -149,10 +149,15 @@ async def _controls(page: Page) -> tuple[str, ...]:
             items = await page.locator(selector).evaluate_all(
                 """nodes => nodes.map(node => {
                     const classes = String(node.getAttribute('class') || node.className || '').toLowerCase();
-                    if (classes.includes('fa-truck-loading')) return 'status=packing';
-                    if (classes.includes('fa-truck')) return 'status=transit';
-                    if (classes.includes('fa-warehouse')) return 'status=new';
-                    if (classes.includes('fa-home')) return 'status=delivered';
+                    const icon = String(
+                        node.getAttribute('data-icon') ||
+                        node.getAttribute('aria-label') ||
+                        ''
+                    ).toLowerCase();
+                    if (classes.includes('fa-truck-loading') || icon.includes('truck-loading')) return 'status=packing';
+                    if (classes.includes('fa-truck') || icon === 'truck') return 'status=transit';
+                    if (classes.includes('fa-warehouse') || icon.includes('warehouse')) return 'status=new';
+                    if (classes.includes('fa-home') || icon === 'home') return 'status=delivered';
                     return null;
                 }).filter(Boolean)""",
                 timeout=500,
@@ -167,6 +172,29 @@ async def _controls(page: Page) -> tuple[str, ...]:
         # including nested <span>/<i> pairs and SVG/icon wrappers. This remains
         # framework-agnostic and does not depend on scenario IDs or literal UI
         # text.
+        if not status:
+            items = await page.locator(
+                ".delivery-status svg, .delivery-status i, " +
+                ".delivery-status [data-icon], " +
+                "svg[data-icon='truck-loading'], svg.fa-truck-loading"
+            ).evaluate_all(
+                """nodes => nodes.map(node => {
+                    const classes = String(node.getAttribute('class') || node.className || '').toLowerCase();
+                    const icon = String(
+                        node.getAttribute('data-icon') ||
+                        node.getAttribute('aria-label') ||
+                        ''
+                    ).toLowerCase();
+                    if (classes.includes('fa-truck-loading') || icon.includes('truck-loading')) return 'status=packing';
+                    if (classes.includes('fa-truck') || icon === 'truck') return 'status=transit';
+                    if (classes.includes('fa-warehouse') || icon.includes('warehouse')) return 'status=new';
+                    if (classes.includes('fa-home') || icon === 'home') return 'status=delivered';
+                    return null;
+                }).filter(Boolean)""",
+                timeout=500,
+            )
+            status.extend(str(item) for item in items)
+
         if not status:
             items = await page.locator(".delivery-status:visible").evaluate_all(
                 """nodes => nodes.flatMap(root => Array.from(
