@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import asyncio
 from hashlib import sha256
 import re
 
@@ -253,7 +254,7 @@ async def wait_for_stable_ui(page: Page, initial: UIState | None = None, timeout
     while __import__("time").monotonic() < deadline:
         await page.wait_for_timeout(sample_interval_ms)
         try:
-            current = await observe(page)
+            current = await asyncio.wait_for(observe(page), timeout=1.5)
         except Exception:
             continue
         if current == previous:
