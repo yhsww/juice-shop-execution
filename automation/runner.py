@@ -267,8 +267,11 @@ async def _run_scenario(scenario: dict) -> dict:
                     "FAILED" if is_functional_assertion else "AUTOMATION_ERROR"
                 )
 
+                status_label = (
+                    "FAILED" if is_functional_assertion else "AUTOMATION_ERROR"
+                )
                 print(
-                    f"[AUTOMATION_ERROR] {scenario['id']} | passo {number} | "
+                    f"[{status_label}] {scenario['id']} | passo {number} | "
                     f"{result.user_action}"
                 )
                 print(f"[ERROR] {result.error}")
