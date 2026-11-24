@@ -672,6 +672,30 @@ async def _add_address_if_needed(
     return False
 
 async def ensure_basket(page) -> bool:
+    """Ensure the authenticated fixture has at least one basket item.
+
+    The fixture is idempotent: if the basket already contains an item, it
+    reuses the current state instead of adding another product on every
+    precondition pass.
+    """
+    try:
+        await page.goto(
+            f"{settings.base_url}/#/basket",
+            wait_until="domcontentloaded",
+        )
+        existing_item = page.locator(
+            "mat-table mat-row, table tbody tr, [role='row']"
+        )
+        if await existing_item.count():
+            for index in range(await existing_item.count()):
+                row = existing_item.nth(index)
+                if await row.is_visible():
+                    text = _normalize_text(await row.inner_text())
+                    if text and "Your Basket" not in text:
+                        return True
+    except Exception:
+        pass
+
     await page.goto(f"{settings.base_url}/#/", wait_until="domcontentloaded")
     add = await resolve(
         page,
@@ -1023,6 +1047,12 @@ async def ensure_order_summary(page) -> bool:
     return False
 
 async def ensure_completed_order(page) -> bool:
+    # A completed-order precondition implies that a real order must be
+    # constructible through the checkout flow. Prepare the minimum fixture
+    # state generically; do not depend on a scenario identifier.
+    if not await ensure_basket(page):
+        return False
+
     if not await ensure_order_summary(page):
         return False
 
@@ -1087,7 +1117,14 @@ async def prepare_precondition(page, scenario: dict) -> tuple[bool, str]:
             if not await ensure_basket(page):
                 return False, "Pré-condição de carrinho não pôde ser preparada."
 
-        if "há endereço cadastrado" in precondition:
+        if (
+            "há endereço cadastrado" in precondition
+            or (
+                required_street is not None
+                and "endereço" in precondition
+                and "cadastrado" in precondition
+            )
+        ):
             if not await ensure_address(
                 page,
                 select=False,
