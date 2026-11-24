@@ -59,6 +59,12 @@ def validate(
         ok = str(phrase).casefold() in observed_text
         checks.append((ok, f"texto contém '{phrase}'"))
 
+    if expected.get("status"):
+        expected_status = str(expected["status"]).casefold()
+        status_marker = f"status={expected_status}"
+        ok = any(status_marker in control.casefold() for control in state.controls)
+        checks.append((ok, f"status semântico = '{expected['status']}'"))
+
     for phrase in expected.get("text_not_contains", []):
         # Negative expectations must describe the final visible application
         # state; transient evidence from earlier steps must not make a final
