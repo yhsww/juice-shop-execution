@@ -49,6 +49,20 @@ def _semantic_text_match(wanted: str | None, actual: str | None) -> bool:
     if wanted_norm in actual_norm or actual_norm in wanted_norm:
         return True
 
+    # Sensitive numeric identifiers are commonly masked by the UI while the
+    # scenario carries the persisted value. Accept a suffix match generically.
+    wanted_digits = re.sub(r"\D", "", wanted_norm)
+    actual_digits = re.sub(r"\D", "", actual_norm)
+    if (
+        len(wanted_digits) >= 4
+        and len(actual_digits) >= 4
+        and (
+            wanted_digits.endswith(actual_digits)
+            or actual_digits.endswith(wanted_digits)
+        )
+    ):
+        return True
+
     wanted_tokens = _tokens(wanted_norm)
     actual_tokens = _tokens(actual_norm)
 
@@ -112,9 +126,16 @@ def _safe_role_candidate(
     # strategy. Do not put a fuzzy role match in this early candidate pool:
     # Playwright would otherwise select an unrelated control before the
     # resolver reaches more precise visible-text/attribute fallbacks.
-    return [
+    candidates = [
         page.get_by_role(role_normalized, name=name, exact=True)
     ]
+    # Translation/rendering layers can expose the same semantic control with
+    # a slightly different accessible name. Keep exact matching first, then
+    # allow Playwright's semantic substring matching as a generic fallback.
+    candidates.append(
+        page.get_by_role(role_normalized, name=name, exact=False)
+    )
+    return candidates
 
 
 async def _angular_material_field(page: Page, label: str) -> Locator | None:
@@ -526,6 +547,44 @@ async def _visible_text_control(page: Page, value: str) -> list[Locator]:
     return candidates
 
 
+
+async def _row_radio_by_text(page: Page, value: str) -> list[Locator]:
+    """Resolve a radio by the semantic text of its interactive table row."""
+    wanted = _norm(value)
+    if not wanted:
+        return []
+
+    candidates: list[Locator] = []
+    for selector in ("mat-row", "tr", "[role='row']"):
+        rows = page.locator(selector)
+        try:
+            count = await rows.count()
+        except Exception:
+            continue
+
+        for index in range(count):
+            row = rows.nth(index)
+            try:
+                if not await row.is_visible():
+                    continue
+                if not _semantic_text_match(wanted, await row.inner_text()):
+                    continue
+
+                radio = await first_visible([
+                    row.locator("mat-radio-button"),
+                    row.locator("[role='radio']"),
+                    row.locator("input[type='radio']"),
+                ])
+                if radio is not None:
+                    candidates.append(radio)
+            except Exception:
+                continue
+
+        if candidates:
+            break
+
+    return candidates
+
 async def _resolve_once(page: Page, target: dict) -> Locator | None:
     """
     Resolve a scenario target against the real Juice Shop DOM.
@@ -604,6 +663,9 @@ async def _resolve_once(page: Page, target: dict) -> Locator | None:
         # example an address, delivery method, or card number). Prefer the
         # row-semantic resolver before falling back to column-header semantics.
         if role_normalized == "radio":
+            candidates.extend(
+                await _row_radio_by_text(page, str(wanted_text))
+            )
             candidates.extend(
                 await _visible_text_control(page, str(wanted_text))
             )
