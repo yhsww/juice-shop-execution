@@ -931,6 +931,24 @@ async def ensure_card(page) -> bool:
     if "/#/payment/shop" not in page.url:
         return False
 
+    # Prefer an idempotent API fixture for the precondition. This is setup
+    # infrastructure, not the behavior under test, and avoids coupling every
+    # payment scenario to the card-entry UI. If the API fixture is unavailable,
+    # retain the UI path as a generic fallback.
+    if await _ensure_card_via_api(page):
+        try:
+            await page.reload(wait_until="domcontentloaded", timeout=settings.navigation_timeout_ms)
+            await page.wait_for_timeout(250)
+        except Exception:
+            pass
+
+        existing = await resolve(
+            page,
+            {"role": "radio", "text": "0002", "exact": False},
+        )
+        if existing is not None:
+            return True
+
     existing = await resolve(
         page,
         {"role": "radio", "text": "0002", "exact": False},
