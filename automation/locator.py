@@ -650,6 +650,17 @@ async def _resolve_once(page: Page, target: dict) -> Locator | None:
     # table header "Address", while the page also contains an "Add New Address"
     # button. Mixing those controls can navigate to /#/address/create.
     if name and control_role not in {"radio", "checkbox"}:
+        # Menu items in Angular Material are sometimes rendered as a
+        # button/mat-menu-item without a reliable accessible role during the
+        # short interval after the overlay opens. Keep menuitem resolution
+        # semantic and framework-generic.
+        if control_role == "menuitem":
+            candidates.extend([
+                page.locator("mat-menu-item").filter(has_text=name),
+                page.locator("[role='menuitem']").filter(has_text=name),
+                page.locator("button").filter(has_text=name),
+            ])
+
         # Buttons and links often have a visible label but no stable accessible
         # name because of nested icons.
         candidates.extend([
