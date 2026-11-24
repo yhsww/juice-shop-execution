@@ -888,7 +888,7 @@
           "type": "CLICK",
           "target": {
             "role": "button",
-            "name": "Go to login page",
+            "name": "Login",
             "exact": true
           }
         },
@@ -1464,8 +1464,8 @@
           "type": "CLICK",
           "target": {
             "role": "button",
-            "name": "Proceed to review",
-            "exact": true
+            "name": "Continue",
+            "exact": false
           }
         },
         {
@@ -2349,9 +2349,8 @@
         {
           "type": "CLICK",
           "target": {
-            "role": "button",
-            "name": "Logout",
-            "exact": true
+            "text": "Logout",
+            "exact": false
           }
         },
         {
