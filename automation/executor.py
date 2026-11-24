@@ -641,6 +641,38 @@ async def _click_target(page: Page, target: dict, attempts: int = 5) -> None:
                     if await ancestor.count() and await ancestor.first.is_visible():
                         locator = ancestor.first
 
+            # Table-like checkout rows are semantic containers, not always the
+            # element that owns the selection event. Prefer their radio/button
+            # descendant when one exists so row targets remain actionable.
+            if requested_role == "row":
+                interactive = locator.locator(
+                    "mat-radio-button, input[type='radio'], [role='radio'], "
+                    "button, [role='button']"
+                )
+                if await interactive.count():
+                    visible_interactive = await first_visible([interactive])
+                    if visible_interactive is not None:
+                        locator = visible_interactive
+
+            # Radio actions are selection intents, not toggle intents. If the
+            # semantic radio is already selected, clicking it again is avoided.
+            # When possible, use the native radio input so Angular Material's
+            # selection lifecycle receives the same event as a user choice.
+            if requested_role == "radio":
+                try:
+                    selected = (await locator.get_attribute("aria-checked") or "").casefold()
+                except Exception:
+                    selected = ""
+                if selected == "true":
+                    return
+                native_radio = locator.locator("input[type='radio']")
+                if await native_radio.count() and await native_radio.first.is_visible():
+                    try:
+                        await native_radio.first.check(timeout=1500)
+                        return
+                    except Exception:
+                        pass
+
             # Give Angular one render turn before interacting. The target is
             # resolved again on every retry, so this is not a scenario wait.
             await page.wait_for_timeout(80)
