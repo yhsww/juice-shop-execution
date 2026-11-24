@@ -1854,9 +1854,7 @@
       ],
       "expected": {
         "url_contains": "/#/track-result",
-        "text_contains": [
-          "Packing"
-        ]
+        "status": "Packing"
       }
     },
     {
