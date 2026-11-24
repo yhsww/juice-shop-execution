@@ -148,7 +148,7 @@ async def _controls(page: Page) -> tuple[str, ...]:
         for selector in status_selectors:
             items = await page.locator(selector).evaluate_all(
                 """nodes => nodes.map(node => {
-                    const classes = String(node.className || '').toLowerCase();
+                    const classes = String(node.getAttribute('class') || node.className || '').toLowerCase();
                     if (classes.includes('fa-truck-loading')) return 'status=packing';
                     if (classes.includes('fa-truck')) return 'status=transit';
                     if (classes.includes('fa-warehouse')) return 'status=new';
@@ -172,7 +172,7 @@ async def _controls(page: Page) -> tuple[str, ...]:
                 """nodes => nodes.flatMap(root => Array.from(
                     root.querySelectorAll("*")
                 ).map(node => {
-                    const classes = String(node.className || '').toLowerCase();
+                    const classes = String(node.getAttribute('class') || node.className || '').toLowerCase();
                     if (classes.includes('fa-truck-loading')) return 'status=packing';
                     if (classes.includes('fa-truck')) return 'status=transit';
                     if (classes.includes('fa-warehouse')) return 'status=new';
