@@ -759,11 +759,18 @@ async def ensure_address(
     if radio is None:
         return False
 
-    await _click(radio)
+    # Juice Shop binds the authoritative checkout selection handler to
+    # the table row. Clicking the radio also bubbles into that row and can
+    # toggle the SelectionModel twice, so fixture selection uses the row when
+    # one is available.
+    row = radio.locator(
+        "xpath=ancestor::*[self::mat-row or self::tr or @role='row'][1]"
+    )
+    if await row.count() and await row.first.is_visible():
+        await _click(row.first)
+    else:
+        await _click(radio)
 
-    # The radio's own click handler is the authoritative selection event.
-    # Do not click the containing row as a second interaction: Angular
-    # SelectionModel can toggle the same row twice and clear addressId().
     continue_button = None
     for _ in range(20):
         continue_button = await resolve(
@@ -826,11 +833,17 @@ async def ensure_delivery(page) -> bool:
     if delivery is None:
         return False
 
-    await _click(delivery)
+    # DeliveryMethodComponent attaches selection to the table row. Use
+    # the row as the primary interaction target so the SelectionModel is
+    # toggled exactly once and deliveryMethodId is updated by the same event.
+    row = delivery.locator(
+        "xpath=ancestor::*[self::mat-row or self::tr or @role='row'][1]"
+    )
+    if await row.count() and await row.first.is_visible():
+        await _click(row.first)
+    else:
+        await _click(delivery)
 
-    # DeliveryMethodComponent updates deliveryMethodId from the radio click
-    # and from the containing mat-row. The row is the generic recovery path
-    # for Angular Material event propagation delays.
     continue_button = None
     for _ in range(20):
         continue_button = await resolve(
