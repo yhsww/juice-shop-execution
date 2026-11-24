@@ -126,6 +126,25 @@ async def _controls(page: Page) -> tuple[str, ...]:
         except Exception:
             continue
 
+    # Capture semantic delivery status when the page exposes the Juice Shop
+    # tracking state through its confirmation icon. This avoids treating an
+    # internal status enum (e.g. Packing) as literal visible text when the
+    # UI intentionally renders that state as an icon.
+    try:
+        status = await page.locator(".delivery-status .confirmation").evaluate_all(
+            """nodes => nodes.map(node => {
+                const classes = String(node.className || '').toLowerCase();
+                if (classes.includes('fa-truck-loading')) return 'status=packing';
+                if (classes.includes('fa-truck')) return 'status=transit';
+                if (classes.includes('fa-warehouse')) return 'status=new';
+                if (classes.includes('fa-home')) return 'status=delivered';
+                return null;
+            }).filter(Boolean)"""
+        )
+        values.extend(str(item) for item in status)
+    except Exception:
+        pass
+
     return tuple(sorted(set(values))[:200])
 
 
