@@ -1719,7 +1719,7 @@
           "type": "CLICK",
           "target": {
             "role": "button",
-            "name": "Print Order Confirmation",
+            "name": "Print order confirmation",
             "exact": true
           },
           "expect_new_page": true
@@ -1855,7 +1855,7 @@
       "expected": {
         "url_contains": "/#/track-result",
         "text_contains": [
-          "In Transit"
+          "Packing"
         ]
       }
     },
