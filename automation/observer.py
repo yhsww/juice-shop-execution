@@ -160,7 +160,31 @@ async def _controls(page: Page) -> tuple[str, ...]:
             status.extend(str(item) for item in items)
             if status:
                 break
-        values.extend(status)
+
+        # The current Juice Shop track-result template puts the state on the
+        # rendered confirmation icon itself. Keep a DOM-level fallback that
+        # inspects every visible element inside the delivery-status component,
+        # including nested <span>/<i> pairs and SVG/icon wrappers. This remains
+        # framework-agnostic and does not depend on scenario IDs or literal UI
+        # text.
+        if not status:
+            items = await page.locator(".delivery-status:visible").evaluate_all(
+                """nodes => nodes.flatMap(root => Array.from(
+                    root.querySelectorAll("*")
+                ).map(node => {
+                    const classes = String(node.className || '').toLowerCase();
+                    if (classes.includes('fa-truck-loading')) return 'status=packing';
+                    if (classes.includes('fa-truck')) return 'status=transit';
+                    if (classes.includes('fa-warehouse')) return 'status=new';
+                    if (classes.includes('fa-home')) return 'status=delivered';
+                    return null;
+                }).filter(Boolean))""",
+                timeout=500,
+            )
+            status.extend(str(item) for item in items)
+
+        if status:
+            values.extend(status)
     except Exception:
         pass
 
