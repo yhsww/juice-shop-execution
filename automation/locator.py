@@ -108,16 +108,13 @@ def _safe_role_candidate(
     # fuzzy matching. This prevents targets such as "Back" from resolving to
     # unrelated controls whose accessible name merely contains that word
     # (for example the navbar button "Back to homepage").
-    candidates = [
+    # Exact accessible-name resolution is the highest-confidence semantic
+    # strategy. Do not put a fuzzy role match in this early candidate pool:
+    # Playwright would otherwise select an unrelated control before the
+    # resolver reaches more precise visible-text/attribute fallbacks.
+    return [
         page.get_by_role(role_normalized, name=name, exact=True)
     ]
-
-    if not exact:
-        candidates.append(
-            page.get_by_role(role_normalized, name=name, exact=False)
-        )
-
-    return candidates
 
 
 async def _angular_material_field(page: Page, label: str) -> Locator | None:
@@ -638,6 +635,15 @@ async def _resolve_once(page: Page, target: dict) -> Locator | None:
                 await _visible_text_row(page, str(wanted_text))
             )
 
+        # A text-only target can intentionally describe an interactive table
+        # row (for example an address). Resolve that row before get_by_text(),
+        # because get_by_text() often returns the nested mat-cell/span rather
+        # than the row that owns the Angular selection handler.
+        if not role_normalized and text:
+            candidates.extend(
+                await _visible_text_row(page, str(wanted_text))
+            )
+
         # Do not use raw visible-text locators for explicitly requested
         # radio/checkbox targets. If the semantic control is temporarily not
         # rendered, get_by_text() can resolve an unrelated button such as
@@ -721,6 +727,40 @@ async def _resolve_once(page: Page, target: dict) -> Locator | None:
         associated = await _associated_field(page, label)
         if associated is not None:
             candidates.append(associated)
+
+    # 6b. Case-insensitive semantic attribute fallback for controls whose
+    # accessible name differs only by casing/punctuation or is exposed through
+    # aria-label/title rather than inner text. This is especially important for
+    # icon-only Angular Material buttons such as "Print order confirmation".
+    if role and name:
+        role_tag_map = {
+            "button": "button,[role='button']",
+            "link": "a,[role='link']",
+            "menuitem": "mat-menu-item,[role='menuitem'],button",
+            "radio": "mat-radio-button,[role='radio']",
+            "checkbox": "mat-checkbox,[role='checkbox']",
+        }
+        selector = role_tag_map.get(str(role).casefold())
+        if selector:
+            nodes = page.locator(selector)
+            try:
+                for index in range(await nodes.count()):
+                    node = nodes.nth(index)
+                    if not await node.is_visible():
+                        continue
+                    attrs = [
+                        await node.get_attribute("aria-label"),
+                        await node.get_attribute("title"),
+                        await node.get_attribute("name"),
+                    ]
+                    if any(
+                        _semantic_text_match(str(name), attr)
+                        for attr in attrs
+                        if attr
+                    ):
+                        candidates.append(node)
+            except Exception:
+                pass
 
     # 7. Generic DOM attribute fallbacks for legacy/Angular controls.
     # These attributes are stable semantic metadata, not scenario-specific selectors.
