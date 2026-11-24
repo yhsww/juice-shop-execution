@@ -705,10 +705,27 @@ async def _click_target(page: Page, target: dict, attempts: int = 5) -> None:
         except Exception as exc:
             last_error = exc
 
-            # Angular Material/CDK menus can replace the menu item between
-            # Playwright's actionability check and the native click. Re-resolve
-            # the semantic target and, only for a detached-node failure, use the
-            # DOM click handler as a last-resort event delivery mechanism.
+            # Angular Material/CDK overlays can make Playwright's native
+            # actionability check fail even though the live component is
+            # present and clickable. For semantic menu items and radios, the
+            # component's own DOM click is a generic event-delivery fallback.
+            if requested_role in {"menuitem", "radio"}:
+                try:
+                    fresh = await resolve(page, target)
+                    if fresh is not None and await fresh.is_visible():
+                        await fresh.evaluate("(el) => el.click()")
+                        if requested_role == "radio":
+                            await page.wait_for_timeout(120)
+                            selected = (
+                                await fresh.get_attribute("aria-checked") or ""
+                            ).casefold()
+                            if selected == "true":
+                                return
+                        else:
+                            return
+                except Exception:
+                    pass
+
             if "detached from the DOM" in str(exc).casefold():
                 try:
                     fresh = await resolve(page, target)
