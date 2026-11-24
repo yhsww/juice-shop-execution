@@ -310,6 +310,16 @@ async def _click(locator) -> None:
         await locator.click(timeout=click_timeout)
     except Exception as exc:
         first_error = exc
+        # Some Angular components expose the user interaction on the host
+        # element while Playwright's actionability check is blocked by a
+        # transparent/animated layer. Deliver one native DOM click before
+        # retrying expensive actionability paths. This is generic and preserves
+        # the component's real event handlers.
+        try:
+            await locator.evaluate("(el) => el.click()")
+            return
+        except Exception:
+            pass
         if await _dismiss_blocking_overlay(page):
             await page.wait_for_timeout(120)
         try:
