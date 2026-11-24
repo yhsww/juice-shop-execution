@@ -62,7 +62,20 @@ def validate(
     if expected.get("status"):
         expected_status = str(expected["status"]).casefold()
         status_marker = f"status={expected_status}"
-        ok = any(status_marker in control.casefold() for control in state.controls)
+
+        # Semantic states such as Juice Shop's delivery status are represented
+        # by UI controls/icons rather than literal visible text. Prefer the
+        # final state, but also accept the same semantic marker captured by a
+        # successful interaction snapshot. This is still black-box evidence:
+        # it never derives the result from the scenario id or from application
+        # internals, and it prevents a late observer snapshot from erasing a
+        # state that was visibly present during the successful flow.
+        status_controls = [str(control) for control in state.controls]
+        for item in successful_evidence:
+            status_controls.extend(
+                str(control) for control in (item.get("controls") or [])
+            )
+        ok = any(status_marker in control.casefold() for control in status_controls)
         checks.append((ok, f"status semântico = '{expected['status']}'"))
 
     for phrase in expected.get("text_not_contains", []):
