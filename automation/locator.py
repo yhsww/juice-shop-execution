@@ -502,24 +502,21 @@ async def _resolve_once(page: Page, target: dict) -> Locator | None:
     candidates.extend(_safe_role_candidate(page, role, name, exact))
 
     # A label target is especially common on native/legacy Juice Shop forms.
-    # Resolve the explicit DOM label relationship before broader heuristics.
-    # This keeps the resolver generic while avoiding dependence on generated
-    # CSS classes or scenario-specific selectors.
-    if label:
-        associated = await _associated_field(page, str(label))
-        if associated is not None:
-            candidates.insert(0, associated)
-
-    # 2. Label-based controls.
-    # Current Juice Shop exposes the top search through the custom
-    # app-mat-search-bar component. Resolve its real visible input before
-    # generic label heuristics so "Search" cannot resolve the search icon.
+    # The top search is an exception: its visible input lives inside the
+    # custom app-mat-search-bar and must win over generic label heuristics.
     if label and _norm(str(label)) == "search":
         candidates.extend([
             page.locator("#searchQuery input:visible"),
             page.locator("app-mat-search-bar input:visible"),
             page.locator("input[type='search']:visible"),
         ])
+
+    if label:
+        associated = await _associated_field(page, str(label))
+        if associated is not None:
+            candidates.insert(0, associated)
+
+    # 2. Label-based controls.
 
     if label:
         if _norm(str(label)) == "search":
