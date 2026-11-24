@@ -14,7 +14,7 @@ from automation.observer import wait_for_stable_ui
 from config.settings import settings
 from recovery.change_detector import diff, fingerprint
 from recovery.data_generator import variants_for
-from recovery.interaction import discover_controls
+from recovery.control_discovery import discover_controls
 from recovery.network import NetworkCollector
 
 
