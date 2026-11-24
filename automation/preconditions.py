@@ -1065,22 +1065,47 @@ async def ensure_completed_order(page) -> bool:
     if not basket_id or str(basket_id) == "undefined":
         return False
 
+    headers = await _auth_headers(page)
+    headers["Content-Type"] = "application/json"
+
     try:
-        response = await page.request.post(
-            f"{settings.base_url}/rest/basket/{basket_id}/checkout",
-            timeout=settings.action_timeout_ms,
+        result = await page.evaluate(
+            """async ({ url, headers }) => {
+                try {
+                    const response = await fetch(url, {
+                        method: "POST",
+                        credentials: "include",
+                        headers,
+                        body: JSON.stringify({})
+                    });
+                    let body = null;
+                    try {
+                        body = await response.json();
+                    } catch (_) {}
+                    return {
+                        ok: response.ok,
+                        status: response.status,
+                        body
+                    };
+                } catch (error) {
+                    return {
+                        ok: false,
+                        error: String(error && error.message || error)
+                    };
+                }
+            }""",
+            {
+                "url": f"{settings.base_url}/rest/basket/{basket_id}/checkout",
+                "headers": headers,
+            },
         )
     except Exception:
         return False
 
-    if not response.ok:
+    if not result or not result.get("ok"):
         return False
 
-    try:
-        payload = await response.json()
-    except Exception:
-        return False
-
+    payload = result.get("body")
     return bool(
         isinstance(payload, dict)
         and payload.get("orderConfirmation") is not None
