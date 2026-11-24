@@ -66,3 +66,33 @@ def test_input_variants_include_required_boundary_cases():
     assert "0" in values
     assert "-1" in values
     assert "1" in values
+
+
+def test_control_target_is_semantic():
+    from recovery.explorer import BehavioralExplorer
+
+    target = BehavioralExplorer._action_target({
+        "role": "input",
+        "label": "Search",
+        "name": "search",
+        "placeholder": "Search...",
+        "id": "search",
+    })
+    assert target == {
+        "label": "Search",
+        "name": "search",
+        "placeholder": "Search...",
+        "id": "search",
+    }
+
+
+def test_control_target_keeps_user_facing_role():
+    from recovery.explorer import BehavioralExplorer
+
+    target = BehavioralExplorer._action_target({
+        "role": "button",
+        "label": "Continue",
+        "id": "continue",
+    })
+    assert target["role"] == "button"
+    assert target["label"] == "Continue"
