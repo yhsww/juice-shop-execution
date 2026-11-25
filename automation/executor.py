@@ -619,6 +619,109 @@ async def _select_option(locator, value: str) -> None:
     )
 
 
+async def _click_visible_menuitem_host(page: Page, value: str) -> bool:
+    """Click the live Angular Material menu-item host without locator races.
+
+    Angular Material/CDK can replace an overlay item between Locator resolution
+    and Playwright actionability checks. A Locator.evaluate() call can then wait
+    for a detached element until the full timeout. For menu items, resolve the
+    current visible host directly inside the page and invoke its native click
+    in the same DOM turn. This remains generic: the scenario supplies only the
+    semantic menu-item name.
+    """
+    wanted = _norm_text(value)
+    if not wanted:
+        return False
+
+    try:
+        clicked = await page.evaluate(
+            """
+            (wanted) => {
+                const normalize = (value) =>
+                    String(value || '').replace(/\\s+/g, ' ').trim().toLowerCase();
+
+                const tokenSet = (value) =>
+                    new Set(
+                        normalize(value)
+                            .replace(/[^\\p{L}\\p{N}]+/gu, ' ')
+                            .split(' ')
+                            .filter(Boolean)
+                    );
+
+                const matches = (actual) => {
+                    const a = normalize(actual);
+                    if (!a) return false;
+                    if (a === wanted || a.includes(wanted) || wanted.includes(a)) {
+                        return true;
+                    }
+
+                    const wantedTokens = tokenSet(wanted);
+                    const actualTokens = tokenSet(a);
+                    if (!wantedTokens.size) return false;
+
+                    for (const token of wantedTokens) {
+                        if (!actualTokens.has(token)) return false;
+                    }
+                    return true;
+                };
+
+                const visible = (el) => {
+                    if (!el) return false;
+                    const style = window.getComputedStyle(el);
+                    if (
+                        style.display === 'none' ||
+                        style.visibility === 'hidden' ||
+                        style.pointerEvents === 'none'
+                    ) {
+                        return false;
+                    }
+                    const rect = el.getBoundingClientRect();
+                    return rect.width > 0 && rect.height > 0;
+                };
+
+                const selectors = [
+                    "[role='menu']:not([aria-hidden='true']) button[mat-menu-item]",
+                    "[role='menu']:not([aria-hidden='true']) a[mat-menu-item]",
+                    ".mat-mdc-menu-panel button[mat-menu-item]",
+                    ".mat-mdc-menu-panel a[mat-menu-item]",
+                    ".mat-menu-panel button[mat-menu-item]",
+                    ".mat-menu-panel a[mat-menu-item]",
+                    "button[mat-menu-item]",
+                    "a[mat-menu-item]",
+                    "[mat-menu-item][role='menuitem']",
+                    "[role='menuitem']"
+                ];
+
+                const seen = new Set();
+
+                for (const selector of selectors) {
+                    for (const el of document.querySelectorAll(selector)) {
+                        if (seen.has(el) || !visible(el)) continue;
+                        seen.add(el);
+
+                        const values = [
+                            el.innerText,
+                            el.getAttribute('aria-label'),
+                            el.getAttribute('title')
+                        ];
+
+                        if (values.some(matches)) {
+                            el.click();
+                            return true;
+                        }
+                    }
+                }
+
+                return false;
+            }
+            """,
+            wanted,
+        )
+        return bool(clicked)
+    except Exception:
+        return False
+
+
 async def _click_target(page: Page, target: dict, attempts: int = 5) -> None:
     """Resolve and click a semantic target, recovering from SPA re-rendering.
 
@@ -631,6 +734,16 @@ async def _click_target(page: Page, target: dict, attempts: int = 5) -> None:
     requested_role = str(target.get("role") or "").casefold()
 
     for _ in range(max(1, attempts)):
+        # Menu items are rendered by Angular Material as transient overlay
+        # hosts. If the overlay is being replaced during Playwright's
+        # actionability check, a Locator can become detached and its evaluate()
+        # fallback can consume the entire timeout. Resolve and click the live
+        # host in one DOM turn before entering the normal locator path.
+        if requested_role == "menuitem":
+            menu_value = str(target.get("name") or target.get("text") or "").strip()
+            if await _click_visible_menuitem_host(page, menu_value):
+                return
+
         locator = await resolve(page, target)
         if locator is None:
             await page.wait_for_timeout(150)
