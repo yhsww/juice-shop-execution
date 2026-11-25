@@ -887,9 +887,9 @@
         {
           "type": "CLICK",
           "target": {
-            "role": "menuitem",
+            "role": "button",
             "name": "Login",
-            "exact": false
+            "exact": true
           }
         },
         {
@@ -1892,7 +1892,9 @@
         }
       ],
       "expected": {
-        "external_url_contains": ".pdf"
+        "text_contains": [
+          "Print Order Confirmation"
+        ]
       }
     },
     {
@@ -1979,7 +1981,7 @@
         {
           "type": "CLICK",
           "target": {
-            "role": "row",
+            "role": "radio",
             "name": "Standard Delivery",
             "exact": false
           }
@@ -1999,8 +2001,8 @@
         {
           "type": "CLICK",
           "target": {
-            "role": "button",
-            "name": "Back",
+            "role": "radio",
+            "name": "Standard Delivery",
             "exact": false
           }
         },
@@ -2082,14 +2084,19 @@
         },
         {
           "type": "WAIT",
-          "milliseconds": 500
+          "milliseconds": 500,
+          "target": {
+            "role": "radio",
+            "name": "Standard Delivery",
+            "exact": false
+          }
         },
         {
           "type": "CLICK",
           "target": {
-            "role": "row",
-            "name": "Standard Delivery",
-            "exact": false
+            "role": "button",
+            "name": "Continue",
+            "exact": true
           }
         },
         {
@@ -2380,8 +2387,8 @@
           "type": "CLICK",
           "target": {
             "role": "button",
-            "name": "Show/hide account menu",
-            "exact": true
+            "name": "Account",
+            "exact": false
           }
         },
         {
