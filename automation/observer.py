@@ -195,6 +195,30 @@ async def _controls(page: Page) -> tuple[str, ...]:
             )
             status.extend(str(item) for item in items)
 
+        # The order-history/track-result pages also render the logistics state
+        # as human-readable text. The icon is not guaranteed to be present in
+        # every Juice Shop build, so derive the semantic state from the
+        # rendered delivery-status text as a black-box fallback.
+        if not status:
+            try:
+                route = str(page.url).casefold()
+                if "/#/track-result" in route or "/#/order-history" in route:
+                    body_text = await page.locator("body").inner_text(timeout=500)
+                    normalized = " ".join(str(body_text or "").split()).casefold()
+                    text_statuses = (
+                        (r"\bin\s+transit\b", "status=transit"),
+                        (r"\bpacking\b", "status=packing"),
+                        (r"\bdelivered\b", "status=delivered"),
+                        (r"\bshipped\b", "status=transit"),
+                        (r"\border\s+placed\b", "status=new"),
+                    )
+                    for pattern, semantic in text_statuses:
+                        if re.search(pattern, normalized):
+                            status.append(semantic)
+                            break
+            except Exception:
+                pass
+
         if not status:
             items = await page.locator(".delivery-status:visible").evaluate_all(
                 """nodes => nodes.flatMap(root => Array.from(
