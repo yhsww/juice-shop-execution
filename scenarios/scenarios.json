@@ -1862,7 +1862,7 @@
       ],
       "expected": {
         "url_contains": "/#/track-result",
-        "status": "In Transit"
+        "status": "transit"
       }
     },
     {
