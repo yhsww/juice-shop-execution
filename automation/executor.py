@@ -649,16 +649,23 @@ async def _click_target(page: Page, target: dict, attempts: int = 5) -> None:
                     if await ancestor.count() and await ancestor.first.is_visible():
                         locator = ancestor.first
 
-            if requested_role in {"button", "link"}:
+            if requested_role in {"button", "link", "menuitem"}:
                 try:
                     tag = (await locator.evaluate("(el) => el.tagName")).lower()
                 except Exception:
                     tag = ""
 
-                if tag not in {"button", "a"}:
+                allowed_tags = {
+                    "button",
+                    "a",
+                    "mat-menu-item",
+                }
+                if tag not in allowed_tags:
                     ancestor = locator.locator(
-                        "xpath=ancestor-or-self::*[self::button or self::a "
-                        "or @role='button' or @role='link'][1]"
+                        "xpath=ancestor-or-self::*["
+                        "self::button or self::a or self::mat-menu-item "
+                        "or @role='button' or @role='link' or @role='menuitem'"
+                        "][1]"
                     )
                     if await ancestor.count() and await ancestor.first.is_visible():
                         locator = ancestor.first
