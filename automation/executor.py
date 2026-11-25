@@ -676,11 +676,26 @@ async def _click_target(page: Page, target: dict, attempts: int = 5) -> None:
             # radio click also bubbles to the row and can toggle the same
             # SelectionModel twice. Keep the semantic row as the click target.
 
-            # Radio actions are selection intents, not toggle intents. If the
-            # semantic radio is already selected, clicking it again is avoided.
+            # Radio actions are selection intents, not toggle intents.
+            # Text-only scenario targets such as "0002" or "Standard Delivery"
+            # can legitimately resolve directly to a mat-radio-button even
+            # when no role was declared. Treat the real resolved control as a
+            # radio so its Angular selection lifecycle is handled consistently.
+            try:
+                resolved_tag = (await locator.evaluate("(el) => el.tagName")).lower()
+                resolved_role = (await locator.get_attribute("role") or "").casefold()
+            except Exception:
+                resolved_tag = ""
+                resolved_role = ""
+            effective_radio = (
+                requested_role == "radio"
+                or resolved_tag == "mat-radio-button"
+                or resolved_role == "radio"
+            )
+
             # When possible, use the native radio input so Angular Material's
             # selection lifecycle receives the same event as a user choice.
-            if requested_role == "radio":
+            if effective_radio:
                 try:
                     selected = (await locator.get_attribute("aria-checked") or "").casefold()
                 except Exception:
