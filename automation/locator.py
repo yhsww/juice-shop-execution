@@ -153,6 +153,31 @@ async def _visible_menu_item_candidates(page: Page, value: str) -> list[Locator]
         return []
 
     candidates: list[Locator] = []
+    # Angular Material applies the mat-menu-item directive to the host
+    # element (normally a <button> or <a>), rather than rendering a
+    # <mat-menu-item> element. Resolve the directive host globally first so
+    # this remains reliable even when the overlay panel is mid-animation.
+    global_items = page.locator(
+        "button[mat-menu-item]:visible, a[mat-menu-item]:visible, "
+        "[mat-menu-item][role='menuitem']:visible, [role='menuitem']:visible"
+    )
+    try:
+        for index in range(await global_items.count()):
+            item = global_items.nth(index)
+            values = [
+                await item.inner_text(),
+                await item.get_attribute("aria-label"),
+                await item.get_attribute("title"),
+            ]
+            if any(
+                _semantic_text_match(wanted, value)
+                for value in values
+                if value
+            ):
+                candidates.append(item)
+    except Exception:
+        pass
+
     menu_panels = page.locator(
         "[role='menu']:visible, .mat-mdc-menu-panel:visible, .mat-menu-panel:visible"
     )
@@ -165,8 +190,7 @@ async def _visible_menu_item_candidates(page: Page, value: str) -> list[Locator]
     for panel in panels:
         try:
             items = panel.locator(
-                "mat-menu-item, button[mat-menu-item], "
-                "a[mat-menu-item], [role='menuitem']"
+                "[mat-menu-item], mat-menu-item, [role='menuitem']"
             )
             for index in range(await items.count()):
                 item = items.nth(index)
@@ -538,6 +562,7 @@ async def _visible_text_control(page: Page, value: str) -> list[Locator]:
         "a",
         "[role='button']",
         "[role='link']",
+        "[mat-menu-item]",
         "mat-menu-item",
         "[role='menuitem']",
     ):
