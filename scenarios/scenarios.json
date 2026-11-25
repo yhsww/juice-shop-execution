@@ -876,8 +876,8 @@
           "type": "CLICK",
           "target": {
             "role": "button",
-            "name": "Show/hide account menu",
-            "exact": true
+            "name": "Account",
+            "exact": false
           }
         },
         {
@@ -1452,7 +1452,7 @@
           "type": "CLICK",
           "target": {
             "role": "radio",
-            "name": "4000000000000002",
+            "name": "0002",
             "exact": false
           }
         },
