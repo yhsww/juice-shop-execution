@@ -714,6 +714,9 @@ async def _click_target(page: Page, target: dict, attempts: int = 5) -> None:
                 await _click(locator)
                 await page.wait_for_timeout(100)
 
+                def _selected_semantically() -> bool:
+                    return False
+
                 try:
                     selected = (await locator.get_attribute("aria-checked") or "").casefold()
                 except Exception:
@@ -722,7 +725,21 @@ async def _click_target(page: Page, target: dict, attempts: int = 5) -> None:
                 if selected == "true":
                     return
 
+                try:
+                    classes = (await locator.get_attribute("class") or "").casefold()
+                    if "mat-radio-checked" in classes:
+                        return
+                except Exception:
+                    pass
+
                 native_radio = locator.locator("input[type='radio']")
+                if await native_radio.count():
+                    try:
+                        if await native_radio.first.is_checked():
+                            return
+                    except Exception:
+                        pass
+
                 if await native_radio.count() and await native_radio.first.is_visible():
                     try:
                         await native_radio.first.check(timeout=1500)
@@ -737,6 +754,20 @@ async def _click_target(page: Page, target: dict, attempts: int = 5) -> None:
 
                 if selected == "true":
                     return
+
+                try:
+                    classes = (await locator.get_attribute("class") or "").casefold()
+                    if "mat-radio-checked" in classes:
+                        return
+                except Exception:
+                    pass
+
+                if await native_radio.count():
+                    try:
+                        if await native_radio.first.is_checked():
+                            return
+                    except Exception:
+                        pass
 
                 raise RuntimeError(
                     "O radio foi acionado, mas o estado selecionado não foi refletido no componente."
@@ -780,7 +811,7 @@ async def _click_target(page: Page, target: dict, attempts: int = 5) -> None:
             # actionability check fail even though the live component is
             # present and clickable. For semantic menu items and radios, the
             # component's own DOM click is a generic event-delivery fallback.
-            if requested_role in {"menuitem", "radio"}:
+            if requested_role in {"menuitem", "radio", "row", "button"}:
                 try:
                     fresh = await resolve(page, target)
                     if fresh is not None and await fresh.is_visible():
@@ -792,6 +823,18 @@ async def _click_target(page: Page, target: dict, attempts: int = 5) -> None:
                             ).casefold()
                             if selected == "true":
                                 return
+                            classes = (
+                                await fresh.get_attribute("class") or ""
+                            ).casefold()
+                            if "mat-radio-checked" in classes:
+                                return
+                            native = fresh.locator("input[type='radio']")
+                            if await native.count():
+                                try:
+                                    if await native.first.is_checked():
+                                        return
+                                except Exception:
+                                    pass
                         else:
                             return
                 except Exception:
@@ -1046,7 +1089,18 @@ async def execute(page: Page, action: dict) -> ActionResult:
             locator = await resolve(page, action.get("target", {}))
             if locator is None:
                 raise RuntimeError("Elemento alvo não encontrado para ASSERT_ENABLED.")
-            if not await locator.is_enabled():
+            deadline = monotonic() + 2500 / 1000
+            while monotonic() < deadline:
+                try:
+                    if await locator.is_enabled():
+                        break
+                except Exception:
+                    pass
+                await page.wait_for_timeout(100)
+                fresh = await resolve(page, action.get("target", {}))
+                if fresh is not None:
+                    locator = fresh
+            else:
                 raise AssertionError("O controle deveria estar habilitado, mas está desabilitado.")
         elif kind == "ASSERT_DISABLED":
             locator = await resolve(page, action.get("target", {}))
