@@ -644,7 +644,9 @@ async def _click_target(page: Page, target: dict, attempts: int = 5) -> None:
                     tag = ""
                 if tag not in {"mat-menu-item"}:
                     ancestor = locator.locator(
-                        "xpath=ancestor-or-self::*[self::mat-menu-item or @role='menuitem'][1]"
+                        "xpath=ancestor-or-self::*["
+                        "self::mat-menu-item or @role='menuitem' or @mat-menu-item"
+                        "][1]"
                     )
                     if await ancestor.count() and await ancestor.first.is_visible():
                         locator = ancestor.first
