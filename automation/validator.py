@@ -108,7 +108,28 @@ def validate(
         application_text = state.visible_text
         for message in state.messages:
             if message:
-                application_text = application_text.replace(message, " ")
+                # Compare normalized whitespace as well as the raw string.
+                # Angular/CDK can normalize the same snackbar differently in
+                # body.inner_text() and in the message container.
+                normalized_message = " ".join(str(message).split())
+                normalized_application = " ".join(application_text.split())
+                if normalized_message:
+                    normalized_application = normalized_application.replace(
+                        normalized_message,
+                        " ",
+                    )
+                application_text = normalized_application
+
+        # Juice Shop can briefly leave a basket confirmation snackbar in the
+        # rendered document even after the basket itself is empty. It is
+        # feedback from the preceding action, not an item in the basket.
+        application_text = re.sub(
+            r"\bplaced\s+.+?\s+into\s+basket\.?(?:\s+x)?",
+            " ",
+            application_text,
+            flags=re.IGNORECASE,
+        )
+
         ok = str(phrase).casefold() not in application_text.casefold()
         checks.append((ok, f"texto não contém '{phrase}'"))
 
