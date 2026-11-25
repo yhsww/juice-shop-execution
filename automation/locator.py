@@ -138,6 +138,52 @@ def _safe_role_candidate(
     return candidates
 
 
+
+
+async def _visible_menu_item_candidates(page: Page, value: str) -> list[Locator]:
+    """Resolve a visible Angular Material menu item by rendered UI text.
+
+    Juice Shop can expose the same menu entry with an accessible name that
+    differs from its visible label. The scenario describes the user-visible
+    action, so prefer the actual item inside the currently open menu before
+    falling back to global text/button resolution.
+    """
+    wanted = _norm(value)
+    if not wanted:
+        return []
+
+    candidates: list[Locator] = []
+    menu_panels = page.locator(
+        "[role='menu']:visible, .mat-mdc-menu-panel:visible, .mat-menu-panel:visible"
+    )
+    try:
+        panel_count = await menu_panels.count()
+    except Exception:
+        panel_count = 0
+    panels = [menu_panels.nth(i) for i in range(panel_count)] or [page]
+
+    for panel in panels:
+        try:
+            items = panel.locator(
+                "mat-menu-item, button[mat-menu-item], "
+                "a[mat-menu-item], [role='menuitem']"
+            )
+            for index in range(await items.count()):
+                item = items.nth(index)
+                if not await item.is_visible():
+                    continue
+                values = [
+                    await item.inner_text(),
+                    await item.get_attribute("aria-label"),
+                    await item.get_attribute("title"),
+                ]
+                if any(_semantic_text_match(wanted, value) for value in values if value):
+                    candidates.append(item)
+        except Exception:
+            continue
+    return candidates
+
+
 async def _angular_material_field(page: Page, label: str) -> Locator | None:
     wanted = _norm(label)
     if not wanted:
@@ -608,6 +654,10 @@ async def _resolve_once(page: Page, target: dict) -> Locator | None:
     candidates: list[Locator] = []
 
     # 1. Semantic ARIA role.
+    role_normalized = str(role or "").casefold()
+    menu_value = name or text
+    if menu_value and role_normalized == "menuitem":
+        candidates.extend(await _visible_menu_item_candidates(page, str(menu_value)))
     candidates.extend(_safe_role_candidate(page, role, name, exact))
 
     # A label target is especially common on native/legacy Juice Shop forms.
@@ -684,10 +734,7 @@ async def _resolve_once(page: Page, target: dict) -> Locator | None:
         # for a menuitem by its user-visible name, resolve the rendered control
         # by its own text as a semantic fallback.
         if role_normalized == "menuitem" and name:
-            candidates.extend([
-                page.locator("mat-menu-item").filter(has_text=str(name)),
-                page.locator("[role='menuitem']").filter(has_text=str(name)),
-            ])
+            candidates.extend(await _visible_menu_item_candidates(page, str(name)))
 
         # For text-only targets, prefer an actual interactive control over a
         # nested <span>. Angular Material buttons commonly expose their label
