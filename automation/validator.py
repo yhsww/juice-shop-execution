@@ -76,6 +76,26 @@ def validate(
                 str(control) for control in (item.get("controls") or [])
             )
         ok = any(status_marker in control.casefold() for control in status_controls)
+
+        # Some Juice Shop views render the same semantic state as human-readable
+        # text (for example "In Transit") without exposing the icon/control in
+        # the final snapshot. Successful step evidence is already part of the
+        # observable black-box corpus, so map the known delivery vocabulary to
+        # its semantic status as a fallback.
+        if not ok:
+            status_text_patterns = {
+                "new": (r"\\border\\s+placed\\b", r"\\bnew\\b"),
+                "packing": (r"\\bpacking\\b",),
+                "transit": (
+                    r"\\bin\\s+transit\\b",
+                    r"\\bshipped\\b",
+                    r"\\btransit\\b",
+                ),
+                "delivered": (r"\\bdelivered\\b",),
+            }
+            patterns = status_text_patterns.get(expected_status, ())
+            ok = any(re.search(pattern, observed_text) for pattern in patterns)
+
         checks.append((ok, f"status semântico = '{expected['status']}'"))
 
     for phrase in expected.get("text_not_contains", []):
