@@ -141,72 +141,121 @@ def _safe_role_candidate(
 
 
 async def _visible_menu_item_candidates(page: Page, value: str) -> list[Locator]:
-    """Resolve a visible Angular Material menu item by rendered UI text.
+    """Resolve the actual visible Angular Material menu-item host.
 
-    Juice Shop can expose the same menu entry with an accessible name that
-    differs from its visible label. The scenario describes the user-visible
-    action, so prefer the actual item inside the currently open menu before
-    falling back to global text/button resolution.
+    Juice Shop renders menu entries as interactive hosts such as
+    <button mat-menu-item>, while the visible label and icon are nested
+    inside that host. Resolve the host itself so the click is delivered to
+    Angular Material's menu-item handler.
     """
     wanted = _norm(value)
     if not wanted:
         return []
 
     candidates: list[Locator] = []
-    # Angular Material applies the mat-menu-item directive to the host
-    # element (normally a <button> or <a>), rather than rendering a
-    # <mat-menu-item> element. Resolve the directive host globally first so
-    # this remains reliable even when the overlay panel is mid-animation.
-    global_items = page.locator(
-        "button[mat-menu-item]:visible, a[mat-menu-item]:visible, "
-        "[mat-menu-item][role='menuitem']:visible, [role='menuitem']:visible"
-    )
-    try:
-        for index in range(await global_items.count()):
-            item = global_items.nth(index)
-            values = [
-                await item.inner_text(),
-                await item.get_attribute("aria-label"),
-                await item.get_attribute("title"),
-            ]
-            if any(
-                _semantic_text_match(wanted, value)
-                for value in values
-                if value
-            ):
-                candidates.append(item)
-    except Exception:
-        pass
 
-    menu_panels = page.locator(
-        "[role='menu']:visible, .mat-mdc-menu-panel:visible, .mat-menu-panel:visible"
+    panel_selector = (
+        "[role='menu']:visible, "
+        ".mat-mdc-menu-panel:visible, "
+        ".mat-menu-panel:visible"
     )
+    panels = page.locator(panel_selector)
+
     try:
-        panel_count = await menu_panels.count()
+        panel_count = await panels.count()
     except Exception:
         panel_count = 0
-    panels = [menu_panels.nth(i) for i in range(panel_count)] or [page]
 
-    for panel in panels:
+    # Prefer items belonging to the currently open menu overlay. This avoids
+    # accidentally selecting a hidden/stale menu elsewhere in the DOM.
+    panel_list = [panels.nth(i) for i in range(panel_count)]
+
+    if panel_list:
+        host_selector = (
+            "button[mat-menu-item]:visible, "
+            "a[mat-menu-item]:visible, "
+            "[mat-menu-item][role='menuitem']:visible, "
+            "[role='menuitem']:visible"
+        )
+
+        for panel in panel_list:
+            try:
+                items = panel.locator(host_selector)
+                for index in range(await items.count()):
+                    item = items.nth(index)
+
+                    if not await item.is_visible():
+                        continue
+
+                    values = [
+                        await item.inner_text(),
+                        await item.get_attribute("aria-label"),
+                        await item.get_attribute("title"),
+                    ]
+
+                    if any(
+                        _semantic_text_match(wanted, actual)
+                        for actual in values
+                        if actual
+                    ):
+                        candidates.append(item)
+            except Exception:
+                continue
+
+    # Fallback for the short interval where the CDK overlay has not yet
+    # exposed its role=menu container, but the Angular Material host is
+    # already visible. This is still generic and returns only real
+    # mat-menu-item hosts, not nested text/icon nodes.
+    if not candidates:
+        hosts = page.locator(
+            "button[mat-menu-item]:visible, "
+            "a[mat-menu-item]:visible, "
+            "[mat-menu-item][role='menuitem']:visible"
+        )
+
         try:
-            items = panel.locator(
-                "[mat-menu-item], mat-menu-item, [role='menuitem']"
-            )
-            for index in range(await items.count()):
-                item = items.nth(index)
-                if not await item.is_visible():
-                    continue
+            for index in range(await hosts.count()):
+                item = hosts.nth(index)
+
                 values = [
                     await item.inner_text(),
                     await item.get_attribute("aria-label"),
                     await item.get_attribute("title"),
                 ]
-                if any(_semantic_text_match(wanted, value) for value in values if value):
+
+                if any(
+                    _semantic_text_match(wanted, actual)
+                    for actual in values
+                    if actual
+                ):
                     candidates.append(item)
         except Exception:
-            continue
-    return candidates
+            pass
 
+    # Last semantic fallback for implementations exposing only role=menuitem.
+    if not candidates:
+        try:
+            items = page.get_by_role("menuitem", name=value, exact=False)
+            for index in range(await items.count()):
+                item = items.nth(index)
+                if not await item.is_visible():
+                    continue
+
+                host = item.locator(
+                    "xpath=ancestor-or-self::*["
+                    "self::button or self::a or "
+                    "@mat-menu-item or @role='menuitem'"
+                    "][1]"
+                )
+
+                if await host.count() and await host.first.is_visible():
+                    candidates.append(host.first)
+                else:
+                    candidates.append(item)
+        except Exception:
+            pass
+
+    return candidates
 
 async def _angular_material_field(page: Page, label: str) -> Locator | None:
     wanted = _norm(label)
