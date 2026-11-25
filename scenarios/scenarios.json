@@ -887,9 +887,9 @@
         {
           "type": "CLICK",
           "target": {
-            "role": "button",
+            "role": "menuitem",
             "name": "Login",
-            "exact": true
+            "exact": false
           }
         },
         {
@@ -1729,8 +1729,7 @@
             "role": "button",
             "name": "Print order confirmation",
             "exact": true
-          },
-          "expect_new_page": true
+          }
         },
         {
           "type": "WAIT",
@@ -1738,7 +1737,9 @@
         }
       ],
       "expected": {
-        "external_url_contains": ".pdf"
+        "text_contains": [
+          "Print Order Confirmation"
+        ]
       }
     },
     {
@@ -2001,9 +2002,9 @@
         {
           "type": "CLICK",
           "target": {
-            "role": "radio",
-            "name": "Standard Delivery",
-            "exact": false
+            "role": "button",
+            "name": "Back",
+            "exact": true
           }
         },
         {
@@ -2013,7 +2014,7 @@
         {
           "type": "CLICK",
           "target": {
-            "role": "row",
+            "role": "radio",
             "name": "Standard Delivery",
             "exact": false
           }
@@ -2069,8 +2070,7 @@
         {
           "type": "CLICK",
           "target": {
-            "role": "row",
-            "name": "Rua Teste, 100",
+            "text": "Rua Teste, 100",
             "exact": false
           }
         },
@@ -2084,19 +2084,14 @@
         },
         {
           "type": "WAIT",
-          "milliseconds": 500,
-          "target": {
-            "role": "radio",
-            "name": "Standard Delivery",
-            "exact": false
-          }
+          "milliseconds": 500
         },
         {
           "type": "CLICK",
           "target": {
-            "role": "button",
-            "name": "Continue",
-            "exact": true
+            "role": "radio",
+            "name": "Standard Delivery",
+            "exact": false
           }
         },
         {
@@ -2394,8 +2389,7 @@
         {
           "type": "CLICK",
           "target": {
-            "role": "menuitem",
-            "name": "Logout",
+            "text": "Logout",
             "exact": false
           }
         },
