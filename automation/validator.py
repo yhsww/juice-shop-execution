@@ -84,14 +84,14 @@ def validate(
         # its semantic status as a fallback.
         if not ok:
             status_text_patterns = {
-                "new": (r"\\border\\s+placed\\b", r"\\bnew\\b"),
-                "packing": (r"\\bpacking\\b",),
+                "new": (r"\border\s+placed\b", r"\bnew\b"),
+                "packing": (r"\bpacking\b",),
                 "transit": (
-                    r"\\bin\\s+transit\\b",
-                    r"\\bshipped\\b",
-                    r"\\btransit\\b",
+                    r"\bin\s+transit\b",
+                    r"\bshipped\b",
+                    r"\btransit\b",
                 ),
-                "delivered": (r"\\bdelivered\\b",),
+                "delivered": (r"\bdelivered\b",),
             }
             patterns = status_text_patterns.get(expected_status, ())
             ok = any(re.search(pattern, observed_text) for pattern in patterns)
