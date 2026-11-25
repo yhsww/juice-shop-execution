@@ -1218,6 +1218,7 @@ async def prepare_precondition(page, scenario: dict) -> tuple[bool, str]:
             or "pagamento acessível" in precondition
             or "seção de outras opções" in precondition
             or "checkout iniciado" in precondition
+            or "método de entrega disponível" in precondition
         )
         if needs_delivery:
             if not await ensure_delivery(
