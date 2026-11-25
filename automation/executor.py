@@ -1069,6 +1069,30 @@ async def execute(page: Page, action: dict) -> ActionResult:
                     checked = await locator.is_checked()
                 except Exception:
                     checked = False
+
+                # Angular Material radios may expose the selected state on
+                # the host class or on the hidden native input instead of
+                # aria-checked. Read all semantic representations before
+                # declaring the control unselected.
+                if not checked:
+                    try:
+                        classes = (
+                            await locator.get_attribute("class") or ""
+                        ).casefold()
+                        checked = "mat-radio-checked" in classes
+                    except Exception:
+                        checked = False
+
+                if not checked:
+                    try:
+                        native = locator.locator(
+                            "input[type='radio'], input[type='checkbox']"
+                        ).first
+                        if await native.count():
+                            checked = await native.is_checked()
+                    except Exception:
+                        checked = False
+
                 if not checked:
                     raise AssertionError("O controle deveria estar selecionado.")
         elif kind == "WAIT":
