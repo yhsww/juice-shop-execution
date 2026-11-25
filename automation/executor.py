@@ -734,15 +734,27 @@ async def _click_target(page: Page, target: dict, attempts: int = 5) -> None:
     requested_role = str(target.get("role") or "").casefold()
 
     for _ in range(max(1, attempts)):
-        # Menu items are rendered by Angular Material as transient overlay
-        # hosts. If the overlay is being replaced during Playwright's
-        # actionability check, a Locator can become detached and its evaluate()
-        # fallback can consume the entire timeout. Resolve and click the live
-        # host in one DOM turn before entering the normal locator path.
-        if requested_role == "menuitem":
-            menu_value = str(target.get("name") or target.get("text") or "").strip()
-            if await _click_visible_menuitem_host(page, menu_value):
-                return
+        # Angular Material menu items are transient overlay hosts, and some
+        # scenario definitions describe them only by visible text instead of
+        # role=menuitem. When a menu is visibly open, use the same semantic
+        # live-host path for any click target that supplies a text/name value.
+        # This keeps the recovery generic while avoiding a hard-coded scenario
+        # selector or scenario ID.
+        menu_value = str(
+            target.get("name") or target.get("text") or target.get("label") or ""
+        ).strip()
+        if menu_value:
+            try:
+                visible_menu = page.locator(
+                    "[role='menu']:visible, "
+                    ".mat-mdc-menu-panel:visible, "
+                    ".mat-menu-panel:visible"
+                )
+                if await visible_menu.count():
+                    if await _click_visible_menuitem_host(page, menu_value):
+                        return
+            except Exception:
+                pass
 
         locator = await resolve(page, target)
         if locator is None:
