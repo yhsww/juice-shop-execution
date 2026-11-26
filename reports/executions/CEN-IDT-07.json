@@ -9,17 +9,17 @@
       "data": "/#/privacy-security",
       "url_before": "http://127.0.0.1:3000/#/search",
       "url_after": "http://127.0.0.1:3000/#/privacy-security",
-      "observed_result": "URL: http://127.0.0.1:3000/#/search → http://127.0.0.1:3000/#/privacy-security Texto transitório capturado: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN You successfully solved a challenge: Error Handling (Provoke an error that is neither very gracefully nor consistently handled.) X | This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN You successfully solved a challenge: Error Handling (Provoke an error that is neither very gracefully nor consistently handled.) X Mensagem transitória: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN You successfully solved a challenge: Error Handling (Provoke an error that is neither very gracefully nor consistently handled.) X | This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN You successfully solved a challenge: Error Handling (Provoke an error that is neither very gracefully nor consistently handled.) X",
+      "observed_result": "URL: http://127.0.0.1:3000/#/search → http://127.0.0.1:3000/#/privacy-security Texto transitório capturado: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN | This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Mensagem transitória: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN | This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN",
       "changed": true,
       "success": true,
       "screenshot": "C:/Users/Asus/Desktop/juice-shop-execution-v2/reports/executions/CEN-IDT-07_step_01.png",
       "error": null,
-      "timestamp": "2026-11-26T13:00:08.111504+00:00",
-      "visible_text_before": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN You successfully solved a challenge: Error Handling (Provoke an error that is neither very gracefully nor consistently handled.) X All Products Items per page: 15 0 of 0",
-      "visible_text_after": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN You successfully solved a challenge: Error Handling (Provoke an error that is neither very gracefully nor consistently handled.) X",
+      "timestamp": "2026-11-26T17:29:28.251321+00:00",
+      "visible_text_before": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN All Products Items per page: 15 0 of 0",
+      "visible_text_after": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN",
       "messages": [
-        "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN You successfully solved a challenge: Error Handling (Provoke an error that is neither very gracefully nor consistently handled.) X",
-        "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN You successfully solved a challenge: Error Handling (Provoke an error that is neither very gracefully nor consistently handled.) X"
+        "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN",
+        "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN"
       ],
       "action_id": "CEN-IDT-07-A-01",
       "network": [],
@@ -33,14 +33,14 @@
       "data": "",
       "url_before": "http://127.0.0.1:3000/#/privacy-security",
       "url_after": "http://127.0.0.1:3000/#/privacy-security",
-      "observed_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN You successfully solved a challenge: Error Handling (Provoke an error that is neither very gracefully nor consistently handled.) X",
+      "observed_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN",
       "changed": false,
       "success": true,
       "screenshot": "C:/Users/Asus/Desktop/juice-shop-execution-v2/reports/executions/CEN-IDT-07_step_02.png",
       "error": null,
-      "timestamp": "2026-11-26T13:00:09.468219+00:00",
-      "visible_text_before": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN You successfully solved a challenge: Error Handling (Provoke an error that is neither very gracefully nor consistently handled.) X",
-      "visible_text_after": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN You successfully solved a challenge: Error Handling (Provoke an error that is neither very gracefully nor consistently handled.) X",
+      "timestamp": "2026-11-26T17:29:29.507298+00:00",
+      "visible_text_before": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN",
+      "visible_text_after": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN",
       "messages": [],
       "action_id": "CEN-IDT-07-A-02",
       "network": [],
@@ -48,14 +48,14 @@
       "controls": []
     }
   ],
-  "final_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN You successfully solved a challenge: Error Handling (Provoke an error that is neither very gracefully nor consistently handled.) X",
+  "final_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN",
   "messages": [
-    "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN You successfully solved a challenge: Error Handling (Provoke an error that is neither very gracefully nor consistently handled.) X",
-    "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN You successfully solved a challenge: Error Handling (Provoke an error that is neither very gracefully nor consistently handled.) X"
+    "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN",
+    "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN"
   ],
   "final_url": "http://127.0.0.1:3000/#/privacy-security",
   "network_summary": "Coleta de rede não habilitada.",
-  "final_visible_text": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN You successfully solved a challenge: Error Handling (Provoke an error that is neither very gracefully nor consistently handled.) X",
+  "final_visible_text": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN",
   "validation": {
     "passed": true,
     "message": "Todos os critérios observáveis foram atendidos."
