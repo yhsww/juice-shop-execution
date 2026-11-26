@@ -3,6 +3,8 @@ from __future__ import annotations
 import argparse
 import json
 from datetime import datetime
+import platform
+import re
 from pathlib import Path
 from typing import Any
 
@@ -22,6 +24,7 @@ DEFAULT_EXECUTIONS = ROOT / "reports" / "executions"
 DEFAULT_OUT = ROOT / "reports" / "docx"
 DEFAULT_ENV = ROOT / ".report-environment.json"
 DEFAULT_HUMANIZED = ROOT / "reports" / "humanized"
+DEFAULT_COMPOSE = ROOT / "juice-shop" / "docker-compose.yml"
 
 DOMAINS = {
     "ADM": "Administração",
@@ -212,12 +215,23 @@ def load_executions(
 
 
 
+def _juice_shop_version(compose_path: Path) -> str:
+    """Obtém a versão do Juice Shop a partir da imagem configurada no Compose."""
+    try:
+        content = compose_path.read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return "Não identificada"
+
+    match = re.search(r"bkimminich/juice-shop:([^\\s]+)", content)
+    return match.group(1) if match else "Não identificada"
+
+
 def load_environment(path: Path) -> dict[str, str]:
     # Estrutura intencionalmente igual à Ficha de Ambiente do modelo fornecido.
     env = {
         "Avaliador e data": datetime.now().strftime("%d/%m/%Y"),
-        "Versão do Juice Shop": "v20.3.0",
-        "Sistema operacional": "Windows",
+        "Versão do Juice Shop": _juice_shop_version(DEFAULT_COMPOSE),
+        "Sistema operacional": platform.system(),
     }
 
     if path.exists():
@@ -378,17 +392,23 @@ def add_scenario(
             if step.get("error"):
                 response = f"Falha durante a execução: {normalize(step.get('error'))}"
 
-            if humanized and scenario.get("id"):
-                humanized_step = next(
-                    (
-                        item
-                        for item in humanized.get("steps", [])
-                        if str(item.get("number")) == str(step.get("step"))
-                    ),
-                    None,
-                )
-            else:
-                humanized_step = None
+            humanized_steps = (
+                humanized.get("steps", [])
+                if isinstance(humanized, dict)
+                else []
+            )
+            if not isinstance(humanized_steps, list):
+                humanized_steps = []
+
+            humanized_step = next(
+                (
+                    item
+                    for item in humanized_steps
+                    if isinstance(item, dict)
+                    and str(item.get("number")) == str(step.get("step"))
+                ),
+                None,
+            )
 
             if humanized_step:
                 user_action = normalize(humanized_step.get("action"))
@@ -456,6 +476,9 @@ def create_document(
 ) -> None:
     doc = Document()
     configure_document(doc)
+    doc.core_properties.title = filename.rsplit(".", 1)[0]
+    doc.core_properties.subject = "Relatório funcional do OWASP Juice Shop"
+    doc.core_properties.author = "Juice Shop Execution"
 
     add_environment(doc, env)
 
