@@ -132,10 +132,16 @@ def load_scenarios(path: Path) -> list[dict[str, Any]]:
     return payload.get("scenarios", payload if isinstance(payload, list) else [])
 
 
-def load_executions(directory: Path) -> dict[str, dict[str, Any]]:
+def load_executions(
+    directory: Path,
+    valid_ids: set[str] | None = None,
+) -> tuple[dict[str, dict[str, Any]], list[str]]:
     executions: dict[str, dict[str, Any]] = {}
+    extras: list[str] = []
+
     if not directory.exists():
-        return executions
+        return executions, extras
+
     for path in sorted(directory.glob("*.json")):
         if path.name.startswith("_"):
             continue
@@ -143,9 +149,15 @@ def load_executions(directory: Path) -> dict[str, dict[str, Any]]:
             payload = json.loads(path.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError):
             continue
+
         scenario_id = str(payload.get("scenario_id") or path.stem)
+        if valid_ids is not None and scenario_id not in valid_ids:
+            extras.append(scenario_id)
+            continue
+
         executions[scenario_id] = payload
-    return executions
+
+    return executions, sorted(set(extras))
 
 
 def git_value(args: list[str], default: str) -> str:
@@ -544,7 +556,8 @@ def main() -> int:
     args = parser.parse_args()
 
     scenarios = load_scenarios(args.scenarios)
-    executions = load_executions(args.executions)
+    valid_ids = {str(scenario.get("id")) for scenario in scenarios if scenario.get("id")}
+    executions, extra_execution_ids = load_executions(args.executions, valid_ids)
 
     if args.results and args.results.exists():
         try:
@@ -553,10 +566,16 @@ def main() -> int:
             if isinstance(items, list):
                 for item in items:
                     sid = str(item.get("scenario_id") or item.get("id") or "")
-                    if sid and sid not in executions:
+                    if not sid or sid not in valid_ids:
+                        if sid:
+                            extra_execution_ids.append(sid)
+                        continue
+                    if sid not in executions:
                         executions[sid] = item
         except (OSError, json.JSONDecodeError):
             pass
+
+    extra_execution_ids = sorted(set(extra_execution_ids))
 
     env = load_environment(args.environment)
     args.output.mkdir(parents=True, exist_ok=True)
@@ -571,8 +590,13 @@ def main() -> int:
         f"gerados em {args.output}"
     )
     print(
-        f"[DOCX] evidências encontradas: {len(executions)}/{len(scenarios)} cenários"
+        f"[DOCX] evidências válidas encontradas: {len(executions)}/{len(scenarios)} cenários"
     )
+    if extra_execution_ids:
+        print(
+            f"[DOCX] artefatos extras ignorados: {len(extra_execution_ids)} "
+            f"({', '.join(extra_execution_ids)})"
+        )
     return 0
 
 
