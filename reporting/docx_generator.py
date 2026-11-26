@@ -8,7 +8,6 @@ from pathlib import Path
 from typing import Any
 
 from docx import Document
-from docx.enum.section import WD_SECTION
 from docx.enum.table import WD_CELL_VERTICAL_ALIGNMENT, WD_TABLE_ALIGNMENT
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.shared import Inches, Pt
@@ -579,7 +578,7 @@ def main() -> int:
                     sid = str(item.get("scenario_id") or item.get("id") or "")
                     if sid in valid_ids and sid not in executions:
                         executions[sid] = item
-                    elif sid:
+                    elif sid and sid not in valid_ids:
                         extras.append(sid)
         except (OSError, json.JSONDecodeError):
             pass
