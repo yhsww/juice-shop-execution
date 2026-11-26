@@ -13,23 +13,36 @@ class LLMHumanizerError(RuntimeError):
     """Erro controlado ao gerar documentação com LLM."""
 
 
-def _config() -> tuple[str, str, str]:
-    provider = os.getenv("REPORTING_LLM_PROVIDER", "kimi").strip().lower()
-    if provider == "kimi":
-        api_key = os.getenv("KIMI_API_KEY", "").strip()
-        base_url = os.getenv("KIMI_API_BASE_URL", "https://api.moonshot.ai/v1").strip()
-        model = os.getenv("REPORTING_LLM_MODEL", "kimi-k3.1-pro").strip()
-    elif provider == "openai":
+def _config() -> tuple[str, str, str, str]:
+    provider = os.getenv("REPORTING_LLM_PROVIDER", "openai").strip().lower()
+
+    if provider == "openai":
         api_key = os.getenv("OPENAI_API_KEY", "").strip()
-        base_url = os.getenv("OPENAI_API_BASE_URL", "https://api.openai.com/v1").strip()
-        model = os.getenv("REPORTING_LLM_MODEL", "gpt-6.2-sol").strip()
+        base_url = os.getenv(
+            "OPENAI_API_BASE_URL",
+            "https://api.openai.com/v1",
+        ).strip()
+        model = os.getenv(
+            "REPORTING_LLM_MODEL",
+            "gpt-6.2-sol",
+        ).strip()
+    elif provider == "kimi":
+        api_key = os.getenv("KIMI_API_KEY", "").strip()
+        base_url = os.getenv(
+            "KIMI_API_BASE_URL",
+            "https://api.moonshot.ai/v1",
+        ).strip()
+        model = os.getenv(
+            "REPORTING_LLM_MODEL",
+            "kimi-k3.1-pro",
+        ).strip()
     else:
         raise LLMHumanizerError(
-            f"REPORTING_LLM_PROVIDER inválido: {provider}. Use 'kimi' ou 'openai'."
+            f"REPORTING_LLM_PROVIDER inválido: {provider}. Use 'openai' ou 'kimi'."
         )
 
     if not api_key:
-        env_name = "KIMI_API_KEY" if provider == "kimi" else "OPENAI_API_KEY"
+        env_name = "OPENAI_API_KEY" if provider == "openai" else "KIMI_API_KEY"
         raise LLMHumanizerError(f"{env_name} não configurada.")
 
     return provider, api_key, base_url, model
