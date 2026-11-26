@@ -9,3 +9,5 @@ screenshots/*
 !screenshots/.gitkeep
 reports/docx/*
 !reports/docx/.gitkeep
+reports/humanized/*
+!reports/humanized/.gitkeep
