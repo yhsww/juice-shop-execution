@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import re
 from pathlib import Path
 from typing import Any
@@ -13,7 +14,23 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_SCENARIOS = ROOT / "scenarios" / "scenarios.json"
 DEFAULT_EXECUTIONS = ROOT / "reports" / "executions"
 DEFAULT_OUTPUT = ROOT / "reports" / "humanized"
-PROMPT_VERSION = "1"
+PROMPT_VERSION = "2"
+
+MAX_REPORT_CHARS = 30000
+
+
+def collect_artifacts(scenario_id: str, executions_dir: Path) -> dict[str, Any]:
+    """Coleta todos os relatórios textuais e screenshots do cenário."""
+    reports = []
+    for path in sorted(executions_dir.glob(f"{scenario_id}*")):
+        if path.is_file() and path.suffix.lower() in {".json", ".md", ".txt"}:
+            try:
+                content = path.read_text(encoding="utf-8", errors="replace")
+            except OSError:
+                continue
+            reports.append({"name": path.name, "content": content[:MAX_REPORT_CHARS]})
+    screenshots = [str(path.resolve()) for path in sorted(executions_dir.glob(f"{scenario_id}*.png")) if path.is_file()]
+    return {"reports": reports, "screenshots": screenshots}
 
 
 def normalize(value: Any, limit: int = 1200) -> str:
@@ -106,10 +123,12 @@ def humanize_scenario(
     execution: dict[str, Any],
     output_dir: Path,
     force: bool = False,
+    executions_dir: Path | None = None,
 ) -> dict[str, Any]:
     model = __import__("os").environ.get("REPORTING_LLM_MODEL", "kimi-k3.1-pro")
     catalog = prepare_catalog(scenario)
     evidence = prepare_execution(execution)
+    evidence["artifacts"] = collect_artifacts(str(scenario["id"]), executions_dir or DEFAULT_EXECUTIONS)
     path = output_dir / f"{scenario['id']}.json"
     fp = fingerprint(catalog, evidence, model)
 
@@ -207,6 +226,7 @@ def main() -> int:
                 load_execution(execution_path),
                 args.output,
                 force=args.force,
+                executions_dir=args.executions,
             )
             generated += 1
             print(f"[LLM] {scenario_id}: documentação humanizada pronta.")
