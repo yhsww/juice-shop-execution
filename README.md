@@ -18,8 +18,6 @@ A automação:
 - gera relatórios DOCX consolidados por domínio e um relatório geral;
 - permite execução de cenários individuais, domínios ou da suíte completa.
 
-O projeto também possui uma etapa de exploração/reverse engineering AMBOLS para observar comportamentos e descobrir fluxos alternativos da aplicação.
-
 ## Resultado atual
 
 A suíte principal possui **72 cenários validados**, distribuídos em:
@@ -67,7 +65,6 @@ A aplicação é executada localmente e a porta do container é vinculada ao end
 juice-shop-execution/
 ├── automation/              # Motor de automação e execução
 ├── config/                  # Configurações da aplicação
-├── recovery/                # Exploração e reverse engineering AMBOLS
 ├── reporting/               # Geração de relatórios
 ├── scenarios/               # Catálogo de cenários
 ├── tests/                   # Testes automatizados do próprio projeto
@@ -242,11 +239,7 @@ Incluem relatórios por domínio:
 - `CHK.md`
 - `IDT.md`
 
-e o relatório consolidado:
-
-```text
-AMBOLS_JUICE_SHOP_FINAL_REPORT.md
-```
+e o relatório consolidado disponível no diretório de relatórios finais.
 
 ### Geração dos relatórios DOCX
 
@@ -296,38 +289,6 @@ Cada cenário descreve, entre outras informações:
 - validação final.
 
 O catálogo é separado do executor para permitir evolução dos cenários sem precisar alterar o motor de automação para cada novo caso.
-
-## Reverse Engineering AMBOLS
-
-O projeto também possui uma etapa de exploração comportamental/reverse engineering.
-
-Ela observa a aplicação real, identifica controles e mudanças de estado e pode descobrir caminhos alternativos de interação.
-
-Exemplos:
-
-```powershell
-python run.py --reverse-engineer --start-app
-```
-
-Por domínio:
-
-```powershell
-python run.py --reverse-engineer --start-app --recovery-domain CAT
-```
-
-Por cenário:
-
-```powershell
-python run.py --reverse-engineer --start-app --recovery-scenario CEN-CAT-01
-```
-
-Os artefatos dessa etapa são armazenados em:
-
-```text
-reports/recovery/
-```
-
-A abordagem prioriza evidência observável da interface. O campo `expected` do catálogo não é tratado como prova de que o comportamento ocorreu.
 
 ## Princípios de engenharia
 
