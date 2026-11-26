@@ -8,11 +8,14 @@ from pathlib import Path
 from typing import Any
 
 from docx import Document
+from docx.enum.section import WD_SECTION
 from docx.enum.table import WD_CELL_VERTICAL_ALIGNMENT, WD_TABLE_ALIGNMENT
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.shared import Inches, Pt
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
+
+from reporting.report import _observed_behavior, _observed_data, _observed_messages
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_SCENARIOS = ROOT / "scenarios" / "scenarios.json"
@@ -37,72 +40,88 @@ def normalize(value: Any, limit: int | None = None) -> str:
     return text
 
 
-def set_cell_shading(cell, fill: str) -> None:
+def shade(cell, fill: str = "D9EAF7") -> None:
     tc_pr = cell._tc.get_or_add_tcPr()
     shd = OxmlElement("w:shd")
     shd.set(qn("w:fill"), fill)
     tc_pr.append(shd)
 
 
-def set_repeat_table_header(row) -> None:
+def repeat_header(row) -> None:
     tr_pr = row._tr.get_or_add_trPr()
     el = OxmlElement("w:tblHeader")
     el.set(qn("w:val"), "true")
     tr_pr.append(el)
 
 
-def add_table(doc: Document, headers: list[str], rows: list[list[str]]) -> None:
+def add_table(
+    doc: Document,
+    headers: list[str],
+    rows: list[list[str]],
+    widths: list[float] | None = None,
+) -> None:
     table = doc.add_table(rows=1, cols=len(headers))
-    table.alignment = WD_TABLE_ALIGNMENT.CENTER
     table.style = "Table Grid"
-    header = table.rows[0]
-    set_repeat_table_header(header)
+    table.alignment = WD_TABLE_ALIGNMENT.CENTER
+    repeat_header(table.rows[0])
+
     for index, value in enumerate(headers):
-        cell = header.cells[index]
+        cell = table.rows[0].cells[index]
         cell.vertical_alignment = WD_CELL_VERTICAL_ALIGNMENT.CENTER
-        paragraph = cell.paragraphs[0]
-        paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        run = paragraph.add_run(normalize(value))
+        p = cell.paragraphs[0]
+        p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        run = p.add_run(normalize(value))
         run.bold = True
-        set_cell_shading(cell, "D9EAF7")
+        shade(cell)
+
     for row in rows:
         cells = table.add_row().cells
         for index, value in enumerate(row):
             cells[index].text = normalize(value)
             cells[index].vertical_alignment = WD_CELL_VERTICAL_ALIGNMENT.TOP
+
+    if widths:
+        for row in table.rows:
+            for index, width in enumerate(widths):
+                row.cells[index].width = Inches(width)
+
     doc.add_paragraph()
-    return table
 
 
 def action_description(action: dict[str, Any]) -> str:
     typ = str(action.get("type", "")).upper()
     target = action.get("target") or {}
-    parts = []
-    for key in ("role", "name", "label", "text"):
-        if target.get(key) is not None:
-            parts.append(f'{key}="{target[key]}"')
-    target_text = ", ".join(parts) or "alvo não especificado"
-    if target.get("exact") is not None:
-        target_text += f', correspondência={"exata" if target["exact"] else "parcial"}'
+    target_name = (
+        target.get("name")
+        or target.get("label")
+        or target.get("text")
+        or target.get("role")
+        or "elemento"
+    )
 
     if typ == "NAVIGATE":
-        return f'Navegar para a rota "{action.get("route", "")}".'
+        return f'Navegar para "{action.get("route", "")}".'
     if typ == "FILL":
-        return f'Preencher {target_text} com o valor definido pelo cenário.'
+        return f'Preencher "{target_name}" com o valor definido pelo cenário.'
     if typ == "CLICK":
-        return f'Acionar {target_text}.'
-    if typ == "WAIT":
-        return f'Aguardar {action.get("milliseconds", 0)} ms para estabilização da interface.'
-    if typ == "PRESS":
-        return f'Pressionar "{action.get("key", "")}" em {target_text}.'
+        return f'Acionar "{target_name}".'
     if typ == "SELECT":
-        return f'Selecionar "{action.get("value", "")}" em {target_text}.'
-    if typ == "CLICK_ALL":
-        return (
-            f'Acionar os elementos {target_text}, respeitando o limite de '
-            f'{action.get("max_clicks", "não informado")} interações.'
-        )
-    return f'Executar a ação "{typ}" com os parâmetros definidos no catálogo.'
+        return f'Selecionar "{action.get("value", "")}" em "{target_name}".'
+    if typ == "PRESS":
+        return f'Pressionar "{action.get("key", "Enter")}" em "{target_name}".'
+    if typ == "CHECK":
+        return f'Marcar "{target_name}".'
+    if typ == "UNCHECK":
+        return f'Desmarcar "{target_name}".'
+    if typ == "WAIT":
+        return f'Aguardar {action.get("milliseconds", 0)} ms para estabilização.'
+    if typ == "ASSERT_ENABLED":
+        return f'Verificar se "{target_name}" está habilitado.'
+    if typ == "ASSERT_DISABLED":
+        return f'Verificar se "{target_name}" está desabilitado.'
+    if typ == "ASSERT_SELECTED":
+        return f'Verificar se "{target_name}" está selecionado.'
+    return f'Executar a ação "{typ}".'
 
 
 def expected_description(expected: dict[str, Any]) -> str:
@@ -110,10 +129,10 @@ def expected_description(expected: dict[str, Any]) -> str:
     if expected.get("url_contains"):
         parts.append(f'a URL contenha "{expected["url_contains"]}"')
     if expected.get("text_contains"):
-        values = ", ".join(f'"{x}"' for x in expected["text_contains"])
+        values = ", ".join(f'"{item}"' for item in expected["text_contains"])
         parts.append(f'o texto observado contenha {values}')
     if expected.get("text_not_contains"):
-        values = ", ".join(f'"{x}"' for x in expected["text_not_contains"])
+        values = ", ".join(f'"{item}"' for item in expected["text_not_contains"])
         parts.append(f'o texto observado não contenha {values}')
     if expected.get("status"):
         parts.append(f'o status observado seja "{expected["status"]}"')
@@ -129,7 +148,7 @@ def load_scenarios(path: Path) -> list[dict[str, Any]]:
 
 def load_executions(
     directory: Path,
-    valid_ids: set[str] | None = None,
+    valid_ids: set[str],
 ) -> tuple[dict[str, dict[str, Any]], list[str]]:
     executions: dict[str, dict[str, Any]] = {}
     extras: list[str] = []
@@ -146,10 +165,9 @@ def load_executions(
             continue
 
         scenario_id = str(payload.get("scenario_id") or path.stem)
-        if valid_ids is not None and scenario_id not in valid_ids:
+        if scenario_id not in valid_ids:
             extras.append(scenario_id)
             continue
-
         executions[scenario_id] = payload
 
     return executions, sorted(set(extras))
@@ -201,10 +219,13 @@ def configure_document(doc: Document) -> None:
     styles["Title"].font.size = Pt(24)
     styles["Heading 1"].font.name = "Aptos Display"
     styles["Heading 1"].font.size = Pt(16)
+    styles["Heading 1"].font.bold = True
     styles["Heading 2"].font.name = "Aptos Display"
     styles["Heading 2"].font.size = Pt(13)
+    styles["Heading 2"].font.bold = True
     styles["Heading 3"].font.name = "Aptos Display"
     styles["Heading 3"].font.size = Pt(11)
+    styles["Heading 3"].font.bold = True
 
 
 def add_cover(doc: Document, title: str, subtitle: str) -> None:
@@ -226,189 +247,206 @@ def add_cover(doc: Document, title: str, subtitle: str) -> None:
     doc.add_page_break()
 
 
-def add_environment_sheet(doc: Document, env: dict[str, str]) -> None:
+def add_environment(doc: Document, env: dict[str, str]) -> None:
     doc.add_heading("Ficha de Ambiente", level=1)
-    add_table(doc, ["Item", "Configuração"], [[k, v] for k, v in env.items()])
+    add_table(doc, ["Item", "Configuração"], [[key, value] for key, value in env.items()])
     doc.add_paragraph(
         "Os dados desta ficha representam o contexto técnico disponível para a execução. "
-        "Campos ausentes nos artefatos permanecem como não registrados; não são criados valores "
-        "de evidência pelo gerador."
+        "Campos ausentes nos artefatos permanecem como não registrados."
     )
 
 
 def status_label(execution: dict[str, Any] | None) -> str:
-    if not execution:
-        return "NÃO EXECUTADO"
-    return str(execution.get("status") or "NÃO INFORMADO").upper()
+    return str((execution or {}).get("status") or "NÃO EXECUTADO").upper()
 
 
 def status_is_passed(execution: dict[str, Any] | None) -> bool:
-    return bool(execution and str(execution.get("status", "")).upper() == "PASSED")
+    return bool(execution and status_label(execution) == "PASSED")
 
 
-def add_execution_summary(doc: Document, execution: dict[str, Any] | None) -> None:
+def observed_result(execution: dict[str, Any]) -> str:
+    return normalize(_observed_behavior(execution), 2600)
+
+
+def observed_messages(execution: dict[str, Any]) -> str:
+    messages = _observed_messages(execution)
+    return " | ".join(messages[:10]) if messages else "Nenhuma mensagem transitória relevante capturada."
+
+
+def observed_data(scenario: dict[str, Any], execution: dict[str, Any]) -> str:
+    return normalize(_observed_data(execution, scenario), 2200)
+
+
+def add_execution_summary(doc: Document, scenario: dict[str, Any], execution: dict[str, Any] | None) -> None:
+    doc.add_heading("Resumo da execução real", level=3)
+
     if not execution:
-        doc.add_heading("Evidência de execução", level=3)
         doc.add_paragraph(
             "Não foi localizado JSON de execução para este cenário. "
-            "O gerador documenta o catálogo, mas não transforma a ausência de evidência em aprovação."
+            "A ausência de evidência não é convertida em aprovação."
         )
         return
 
     validation = execution.get("validation") or {}
-    doc.add_heading("Resumo da execução real", level=3)
     add_table(
         doc,
         ["Campo", "Valor observado"],
         [
             ["Status", status_label(execution)],
-            ["URL final", execution.get("final_url") or "Não registrado."],
-            ["Resultado final", execution.get("final_result") or "Não registrado."],
+            ["URL final", execution.get("final_url") or "Não registrada."],
+            ["Resultado observado", observed_result(execution)],
             ["Validação", validation.get("message") or "Não registrada."],
             ["Validação aprovada", "Sim" if validation.get("passed") else "Não"],
-            ["Mensagens", " | ".join(execution.get("messages") or []) or "Nenhuma registrada."],
-            ["Resumo de rede", execution.get("network_summary") or "Não registrado."],
+            ["Mensagens exibidas", observed_messages(execution)],
+            ["Dados observados", observed_data(scenario, execution)],
         ],
     )
 
-    final_text = normalize(execution.get("final_visible_text"), 5000)
-    if final_text:
-        doc.add_heading("Texto visível no estado final", level=3)
-        doc.add_paragraph(final_text)
+
+def add_execution_steps(doc: Document, execution: dict[str, Any]) -> None:
+    steps = execution.get("steps") or []
+    doc.add_heading("Passos Executados", level=3)
+
+    if not steps:
+        doc.add_paragraph("O JSON de execução não contém passos registrados.")
+        return
+
+    rows = []
+    for step in steps:
+        response = normalize(step.get("observed_result") or "")
+        if step.get("error"):
+            response = f"Falha de automação: {normalize(step.get('error'))}"
+
+        rows.append([
+            str(step.get("step", "")),
+            normalize(step.get("user_action") or step.get("action")),
+            normalize(step.get("data") or "—", 500),
+            response or "Nenhuma resposta observável registrada.",
+        ])
+
+    add_table(
+        doc,
+        ["#", "Ação do usuário", "Dados informados", "Resposta da interface"],
+        rows,
+        widths=[0.35, 2.05, 1.45, 3.25],
+    )
 
 
 def add_step_evidence(doc: Document, step: dict[str, Any]) -> None:
     step_no = step.get("step", "?")
-    action = step.get("action", step.get("user_action", ""))
-    user_action = step.get("user_action", "")
-    data = step.get("data", "")
-    before_url = step.get("url_before", "")
-    after_url = step.get("url_after", "")
-    before_text = normalize(step.get("visible_text_before"), 2500)
-    after_text = normalize(step.get("visible_text_after"), 2500)
-    observed = step.get("observed_result", "")
-    error = step.get("error", "")
-    changed = step.get("changed")
-    success = step.get("success")
-    screenshot = step.get("screenshot")
-    network = step.get("network_summary", "")
-    controls = step.get("controls") or []
-    messages = step.get("messages") or []
+    doc.add_heading(
+        f"Passo {step_no} — {normalize(step.get('user_action') or step.get('action'))}",
+        level=4,
+    )
 
-    doc.add_heading(f"Passo {step_no} — {normalize(user_action or action)}", level=3)
+    before_url = normalize(step.get("url_before"))
+    after_url = normalize(step.get("url_after"))
+    before_text = normalize(step.get("visible_text_before"), 1800)
+    after_text = normalize(step.get("visible_text_after"), 1800)
+    messages = step.get("messages") or []
+    controls = step.get("controls") or []
 
     add_table(
         doc,
         ["Evidência", "Registro"],
         [
-            ["Ação técnica", action],
-            ["Ação do usuário", user_action],
-            ["Dados", data],
-            ["URL antes", before_url],
-            ["URL depois", after_url],
-            ["Mudança detectada", "Sim" if changed else "Não"],
-            ["Execução do passo", "Sucesso" if success else "Falha"],
-            ["Resultado observado", observed],
-            ["Erro", error or "Nenhum erro registrado."],
-            ["Mensagens", " | ".join(str(x) for x in messages) or "Nenhuma."],
-            ["Resumo de rede", network or "Não registrado."],
+            ["Ação técnica", step.get("action", "")],
+            ["URL antes", before_url or "Não registrada."],
+            ["URL depois", after_url or "Não registrada."],
+            ["Mudança detectada", "Sim" if step.get("changed") else "Não"],
+            ["Execução do passo", "Sucesso" if step.get("success") else "Falha"],
+            ["Resultado observado", step.get("observed_result") or "Não registrado."],
+            ["Mensagens", " | ".join(map(str, messages)) or "Nenhuma."],
+            ["Erro", step.get("error") or "Nenhum erro registrado."],
         ],
     )
 
     if before_text:
-        doc.add_heading("Estado visível antes da ação", level=4)
-        doc.add_paragraph(before_text)
+        doc.add_paragraph(f"Estado antes: {before_text}")
     if after_text:
-        doc.add_heading("Estado visível depois da ação", level=4)
-        doc.add_paragraph(after_text)
+        doc.add_paragraph(f"Estado depois: {after_text}")
 
     if controls:
-        compact_controls = []
-        for control in controls[:40]:
-            if isinstance(control, dict):
-                compact_controls.append(
-                    " | ".join(
-                        f"{key}={normalize(control.get(key))}"
-                        for key in ("role", "name", "value", "checked")
-                        if control.get(key) not in (None, "")
-                    )
-                )
-            else:
-                compact_controls.append(normalize(control))
-        doc.add_heading("Controles semânticos capturados", level=4)
-        doc.add_paragraph("\n".join(x for x in compact_controls if x) or "Nenhum controle registrado.")
+        doc.add_paragraph(
+            "Controles semânticos: "
+            + " | ".join(normalize(item) for item in controls[:30])
+        )
 
+    screenshot = step.get("screenshot")
     if screenshot:
-        screenshot_path = Path(str(screenshot))
-        if not screenshot_path.is_absolute():
-            screenshot_path = ROOT / screenshot_path
-        if screenshot_path.exists():
-            doc.add_heading("Evidência visual", level=4)
+        path = Path(str(screenshot))
+        if not path.is_absolute():
+            path = ROOT / path
+        if path.exists():
             try:
-                doc.add_picture(str(screenshot_path), width=Inches(6.4))
+                doc.add_picture(str(path), width=Inches(6.4))
             except Exception as exc:
-                doc.add_paragraph(f"Screenshot registrado em {screenshot_path}, mas não pôde ser incorporado: {exc}")
+                doc.add_paragraph(f"Evidência visual registrada, mas não incorporada: {exc}")
         else:
-            doc.add_paragraph(f"Evidência visual registrada no artefato, mas o arquivo não está disponível: {screenshot}")
+            doc.add_paragraph(
+                f"Evidência visual registrada no JSON, mas o arquivo não está disponível: {screenshot}"
+            )
 
 
 def add_scenario(doc: Document, scenario: dict[str, Any], execution: dict[str, Any] | None) -> None:
-    sid = scenario["id"]
-    status = status_label(execution)
-    doc.add_heading(f"{sid} — {scenario['name']}", level=2)
+    doc.add_heading(f"{scenario['id']} — {scenario['name']}", level=2)
 
     add_table(
         doc,
         ["Campo", "Descrição"],
         [
-            ["Domínio", f"{scenario.get('domain', '')} — {DOMAINS.get(scenario.get('domain', ''), scenario.get('domain', ''))}"],
+            ["Domínio", f"{scenario.get('domain', '')} — {DOMAINS.get(scenario.get('domain', ''), '')}"],
             ["Ator", scenario.get("actor", "")],
-            ["Status da execução", status],
+            ["Status da execução", status_label(execution)],
             ["Fluxo", scenario.get("flow", "")],
-            ["Objetivo / requisito", scenario.get("requirement", "")],
             ["Pré-condição", scenario.get("precondition", "")],
-            ["Dados de teste", scenario.get("data", "")],
+            ["Resultado observado", observed_result(execution) if execution else "Não registrado."],
+            ["Mensagens exibidas", observed_messages(execution) if execution else "Não registradas."],
+            ["Dados manipulados", observed_data(scenario, execution) if execution else scenario.get("data", "")],
+            ["Coerente com a aplicação", scenario.get("coherent", "")],
             ["Justificativa", scenario.get("justification", "")],
-            ["Coerência", scenario.get("coherent", "")],
-            ["Critério de aceite", expected_description(scenario.get("expected", {}))],
+            ["Requisito candidato", scenario.get("requirement", "")],
         ],
     )
 
     doc.add_heading("Descrição funcional", level=3)
-    doc.add_paragraph(
-        f"O cenário verifica se o sistema permite que o ator '{scenario.get('actor', 'não informado')}' "
-        f"execute o fluxo '{scenario.get('flow', '')}'. A finalidade funcional é atender ao requisito: "
-        f"{scenario.get('requirement', '')}"
-    )
+    if execution:
+        doc.add_paragraph(
+            f"O cenário foi executado pelo ator '{scenario.get('actor', 'não informado')}'. "
+            f"A descrição abaixo é baseada no comportamento efetivamente observado: "
+            f"{observed_result(execution)}"
+        )
+    else:
+        doc.add_paragraph(
+            f"O cenário verifica o fluxo '{scenario.get('flow', '')}' definido no catálogo. "
+            "Não há evidência de execução disponível para complementar a descrição."
+        )
+
+    doc.add_heading("Critério de aceite", level=3)
+    doc.add_paragraph(expected_description(scenario.get("expected", {})))
 
     doc.add_heading("Procedimento previsto no catálogo", level=3)
     for index, action in enumerate(scenario.get("actions", []), start=1):
         doc.add_paragraph(f"{index}. {action_description(action)}")
 
-    add_execution_summary(doc, execution)
-
     if execution:
-        doc.add_heading("Evidência passo a passo", level=3)
-        steps = execution.get("steps") or []
-        if steps:
-            for step in steps:
-                add_step_evidence(doc, step)
-        else:
-            doc.add_paragraph("O JSON de execução não contém passos registrados.")
+        add_execution_summary(doc, scenario, execution)
+        add_execution_steps(doc, execution)
+
+        doc.add_heading("Evidências detalhadas", level=3)
+        for step in execution.get("steps") or []:
+            add_step_evidence(doc, step)
 
         doc.add_heading("Conclusão do cenário", level=3)
-        if status == "PASSED":
+        if status_is_passed(execution):
             doc.add_paragraph(
-                "O cenário foi aprovado pelo executor e pelo validador configurado. "
-                "A conclusão é sustentada pelo status da execução e pela evidência registrada nos passos."
-            )
-        elif status in {"FAILED", "AUTOMATION_ERROR", "TIMEOUT"}:
-            doc.add_paragraph(
-                "O cenário não foi aprovado. A causa deve ser analisada a partir do status, "
-                "da validação e dos passos/evidências registrados acima."
+                "Cenário aprovado. O status PASSED foi sustentado pela execução e pela validação "
+                "dos estados observáveis registrados nos artefatos."
             )
         else:
-            doc.add_paragraph("Não foi possível classificar a conclusão com base nos artefatos disponíveis.")
+            doc.add_paragraph(
+                "Cenário não aprovado. O status e as evidências acima representam o resultado efetivamente registrado."
+            )
 
 
 def create_domain_doc(
@@ -418,7 +456,7 @@ def create_domain_doc(
     executions: dict[str, dict[str, Any]],
     out: Path,
 ) -> None:
-    selected = [s for s in scenarios if s.get("domain") == domain]
+    selected = [scenario for scenario in scenarios if scenario.get("domain") == domain]
     doc = Document()
     configure_document(doc)
     add_cover(doc, f"Relatório de Execução — {domain}", DOMAINS.get(domain, domain))
@@ -432,20 +470,11 @@ def create_domain_doc(
             ["Cenários no catálogo", str(len(selected))],
             ["Cenários com execução", str(sum(s["id"] in executions for s in selected))],
             ["Aprovados", str(sum(status_is_passed(executions.get(s["id"])) for s in selected))],
-            [
-                "Não aprovados",
-                str(
-                    sum(
-                        bool(executions.get(s["id"]))
-                        and not status_is_passed(executions.get(s["id"]))
-                        for s in selected
-                    )
-                ),
-            ],
+            ["Não aprovados", str(sum(bool(executions.get(s["id"])) and not status_is_passed(executions.get(s["id"])) for s in selected))],
         ],
     )
 
-    add_environment_sheet(doc, env)
+    add_environment(doc, env)
 
     doc.add_heading("2. Resumo dos cenários", level=1)
     rows = []
@@ -479,10 +508,7 @@ def create_general_doc(
 
     passed = sum(status_is_passed(executions.get(s["id"])) for s in scenarios)
     executed = sum(s["id"] in executions for s in scenarios)
-    not_passed = sum(
-        bool(executions.get(s["id"])) and not status_is_passed(executions.get(s["id"]))
-        for s in scenarios
-    )
+    not_passed = sum(bool(executions.get(s["id"])) and not status_is_passed(executions.get(s["id"])) for s in scenarios)
 
     doc.add_heading("1. Identificação da execução", level=1)
     add_table(
@@ -497,7 +523,7 @@ def create_general_doc(
         ],
     )
 
-    add_environment_sheet(doc, env)
+    add_environment(doc, env)
 
     doc.add_heading("2. Resultado por domínio", level=1)
     rows = []
@@ -507,20 +533,14 @@ def create_general_doc(
             continue
         executed_domain = sum(s["id"] in executions for s in selected)
         passed_domain = sum(status_is_passed(executions.get(s["id"])) for s in selected)
-        rows.append([
-            code,
-            name,
-            str(len(selected)),
-            str(executed_domain),
-            f"{passed_domain}/{len(selected)}",
-        ])
+        rows.append([code, name, str(len(selected)), str(executed_domain), f"{passed_domain}/{len(selected)}"])
     add_table(doc, ["Código", "Domínio", "Catálogo", "Executados", "Aprovados"], rows)
 
     doc.add_heading("3. Integridade documental", level=1)
     doc.add_paragraph(
-        "Este relatório separa o que foi definido no catálogo do que foi realmente observado durante a execução. "
-        "O campo expected é documentado como critério de aceite, mas não é usado como evidência. "
-        "Quando um cenário não possui JSON de execução, ele permanece como NÃO EXECUTADO."
+        "Os dados de catálogo descrevem intenção, fluxo e critério de aceite. "
+        "Os campos de resultado, mensagens, dados observados, URLs e respostas da interface "
+        "são derivados dos artefatos reais de execução. A ausência de evidência não é convertida em aprovação."
     )
 
     doc.add_heading("4. Detalhamento por domínio", level=1)
@@ -532,7 +552,7 @@ def create_general_doc(
         for scenario in selected:
             add_scenario(doc, scenario, executions.get(scenario["id"]))
 
-    doc.save(out / "AMBOLS_JUICE_SHOP_RELATORIO_GERAL.docx")
+    doc.save(out / "JUICE_SHOP_RELATORIO_GERAL.docx")
 
 
 def main() -> int:
@@ -540,25 +560,15 @@ def main() -> int:
         description="Gera DOCX por domínio e relatório geral a partir do catálogo e das evidências reais."
     )
     parser.add_argument("--scenarios", type=Path, default=DEFAULT_SCENARIOS)
-    parser.add_argument(
-        "--executions",
-        type=Path,
-        default=DEFAULT_EXECUTIONS,
-        help="Diretório com reports/executions/*.json gerados pelo runner.",
-    )
-    parser.add_argument(
-        "--results",
-        type=Path,
-        default=None,
-        help="JSON adicional de resultados; usado somente para complementar a execução quando necessário.",
-    )
+    parser.add_argument("--executions", type=Path, default=DEFAULT_EXECUTIONS)
+    parser.add_argument("--results", type=Path, default=None)
     parser.add_argument("--environment", type=Path, default=DEFAULT_ENV)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUT)
     args = parser.parse_args()
 
     scenarios = load_scenarios(args.scenarios)
-    valid_ids = {str(scenario.get("id")) for scenario in scenarios if scenario.get("id")}
-    executions, extra_execution_ids = load_executions(args.executions, valid_ids)
+    valid_ids = {str(item.get("id")) for item in scenarios if item.get("id")}
+    executions, extras = load_executions(args.executions, valid_ids)
 
     if args.results and args.results.exists():
         try:
@@ -567,37 +577,28 @@ def main() -> int:
             if isinstance(items, list):
                 for item in items:
                     sid = str(item.get("scenario_id") or item.get("id") or "")
-                    if not sid or sid not in valid_ids:
-                        if sid:
-                            extra_execution_ids.append(sid)
-                        continue
-                    if sid not in executions:
+                    if sid in valid_ids and sid not in executions:
                         executions[sid] = item
+                    elif sid:
+                        extras.append(sid)
         except (OSError, json.JSONDecodeError):
             pass
 
-    extra_execution_ids = sorted(set(extra_execution_ids))
-
+    extras = sorted(set(extras))
     env = load_environment(args.environment)
     args.output.mkdir(parents=True, exist_ok=True)
 
-    domains = sorted({str(s.get("domain")) for s in scenarios if s.get("domain")})
+    domains = sorted({str(item.get("domain")) for item in scenarios if item.get("domain")})
     for domain in domains:
         create_domain_doc(scenarios, domain, env, executions, args.output)
     create_general_doc(scenarios, env, executions, args.output)
 
     print(
-        f"[DOCX] {len(domains)} relatórios por domínio + 1 relatório geral "
-        f"gerados em {args.output}"
+        f"[DOCX] {len(domains)} relatórios por domínio + 1 relatório geral gerados em {args.output}"
     )
-    print(
-        f"[DOCX] evidências válidas encontradas: {len(executions)}/{len(scenarios)} cenários"
-    )
-    if extra_execution_ids:
-        print(
-            f"[DOCX] artefatos extras ignorados: {len(extra_execution_ids)} "
-            f"({', '.join(extra_execution_ids)})"
-        )
+    print(f"[DOCX] evidências válidas encontradas: {len(executions)}/{len(scenarios)} cenários")
+    if extras:
+        print(f"[DOCX] artefatos extras ignorados: {len(extras)} ({', '.join(extras)})")
     return 0
 
 
