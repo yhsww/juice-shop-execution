@@ -91,11 +91,11 @@ async def _install_mutation_observer(page: Page) -> None:
     try:
         await page.evaluate("""
             () => {
-                if (window.__ambolsMutationObserver) {
-                    try { window.__ambolsMutationObserver.disconnect(); } catch (_) {}
+                if (window.__juiceShopMutationObserver) {
+                    try { window.__juiceShopMutationObserver.disconnect(); } catch (_) {}
                 }
 
-                window.__ambolsMutationBuffer = [];
+                window.__juiceShopMutationBuffer = [];
                 const normalize = (value) =>
                     String(value || '').replace(/\\s+/g, ' ').trim();
 
@@ -119,11 +119,11 @@ async def _install_mutation_observer(page: Page) -> None:
                 const push = (value) => {
                     const text = normalize(value);
                     if (!text || text.length > 1600) return;
-                    if (!window.__ambolsMutationBuffer.includes(text)) {
-                        window.__ambolsMutationBuffer.push(text);
+                    if (!window.__juiceShopMutationBuffer.includes(text)) {
+                        window.__juiceShopMutationBuffer.push(text);
                     }
-                    if (window.__ambolsMutationBuffer.length > 120) {
-                        window.__ambolsMutationBuffer.shift();
+                    if (window.__juiceShopMutationBuffer.length > 120) {
+                        window.__juiceShopMutationBuffer.shift();
                     }
                 };
 
@@ -187,7 +187,7 @@ async def _install_mutation_observer(page: Page) -> None:
                     attributeFilter: ['class', 'style', 'aria-live', 'role'],
                 });
 
-                window.__ambolsMutationObserver = observer;
+                window.__juiceShopMutationObserver = observer;
             }
         """)
     except Exception:
@@ -198,12 +198,12 @@ async def _collect_mutation_text(page: Page) -> list[str]:
     try:
         values = await page.evaluate("""
             () => {
-                const values = Array.isArray(window.__ambolsMutationBuffer)
-                    ? window.__ambolsMutationBuffer.slice()
+                const values = Array.isArray(window.__juiceShopMutationBuffer)
+                    ? window.__juiceShopMutationBuffer.slice()
                     : [];
-                try { window.__ambolsMutationObserver?.disconnect(); } catch (_) {}
-                window.__ambolsMutationObserver = null;
-                window.__ambolsMutationBuffer = [];
+                try { window.__juiceShopMutationObserver?.disconnect(); } catch (_) {}
+                window.__juiceShopMutationObserver = null;
+                window.__juiceShopMutationBuffer = [];
                 return values;
             }
         """)
