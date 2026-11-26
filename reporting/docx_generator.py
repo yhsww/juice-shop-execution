@@ -507,6 +507,10 @@ def main() -> int:
         description="Gera DOCX seguindo estritamente a estrutura da Etapa 1."
     )
     parser.add_argument("--scenarios", type=Path, default=DEFAULT_SCENARIOS)
+    parser.add_argument(
+        "--scenario",
+        help="Processa somente o cenário informado pelo ID.",
+    )
     parser.add_argument("--executions", type=Path, default=DEFAULT_EXECUTIONS)
     parser.add_argument("--results", type=Path, default=None)
     parser.add_argument("--environment", type=Path, default=DEFAULT_ENV)
@@ -522,6 +526,16 @@ def main() -> int:
     args = parser.parse_args()
 
     scenarios = load_scenarios(args.scenarios)
+    if args.scenario:
+        scenarios = [
+            item for item in scenarios
+            if str(item.get("id") or "") == args.scenario
+        ]
+        if not scenarios:
+            raise SystemExit(
+                f"Cenário não encontrado no catálogo: {args.scenario}"
+            )
+
     valid_ids = {str(item.get("id")) for item in scenarios if item.get("id")}
     executions, extras = load_executions(args.executions, valid_ids)
 
