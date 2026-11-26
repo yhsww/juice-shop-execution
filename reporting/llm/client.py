@@ -1,10 +1,17 @@
 from __future__ import annotations
 
+import base64
 import json
 import os
+from pathlib import Path
 from typing import Any
 
+from dotenv import load_dotenv
+
 from openai import OpenAI
+
+ROOT = Path(__file__).resolve().parents[2]
+load_dotenv(ROOT / ".env")
 
 from reporting.llm.prompt import HUMANIZER_SCHEMA, HUMANIZER_SYSTEM_PROMPT
 
@@ -14,7 +21,7 @@ class LLMHumanizerError(RuntimeError):
 
 
 def _config() -> tuple[str, str, str, str]:
-    provider = os.getenv("REPORTING_LLM_PROVIDER", "groq").strip().lower()
+    provider = os.getenv("REPORTING_LLM_PROVIDER", "gemini").strip().lower()
 
     configs = {
         "groq": (
@@ -41,7 +48,7 @@ def _config() -> tuple[str, str, str, str]:
                 "GEMINI_API_BASE_URL",
                 "https://generativelanguage.googleapis.com/v1beta/openai/",
             ).strip(),
-            os.getenv("GEMINI_LLM_MODEL", "gemini-3.8-flash").strip(),
+            os.getenv("GEMINI_LLM_MODEL", "gemini-3.5-flash-lite").strip(),
             "GEMINI_API_KEY",
         ),
         "claude": (
@@ -110,7 +117,7 @@ def _humanize_openai_compatible(
         model=model,
         messages=[
             {"role": "system", "content": HUMANIZER_SYSTEM_PROMPT},
-            {"role": "user", "content": _build_input(payload)},
+            {"role": "user", "content": _build_multimodal_content(payload)},
         ],
         response_format={
             "type": "json_schema",
@@ -166,6 +173,13 @@ def _humanize_claude(
 
 
 def _build_input(payload: dict[str, Any]) -> str:
+    execution = payload["execution"].copy()
+    artifacts = execution.pop("artifacts", {})
+    reports = artifacts.get("reports", [])
+    report_text = "\n\n".join(
+        f"--- {item.get('name', 'report')} ---\n{item.get('content', '')}"
+        for item in reports
+    )
     return "\n".join(
         [
             "Transforme as evidências abaixo em documentação funcional.",
@@ -173,10 +187,43 @@ def _build_input(payload: dict[str, Any]) -> str:
             "CATÁLOGO DO CENÁRIO:",
             json.dumps(payload["catalog"], ensure_ascii=False, indent=2),
             "",
-            "EVIDÊNCIAS DA EXECUÇÃO:",
-            json.dumps(payload["execution"], ensure_ascii=False, indent=2),
+            "RELATÓRIOS TEXTUAIS DO CENÁRIO:",
+            report_text or "Nenhum relatório textual adicional encontrado.",
+            "",
+            "EVIDÊNCIA ESTRUTURADA DA EXECUÇÃO:",
+            json.dumps(execution, ensure_ascii=False, indent=2),
+            "",
+            "As capturas de tela deste cenário serão anexadas à mesma mensagem. Use-as para confirmar visualmente textos, rótulos, campos, produtos, quantidades, mensagens, menus, estados e mudanças de interface. Não invente elementos que não estejam visíveis ou registrados.",
         ]
     )
+
+
+def _build_multimodal_content(payload: dict[str, Any]) -> list[dict[str, Any]]:
+    content: list[dict[str, Any]] = [
+        {"type": "text", "text": _build_input(payload)}
+    ]
+    screenshots = payload.get("execution", {}).get("artifacts", {}).get("screenshots", [])
+    for path in screenshots:
+        try:
+            raw = Path(path).read_bytes()
+            encoded = base64.b64encode(raw).decode("ascii")
+            content.append(
+                {
+                    "type": "text",
+                    "text": f"CAPTURA DE TELA: {Path(path).name}",
+                }
+            )
+            content.append(
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": f"data:image/png;base64,{encoded}",
+                    },
+                }
+            )
+        except OSError:
+            continue
+    return content
 
 
 def _validate(result: dict[str, Any]) -> None:
