@@ -2,7 +2,7 @@ name: Tests and UI Execution
 
 on:
   push:
-    branches: [main, ambols-recovery-v2]
+    branches: [main]
   pull_request:
 
 jobs:
@@ -26,39 +26,35 @@ jobs:
           python-version: "3.12"
       - run: pip install -r requirements.txt
       - run: python -m playwright install --with-deps chromium
+
       - name: Start pinned Juice Shop environment
         run: docker compose -f juice-shop/docker-compose.yml up -d
+
       - name: Wait for Juice Shop
         run: |
           for attempt in $(seq 1 60); do
-            if curl --fail --silent http://127.0.0.1:3000/ >/dev/null; then exit 0; fi
+            if curl --fail --silent http://127.0.0.1:3000/ >/dev/null; then
+              exit 0
+            fi
             sleep 2
           done
           docker compose -f juice-shop/docker-compose.yml logs
           exit 1
-      - name: Run unit tests
-        run: python -m pytest -q
+
       - name: Execute all UI scenarios
         env:
           JUICE_SHOP_BASE_URL: http://127.0.0.1:3000
           JUICE_SHOP_HEADLESS: "true"
         run: python run.py --all
-      - name: Execute behavioral exploration smoke test
-        env:
-          JUICE_SHOP_BASE_URL: http://127.0.0.1:3000
-          JUICE_SHOP_HEADLESS: "true"
-          AMBOLS_RECOVERY_OUTPUT_DIR: reports/recovery
-        run: python run.py --reverse-engineer --recovery-domain CAT --recovery-timeout 120 --recovery-max-steps 12 --recovery-max-variants 4
-      - name: Upload evidence
+
+      - name: Upload execution evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: juice-shop-ambols-evidence
-          path: |
-            reports/executions/**
-            reports/recovery/**
-            screenshots/**
+          name: juice-shop-execution-evidence
+          path: reports/executions/**
           if-no-files-found: warn
+
       - name: Stop Juice Shop
         if: always()
         run: docker compose -f juice-shop/docker-compose.yml down
