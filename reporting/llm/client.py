@@ -92,13 +92,37 @@ def humanize(payload: dict[str, Any]) -> dict[str, Any]:
     if not raw:
         raise LLMHumanizerError(f"A LLM ({provider}) retornou uma resposta vazia.")
 
-    try:
-        result = json.loads(raw)
-    except json.JSONDecodeError as exc:
-        raise LLMHumanizerError("A LLM retornou JSON inválido.") from exc
-
+    result = _parse_json_response(raw)
     _validate(result)
     return result
+
+
+def _parse_json_response(raw: str) -> dict[str, Any]:
+    text = (raw or "").strip()
+    candidates = [text]
+
+    fenced = re.search(
+        r"\`\`\`(?:json)?\\s*(.*?)\\s*\`\`\`",
+        text,
+        flags=re.IGNORECASE | re.DOTALL,
+    )
+    if fenced:
+        candidates.insert(0, fenced.group(1).strip())
+
+    start = text.find("{")
+    end = text.rfind("}")
+    if start >= 0 and end > start:
+        candidates.append(text[start : end + 1])
+
+    for candidate in candidates:
+        try:
+            value = json.loads(candidate)
+            if isinstance(value, dict):
+                return value
+        except json.JSONDecodeError:
+            continue
+
+    raise LLMHumanizerError("A LLM retornou JSON inválido.")
 
 
 def _humanize_openai_compatible(
@@ -113,24 +137,48 @@ def _humanize_openai_compatible(
     # Gemini usa o endpoint Chat Completions compatível com OpenAI.
     # Responses API não é usada aqui porque a compatibilidade oficial do Gemini
     # não cobre Responses da mesma forma.
+    messages = [
+        {"role": "system", "content": HUMANIZER_SYSTEM_PROMPT},
+        {"role": "user", "content": _build_multimodal_content(payload)},
+    ]
+
+    try:
+        response = client.chat.completions.create(
+            model=model,
+            messages=messages,
+            response_format={
+                "type": "json_schema",
+                "json_schema": {
+                    "name": "qa_humanized_scenario",
+                    "strict": True,
+                    "schema": HUMANIZER_SCHEMA,
+                },
+            },
+            max_tokens=2400,
+        )
+        content = response.choices[0].message.content
+        if content and content.strip():
+            return content.strip()
+    except Exception:
+        pass
+
+    fallback_messages = [
+        {
+            "role": "system",
+            "content": (
+                HUMANIZER_SYSTEM_PROMPT
+                + "\n\nIMPORTANTE: responda SOMENTE com um objeto JSON válido. "
+                "Não use Markdown, cercas de código, comentários ou texto antes/depois do JSON."
+            ),
+        },
+        {"role": "user", "content": _build_multimodal_content(payload)},
+    ]
     response = client.chat.completions.create(
         model=model,
-        messages=[
-            {"role": "system", "content": HUMANIZER_SYSTEM_PROMPT},
-            {"role": "user", "content": _build_multimodal_content(payload)},
-        ],
-        response_format={
-            "type": "json_schema",
-            "json_schema": {
-                "name": "qa_humanized_scenario",
-                "strict": True,
-                "schema": HUMANIZER_SCHEMA,
-            },
-        },
+        messages=fallback_messages,
         max_tokens=2400,
     )
-    content = response.choices[0].message.content
-    return (content or "").strip()
+    return (response.choices[0].message.content or "").strip()
 
 
 def _humanize_claude(
