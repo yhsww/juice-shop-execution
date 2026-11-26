@@ -1121,10 +1121,13 @@ async def execute(page: Page, action: dict) -> ActionResult:
                 await _click_target(page, target)
 
         elif kind == "CLICK_ALL":
-            # Generic repeated-click primitive for actions whose semantics are
-            # explicitly plural (for example, clearing a basket). The target
-            # is resolved afresh after every click because Angular re-renders
-            # the table after mutations.
+            # Repeated semantic removal action. Angular re-renders the basket
+            # after each mutation, so the control is resolved again every time.
+            # Use the real DOM click event first: Playwright actionability can
+            # wait on a transient render layer for the entire action budget even
+            # though Angular's click handler is already attached to the live
+            # button. If the DOM event does not mutate the UI, fall back to the
+            # normal bounded click primitive.
             max_clicks = max(1, min(int(action.get("max_clicks", 20)), 100))
             clicked = 0
 
@@ -1132,21 +1135,22 @@ async def execute(page: Page, action: dict) -> ActionResult:
                 locator = await resolve(page, action.get("target", {}))
                 if locator is None:
                     break
+
                 try:
+                    await locator.evaluate("(el) => el.click()")
+                    await page.wait_for_timeout(120)
+                except Exception:
                     await _click(locator)
-                except PlaywrightTimeoutError:
-                    # CLICK_ALL is explicitly a destructive/repetitive UI action.
-                    # When Angular leaves the visible remove control covered by a
-                    # transient render layer, a bounded native/forced click is a
-                    # valid recovery for the same visible control. Re-resolving
-                    # happens on the next iteration after the list re-renders.
-                    await locator.click(
-                        timeout=min(1500, max(500, int(settings.action_timeout_ms))),
-                        force=True,
-                    )
+
                 clicked += 1
+
+                # Angular may replace the clicked node immediately. Re-resolve
+                # on the next iteration rather than retaining a stale Locator.
+                # The short settle interval is deliberately below the global
+                # action budget and is only synchronization for this repeated
+                # UI mutation.
                 await page.wait_for_timeout(
-                    min(250, max(50, settings.action_timeout_ms // 40))
+                    min(180, max(50, settings.action_timeout_ms // 60))
                 )
 
             if clicked == 0:
