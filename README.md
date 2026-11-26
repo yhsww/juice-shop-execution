@@ -122,14 +122,18 @@ Configure o arquivo `.env` conforme o ambiente de execução.
 
 ### Humanização dos relatórios com LLM
 
-Para habilitar a humanização dos relatórios DOCX por LLM, abra o arquivo `.env` e preencha a chave da OpenAI:
+A humanização dos relatórios DOCX usa **Kimi por padrão**. O projeto utiliza o SDK oficial da OpenAI em modo compatível com a API da Kimi, apontando para o endpoint oficial da Kimi. urlDocumentação oficial da Kimi APIhttps://platform.kimi.ai/docs/api/overview
+
+Abra o arquivo `.env` e preencha a sua chave Kimi:
 
 ```env
-OPENAI_API_KEY=COLE_SUA_CHAVE_AQUI
-REPORTING_LLM_MODEL=gpt-6.2-sol
+REPORTING_LLM_PROVIDER=kimi
+KIMI_API_KEY=COLE_SUA_CHAVE_AQUI
+KIMI_API_BASE_URL=https://api.moonshot.ai/v1
+REPORTING_LLM_MODEL=kimi-k3.1-pro
 ```
 
-O arquivo `.env.example` já contém esse campo como referência. **A chave deve ser colocada somente no arquivo `.env` local e nunca deve ser enviada ao GitHub.** O `.gitignore` já impede o versionamento do `.env`.
+O arquivo `.env.example` já contém essa configuração. **A chave deve ser colocada somente no `.env` local e nunca deve ser enviada ao GitHub.** O `.gitignore` já impede o versionamento do `.env`.
 
 Depois de configurar a chave, teste primeiro um único cenário:
 
@@ -143,7 +147,7 @@ Se a humanização funcionar, gere os DOCX:
 python -m reporting.docx_generator --humanize llm
 ```
 
-Se a conta da OpenAI não tiver créditos disponíveis, a API poderá retornar erro HTTP 429. Nesse caso, a configuração da chave está correta, mas é necessário utilizar uma conta/projeto com faturamento ou créditos disponíveis.
+Para usar OpenAI em vez de Kimi, altere `REPORTING_LLM_PROVIDER=openai` e configure `OPENAI_API_KEY` no `.env`. A arquitetura mantém os dois provedores sem alterar o executor dos testes.
 
 ## Executando o Juice Shop
 
