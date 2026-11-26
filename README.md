@@ -16,6 +16,7 @@ A automação:
 - captura screenshots durante a execução;
 - gera relatórios em JSON e Markdown;
 - gera relatórios DOCX consolidados por domínio e um relatório geral;
+- pode usar uma LLM para transformar evidências técnicas em descrições funcionais humanizadas;
 - permite execução de cenários individuais, domínios ou da suíte completa.
 
 ## Resultado atual
@@ -246,16 +247,34 @@ e o relatório consolidado disponível no diretório de relatórios finais.
 Depois de executar os cenários, gere os documentos Word com:
 
 ```powershell
-python reporting\docx_generator.py
+python -m reporting.docx_generator
 ```
+
+Por padrão, o gerador usa a humanização por LLM quando OPENAI_API_KEY está configurada. Se a chave não estiver disponível, utiliza a humanização determinística já existente.
+
+Para exigir LLM:
+
+```powershell
+python -m reporting.docx_generator --humanize llm
+```
+
+Para gerar sem LLM:
+
+```powershell
+python -m reporting.docx_generator --humanize deterministic
+```
+
+A documentação humanizada é armazenada em reports/humanized/ e reutilizada em execuções seguintes quando as evidências e o modelo não mudarem. O diretório é cache gerado e não é versionado.
+
+A LLM recebe somente o cenário e as evidências funcionais normalizadas. URLs, rotas, seletores, waits, credenciais e detalhes de implementação são removidos antes do envio. O status do teste e as evidências de execução continuam sob autoridade do executor; a LLM atua somente na redação.
 
 O gerador cria:
 
 - um relatório DOCX para cada domínio;
 - um relatório DOCX geral;
 - evidências detalhadas por cenário;
+- descrições funcionais humanizadas por cenário;
 - informações das etapas executadas;
-- URLs;
 - resultados;
 - validações;
 - mensagens;
