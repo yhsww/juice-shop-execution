@@ -1,132 +1,370 @@
 # Juice Shop Execution
 
-Automação determinística de cenários de teste no OWASP Juice Shop usando a interface real da aplicação.
+Automação de testes funcionais no [OWASP Juice Shop](https://github.com/juice-shop/juice-shop) usando a interface real da aplicação, com Playwright, execução reproduzível em Docker e geração de evidências e relatórios.
 
-## Organização dos repositórios
+## Objetivo
 
-Este repositório reúne o executor dos testes e a configuração Docker usada para subir a aplicação sob teste:
+Este projeto tem como objetivo automatizar e validar cenários de teste do Juice Shop de forma **determinística, rastreável e baseada no comportamento real da aplicação**.
 
-- `automation/`, `scenarios/` e `reporting/`: automação, catálogo de cenários e relatórios.
-- `juice-shop/`: configuração de execução local derivada de `https://github.com/yhsww/juice-shop`.
-- `juice-shop/docker-compose.yml`: inicia a imagem `bkimminich/juice-shop:v20.3.0`, fixada para manter o ambiente reprodutível.
+A automação:
 
-O diretório `juice-shop/` incorpora a configuração de ambiente Docker e scripts de inicialização do repositório separado. Não copia o código-fonte integral da aplicação: o serviço é fornecido pela imagem Docker versionada.
+- executa cenários definidos em `scenarios/scenarios.json`;
+- interage com a aplicação por meio da interface real;
+- utiliza localizadores semânticos e comportamento observado no DOM;
+- valida o estado final esperado de cada cenário;
+- registra URLs, ações, resultados observados, mensagens, controles e evidências;
+- captura screenshots durante a execução;
+- gera relatórios em JSON e Markdown;
+- gera relatórios DOCX consolidados por domínio e um relatório geral;
+- permite execução de cenários individuais, domínios ou da suíte completa.
 
-## Requisitos
+O projeto também possui uma etapa de exploração/reverse engineering AMBOLS para observar comportamentos e descobrir fluxos alternativos da aplicação.
 
-- Python 3.10+ (recomendado 3.12)
-- Docker Desktop no Windows/macOS ou Docker Engine + Docker Compose v2 no Linux
-- Playwright Chromium
+## Resultado atual
 
-## Instalação
+A suíte principal possui **72 cenários validados**, distribuídos em:
 
-```powershell
-pip install -r requirements.txt
-python -m playwright install chromium
-Copy-Item .env.example .env
-```
-
-## Execução
-
-Para executar um cenário e iniciar o Docker automaticamente quando o serviço ainda não estiver disponível:
-
-```powershell
-python run.py --start-app --scenario CEN-IDT-01
-```
-
-Para executar um domínio inteiro e facilitar a investigação por área:
-
-```powershell
-python run.py --start-app --domain CHK
-python run.py --start-app --domain IDT
-```
-
-É possível repetir `--domain` para executar mais de um domínio:
-
-```powershell
-python run.py --start-app --domain CHK --domain IDT
-```
-
-Para executar um cenário específico:
-
-```powershell
-python run.py --start-app --scenario CEN-CHK-03
-```
-
-Para iniciar o ambiente e executar todos os cenários cadastrados:
-
-```powershell
-python run.py --start-app --all
-```
-
-Para encerrar o container ao fim da execução:
-
-```powershell
-python run.py --start-app --all --stop-app
-```
-
-Se o serviço já estiver rodando em `http://127.0.0.1:3000`, o executor reutiliza essa instância e não sobe outra.
-
-Também é possível controlar o container manualmente:
-
-```powershell
-docker compose -f juice-shop/docker-compose.yml up -d
-docker compose -f juice-shop/docker-compose.yml ps
-docker compose -f juice-shop/docker-compose.yml logs -f
-docker compose -f juice-shop/docker-compose.yml down
-```
-
-## Engenharia reversa AMBOLS
-
-Esta branch adiciona uma etapa determinística de exploração comportamental. Ela usa os cenários AMBOLS como guia, executa o fluxo real na interface e, a partir do estado observado, explora controles, entradas e interações adicionais para descobrir comportamentos e cenários alternativos.
-
-Execução da exploração:
-
-```powershell
-python run.py --reverse-engineer --start-app
-python run.py --reverse-engineer --start-app --recovery-domain CAT
-python run.py --reverse-engineer --start-app --recovery-scenario CEN-CAT-01
-```
-
-Artefatos gerados em `reports/recovery/`:
-
-- `ETAPA_1.md` e `ETAPA_1.json`: relatório consolidado da Etapa 1.
-- `stage1-scenarios.json`: execução observacional por cenário.
-- `behaviors.json`: comportamentos derivados das mudanças observadas.
-- `discovered-scenarios.json`: caminhos alternativos descobertos.
-- `evidence-index.json`: índice metodológico das evidências.
-
-A abordagem é deliberadamente determinística e conservadora: o campo `expected` do catálogo não é tratado como evidência. O comportamento relatado precisa ser sustentado por observação da UI. Network/ZAP podem complementar a evidência, mas não substituem a observação da interface. Esta etapa não produz END, COMP ou REQ.
-
-## Catálogo de cenários
-
-O catálogo contém 69 cenários definidos nos domínios ADM, CAR, CAT, CHK e IDT. A existência no inventário não significa que o cenário já tenha sido validado. Somente a execução real pode produzir resultado PASSED.
-
-| Domínio | Quantidade |
+| Domínio | Cenários |
 |---|---:|
 | ADM | 3 |
 | CAR | 7 |
 | CAT | 17 |
 | CHK | 28 |
 | IDT | 17 |
-| PER | 6 |
-| **Total** | **78** |
+| **Total** | **72** |
 
-## Princípio da automação
+A versão atual está consolidada na branch `main`.
 
-1. Verifica se o Juice Shop responde no endereço local.
-2. Quando `--start-app` é informado, inicia o serviço a partir do Docker Compose incorporado.
-3. Abre a aplicação com Playwright.
-4. Observa o estado inicial, executa as ações e observa novamente a interface.
-5. Valida mudanças observáveis, captura screenshots e registra evidências.
-6. Gera uma Ficha de Cenário em Markdown e um registro JSON.
+## Tecnologias utilizadas
 
-Resultados, mensagens e respostas da interface devem refletir o que foi observado. O sistema não deve inventar observações para completar um relatório.
+| Tecnologia | Finalidade |
+|---|---|
+| **Python 3.10+** | Linguagem principal da automação |
+| **Playwright** | Automação e interação com a interface web |
+| **Chromium** | Navegador utilizado pelos testes |
+| **Docker / Docker Compose** | Execução isolada e reproduzível do Juice Shop |
+| **OWASP Juice Shop** | Aplicação alvo dos testes |
+| **pytest** | Estrutura e execução de testes automatizados |
+| **python-dotenv** | Gerenciamento de variáveis de ambiente |
+| **python-docx** | Geração dos relatórios em Word/DOCX |
+| **JSON** | Catálogo de cenários e evidências estruturadas |
+| **Markdown** | Relatórios e documentação |
+| **Git / GitHub** | Versionamento e colaboração |
+
+### Ambiente da aplicação
+
+O projeto utiliza uma configuração Docker em `juice-shop/`, com a imagem versionada do Juice Shop:
+
+```text
+bkimminich/juice-shop:v20.3.0
+```
+
+A aplicação é executada localmente e a porta do container é vinculada ao endereço `127.0.0.1`.
+
+## Estrutura do projeto
+
+```text
+juice-shop-execution/
+├── automation/              # Motor de automação e execução
+├── config/                  # Configurações da aplicação
+├── recovery/                # Exploração e reverse engineering AMBOLS
+├── reporting/               # Geração de relatórios
+├── scenarios/               # Catálogo de cenários
+├── tests/                   # Testes automatizados do próprio projeto
+├── juice-shop/              # Docker Compose do ambiente alvo
+├── reports/
+│   ├── executions/          # Evidências JSON das execuções
+│   ├── final/               # Relatórios finais em Markdown
+│   └── docx/                # Relatórios DOCX gerados
+├── screenshots/             # Evidências visuais
+├── requirements.txt         # Dependências Python
+├── run.py                   # Ponto de entrada da execução
+└── README.md
+```
+
+## Requisitos
+
+Antes de executar o projeto, instale:
+
+- Python 3.10 ou superior;
+- Docker Desktop no Windows/macOS ou Docker Engine + Docker Compose v2 no Linux;
+- Git;
+- Playwright/Chromium.
+
+No Windows, o PowerShell é recomendado para os comandos abaixo.
+
+## Instalação
+
+Clone o repositório:
+
+```powershell
+git clone https://github.com/yhsww/juice-shop-execution.git
+cd juice-shop-execution
+```
+
+Instale as dependências:
+
+```powershell
+pip install -r requirements.txt
+```
+
+Instale o navegador utilizado pelo Playwright:
+
+```powershell
+python -m playwright install chromium
+```
+
+Se o projeto utilizar variáveis de ambiente locais:
+
+```powershell
+Copy-Item .env.example .env
+```
+
+Configure o arquivo `.env` conforme o ambiente de execução.
+
+## Executando o Juice Shop
+
+O executor pode iniciar o ambiente Docker automaticamente.
+
+Para executar um cenário específico:
+
+```powershell
+python run.py --start-app --scenario CEN-IDT-01
+```
+
+Para executar um domínio:
+
+```powershell
+python run.py --start-app --domain CHK
+```
+
+Também é possível executar mais de um domínio:
+
+```powershell
+python run.py --start-app --domain CHK --domain IDT
+```
+
+Para executar toda a suíte:
+
+```powershell
+python run.py --start-app --all
+```
+
+Para iniciar a aplicação, executar todos os cenários e desligar o container ao final:
+
+```powershell
+python run.py --start-app --all --stop-app
+```
+
+### Execução sem iniciar o Docker
+
+Se o Juice Shop já estiver disponível em:
+
+```text
+http://127.0.0.1:3000
+```
+
+o executor pode reutilizar a instância existente.
+
+## Docker manual
+
+Também é possível controlar o ambiente diretamente:
+
+```powershell
+docker compose -f juice-shop/docker-compose.yml up -d
+```
+
+Verificar o container:
+
+```powershell
+docker compose -f juice-shop/docker-compose.yml ps
+```
+
+Visualizar logs:
+
+```powershell
+docker compose -f juice-shop/docker-compose.yml logs -f
+```
+
+Encerrar:
+
+```powershell
+docker compose -f juice-shop/docker-compose.yml down
+```
+
+## Execução e evidências
+
+Durante uma execução, o runner registra evidências da atividade do cenário.
+
+Entre os dados registrados estão:
+
+- cenário executado;
+- ação realizada;
+- ação técnica e descrição da ação do usuário;
+- dados utilizados;
+- URL antes e depois;
+- resultado observado;
+- alteração detectada;
+- sucesso ou falha da etapa;
+- mensagens da aplicação;
+- estado visível da interface;
+- controles encontrados;
+- informações de rede;
+- screenshot da etapa;
+- URL final;
+- resultado da validação.
+
+As evidências individuais são armazenadas em:
+
+```text
+reports/executions/
+```
+
+Screenshots são armazenados em:
+
+```text
+screenshots/
+```
+
+## Relatórios
+
+Os relatórios Markdown finais ficam em:
+
+```text
+reports/final/
+```
+
+Incluem relatórios por domínio:
+
+- `ADM.md`
+- `CAR.md`
+- `CAT.md`
+- `CHK.md`
+- `IDT.md`
+
+e o relatório consolidado:
+
+```text
+AMBOLS_JUICE_SHOP_FINAL_REPORT.md
+```
+
+### Geração dos relatórios DOCX
+
+Depois de executar os cenários, gere os documentos Word com:
+
+```powershell
+python reporting\docx_generator.py
+```
+
+O gerador cria:
+
+- um relatório DOCX para cada domínio;
+- um relatório DOCX geral;
+- evidências detalhadas por cenário;
+- informações das etapas executadas;
+- URLs;
+- resultados;
+- validações;
+- mensagens;
+- screenshots disponíveis;
+- conclusão baseada na execução real.
+
+Os arquivos são gerados em:
+
+```text
+reports/docx/
+```
+
+Os DOCX são artefatos gerados e não precisam ser versionados no Git.
+
+## Catálogo de cenários
+
+Os cenários são definidos em:
+
+```text
+scenarios/scenarios.json
+```
+
+Cada cenário descreve, entre outras informações:
+
+- identificador;
+- domínio;
+- nome;
+- ações;
+- dados utilizados;
+- comportamento esperado;
+- validação final.
+
+O catálogo é separado do executor para permitir evolução dos cenários sem precisar alterar o motor de automação para cada novo caso.
+
+## Reverse Engineering AMBOLS
+
+O projeto também possui uma etapa de exploração comportamental/reverse engineering.
+
+Ela observa a aplicação real, identifica controles e mudanças de estado e pode descobrir caminhos alternativos de interação.
+
+Exemplos:
+
+```powershell
+python run.py --reverse-engineer --start-app
+```
+
+Por domínio:
+
+```powershell
+python run.py --reverse-engineer --start-app --recovery-domain CAT
+```
+
+Por cenário:
+
+```powershell
+python run.py --reverse-engineer --start-app --recovery-scenario CEN-CAT-01
+```
+
+Os artefatos dessa etapa são armazenados em:
+
+```text
+reports/recovery/
+```
+
+A abordagem prioriza evidência observável da interface. O campo `expected` do catálogo não é tratado como prova de que o comportamento ocorreu.
+
+## Princípios de engenharia
+
+O projeto segue alguns princípios importantes:
+
+1. **Evidência real:** um cenário não deve ser considerado aprovado apenas porque a ação foi enviada; o estado observado precisa corresponder ao resultado esperado.
+2. **Localizadores genéricos:** correções devem atuar sobre padrões reais da aplicação, evitando soluções específicas para um único ID de cenário.
+3. **Sem mascaramento de falhas:** exceções, timeouts excessivos ou ações forçadas não devem ser utilizados para transformar uma falha funcional em sucesso artificial.
+4. **Rastreabilidade:** cada resultado deve poder ser relacionado ao cenário, às etapas executadas e às evidências produzidas.
+5. **Reprodutibilidade:** o ambiente da aplicação é controlado por Docker e a suíte utiliza dependências declaradas em `requirements.txt`.
+6. **Separação entre execução e relatório:** o executor produz evidências estruturadas e o gerador de relatórios transforma essas evidências em documentação.
 
 ## Segurança
 
-O Juice Shop é intencionalmente vulnerável. A porta do container é vinculada somente a `127.0.0.1`. Não altere para exposição pública e utilize o ambiente apenas localmente ou em ambiente autorizado.
+O OWASP Juice Shop é uma aplicação propositalmente vulnerável e deve ser executado somente em ambiente controlado.
 
-## Uso de IA na Etapa 1
+A configuração deste projeto vincula o serviço localmente em `127.0.0.1`. Não exponha o Juice Shop vulnerável diretamente à Internet ou a redes não autorizadas.
 
-A execução da Etapa 1 é determinística. Não depende de LLM para decidir o que foi observado, evitando que um modelo invente comportamentos ausentes da evidência. Modelos de IA podem ser usados posteriormente para revisão ou refinamento textual, mas a evidência primária permanece a execução real da UI.
+## Contribuição e manutenção
+
+A branch oficial do projeto é:
+
+```text
+main
+```
+
+Antes de enviar alterações, execute a suíte relevante e confirme:
+
+```powershell
+git status
+python run.py --start-app --all
+```
+
+Para mudanças no executor ou nos localizadores, priorize correções genéricas baseadas no DOM e no comportamento real da aplicação, evitando regras específicas para IDs individuais de cenários.
+
+## Licença e aplicação alvo
+
+Este projeto automatiza testes sobre o OWASP Juice Shop. Consulte a documentação e o repositório oficial do projeto para informações sobre a aplicação alvo e sua licença.
+
+- OWASP Juice Shop: https://github.com/juice-shop/juice-shop
