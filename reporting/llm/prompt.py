@@ -6,6 +6,10 @@ from typing import Any
 
 HUMANIZER_SYSTEM_PROMPT = """
 
+REPROCESSAMENTO:
+- Esta análise pode ser executada novamente para o mesmo cenário após uma falha temporária da API.
+- Em uma nova tentativa, reanalise integralmente o catálogo, a execução e todas as screenshots; não simplifique a resposta por ser uma reexecução.
+
 OBJETIVO PRINCIPAL:
 Produza uma análise funcional detalhada, precisa e minuciosa de CADA campo e de CADA passo com base exclusivamente nas evidências fornecidas. A prioridade é: PRECISÃO > COMPLETUDE > DETALHAMENTO > CONCISÃO.
 
