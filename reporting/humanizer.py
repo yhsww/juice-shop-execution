@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_SCENARIOS = ROOT / "scenarios" / "scenarios.json"
 DEFAULT_EXECUTIONS = ROOT / "reports" / "executions"
 DEFAULT_OUTPUT = ROOT / "reports" / "humanized"
-PROMPT_VERSION = "2"
+PROMPT_VERSION = "3"
 
 MAX_REPORT_CHARS = 30000
 
@@ -125,7 +125,7 @@ def humanize_scenario(
     force: bool = False,
     executions_dir: Path | None = None,
 ) -> dict[str, Any]:
-    model = __import__("os").environ.get("REPORTING_LLM_MODEL", "kimi-k3.1-pro")
+    model = os.environ.get("REPORTING_LLM_MODEL", "gemini-3.5-flash-lite")
     catalog = prepare_catalog(scenario)
     evidence = prepare_execution(execution)
     evidence["artifacts"] = collect_artifacts(str(scenario["id"]), executions_dir or DEFAULT_EXECUTIONS)
@@ -212,6 +212,7 @@ def main() -> int:
 
     generated = 0
     skipped = 0
+    failed = 0
     for scenario in selected:
         scenario_id = str(scenario.get("id") or "")
         execution_path = args.executions / f"{scenario_id}.json"
@@ -231,11 +232,14 @@ def main() -> int:
             generated += 1
             print(f"[LLM] {scenario_id}: documentação humanizada pronta.")
         except LLMHumanizerError as exc:
+            failed += 1
             print(f"[LLM] {scenario_id}: erro controlado: {exc}")
-            return 2
+            continue
 
-    print(f"[LLM] {generated} cenários processados; {skipped} ignorados.")
-    return 0
+    print(
+        f"[LLM] {generated} humanizados; {skipped} ignorados; {failed} com erro."
+    )
+    return 0 if failed == 0 else 2
 
 
 if __name__ == "__main__":
