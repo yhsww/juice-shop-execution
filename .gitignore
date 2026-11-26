@@ -9,3 +9,10 @@ __pycache__/
 # - reports/humanized: LLM/deterministic humanized JSON
 # - reports/docx: final DOCX reports
 # - screenshots: legacy location, if used
+
+# Arquivos temporarios do Microsoft Word
+~$*.docx
+# Arquivos temporários do Microsoft Word
+~$*.docx
+# Arquivos temporários do Microsoft Word
+~$*.docx
