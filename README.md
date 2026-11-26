@@ -91,7 +91,6 @@ juice-shop-execution/
 ├── juice-shop/              # Docker Compose da aplicação alvo
 ├── reports/
 │   ├── executions/          # JSONs e screenshots das execuções
-│   ├── final/               # Relatórios Markdown
 │   ├── humanized/           # Resultado da humanização pela LLM
 │   └── docx/                # Relatórios DOCX
 ├── .env.example             # Modelo de configuração
@@ -131,7 +130,6 @@ python -m reporting.docx_generator --humanize auto --force-humanize
 ```
 
 Para uma execução do zero, os passos detalhados abaixo devem ser seguidos na ordem apresentada.
-
 
 ### Passo 1 — Pré-requisitos
 
@@ -476,7 +474,6 @@ Isso permite validar a execução e a geração do relatório mesmo sem uma chav
 
 A estrutura do DOCX é fixa e segue a ficha definida para o projeto. O gerador não cria seções adicionais de resumo, integridade ou detalhes técnicos de automação.
 
-
 Cada relatório contém:
 
 1. **Ficha de Ambiente**
@@ -488,7 +485,6 @@ Cada relatório contém:
 Os artefatos gerados ficam organizados em `reports/`:
 
 - `reports/executions/` — JSONs e screenshots das execuções;
-- `reports/final/` — relatórios Markdown;
 - `reports/humanized/` — JSONs produzidos pela humanização;
 - `reports/docx/` — documentos DOCX finais.
 
