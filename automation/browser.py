@@ -13,7 +13,7 @@ from config.settings import settings
 async def browser_session() -> AsyncIterator[tuple[Browser, BrowserContext, Page]]:
     async with async_playwright() as p:
         launch_kwargs = {'headless': settings.headless, 'args': ['--disable-dev-shm-usage']}
-        proxy = os.getenv('AMBOLS_PROXY_SERVER', '').strip()
+        proxy = os.getenv('JUICE_SHOP_PROXY_SERVER', '').strip()
         if proxy: launch_kwargs['proxy'] = {'server': proxy}
         browser = await p.chromium.launch(**launch_kwargs)
         context = await browser.new_context(viewport={'width': 1440, 'height': 900}, ignore_https_errors=True)
