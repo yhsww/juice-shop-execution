@@ -14,18 +14,30 @@ class LLMHumanizerError(RuntimeError):
 
 
 def _config() -> tuple[str, str, str, str]:
-    provider = os.getenv("REPORTING_LLM_PROVIDER", "openai").strip().lower()
+    provider = os.getenv("REPORTING_LLM_PROVIDER", "groq").strip().lower()
 
-    if provider == "openai":
+    if provider == "groq":
+        api_key = os.getenv("GROQ_API_KEY", "").strip()
+        base_url = os.getenv(
+            "GROQ_API_BASE_URL",
+            "https://api.groq.com/openai/v1",
+        ).strip()
+        model = os.getenv(
+            "GROQ_LLM_MODEL",
+            "openai/gpt-oss-120b",
+        ).strip()
+        env_name = "GROQ_API_KEY"
+    elif provider == "openai":
         api_key = os.getenv("OPENAI_API_KEY", "").strip()
         base_url = os.getenv(
             "OPENAI_API_BASE_URL",
             "https://api.openai.com/v1",
         ).strip()
         model = os.getenv(
-            "REPORTING_LLM_MODEL",
+            "OPENAI_LLM_MODEL",
             "gpt-6.2-sol",
         ).strip()
+        env_name = "OPENAI_API_KEY"
     elif provider == "kimi":
         api_key = os.getenv("KIMI_API_KEY", "").strip()
         base_url = os.getenv(
@@ -33,16 +45,17 @@ def _config() -> tuple[str, str, str, str]:
             "https://api.moonshot.ai/v1",
         ).strip()
         model = os.getenv(
-            "REPORTING_LLM_MODEL",
+            "KIMI_LLM_MODEL",
             "kimi-k3.1-pro",
         ).strip()
+        env_name = "KIMI_API_KEY"
     else:
         raise LLMHumanizerError(
-            f"REPORTING_LLM_PROVIDER inválido: {provider}. Use 'openai' ou 'kimi'."
+            f"REPORTING_LLM_PROVIDER inválido: {provider}. "
+            "Use 'groq', 'openai' ou 'kimi'."
         )
 
     if not api_key:
-        env_name = "OPENAI_API_KEY" if provider == "openai" else "KIMI_API_KEY"
         raise LLMHumanizerError(f"{env_name} não configurada.")
 
     return provider, api_key, base_url, model
@@ -52,22 +65,27 @@ def humanize(payload: dict[str, Any]) -> dict[str, Any]:
     provider, api_key, base_url, model = _config()
     client = OpenAI(api_key=api_key, base_url=base_url)
 
-    response = client.responses.create(
-        model=model,
-        input=[
-            {"role": "system", "content": HUMANIZER_SYSTEM_PROMPT},
-            {"role": "user", "content": _build_input(payload)},
-        ],
-        text={
-            "format": {
-                "type": "json_schema",
-                "name": "qa_humanized_scenario",
-                "strict": True,
-                "schema": HUMANIZER_SCHEMA,
-            }
-        },
-        max_output_tokens=2400,
-    )
+    try:
+        response = client.responses.create(
+            model=model,
+            input=[
+                {"role": "system", "content": HUMANIZER_SYSTEM_PROMPT},
+                {"role": "user", "content": _build_input(payload)},
+            ],
+            text={
+                "format": {
+                    "type": "json_schema",
+                    "name": "qa_humanized_scenario",
+                    "strict": True,
+                    "schema": HUMANIZER_SCHEMA,
+                }
+            },
+            max_output_tokens=2400,
+        )
+    except Exception as exc:
+        raise LLMHumanizerError(
+            f"Falha ao consultar a LLM ({provider}, modelo {model}): {exc}"
+        ) from exc
 
     raw = response.output_text.strip()
     if not raw:
