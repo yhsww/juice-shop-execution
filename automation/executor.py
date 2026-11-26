@@ -1122,12 +1122,9 @@ async def execute(page: Page, action: dict) -> ActionResult:
 
         elif kind == "CLICK_ALL":
             # Repeated UI mutation (for example, removing every basket item).
-            #
-            # Do not call the full semantic resolver inside this loop. Its
-            # candidate expansion performs several DOM queries and can consume
-            # the entire action budget when Angular is re-rendering the same
-            # control. Instead, resolve the requested semantic control directly
-            # in the live DOM and click one visible match at a time.
+            # Resolve the live control directly so Angular re-renders cannot
+            # make a previously resolved Locator stale or consume the action
+            # timeout while searching a large semantic candidate set.
             max_clicks = max(1, min(int(action.get("max_clicks", 20)), 100))
             target = action.get("target", {})
             wanted = str(
@@ -1136,7 +1133,6 @@ async def execute(page: Page, action: dict) -> ActionResult:
                 or target.get("text")
                 or ""
             ).strip().casefold()
-            role = str(target.get("role") or "").strip().casefold()
             clicked = 0
 
             if not wanted:
@@ -1149,7 +1145,7 @@ async def execute(page: Page, action: dict) -> ActionResult:
                     return bool(
                         await page.evaluate(
                             """
-                            ({wanted, role}) => {
+                            (wanted) => {
                                 const normalize = value =>
                                     String(value || "")
                                         .replace(/\\s+/g, " ")
@@ -1162,43 +1158,58 @@ async def execute(page: Page, action: dict) -> ActionResult:
                                     if (
                                         style.display === "none" ||
                                         style.visibility === "hidden" ||
-                                        style.pointerEvents === "none"
+                                        style.opacity === "0"
                                     ) return false;
                                     const rect = el.getBoundingClientRect();
                                     return rect.width > 0 && rect.height > 0;
                                 };
 
-                                const candidates = Array.from(
+                                const semantic = el => normalize([
+                                    el.getAttribute?.("aria-label"),
+                                    el.getAttribute?.("title"),
+                                    el.getAttribute?.("mattooltip"),
+                                    el.innerText,
+                                    el.textContent
+                                ].filter(Boolean).join(" "));
+
+                                // Inspect both interactive hosts and descendants
+                                // such as mat-icon. When the label is exposed by
+                                // a child icon, click its nearest real control.
+                                const nodes = Array.from(
                                     document.querySelectorAll(
-                                        role === "button"
-                                            ? "button,[role='button']"
-                                            : "[role='button'],button,a,[role='link'],[role='menuitem']"
+                                        "button,a,[role='button'],[role='link'],"
+                                        + "mat-icon,[aria-label],[title],[mat-icon-button]"
                                     )
                                 );
 
-                                const match = candidates.find(el => {
-                                    if (!visible(el)) return false;
+                                for (const node of nodes) {
+                                    if (!visible(node)) continue;
 
-                                    const semantic = normalize(
-                                        [
-                                            el.getAttribute("aria-label"),
-                                            el.getAttribute("title"),
-                                            el.innerText,
-                                            el.textContent
-                                        ].filter(Boolean).join(" ")
-                                    );
+                                    const value = semantic(node);
+                                    if (!value.includes(wanted)) continue;
 
-                                    return semantic.includes(wanted);
-                                });
+                                    let control = node;
+                                    if (!/^(BUTTON|A|MAT-ICON-BUTTON)$/.test(control.tagName)
+                                        && control.getAttribute("role") !== "button") {
+                                        control = node.closest(
+                                            "button,a,[role='button'],[mat-icon-button]"
+                                        ) || node;
+                                    }
 
-                                if (!match) return false;
+                                    if (!visible(control)) continue;
 
-                                match.scrollIntoView({block: "center", inline: "nearest"});
-                                match.click();
-                                return true;
+                                    control.scrollIntoView({
+                                        block: "center",
+                                        inline: "nearest"
+                                    });
+                                    control.click();
+                                    return true;
+                                }
+
+                                return false;
                             }
                             """,
-                            {"wanted": wanted, "role": role},
+                            wanted,
                         )
                     )
                 except Exception:
