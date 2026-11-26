@@ -50,9 +50,9 @@ def humanize_text(value: Any, limit: int = 1200) -> str:
     # URLs, rotas e detalhes técnicos pertencem aos artefatos de execução,
     # não à narrativa funcional do DOCX.
     import re
-    text = re.sub(r"https?://\\S+", "", text)
-    text = re.sub(r"(?<!\\w)/#/[A-Za-z0-9_./?=&%-]+", "", text)
-    text = re.sub(r"\\s{2,}", " ", text).strip()
+    text = re.sub(r"https?://\S+", "", text)
+    text = re.sub(r"(?<!\w)/#/[A-Za-z0-9_./?=&%-]+", "", text)
+    text = re.sub(r"\s{2,}", " ", text).strip()
     text = text.replace("Falha de automação:", "A aplicação não concluiu a ação esperada: ")
     text = text.replace("Nenhuma mudança visual relevante detectada.", "")
     return normalize(text, limit)
@@ -261,7 +261,7 @@ def action_description(action: dict[str, Any]) -> str:
     )
 
     if typ == "NAVIGATE":
-        return f'Navegar para "{action.get("route", "")}"'
+        return "Acessar a área correspondente da aplicação"
     if typ == "FILL":
         return f'Preencher "{target_name}"'
     if typ == "CLICK":
