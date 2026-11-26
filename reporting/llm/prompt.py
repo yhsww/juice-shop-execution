@@ -1,5 +1,9 @@
 from __future__ import annotations
 
+import json
+from typing import Any
+
+
 HUMANIZER_SYSTEM_PROMPT = """
 Você é um analista de QA responsável por transformar evidências reais de uma execução automatizada em documentação funcional clara para uma ficha de cenário.
 
@@ -24,53 +28,56 @@ Regras:
 - Se uma resposta de interface não estiver registrada, use "Nenhuma resposta adicional registrada."
 
 Retorne exatamente a estrutura solicitada pelo schema.
-""";
+"""
 
-export const HUMANIZER_SCHEMA = {
-  type: "object",
-  additionalProperties: false,
-  properties: {
-    flow: { type: "string" },
-    precondition: { type: "string" },
-    observed_result: { type: "string" },
-    messages: {
-      type: "array",
-      items: { type: "string" }
-    },
-    data: { type: "string" },
-    steps: {
-      type: "array",
-      items: {
-        type: "object",
-        additionalProperties: false,
-        properties: {
-          number: { type: "integer" },
-          action: { type: "string" },
-          data: { type: "string" },
-          response: { type: "string" }
+
+HUMANIZER_SCHEMA: dict[str, Any] = {
+    "type": "object",
+    "additionalProperties": False,
+    "properties": {
+        "flow": {"type": "string"},
+        "precondition": {"type": "string"},
+        "observed_result": {"type": "string"},
+        "messages": {
+            "type": "array",
+            "items": {"type": "string"},
         },
-        required: ["number", "action", "data", "response"]
-      }
-    }
-  },
-  required: [
-    "flow",
-    "precondition",
-    "observed_result",
-    "messages",
-    "data",
-    "steps"
-  ]
-};
-
-export function buildInput(payload: Record<string, unknown>): string {
-  return [
-    "Transforme as evidências abaixo em documentação funcional.",
-    "",
-    "CATÁLOGO DO CENÁRIO:",
-    JSON.stringify(payload.catalog, null, 2),
-    "",
-    "EVIDÊNCIAS DA EXECUÇÃO:",
-    JSON.stringify(payload.execution, null, 2),
-  ].join("\n");
+        "data": {"type": "string"},
+        "steps": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "additionalProperties": False,
+                "properties": {
+                    "number": {"type": "integer"},
+                    "action": {"type": "string"},
+                    "data": {"type": "string"},
+                    "response": {"type": "string"},
+                },
+                "required": ["number", "action", "data", "response"],
+            },
+        },
+    },
+    "required": [
+        "flow",
+        "precondition",
+        "observed_result",
+        "messages",
+        "data",
+        "steps",
+    ],
 }
+
+
+def build_input(payload: dict[str, Any]) -> str:
+    return "\n".join(
+        [
+            "Transforme as evidências abaixo em documentação funcional.",
+            "",
+            "CATÁLOGO DO CENÁRIO:",
+            json.dumps(payload["catalog"], ensure_ascii=False, indent=2),
+            "",
+            "EVIDÊNCIAS DA EXECUÇÃO:",
+            json.dumps(payload["execution"], ensure_ascii=False, indent=2),
+        ]
+    )
