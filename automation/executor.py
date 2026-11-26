@@ -1122,35 +1122,97 @@ async def execute(page: Page, action: dict) -> ActionResult:
 
         elif kind == "CLICK_ALL":
             # Repeated UI mutation (for example, removing every basket item).
-            # Resolve the control fresh after each Angular re-render, but never
-            # let locator resolution consume the whole action timeout.
+            #
+            # Do not call the full semantic resolver inside this loop. Its
+            # candidate expansion performs several DOM queries and can consume
+            # the entire action budget when Angular is re-rendering the same
+            # control. Instead, resolve the requested semantic control directly
+            # in the live DOM and click one visible match at a time.
             max_clicks = max(1, min(int(action.get("max_clicks", 20)), 100))
+            target = action.get("target", {})
+            wanted = str(
+                target.get("name")
+                or target.get("label")
+                or target.get("text")
+                or ""
+            ).strip().casefold()
+            role = str(target.get("role") or "").strip().casefold()
             clicked = 0
 
-            for _ in range(max_clicks):
-                locator = await resolve(page, action.get("target", {}))
-                if locator is None:
-                    break
+            if not wanted:
+                raise RuntimeError(
+                    "A ação CLICK_ALL não possui um alvo semântico."
+                )
 
+            async def _click_live_match() -> bool:
+                try:
+                    return bool(
+                        await page.evaluate(
+                            """
+                            ({wanted, role}) => {
+                                const normalize = value =>
+                                    String(value || "")
+                                        .replace(/\\s+/g, " ")
+                                        .trim()
+                                        .toLowerCase();
+
+                                const visible = el => {
+                                    if (!el) return false;
+                                    const style = getComputedStyle(el);
+                                    if (
+                                        style.display === "none" ||
+                                        style.visibility === "hidden" ||
+                                        style.pointerEvents === "none"
+                                    ) return false;
+                                    const rect = el.getBoundingClientRect();
+                                    return rect.width > 0 && rect.height > 0;
+                                };
+
+                                const candidates = Array.from(
+                                    document.querySelectorAll(
+                                        role === "button"
+                                            ? "button,[role='button']"
+                                            : "[role='button'],button,a,[role='link'],[role='menuitem']"
+                                    )
+                                );
+
+                                const match = candidates.find(el => {
+                                    if (!visible(el)) return false;
+
+                                    const semantic = normalize(
+                                        [
+                                            el.getAttribute("aria-label"),
+                                            el.getAttribute("title"),
+                                            el.innerText,
+                                            el.textContent
+                                        ].filter(Boolean).join(" ")
+                                    );
+
+                                    return semantic.includes(wanted);
+                                });
+
+                                if (!match) return false;
+
+                                match.scrollIntoView({block: "center", inline: "nearest"});
+                                match.click();
+                                return true;
+                            }
+                            """,
+                            {"wanted": wanted, "role": role},
+                        )
+                    )
+                except Exception:
+                    return False
+
+            for _ in range(max_clicks):
                 before = await observe(page)
 
-                try:
-                    await _click(locator)
-                except Exception:
-                    # The control was already resolved semantically. A short
-                    # forced click is a bounded recovery for transient Angular
-                    # actionability layers.
-                    try:
-                        await locator.click(timeout=1200, force=True)
-                    except Exception:
-                        break
+                if not await _click_live_match():
+                    break
 
                 clicked += 1
                 await page.wait_for_timeout(180)
 
-                # The important stop condition is a real UI mutation. This
-                # prevents the runner from repeatedly resolving a stale/hidden
-                # "Remove" control after the basket has already changed.
                 after = await _safe_observe(page, before)
                 if not meaningful_change(before, after):
                     break
