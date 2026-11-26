@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_SCENARIOS = ROOT / "scenarios" / "scenarios.json"
 DEFAULT_EXECUTIONS = ROOT / "reports" / "executions"
 DEFAULT_OUTPUT = ROOT / "reports" / "humanized"
-PROMPT_VERSION = "3"
+PROMPT_VERSION = "4"
 
 MAX_REPORT_CHARS = 30000
 
@@ -29,7 +29,11 @@ def collect_artifacts(scenario_id: str, executions_dir: Path) -> dict[str, Any]:
             except OSError:
                 continue
             reports.append({"name": path.name, "content": content[:MAX_REPORT_CHARS]})
-    screenshots = [str(path.resolve()) for path in sorted(executions_dir.glob(f"{scenario_id}*.png")) if path.is_file()]
+    screenshots = [
+        str(path.resolve())
+        for path in sorted(executions_dir.glob(f"{scenario_id}*.png"))
+        if path.is_file()
+    ]
     return {"reports": reports, "screenshots": screenshots}
 
 
@@ -50,8 +54,28 @@ def is_sensitive(target: Any) -> bool:
     raw = json.dumps(target, ensure_ascii=False).casefold()
     return any(
         token in raw
-        for token in ("password", "senha", "token", "authorization", "api_key", "secret")
+        for token in (
+            "password",
+            "senha",
+            "token",
+            "authorization",
+            "api_key",
+            "secret",
+        )
     )
+
+
+def target_description(target: dict[str, Any]) -> str:
+    parts = []
+    for key in ("label", "name", "text", "role"):
+        value = safe_text(target.get(key), 300)
+        if value and value not in parts:
+            parts.append(value)
+
+    if target.get("exact") is False:
+        parts.append("correspondência parcial")
+
+    return " — ".join(parts)
 
 
 def prepare_step(step: dict[str, Any]) -> dict[str, Any]:
@@ -64,16 +88,15 @@ def prepare_step(step: dict[str, Any]) -> dict[str, Any]:
 
     return {
         "number": step.get("step"),
-        "user_action": safe_text(step.get("user_action")),
-        "action_type": safe_text(action.get("type")),
-        "target": safe_text(
-            target.get("label")
-            or target.get("name")
-            or target.get("text")
-            or target.get("role")
+        "user_action": safe_text(step.get("user_action"), 900),
+        "action_type": safe_text(action.get("type"), 200),
+        "target": target_description(target),
+        "target_text": safe_text(
+            target.get("text") or target.get("name") or target.get("label"),
+            500,
         ),
-        "data": safe_text(data, 500),
-        "observed_result": safe_text(step.get("observed_result"), 900),
+        "data": safe_text(data, 700),
+        "observed_result": safe_text(step.get("observed_result"), 1100),
         "success": step.get("success") is True,
     }
 
@@ -81,17 +104,17 @@ def prepare_step(step: dict[str, Any]) -> dict[str, Any]:
 def prepare_execution(execution: dict[str, Any]) -> dict[str, Any]:
     steps = [prepare_step(step) for step in execution.get("steps", [])]
     messages = [
-        safe_text(message, 500)
+        safe_text(message, 700)
         for message in execution.get("messages", [])
-        if safe_text(message, 500)
+        if safe_text(message, 700)
     ]
 
     return {
         "scenario_id": safe_text(execution.get("scenario_id"), 100),
         "status": safe_text(execution.get("status"), 50),
         "steps": steps,
-        "messages": messages[:8],
-        "final_visible_text": safe_text(execution.get("final_visible_text"), 1200),
+        "messages": messages[:12],
+        "final_visible_text": safe_text(execution.get("final_visible_text"), 2000),
     }
 
 
@@ -101,9 +124,9 @@ def prepare_catalog(scenario: dict[str, Any]) -> dict[str, Any]:
         "domain": safe_text(scenario.get("domain"), 100),
         "name": safe_text(scenario.get("name"), 300),
         "actor": safe_text(scenario.get("actor"), 200),
-        "flow": safe_text(scenario.get("flow"), 900),
-        "precondition": safe_text(scenario.get("precondition"), 900),
-        "data": safe_text(scenario.get("data"), 900),
+        "flow": safe_text(scenario.get("flow"), 1200),
+        "precondition": safe_text(scenario.get("precondition"), 1200),
+        "data": safe_text(scenario.get("data"), 1200),
     }
 
 
@@ -128,7 +151,10 @@ def humanize_scenario(
     model = os.environ.get("REPORTING_LLM_MODEL", "gemini-3.5-flash-lite")
     catalog = prepare_catalog(scenario)
     evidence = prepare_execution(execution)
-    evidence["artifacts"] = collect_artifacts(str(scenario["id"]), executions_dir or DEFAULT_EXECUTIONS)
+    evidence["artifacts"] = collect_artifacts(
+        str(scenario["id"]),
+        executions_dir or DEFAULT_EXECUTIONS,
+    )
     path = output_dir / f"{scenario['id']}.json"
     fp = fingerprint(catalog, evidence, model)
 
@@ -146,7 +172,11 @@ def humanize_scenario(
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
         json.dumps(
-            {"scenario_id": scenario["id"], "fingerprint": fp, "content": sanitized},
+            {
+                "scenario_id": scenario["id"],
+                "fingerprint": fp,
+                "content": sanitized,
+            },
             ensure_ascii=False,
             indent=2,
         ),
@@ -157,11 +187,14 @@ def humanize_scenario(
 
 def sanitize_output(content: dict[str, Any]) -> dict[str, Any]:
     cleaned = {
-        "flow": safe_text(content.get("flow"), 1400),
-        "precondition": safe_text(content.get("precondition"), 1200),
-        "observed_result": safe_text(content.get("observed_result"), 1600),
-        "messages": [safe_text(item, 500) for item in content.get("messages", [])][:8],
-        "data": safe_text(content.get("data"), 1600),
+        "flow": safe_text(content.get("flow"), 1600),
+        "precondition": safe_text(content.get("precondition"), 1400),
+        "observed_result": safe_text(content.get("observed_result"), 2000),
+        "messages": [
+            safe_text(item, 700)
+            for item in content.get("messages", [])
+        ][:12],
+        "data": safe_text(content.get("data"), 1800),
         "steps": [],
     }
 
@@ -169,9 +202,9 @@ def sanitize_output(content: dict[str, Any]) -> dict[str, Any]:
         cleaned["steps"].append(
             {
                 "number": step.get("number"),
-                "action": safe_text(step.get("action"), 500),
-                "data": safe_text(step.get("data"), 500),
-                "response": safe_text(step.get("response"), 700),
+                "action": safe_text(step.get("action"), 700),
+                "data": safe_text(step.get("data"), 700),
+                "response": safe_text(step.get("response"), 900),
             }
         )
 
