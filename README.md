@@ -1,30 +1,34 @@
 # Juice Shop Execution
 
-Automação de testes funcionais do **OWASP Juice Shop** usando a interface real da aplicação, Playwright, Docker e geração de evidências e relatórios.
+Automação de testes funcionais do **OWASP Juice Shop** utilizando a interface real da aplicação, Playwright, Python, Docker e geração de evidências e relatórios.
 
-## Objetivo
+## 1. Objetivo
 
-O projeto executa cenários funcionais de forma reproduzível e rastreável.
+O objetivo deste projeto é automatizar a execução de cenários funcionais do OWASP Juice Shop de forma **reprodutível, rastreável e baseada em evidências reais da interface**.
 
-O fluxo principal é:
+A automação executa as ações do usuário na aplicação, registra o comportamento observado e gera evidências para cada cenário.
+
+Fluxo geral:
 
 ```text
-Cenário
-   ↓
-Playwright + interface real
-   ↓
+Cenário definido no catálogo
+        ↓
+Execução na interface real
+        ↓
+Playwright
+        ↓
 Evidências JSON + screenshots
-   ↓
+        ↓
 Relatório Markdown / DOCX
-   ↓
+        ↓
 Humanização opcional com LLM
 ```
 
-A LLM atua somente na documentação. **O resultado do teste é determinado pelo executor e pelas evidências reais.**
+A LLM é utilizada somente para **interpretar e organizar a documentação**. Ela não decide se um cenário passou ou falhou. O status da execução é determinado pelo executor e pelas evidências reais coletadas.
 
-## Status atual
+## 2. Escopo atual
 
-A suíte principal contém **72 cenários**:
+A suíte principal possui **72 cenários funcionais**:
 
 | Domínio | Cenários |
 |---|---:|
@@ -35,151 +39,421 @@ A suíte principal contém **72 cenários**:
 | IDT | 17 |
 | **Total** | **72** |
 
-A implementação consolidada está na branch `main`.
+Os cenários são mantidos em:
 
-## Tecnologias
+```text
+scenarios/scenarios.json
+```
 
-- Python 3.10+
-- Playwright
-- Chromium
-- Docker / Docker Compose
-- OWASP Juice Shop
-- pytest
-- python-dotenv
-- python-docx
-- OpenAI SDK — usado também para provedores compatíveis com a API OpenAI
-- Anthropic SDK — suporte opcional ao Claude
+## 3. Tecnologias utilizadas
 
-## Estrutura
+### Linguagem e execução
+
+- **Python 3.10+** — linguagem principal da automação.
+- **Playwright** — automação da interface web e interação com o navegador.
+- **Chromium** — navegador utilizado pelos testes.
+- **pytest** — infraestrutura de testes e validações do projeto.
+
+### Ambiente da aplicação
+
+- **OWASP Juice Shop** — aplicação web alvo dos testes.
+- **Docker** — isolamento e execução da aplicação Juice Shop.
+- **Docker Compose** — configuração e gerenciamento do container da aplicação.
+
+### Configuração
+
+- **python-dotenv** — carregamento das variáveis de ambiente a partir do arquivo `.env`.
+
+### Evidências e documentação
+
+- **python-docx** — geração dos relatórios DOCX.
+- **JSON** — armazenamento estruturado das evidências de execução.
+- **Markdown** — geração e leitura de relatórios intermediários.
+
+### Humanização com IA
+
+- **OpenAI SDK** — integração com provedores compatíveis com a API OpenAI.
+- **Anthropic SDK** — suporte opcional ao Claude.
+- **Gemini** — provedor recomendado atualmente para a humanização multimodal, utilizando a interface compatível com a API OpenAI.
+- **LLM multimodal** — recebe as evidências textuais e screenshots para produzir descrições mais específicas dos comportamentos observados.
+
+## 4. Estrutura do projeto
 
 ```text
 juice-shop-execution/
 ├── automation/              # Executor e ações funcionais
-├── config/                  # Configurações de ambiente
+├── config/                  # Configurações do ambiente
 ├── reporting/               # Evidências, relatórios e humanização
 │   └── llm/                 # Cliente e prompt da LLM
 ├── scenarios/               # Catálogo dos 72 cenários
 ├── tests/                   # Testes do projeto
-├── juice-shop/              # Docker Compose do ambiente alvo
+├── juice-shop/              # Docker Compose da aplicação alvo
 ├── reports/
-│   ├── executions/          # Evidências JSON e screenshots
+│   ├── executions/          # JSONs e screenshots das execuções
 │   ├── final/               # Relatórios Markdown
-│   ├── humanized/           # Cache da documentação humanizada
-│   └── docx/                # DOCX gerados
-├── screenshots/             # Diretório reservado para evidências visuais
+│   ├── humanized/           # Resultado da humanização pela LLM
+│   └── docx/                # Relatórios DOCX
 ├── .env.example             # Modelo de configuração
-├── requirements.txt
-├── run.py                   # Ponto de entrada
+├── requirements.txt         # Dependências Python
+├── run.py                   # Ponto de entrada da execução
 └── README.md
 ```
 
-## Requisitos
+## 5. Passo a passo para executar o projeto
+
+### Passo 1 — Pré-requisitos
 
 Instale:
 
 - Python 3.10 ou superior;
-- Docker Desktop no Windows/macOS ou Docker Engine + Compose v2 no Linux;
-- Git.
+- Git;
+- Docker Desktop no Windows/macOS ou Docker Engine + Docker Compose v2 no Linux.
 
-No Windows, PowerShell é recomendado.
+No Windows, o projeto pode ser executado pelo **PowerShell**.
 
-## Instalação
+Verifique as instalações:
 
-Clone o projeto:
+```powershell
+python --version
+git --version
+docker --version
+docker compose version
+```
+
+### Passo 2 — Clonar o projeto
 
 ```powershell
 git clone https://github.com/yhsww/juice-shop-execution.git
 cd juice-shop-execution
 ```
 
-Instale as dependências:
+Para trabalhar sempre com a versão atual da branch principal:
 
 ```powershell
+git pull --ff-only origin main
+```
+
+### Passo 3 — Criar o ambiente Python
+
+É recomendado utilizar um ambiente virtual:
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+```
+
+Caso o PowerShell bloqueie a ativação do ambiente virtual, ajuste a política somente para a sessão atual:
+
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+```
+
+Depois, ative novamente:
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
+
+### Passo 4 — Instalar as dependências
+
+```powershell
+python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-Instale o Chromium:
+### Passo 5 — Instalar o navegador do Playwright
 
 ```powershell
 python -m playwright install chromium
 ```
 
-Crie o arquivo de ambiente:
+### Passo 6 — Configurar o ambiente
+
+Crie o arquivo `.env` a partir do modelo:
 
 ```powershell
 Copy-Item .env.example .env
 ```
 
-Edite `.env` e informe as configurações locais necessárias.
-
-**Nunca versione o arquivo `.env` nem chaves de API.**
-
-## Configuração
-
-As principais variáveis do Juice Shop são:
+Configure, no mínimo, a URL da aplicação:
 
 ```env
 JUICE_SHOP_BASE_URL=http://127.0.0.1:3000
 JUICE_SHOP_HEADLESS=false
-JUICE_SHOP_ACTION_TIMEOUT_MS=10000
-JUICE_SHOP_NAVIGATION_TIMEOUT_MS=15000
-JUICE_SHOP_SCENARIO_TIMEOUT_SECONDS=180
-JUICE_SHOP_MAX_STEPS=30
 ```
 
-O projeto utiliza por padrão:
-
-- usuário de teste para os cenários de identidade;
-- credenciais administrativas da instância local do Juice Shop;
-- screenshots e evidências em `reports/executions/`.
-
-## LLM para documentação
-
-A humanização é opcional e não participa da aprovação dos cenários.
-
-O provedor recomendado atualmente é **Gemini**, principalmente porque o humanizador envia as screenshots ao modelo para análise multimodal.
-
-Configuração:
+Para utilizar a humanização por LLM, configure também o provedor e a chave correspondente. Exemplo com Gemini:
 
 ```env
 REPORTING_LLM_PROVIDER=gemini
-
-GEMINI_API_KEY=
+GEMINI_API_KEY=SUA_CHAVE_AQUI
 GEMINI_API_BASE_URL=https://generativelanguage.googleapis.com/v1beta/openai/
 GEMINI_LLM_MODEL=gemini-3.5-flash-lite
 ```
 
-Também existe suporte configurável para:
+**Nunca versione o arquivo `.env` nem chaves de API.**
 
-- Groq;
-- OpenAI;
-- Kimi;
-- Claude.
+### Passo 7 — Iniciar o Juice Shop
 
-As chaves e os modelos devem ser configurados no `.env`.
-
-### Como a LLM recebe as evidências
+O projeto já possui um Docker Compose em:
 
 ```text
-Execução real
-    ↓
-JSON de evidências
-    ↓
-Normalização dos dados funcionais
-    ↓
-Screenshots PNG + evidências textuais
-    ↓
-Gemini multimodal
-    ↓
-JSON estruturado
-    ↓
-DOCX
+juice-shop/docker-compose.yml
 ```
 
-As screenshots são enviadas como imagens para o Gemini. O prompt exige que o modelo analise visualmente os elementos realmente visíveis, incluindo:
+É possível iniciar manualmente:
+
+```powershell
+docker compose -f juice-shop/docker-compose.yml up -d
+```
+
+Verifique se o container está executando:
+
+```powershell
+docker compose -f juice-shop/docker-compose.yml ps
+```
+
+A aplicação deve estar disponível em:
+
+```text
+http://127.0.0.1:3000
+```
+
+### Passo 8 — Executar um cenário específico
+
+Com a aplicação já iniciada:
+
+```powershell
+python run.py --scenario CEN-CAR-03
+```
+
+O resultado será apresentado no terminal, por exemplo:
+
+```text
+[PASSED] CEN-CAR-03
+```
+
+Para deixar o próprio projeto responsável por iniciar a aplicação:
+
+```powershell
+python run.py --start-app --scenario CEN-CAR-03
+```
+
+### Passo 9 — Executar um domínio inteiro
+
+Exemplo:
+
+```powershell
+python run.py --start-app --domain CHK
+```
+
+É possível executar mais de um domínio:
+
+```powershell
+python run.py --start-app --domain CHK --domain IDT
+```
+
+### Passo 10 — Executar todos os 72 cenários
+
+Para executar a suíte completa:
+
+```powershell
+python run.py --start-app --all
+```
+
+O executor apresenta o resultado de cada cenário e, ao final, um resumo:
+
+```text
+[summary] X/72 cenários aprovados; Y com falha.
+```
+
+Para iniciar e encerrar automaticamente o ambiente Docker ao final:
+
+```powershell
+python run.py --start-app --all --stop-app
+```
+
+### Passo 11 — Verificar as evidências
+
+Após a execução, consulte:
+
+```text
+reports/executions/
+```
+
+As evidências registram informações como:
+
+- ID do cenário;
+- status;
+- ações executadas;
+- dados utilizados;
+- resultado observado;
+- mensagens apresentadas pela interface;
+- screenshots;
+- informações de validação.
+
+As screenshots são importantes para a documentação porque registram visualmente o estado da aplicação durante a execução.
+
+### Passo 12 — Gerar a documentação humanizada
+
+A humanização pode ser executada para um cenário específico:
+
+```powershell
+python -m reporting.humanizer --scenario CEN-CAR-03 --force
+```
+
+Ou para todos os cenários que possuem evidências:
+
+```powershell
+python -m reporting.humanizer --all --force
+```
+
+O resultado intermediário é armazenado em:
+
+```text
+reports/humanized/
+```
+
+A humanização considera as evidências estruturadas e as screenshots para produzir descrições funcionais mais detalhadas.
+
+### Passo 13 — Gerar os relatórios DOCX
+
+Para gerar os DOCX utilizando humanização automática:
+
+```powershell
+python -m reporting.docx_generator --humanize auto
+```
+
+Para exigir o uso da LLM:
+
+```powershell
+python -m reporting.docx_generator --humanize llm
+```
+
+Para gerar a documentação sem LLM:
+
+```powershell
+python -m reporting.docx_generator --humanize deterministic
+```
+
+Os documentos são gerados em:
+
+```text
+reports/docx/
+```
+
+## 6. Fluxo completo recomendado
+
+Para uma execução completa do projeto, a sequência recomendada é:
+
+```powershell
+cd C:\Users\Asus\Desktop\juice-shop-execution-v2
+
+git pull --ff-only origin main
+
+.\.venv\Scripts\Activate.ps1
+
+pip install -r requirements.txt
+
+python -m playwright install chromium
+
+Copy-Item .env.example .env
+```
+
+Depois de configurar o `.env`:
+
+```powershell
+python run.py --start-app --all
+```
+
+Em seguida, gere a documentação:
+
+```powershell
+python -m reporting.docx_generator --humanize auto
+```
+
+Resultado esperado:
+
+```text
+Execução
+   ↓
+72 cenários
+   ↓
+JSON + screenshots
+   ↓
+Humanização
+   ↓
+DOCX final
+```
+
+## 7. Execução sem humanização por LLM
+
+A LLM é opcional.
+
+Para testar somente o executor:
+
+```powershell
+python run.py --start-app --all
+```
+
+Para gerar a documentação sem depender de uma API de IA:
+
+```powershell
+python -m reporting.docx_generator --humanize deterministic
+```
+
+Isso permite validar a execução e a geração do relatório mesmo sem uma chave de API configurada.
+
+## 8. Documentação DOCX
+
+A estrutura do DOCX é fixa e segue a ficha definida para o projeto.
+
+Cada relatório contém:
+
+1. **Ficha de Ambiente**
+2. **Guia de Domínio**
+3. **Ficha de Cenário**
+4. **Passos Executados**
+5. Screenshots vinculadas às evidências dos passos
+
+A ficha de cenário contempla:
+
+- ID do cenário;
+- domínio;
+- nome do cenário;
+- ator;
+- fluxo;
+- pré-condição;
+- resultado observado;
+- mensagens exibidas ao usuário;
+- dados manipulados;
+- coerência com a loja de sucos;
+- justificativa;
+- requisito candidato, quando aplicável.
+
+A tabela de passos registra:
+
+| Campo | Conteúdo |
+|---|---|
+| # | Número do passo |
+| Ação do usuário | Ação funcional realizada |
+| Dados informados | Dados utilizados na ação |
+| Resposta da interface | Comportamento observado |
+
+## 9. Humanização multimodal
+
+Quando o provedor Gemini está configurado, o humanizador pode receber:
+
+- evidências JSON;
+- relatórios textuais;
+- screenshots PNG;
+- dados das ações executadas;
+- resultados observados.
+
+As imagens são analisadas para identificar elementos realmente visíveis, como:
 
 - produtos;
-- imagens dos produtos;
+- imagens;
 - preços;
 - quantidades;
 - botões;
@@ -190,226 +464,33 @@ As screenshots são enviadas como imagens para o Gemini. O prompt exige que o mo
 - mensagens;
 - alertas;
 - resultados de pesquisa;
-- mudanças de estado entre screenshots.
+- mudanças de estado.
 
-A LLM não pode inventar informações que não estejam nas evidências.
+A LLM deve interpretar as evidências, mas **não pode inventar fatos**. O executor continua sendo a fonte de verdade sobre o resultado do cenário.
 
-## Executando os cenários
-
-### Um cenário
-
-```powershell
-python run.py --start-app --scenario CEN-CAR-03
-```
-
-### Um domínio
-
-```powershell
-python run.py --start-app --domain CHK
-```
-
-### Mais de um domínio
-
-```powershell
-python run.py --start-app --domain CHK --domain IDT
-```
-
-### Suíte completa
-
-```powershell
-python run.py --start-app --all
-```
-
-### Iniciar e encerrar o Docker automaticamente
-
-```powershell
-python run.py --start-app --all --stop-app
-```
-
-Se o Juice Shop já estiver rodando em `http://127.0.0.1:3000`, não é necessário usar `--start-app`.
-
-## Docker
-
-Para iniciar manualmente:
-
-```powershell
-docker compose -f juice-shop/docker-compose.yml up -d
-```
-
-Verificar:
-
-```powershell
-docker compose -f juice-shop/docker-compose.yml ps
-```
-
-Logs:
-
-```powershell
-docker compose -f juice-shop/docker-compose.yml logs -f
-```
-
-Encerrar:
-
-```powershell
-docker compose -f juice-shop/docker-compose.yml down
-```
-
-A aplicação é vinculada localmente em `127.0.0.1`.
-
-## Evidências
-
-Cada execução gera evidências estruturadas em:
-
-```text
-reports/executions/
-```
-
-As evidências podem conter:
-
-- ID do cenário;
-- status;
-- ação realizada;
-- descrição funcional da ação;
-- dados utilizados;
-- estado visual antes e depois;
-- resultado observado;
-- mensagens;
-- URL;
-- screenshot;
-- informações de validação.
-
-As screenshots são capturadas durante as etapas e utilizadas também pelo humanizador multimodal.
-
-## Humanização de um cenário
-
-Depois que o cenário foi executado, gere a documentação humanizada:
-
-```powershell
-python -m reporting.humanizer --scenario CEN-CAR-03 --force
-```
-
-O resultado fica em:
-
-```text
-reports/humanized/CEN-CAR-03.json
-```
-
-Para humanizar todos os cenários que possuem evidência:
-
-```powershell
-python -m reporting.humanizer --all --force
-```
-
-### Por que usar `--force`
-
-Os arquivos em `reports/humanized/` funcionam como cache. O `--force` força uma nova chamada à LLM e é recomendado depois de alterar o prompt ou a forma de preparação das evidências.
-
-## Relatórios DOCX
-
-A estrutura do DOCX é fixa e segue a ficha definida para o projeto.
-
-Cada cenário contém:
-
-1. **Ficha de Ambiente**
-2. **Guia de Domínio**
-3. **Ficha de Cenário**
-4. **Passos Executados**
-5. Screenshots vinculadas às evidências dos passos
-
-A ficha de cenário utiliza:
-
-- ID do cenário;
-- domínio;
-- nome;
-- ator;
-- fluxo;
-- pré-condição;
-- resultado observado;
-- mensagens;
-- dados manipulados;
-- coerência com a loja de sucos;
-- justificativa;
-- requisito candidato;
-- tabela de ações, dados e respostas da interface.
-
-### Gerar DOCX com humanização automática
-
-```powershell
-python -m reporting.docx_generator --humanize auto
-```
-
-### Exigir LLM
-
-```powershell
-python -m reporting.docx_generator --humanize llm
-```
-
-### Gerar sem LLM
-
-```powershell
-python -m reporting.docx_generator --humanize deterministic
-```
-
-Os arquivos são gerados em:
-
-```text
-reports/docx/
-```
-
-Os DOCX e os arquivos humanizados são artefatos gerados e não são versionados.
-
-## Catálogo de cenários
-
-O catálogo está em:
-
-```text
-scenarios/scenarios.json
-```
-
-Cada cenário possui informações como:
-
-- identificador;
-- domínio;
-- nome;
-- ator;
-- fluxo;
-- pré-condição;
-- ações;
-- dados;
-- comportamento esperado;
-- validação.
-
-O catálogo é separado do executor para permitir evolução dos cenários sem acoplar cada caso ao código do motor.
-
-## Princípios de engenharia
+## 10. Princípios de funcionamento
 
 ### Evidência antes da expectativa
 
-O executor deve validar o comportamento real da aplicação. O catálogo descreve o que deve acontecer; a evidência registra o que aconteceu.
-
-### Correções genéricas
-
-Correções no executor devem resolver padrões de comportamento da aplicação, e não criar regras específicas para um único cenário.
-
-### Sem mascaramento de falhas
-
-Timeouts, exceções ou ações alternativas não devem transformar uma falha funcional em `PASSED`.
+O catálogo define o comportamento esperado. A execução registra o comportamento real.
 
 ### Separação entre execução e documentação
-
-O executor produz as evidências. O humanizador apenas transforma essas evidências em documentação legível.
 
 ```text
 Executor
    ↓
-Evidência
+Evidências
    ↓
 Humanizador
    ↓
 DOCX
 ```
 
-Uma falha na LLM não deve alterar o resultado real da execução.
+Uma falha da LLM não transforma um cenário real em `PASSED`.
+
+### Correções genéricas
+
+As correções no executor devem resolver padrões de comportamento da aplicação, evitando regras criadas exclusivamente para mascarar problemas de um cenário.
 
 ### Rastreabilidade
 
@@ -425,11 +506,9 @@ JSON da execução
 ações e screenshots reais
 ```
 
-## Segurança
+## 11. Segurança
 
-O OWASP Juice Shop é uma aplicação propositalmente vulnerável.
-
-Execute-o somente em ambiente controlado.
+O OWASP Juice Shop é uma aplicação propositalmente vulnerável. Execute-o somente em ambiente controlado.
 
 Não exponha o Juice Shop diretamente à Internet ou a redes não autorizadas.
 
@@ -439,45 +518,45 @@ Nunca envie para o Git:
 - chaves de API;
 - tokens;
 - credenciais reais;
-- evidências contendo informações sensíveis.
+- evidências que contenham informações sensíveis.
 
-## Manutenção
+## 12. Manutenção
 
-A branch oficial é:
+A branch principal do projeto é:
 
 ```text
 main
 ```
 
-Antes de uma alteração:
+Antes de alterar o código:
 
 ```powershell
 git pull --ff-only origin main
 git status
 ```
 
-Depois de alterar o código:
+Após alterações:
 
 ```powershell
 git status
 ```
 
-Para validar a suíte:
+Validação da suíte completa:
 
 ```powershell
 python run.py --start-app --all
 ```
 
-Para validar somente a documentação após mudanças no reporting, prefira primeiro um cenário:
+Validação rápida da documentação:
 
 ```powershell
 python -m reporting.humanizer --scenario CEN-CAR-03 --force
 ```
 
-Isso permite verificar a qualidade da humanização sem executar novamente toda a suíte.
+## 13. Aplicação alvo
 
-## OWASP Juice Shop
+O projeto utiliza o **OWASP Juice Shop** como aplicação alvo dos testes.
 
-Aplicação alvo:
-
+```text
 https://github.com/juice-shop/juice-shop
+```
