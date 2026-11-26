@@ -120,6 +120,31 @@ Copy-Item .env.example .env
 
 Configure o arquivo `.env` conforme o ambiente de execução.
 
+### Humanização dos relatórios com LLM
+
+Para habilitar a humanização dos relatórios DOCX por LLM, abra o arquivo `.env` e preencha a chave da OpenAI:
+
+```env
+OPENAI_API_KEY=COLE_SUA_CHAVE_AQUI
+REPORTING_LLM_MODEL=gpt-6.2-sol
+```
+
+O arquivo `.env.example` já contém esse campo como referência. **A chave deve ser colocada somente no arquivo `.env` local e nunca deve ser enviada ao GitHub.** O `.gitignore` já impede o versionamento do `.env`.
+
+Depois de configurar a chave, teste primeiro um único cenário:
+
+```powershell
+python -m reporting.humanizer --scenario CEN-CAT-03 --force
+```
+
+Se a humanização funcionar, gere os DOCX:
+
+```powershell
+python -m reporting.docx_generator --humanize llm
+```
+
+Se a conta da OpenAI não tiver créditos disponíveis, a API poderá retornar erro HTTP 429. Nesse caso, a configuração da chave está correta, mas é necessário utilizar uma conta/projeto com faturamento ou créditos disponíveis.
+
 ## Executando o Juice Shop
 
 O executor pode iniciar o ambiente Docker automaticamente.
