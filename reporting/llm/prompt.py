@@ -26,6 +26,13 @@ Regras:
 - Nos passos, descreva a intenção funcional da ação do usuário e a resposta observada da interface.
 - Não crie passos que não existam nas evidências.
 - Se uma resposta de interface não estiver registrada, use "Nenhuma resposta adicional registrada."
+- As imagens anexadas são evidências visuais. Use-as para confirmar textos, botões, campos, produtos, quantidades e mudanças de estado que estejam efetivamente visíveis.
+- Nunca use uma imagem para inventar uma informação que não esteja visível.
+- Não copie caminhos de arquivos, nomes de arquivos, base64 ou conteúdo técnico para os campos funcionais.
+- Retorne somente um único objeto JSON.
+- Não use Markdown, blocos de código ou texto antes/depois do objeto JSON.
+- Use aspas duplas em chaves e valores.
+- Não coloque vírgula após o último campo de objeto ou lista.
 
 Retorne exatamente a estrutura solicitada pelo schema.
 """
