@@ -2,7 +2,7 @@
 
 Automação de testes funcionais do **OWASP Juice Shop** utilizando a interface real da aplicação, Playwright, Python, Docker e geração de evidências e relatórios.
 
-## 1. Objetivo
+## 1. Objetivo do projeto
 
 O objetivo deste projeto é automatizar a execução de cenários funcionais do OWASP Juice Shop de forma **reprodutível, rastreável e baseada em evidências reais da interface**.
 
@@ -100,7 +100,7 @@ juice-shop-execution/
 └── README.md
 ```
 
-## 5. Passo a passo para executar o projeto
+## 5. Passo a passo para executar
 
 ### Fluxo rápido
 
