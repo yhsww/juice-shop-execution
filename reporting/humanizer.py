@@ -107,7 +107,7 @@ def humanize_scenario(
     output_dir: Path,
     force: bool = False,
 ) -> dict[str, Any]:
-    model = __import__("os").environ.get("REPORTING_LLM_MODEL", "gpt-6.2-sol")
+    model = __import__("os").environ.get("REPORTING_LLM_MODEL", "kimi-k3.1-pro")
     catalog = prepare_catalog(scenario)
     evidence = prepare_execution(execution)
     path = output_dir / f"{scenario['id']}.json"
