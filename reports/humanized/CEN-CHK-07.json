@@ -1,32 +1,33 @@
 {
   "scenario_id": "CEN-CHK-07",
-  "fingerprint": "ccd2ee5ad5d213fac0739f54710de3e40987d584d5166c5ac4dedb23515eb7cd",
+  "fingerprint": "ebb0bbe46a7cf8013cdeaea22dae0ab39225dbea112123bf4a6d89ee2e2c2995",
   "content": {
-    "flow": "Na tela de opções de pagamento, o cliente expandiu a seção Add new card, preencheu os campos Name com Cliente Teste, Card Number com 4000000000000002, selecionou Expiry Month 12 e Expiry Year 2090, e acionou o botão Submit para salvar o cartão de crédito.",
+    "flow": "Na tela My Payment Options, o ator expandiu a seção Add new card, preencheu os campos Name com Cliente Teste, Card Number com 4000000000000002, Expiry Month com 12 e Expiry Year com 2090. Em seguida, acionou o botão Submit, resultando na gravação do cartão com final 0002 e exibição de notificação de sucesso.",
     "precondition": "Cliente autenticado; método de entrega selecionado.",
-    "observed_result": "O cartão de crédito cadastrado foi listado na seção My Payment Options exibindo o final ************0002, o nome Cliente Teste e a validade 12/2090, acompanhado da mensagem de confirmação de salvamento.",
+    "observed_result": "O cartão de crédito com final 0002 foi cadastrado com sucesso, exibindo os dados mascarados, nome do titular e validade na listagem de opções de pagamento, acompanhado da mensagem de confirmação correspondente.",
     "messages": [
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!",
       "Your card ending with 0002 has been saved for your convenience."
     ],
-    "data": "Número de teste: 4000000000000002; Nome: Cliente Teste; Mês: 12; Ano: 2090",
+    "data": "Número de teste: 4000000000000002; validade 12/2090 e nome Cliente Teste.",
     "steps": [
       {
         "number": 1,
         "action": "Abrir a rota",
         "data": "",
-        "response": "A página My Payment Options foi exibida contendo as seções Add new card, Pay using wallet, Add a coupon e Other payment options."
+        "response": "A página My Payment Options foi exibida contendo as opções Add new card, Pay using wallet, Add a coupon e Other payment options."
       },
       {
         "number": 2,
         "action": "Clicar em \"Add new card\"",
         "data": "",
-        "response": "A seção Add new card foi expandida exibindo os campos Name, Card Number, Expiry Month, Expiry Year e o botão Submit."
+        "response": "A seção Add new card foi expandida, revelando os campos Name, Card Number, Expiry Month, Expiry Year e o botão Submit."
       },
       {
         "number": 3,
         "action": "Aguardar a atualização da interface",
         "data": "",
-        "response": "A interface permaneceu estável com o formulário de cadastro de cartão exibido."
+        "response": "Nenhuma mudança visual adicional registrada."
       },
       {
         "number": 4,
@@ -38,7 +39,7 @@
         "number": 5,
         "action": "Preencher \"Card Number\"",
         "data": "4000000000000002",
-        "response": "O campo Card Number foi preenchido com o número 4000000000000002 e o indicador de tamanho passou a exibir 16/16."
+        "response": "O campo Card Number foi preenchido com o número do cartão e o indicador de dígitos passou a exibir 16/16."
       },
       {
         "number": 6,
@@ -56,13 +57,13 @@
         "number": 8,
         "action": "Clicar em \"Submit\"",
         "data": "",
-        "response": "O cartão cadastrado ************0002 com o nome Cliente Teste e validade 12/2090 apareceu listado na parte superior da página e a notificação Your card ending with 0002 has been saved for your convenience. foi exibida."
+        "response": "O cartão de crédito foi salvo, aparecendo na lista superior com a numeração mascarada ************0002, nome Cliente Teste e validade 12/2090, junto à mensagem de sucesso."
       },
       {
         "number": 9,
         "action": "Aguardar a atualização da interface",
         "data": "",
-        "response": "Nenhuma resposta adicional registrada."
+        "response": "Nenhuma mudança visual adicional registrada, mantendo o cartão listado e a mensagem visível."
       }
     ]
   }

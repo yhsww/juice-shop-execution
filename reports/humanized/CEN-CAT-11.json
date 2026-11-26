@@ -1,10 +1,10 @@
 {
   "scenario_id": "CEN-CAT-11",
-  "fingerprint": "291c0ba2a34dfbb6462a52f54d1005845cf03da4be2b0d6ab87fb8122ad223bb",
+  "fingerprint": "8f7c01f1c3642edbdddb248a417845e72c1357d8bea30c469c9e651d5beae879",
   "content": {
-    "flow": "O cliente abriu a rota principal da loja de sucos e conferiu a exibição correta do preço associado ao produto Apple Juice no catálogo.",
+    "flow": "Na tela inicial da aplicação OWASP Juice Shop, o ator acessou a rota /#/ para conferir o catálogo, onde o produto Apple Juice (1000ml) é exibido juntamente com seu preço e o botão Add to Basket.",
     "precondition": "Catálogo disponível.",
-    "observed_result": "A página de catálogo foi carregada exibindo o produto Apple Juice (1000ml) acompanhado do preço de 1.99¤ e do botão Add to Basket.",
+    "observed_result": "A página de produtos foi carregada exibindo o item Apple Juice (1000ml) com o preço de 1.99¤ e o botão Add to Basket.",
     "messages": [],
     "data": "Produto: Apple Juice.",
     "steps": [
@@ -12,13 +12,13 @@
         "number": 1,
         "action": "O usuário abriu a rota /#/",
         "data": "/#/",
-        "response": "A página principal do OWASP Juice Shop foi carregada exibindo o catálogo de produtos e o item Apple Juice (1000ml) com o preço de 1.99¤."
+        "response": "A interface exibiu a página principal de produtos com o título All Products, contendo o cartão do produto Apple Juice (1000ml) com a imagem do suco, o preço de 1.99¤ e o botão Add to Basket."
       },
       {
         "number": 2,
         "action": "O usuário aguardou a atualização da interface",
         "data": "",
-        "response": "A interface permaneceu estável com o produto Apple Juice (1000ml) e seu respectivo preço de 1.99¤ visíveis no catálogo."
+        "response": "Nenhuma mudança visual relevante detectada, mantendo o produto Apple Juice (1000ml) visível com o preço de 1.99¤."
       }
     ]
   }

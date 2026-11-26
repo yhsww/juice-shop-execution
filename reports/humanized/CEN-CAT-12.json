@@ -1,10 +1,10 @@
 {
   "scenario_id": "CEN-CAT-12",
-  "fingerprint": "3fea51efe31f366e02db1bac1a291fdebba8a3a769f9e842730a4c72389e4ee5",
+  "fingerprint": "58641c50443cff0ff3437efeef995c4b8e149c1756622d2291c52ce21100b0be",
   "content": {
-    "flow": "O usuário acessou o catálogo de produtos, selecionou o item Apple Juice (1000ml) e visualizou a janela de detalhes com a respectiva área de avaliações.",
+    "flow": "Na página inicial do catálogo de produtos, o cliente localizou o item Apple Juice (1000ml) e clicou sobre ele para abrir os detalhes do produto, verificando em seguida a seção de avaliações exibida na janela modal.",
     "precondition": "Catálogo disponível.",
-    "observed_result": "A janela de detalhes do produto Apple Juice (1000ml) foi exibida na tela, contendo a imagem do produto, a descrição \"The all-time classic.\", o preço de 1.99¤ e a seção \"Reviews (2)\" visível, acompanhada pelo botão Close.",
+    "observed_result": "A janela modal de detalhes do produto Apple Juice (1000ml) foi aberta, exibindo a imagem do produto, a descrição \"The all-time classic.\", o preço de 1.99¤ e a seção \"Reviews (2)\" acompanhada de um botão \"Close\".",
     "messages": [
       "Language has been changed to English Force page reload"
     ],
@@ -12,21 +12,21 @@
     "steps": [
       {
         "number": 1,
-        "action": "O usuário abriu a rota inicial do catálogo.",
+        "action": "Abrir a rota inicial da aplicação.",
         "data": "/#/",
-        "response": "A tela principal do OWASP Juice Shop foi exibida listando diversos produtos, incluindo o item Apple Juice (1000ml) com preço de 1.99¤ e o botão Add to Basket."
+        "response": "A página inicial foi carregada exibindo a listagem de produtos com itens como Apple Juice (1000ml), Apple Pomace, Banana Juice (1000ml) e Basil Smoothie, além do banner de cookies e do seletor de idioma."
       },
       {
         "number": 2,
-        "action": "O usuário clicou no cartão do produto Apple Juice.",
-        "data": "Apple Juice",
-        "response": "Um modal de detalhes do produto foi aberto sobrepondo a tela, exibindo o título Apple Juice (1000ml), a descrição \"The all-time classic.\", o preço 1.99¤ e a seção \"Reviews (2)\"."
+        "action": "Clicar no cartão do produto Apple Juice.",
+        "data": "Apple Juice (1000ml)",
+        "response": "A interface abriu uma janela modal centralizada sobre o catálogo contendo a imagem do Apple Juice (1000ml), o título \"Apple Juice (1000ml)\", a descrição \"The all-time classic.\", o preço \"1.99¤\", o componente expansível \"Reviews (2)\" e o botão \"Close\"."
       },
       {
         "number": 3,
-        "action": "O usuário aguardou a atualização e consolidação da interface.",
-        "data": "Nenhuma",
-        "response": "O modal com os detalhes e as avaliações do produto Apple Juice (1000ml) permaneceu aberto e totalmente visível na interface."
+        "action": "Aguardar a atualização da interface.",
+        "data": "Nenhum dado adicional.",
+        "response": "A interface permaneceu estável com a janela modal de detalhes do produto e a seção de avaliações visíveis."
       }
     ]
   }

@@ -1,10 +1,10 @@
 {
   "scenario_id": "CEN-CHK-28",
-  "fingerprint": "d3a8981365e93ac1f443952e66520761d9985b2b64ed7dc3b3e160d14dd41f0b",
+  "fingerprint": "de0d1709cc170ff5edc3c4b5d6a28ee9c9c15b7d28b5d235b0c4a7d389763839",
   "content": {
-    "flow": "Na tela do carrinho Your Basket contendo o produto Apple Juice (1000ml), o cliente acionou Checkout, selecionou o endereço Rua Teste, 100 em Fortaleza/CE, escolheu a velocidade de entrega Standard Delivery, selecionou o cartão com final 0002, revisou o resumo do pedido e concluiu a compra pelo botão Complete your purchase.",
+    "flow": "O cliente iniciou o fluxo de compra acessando a tela de carrinho contendo o produto Apple Juice (1000ml), prosseguiu para a seleção de endereço escolhendo a Rua Teste, 100 em Fortaleza/CE, selecionou o método de entrega Standard Delivery, escolheu a forma de pagamento com o cartão terminado em 0002 em nome de Cliente Teste, revisou o resumo do pedido e concluiu a compra com sucesso.",
     "precondition": "Cliente autenticado; carrinho contém produto; endereço Rua Teste, 100 cadastrado; método de entrega disponível; cartão de teste terminado em 0002 cadastrado.",
-    "observed_result": "O pedido foi processado com sucesso, exibindo a tela de confirmação com a mensagem de agradecimento, o endereço de entrega, o resumo com o produto Apple Juice (1000ml) no valor de 1.99¤, a estimativa de entrega em 5 dias e o carrinho esvaziado com indicador zerado.",
+    "observed_result": "O pedido foi finalizado com sucesso, exibindo a tela de confirmação com a mensagem \"Thank you for your purchase!\", o resumo detalhado do produto Apple Juice (1000ml) no valor de 1.99¤, o endereço de entrega cadastrado e o método de pagamento selecionado.",
     "messages": [
       "Thank you for your purchase!",
       "Your order has been placed and is being processed.",
@@ -12,97 +12,97 @@
       "Your order will be delivered in 5 days.",
       "You have gained 0 Bonus Points from this order!"
     ],
-    "data": "Produto: Apple Juice (1000ml); Quantidade: 1; Preço: 1.99¤; Endereço: Rua Teste, 100, Fortaleza, CE, 60000000 Brazil; Entrega: Standard Delivery; Cartão: ************0002",
+    "data": "Produto: Apple Juice (1000ml); Quantidade: 1; Preço: 1.99¤; Endereço: Rua Teste, 100, Fortaleza, CE, 60000000 Brazil; Telefone: 8599999999; Método de entrega: Standard Delivery; Opção de pagamento: Cartão terminado em 0002",
     "steps": [
       {
         "number": 1,
         "action": "Abrir a rota do carrinho",
         "data": "",
-        "response": "A tela Your Basket foi exibida contendo o produto Apple Juice (1000ml) com quantidade 1 e preço Total de 1.99¤, além do botão Checkout visível."
+        "response": "A tela \"Your Basket\" foi exibida contendo o produto Apple Juice (1000ml) com quantidade 1, preço unitário de 1.99¤, preço total de 1.99¤ e o botão \"Checkout\" habilitado."
       },
       {
         "number": 2,
-        "action": "Clicar em Checkout",
+        "action": "Clicar em \"Checkout\"",
         "data": "",
-        "response": "A interface exibiu a tela Select an address listando o endereço Cliente Teste na Rua Teste, 100, Fortaleza, CE, 60000000 Brazil e o botão Continue desabilitado."
+        "response": "A interface exibiu a tela \"Select an address\" mostrando o endereço cadastrado Cliente Teste, Rua Teste, 100, Fortaleza, CE, 60000000 Brazil e o botão \"Continue\"."
       },
       {
         "number": 3,
         "action": "Aguardar a atualização da interface",
         "data": "",
-        "response": "Nenhuma resposta adicional registrada."
+        "response": "Nenhuma mudança visual adicional registrada."
       },
       {
         "number": 4,
-        "action": "Clicar no endereço Rua Teste, 100",
+        "action": "Clicar no endereço \"Rua Teste, 100\"",
         "data": "Rua Teste, 100",
-        "response": "O endereço foi selecionado com um marcador circular preenchido e o botão Continue tornou-se disponível."
+        "response": "O elemento correspondente ao endereço foi selecionado na listagem."
       },
       {
         "number": 5,
-        "action": "Clicar em Continue",
+        "action": "Clicar em \"Continue\"",
         "data": "",
-        "response": "A tela Delivery Address e a seção Choose a delivery speed foram exibidas com as opções One Day Delivery, Fast Delivery e Standard Delivery."
+        "response": "A interface exibiu a tela de seleção de entrega \"Choose a delivery speed\" com as opções One Day Delivery (0.99¤), Fast Delivery (0.50¤) e Standard Delivery (0.00¤)."
       },
       {
         "number": 6,
         "action": "Aguardar a atualização da interface",
         "data": "",
-        "response": "Nenhuma resposta adicional registrada."
+        "response": "Nenhuma mudança visual adicional registrada."
       },
       {
         "number": 7,
-        "action": "Clicar em Standard Delivery",
+        "action": "Clicar em \"Standard Delivery\"",
         "data": "Standard Delivery",
-        "response": "A opção Standard Delivery (0.00¤, 5 Days) foi selecionada com o marcador circular preenchido e o botão Continue habilitado."
+        "response": "A opção de envio \"Standard Delivery\" (0.00¤, 5 Days) foi selecionada na listagem."
       },
       {
         "number": 8,
-        "action": "Clicar em Continue",
+        "action": "Clicar em \"Continue\"",
         "data": "",
-        "response": "A tela My Payment Options foi exibida contendo o cartão cadastrado ************0002 em nome de Cliente Teste."
+        "response": "A interface exibiu a tela \"My Payment Options\" contendo o cartão cadastrado ************0002, o saldo da carteira (0.00) e os botões de navegação."
       },
       {
         "number": 9,
         "action": "Aguardar a atualização da interface",
         "data": "",
-        "response": "Nenhuma resposta adicional registrada."
+        "response": "Nenhuma mudança visual adicional registrada."
       },
       {
         "number": 10,
-        "action": "Clicar no cartão final 0002",
+        "action": "Clicar no cartão \"0002\"",
         "data": "0002",
-        "response": "O cartão de crédito foi selecionado com o marcador circular preenchido e o botão Continue foi habilitado."
+        "response": "O cartão de crédito finalizado em 0002 foi selecionado na lista de opções de pagamento."
       },
       {
         "number": 11,
         "action": "Aguardar a atualização da interface",
         "data": "",
-        "response": "Nenhuma resposta adicional registrada."
+        "response": "Nenhuma mudança visual adicional registrada."
       },
       {
         "number": 12,
-        "action": "Clicar em Continue",
+        "action": "Clicar em \"Continue\"",
         "data": "",
-        "response": "A tela Order Summary foi exibida mostrando o endereço de entrega, o método de pagamento com o cartão 0002, o resumo do carrinho com o item Apple Juice (1000ml) e o botão Place your order and pay."
+        "response": "A interface exibiu a tela \"Order Summary\" com o endereço de entrega, método de pagamento (Card ending in 0002), resumo de itens (1.99¤), frete (0.00¤), valor total (1.99¤) e o botão \"Place your order and pay\"."
       },
       {
         "number": 13,
         "action": "Aguardar a atualização da interface",
         "data": "",
-        "response": "Nenhuma resposta adicional registrada."
+        "response": "Nenhuma mudança visual adicional registrada."
       },
       {
         "number": 14,
-        "action": "Clicar em Place your order and pay",
+        "action": "Clicar em \"Complete your purchase\" / \"Place your order and pay\"",
         "data": "",
-        "response": "A tela de confirmação de pedido foi exibida com a mensagem Thank you for your purchase! e os detalhes do pedido."
+        "response": "O pedido foi processado e a interface redirecionou para a tela de confirmação de compra."
       },
       {
         "number": 15,
         "action": "Aguardar a atualização da interface",
         "data": "",
-        "response": "A página confirmou que o pedido foi feito e está sendo processado, indicando entrega em 5 dias e carrinho zerado."
+        "response": "A tela de confirmação exibiu o título \"Thank you for your purchase!\", as instruções de entrega em 5 dias, o endereço do Cliente Teste e o sumário final do pedido contendo o item Apple Juice (1000ml) e o valor total de 1.99¤."
       }
     ]
   }

@@ -1,33 +1,33 @@
 {
   "scenario_id": "CEN-CHK-20",
-  "fingerprint": "a0389d7a48e487ca602a112924827a84014c62840702c8ce92f760bbfe4f55eb",
+  "fingerprint": "9ebd74b06a39dea2c0ecd17f38020e3b3b5b4f1325fb921530c0f09408d1d4e4",
   "content": {
-    "flow": "Na tela Order History, o cliente localizou o pedido com ID #44a3-4f3afa9378fad1f6 exibindo o status In Transit. Em seguida, clicou no ícone de rastreamento associado ao pedido para conferir os detalhes logísticos, sendo redirecionado para a tela Search Results com a previsão de entrega de 5 dias e a listagem do produto Apple Juice (1000ml).",
+    "flow": "O cliente abriu o histórico de pedidos na rota para consultar o pedido concluído. Em seguida, acionou o rastreamento do pedido #d9e0-077edcda7015af96 e visualizou a tela de status detalhada contendo a previsão de entrega de 5 dias e a relação do produto Apple Juice (1000ml).",
     "precondition": "Cliente autenticado; pedido concluído.",
-    "observed_result": "A tela de resultados de rastreamento exibiu o ID do pedido #44a3-4f3afa9378fad1f6, a indicação de entrega esperada em 5 dias, a relação de produtos encomendados contendo Apple Juice (1000ml) com quantidade 1 e preço total de 1.99¤, além da pontuação de bônus obtida.",
+    "observed_result": "A interface exibiu os resultados da pesquisa de rastreamento para o pedido #d9e0-077edcda7015af96, informando o status com previsão de entrega de 5 Days e listando o produto Apple Juice (1000ml) com preço de 1.99¤, quantidade 1, total 1.99¤ e indicação de 0 pontos de bônus obtidos.",
     "messages": [
-      "Placed Apple Juice (1000ml) into basket.",
-      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!"
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!",
+      "Placed Apple Juice (1000ml) into basket."
     ],
-    "data": "Pedido de teste com ID #44a3-4f3afa9378fad1f6 e produto Apple Juice (1000ml).",
+    "data": "Pedido de teste com ID #d9e0-077edcda7015af96, contendo o produto Apple Juice (1000ml) com quantidade 1 e valor total de 1.99¤.",
     "steps": [
       {
         "number": 1,
-        "action": "Abrir a rota para acessar o histórico de pedidos.",
+        "action": "Abrir a rota",
         "data": "",
-        "response": "A página Order History foi exibida contendo o pedido com ID #44a3-4f3afa9378fad1f6, preço total de 1.99¤, bônus 0, status In Transit e a tabela de produtos listando Apple Juice (1000ml) com quantidade 1 e preço 1.99¤."
+        "response": "A página de histórico de pedidos foi exibida, contendo a tabela Order History com o registro do pedido ID #d9e0-077edcda7015af96, preço total de 1.99¤, bônus 0, status In Transit, acompanhado do detalhamento do produto Apple Juice (1000ml), preço 1.99¤, quantidade 1 e total de 1.99¤."
       },
       {
         "number": 2,
-        "action": "Clicar no ícone de rastreamento na linha do pedido correspondente.",
+        "action": "Clicar em \"Track Your Order\"",
         "data": "",
-        "response": "A interface foi redirecionada para a tela de rastreamento exibindo o título Search Results - 44a3-4f3afa9378fad1f6, o ícone gráfico de progresso de entrega, a previsão de Expected Delivery 5 Days e os produtos encomendados contendo Apple Juice (1000ml)."
+        "response": "A interface navegou para a tela de resultados de rastreamento do pedido #d9e0-077edcda7015af96, exibindo o título Search Results, a indicação de entrega esperada em 5 Days, os produtos ordenados contendo Apple Juice (1000ml) (1.99¤, quantidade 1) e a informação de que foram obtidos 0 Bonus Points Earned."
       },
       {
         "number": 3,
-        "action": "Aguardar a atualização da interface.",
+        "action": "Aguardar a atualização da interface",
         "data": "",
-        "response": "Nenhuma resposta adicional registrada."
+        "response": "Nenhuma mudança visual relevante detectada, mantendo a exibição da tela de resultados de rastreamento com a previsão de entrega de 5 Days e o detalhamento do produto Apple Juice (1000ml)."
       }
     ]
   }

@@ -14,20 +14,13 @@
       "success": true,
       "screenshot": "C:/Users/Asus/Desktop/juice-shop-execution-v2/reports/executions/CEN-CHK-08_step_01.png",
       "error": null,
-      "timestamp": "2026-11-26T00:16:43.561153+00:00",
+      "timestamp": "2026-11-26T12:26:42.260645+00:00",
       "visible_text_before": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options ************0002 Cliente Teste 12/2090 Add new card Add a credit or debit card Pay using wallet Wallet Balance 0.00 Pay NaN¤ Add a coupon Add a coupon code to receive discounts Other payment options navigate_before Back You can review this order before it is finalized. navigate_next Continue",
       "visible_text_after": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options ************0002 Cliente Teste 12/2090 Add new card Add a credit or debit card Pay using wallet Wallet Balance 0.00 Pay NaN¤ Add a coupon Add a coupon code to receive discounts Other payment options navigate_before Back You can review this order before it is finalized. navigate_next Continue",
       "messages": [],
       "action_id": "CEN-CHK-08-A-01",
       "network": [],
-      "network_summary": {
-        "requests": 0,
-        "responses": 0,
-        "api_responses": 0,
-        "failed_requests": 0,
-        "methods": [],
-        "status_codes": []
-      },
+      "network_summary": "Coleta de rede não habilitada.",
       "controls": []
     },
     {
@@ -42,20 +35,13 @@
       "success": true,
       "screenshot": "C:/Users/Asus/Desktop/juice-shop-execution-v2/reports/executions/CEN-CHK-08_step_02.png",
       "error": null,
-      "timestamp": "2026-11-26T00:16:44.763325+00:00",
+      "timestamp": "2026-11-26T12:26:43.495348+00:00",
       "visible_text_before": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options ************0002 Cliente Teste 12/2090 Add new card Add a credit or debit card Pay using wallet Wallet Balance 0.00 Pay NaN¤ Add a coupon Add a coupon code to receive discounts Other payment options navigate_before Back You can review this order before it is finalized. navigate_next Continue",
       "visible_text_after": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options ************0002 Cliente Teste 12/2090 Add new card Add a credit or debit card Pay using wallet Wallet Balance 0.00 Pay NaN¤ Add a coupon Add a coupon code to receive discounts Other payment options navigate_before Back You can review this order before it is finalized. navigate_next Continue",
       "messages": [],
       "action_id": "CEN-CHK-08-A-02",
       "network": [],
-      "network_summary": {
-        "requests": 0,
-        "responses": 0,
-        "api_responses": 0,
-        "failed_requests": 0,
-        "methods": [],
-        "status_codes": []
-      },
+      "network_summary": "Coleta de rede não habilitada.",
       "controls": []
     },
     {
@@ -70,7 +56,7 @@
       "success": true,
       "screenshot": "C:/Users/Asus/Desktop/juice-shop-execution-v2/reports/executions/CEN-CHK-08_step_03.png",
       "error": null,
-      "timestamp": "2026-11-26T00:16:48.173070+00:00",
+      "timestamp": "2026-11-26T12:26:48.921342+00:00",
       "visible_text_before": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options ************0002 Cliente Teste 12/2090 Add new card Add a credit or debit card Pay using wallet Wallet Balance 0.00 Pay NaN¤ Add a coupon Add a coupon code to receive discounts Other payment options navigate_before Back You can review this order before it is finalized. navigate_next Continue",
       "visible_text_after": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options ************0002 Cliente Teste 12/2090 Add new card Add a credit or debit card Pay using wallet Wallet Balance 0.00 Pay NaN¤ Add a coupon Add a coupon code to receive discounts Other payment options navigate_before Back You can review this order before it is finalized. navigate_next Continue",
       "messages": [
@@ -82,14 +68,7 @@
       ],
       "action_id": "CEN-CHK-08-A-03",
       "network": [],
-      "network_summary": {
-        "requests": 0,
-        "responses": 0,
-        "api_responses": 0,
-        "failed_requests": 0,
-        "methods": [],
-        "status_codes": []
-      },
+      "network_summary": "Coleta de rede não habilitada.",
       "controls": []
     },
     {
@@ -104,20 +83,13 @@
       "success": true,
       "screenshot": "C:/Users/Asus/Desktop/juice-shop-execution-v2/reports/executions/CEN-CHK-08_step_04.png",
       "error": null,
-      "timestamp": "2026-11-26T00:16:49.029403+00:00",
+      "timestamp": "2026-11-26T12:26:49.833563+00:00",
       "visible_text_before": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options ************0002 Cliente Teste 12/2090 Add new card Add a credit or debit card Pay using wallet Wallet Balance 0.00 Pay NaN¤ Add a coupon Add a coupon code to receive discounts Other payment options navigate_before Back You can review this order before it is finalized. navigate_next Continue",
       "visible_text_after": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options ************0002 Cliente Teste 12/2090 Add new card Add a credit or debit card Pay using wallet Wallet Balance 0.00 Pay NaN¤ Add a coupon Add a coupon code to receive discounts Other payment options navigate_before Back You can review this order before it is finalized. navigate_next Continue",
       "messages": [],
       "action_id": "CEN-CHK-08-A-04",
       "network": [],
-      "network_summary": {
-        "requests": 0,
-        "responses": 0,
-        "api_responses": 0,
-        "failed_requests": 0,
-        "methods": [],
-        "status_codes": []
-      },
+      "network_summary": "Coleta de rede não habilitada.",
       "controls": []
     }
   ],
@@ -130,22 +102,7 @@
     "My Payment Options ************0002 Cliente Teste 12/2090 Add new card Add a credit or debit card Pay using wallet Wallet Balance 0.00 Pay NaN¤ Add a coupon Add a coupon code to receive discounts Other payment options navigate_before Back You can review this order before it is finalized. navigate_next Continue"
   ],
   "final_url": "http://127.0.0.1:3000/#/payment/shop",
-  "network_summary": {
-    "requests": 97,
-    "responses": 97,
-    "api_responses": 57,
-    "failed_requests": 1,
-    "methods": [
-      "GET",
-      "POST"
-    ],
-    "status_codes": [
-      200,
-      201,
-      304,
-      401
-    ]
-  },
+  "network_summary": "Coleta de rede não habilitada.",
   "final_visible_text": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options ************0002 Cliente Teste 12/2090 Add new card Add a credit or debit card Pay using wallet Wallet Balance 0.00 Pay NaN¤ Add a coupon Add a coupon code to receive discounts Other payment options navigate_before Back You can review this order before it is finalized. navigate_next Continue",
   "validation": {
     "passed": true,

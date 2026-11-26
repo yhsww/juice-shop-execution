@@ -1,34 +1,43 @@
 {
   "scenario_id": "CEN-IDT-16",
-  "fingerprint": "24910c8a8a3837aa06ab631f8e6efd857ea7fb7a13599194202f6877d8af7f57",
+  "fingerprint": "7914fcd09a281761ecb5c2686ce631e64bec959035881777804305722e888aa8",
   "content": {
-    "flow": "Na tela de cadastro de usuário, o cliente preencheu o campo Email com um dado em formato inválido e aguardou a atualização da interface.",
-    "precondition": "A tela de cadastro de usuário está aberta.",
-    "observed_result": "O campo Email exibe o valor preenchido e a interface mantém a estrutura do formulário de registro, sem alteração adicional de estado após a espera.",
+    "flow": "Na tela de cadastro, o ator inseriu um endereço de e-mail em formato inválido no campo Email e aguardou a atualização da interface.",
+    "precondition": "Tela de cadastro aberta.",
+    "observed_result": "O campo Email foi preenchido com o valor informado e a interface manteve-se na tela de User Registration sem alterações visuais adicionais.",
     "messages": [
+      "User Registration",
+      "Email*",
+      "Password*",
       "Password must be 5-40 characters long.",
+      "Repeat Password*",
+      "Show password advice",
+      "Security Question *",
       "This cannot be changed later!",
-      "Already a customer?"
+      "Answer*",
+      "Register",
+      "Already a customer?",
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!"
     ],
     "data": "E-mail: teste-sem-formato",
     "steps": [
       {
         "number": 1,
-        "action": "Abrir a rota de cadastro",
+        "action": "Abrir a rota",
         "data": "",
-        "response": "A página User Registration foi carregada exibindo os campos Email, Password, Repeat Password, Security Question e Answer, além do botão Register desabilitado."
+        "response": "A página User Registration foi carregada exibindo os campos Email*, Password*, Repeat Password*, Security Question * e Answer*, além do banner de cookies na parte inferior direita."
       },
       {
         "number": 2,
-        "action": "Preencher o campo Email address",
+        "action": "Preencher \"Email address\"",
         "data": "teste-sem-formato",
-        "response": "O texto informando o e-mail sem formato válido passou a ser exibido dentro do campo Email."
+        "response": "O texto teste-sem-formato foi inserido no campo Email* da tela de cadastro."
       },
       {
         "number": 3,
         "action": "Aguardar a atualização da interface",
-        "data": "Nenhum dado informado",
-        "response": "Nenhuma mudança visual adicional foi detectada na interface."
+        "data": "",
+        "response": "Nenhuma mudança visual relevante detectada. O formulário de User Registration permaneceu inalterado com o valor informado no campo de e-mail."
       }
     ]
   }

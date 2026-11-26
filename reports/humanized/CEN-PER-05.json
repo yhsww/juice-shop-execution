@@ -1,0 +1,28 @@
+{
+  "scenario_id": "CEN-PER-05",
+  "fingerprint": "9bb9c228eb1ea0bbc53894196a0396ba819bb951495789e829f5a7634f39eed8",
+  "content": {
+    "flow": "O cliente autenticado navega diretamente para a URL de alteração de senha, resultando na exibição do formulário Change Password, que contém os campos Current Password, New Password e Repeat New Password, além do botão de ação Change.",
+    "precondition": "O cliente está devidamente autenticado na plataforma.",
+    "observed_result": "A tela de alteração de senha foi carregada com sucesso, apresentando os campos necessários para a redefinição de senha e o botão Change desabilitado, conforme o estado inicial da página.",
+    "messages": [
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!",
+      "Password must be 5-40 characters long."
+    ],
+    "data": "Acesso à rota de alteração de senha:",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Navegação para a rota de alteração de senha",
+        "data": "",
+        "response": "A interface redirecionou o usuário para a página de alteração de senha, exibindo o título 'Change Password' e os campos 'Current Password', 'New Password' e 'Repeat New Password'."
+      },
+      {
+        "number": 2,
+        "action": "Aguardar estabilização da interface",
+        "data": "Nenhum dado adicional",
+        "response": "A página permaneceu estável na rota de alteração de senha, com os campos de entrada visíveis e o botão 'Change' inalterado na interface."
+      }
+    ]
+  }
+}

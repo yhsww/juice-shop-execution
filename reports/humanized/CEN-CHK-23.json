@@ -1,30 +1,26 @@
 {
   "scenario_id": "CEN-CHK-23",
-  "fingerprint": "72cf826c4fad74482ece630d62fc81f9c257f31e47f363334a0f053b2853fd4f",
+  "fingerprint": "a1f8f845c349c94cb8f3e65acf2372f98c4f1c028836769cc6c8e79dd1dd6244",
   "content": {
-    "flow": "O cliente iniciou o fluxo de checkout acessando a tela de seleção de endereço sem possuir um endereço selecionado.",
-    "precondition": "Carrinho com produto e nenhum endereço selecionado.",
-    "observed_result": "A tela \"Select an address\" foi exibida contendo o endereço cadastrado do Cliente Teste (Rua Teste, 100, Fortaleza, CE, 60000000, Brazil) com o botão \"Continue\" desativado e a opção de adicionar um novo endereço disponível.",
+    "flow": "Na tela de métodos de entrega, o cliente iniciou o checkout navegando para a rota de seleção de endereço de entrega, exibindo a interface com o título Select an address, um endereço cadastrado e inativo e os controles Add New Address e Continue desabilitado.",
+    "precondition": "Carrinho com produto; nenhum endereço selecionado.",
+    "observed_result": "A aplicação exibiu a página de seleção de endereço com o endereço Cliente Teste listado e não selecionado, mantendo o botão Continue desabilitado por falta de seleção prévia de endereço válido.",
     "messages": [
-      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!",
-      "Select an address",
-      "Cliente Teste Rua Teste, 100, Fortaleza, CE, 60000000 Brazil",
-      "Add New Address",
-      "Continue"
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!"
     ],
-    "data": "Nenhum dado adicional.",
+    "data": "",
     "steps": [
       {
         "number": 1,
-        "action": "Abrir a rota de seleção de endereço.",
+        "action": "Abrir a rota",
         "data": "",
-        "response": "A interface exibiu a página \"Select an address\" com o endereço do Cliente Teste listado, o botão \"Add New Address\" e o botão \"Continue\" desativado."
+        "response": "A interface exibiu a página com o título Select an address, contendo o endereço Cliente Teste com os dados Rua Teste, 100, Fortaleza, CE, 60000000, Brazil, o botão Add New Address e o botão Continue desabilitado."
       },
       {
         "number": 2,
-        "action": "Aguardar a atualização da interface.",
+        "action": "Aguardar a atualização da interface",
         "data": "",
-        "response": "Nenhuma mudança visual relevante detectada, mantendo o estado da tela de seleção de endereço."
+        "response": "Nenhuma mudança visual relevante detectada, mantendo o estado anterior com o endereço não selecionado."
       }
     ]
   }

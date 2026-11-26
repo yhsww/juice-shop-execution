@@ -14,7 +14,7 @@
       "success": true,
       "screenshot": "C:/Users/Asus/Desktop/juice-shop-execution-v2/reports/executions/CEN-IDT-13_step_01.png",
       "error": null,
-      "timestamp": "2026-11-26T00:43:52.073236+00:00",
+      "timestamp": "2026-11-26T13:04:13.867637+00:00",
       "visible_text_before": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN All Products Items per page: 15 0 of 0",
       "visible_text_after": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN",
       "messages": [
@@ -22,182 +22,8 @@
         "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN"
       ],
       "action_id": "CEN-IDT-13-A-01",
-      "network": [
-        {
-          "sequence": 37,
-          "timestamp": 1795653829.9082606,
-          "kind": "request",
-          "method": "GET",
-          "url": "http://127.0.0.1:3000/rest/products/search?q=",
-          "status": null,
-          "resource_type": "fetch",
-          "action_id": "CEN-IDT-13-A-01",
-          "request_headers": {
-            "accept": "application/json, text/plain, */*",
-            "accept-encoding": "gzip, deflate, br, zstd",
-            "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
-            "authorization": "<redacted>",
-            "connection": "keep-alive",
-            "cookie": "<redacted>",
-            "host": "127.0.0.1:3000",
-            "if-none-match": "W/\"6953-navvEVDOnoCMTMSV7mvULHR6TRs\"",
-            "referer": "http://127.0.0.1:3000/",
-            "sec-fetch-dest": "empty",
-            "sec-fetch-mode": "cors",
-            "sec-fetch-site": "same-origin",
-            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/158.0.0.0 Safari/537.36",
-            "sec-ch-ua": "\"Not.A/Brand\";v=\"24\", \"Chromium\";v=\"158\"",
-            "sec-ch-ua-mobile": "?0",
-            "sec-ch-ua-platform": "\"Windows\""
-          },
-          "response_headers": null,
-          "error": ""
-        },
-        {
-          "sequence": 38,
-          "timestamp": 1795653829.9095852,
-          "kind": "response",
-          "method": "GET",
-          "url": "http://127.0.0.1:3000/rest/products/search?q=",
-          "status": 200,
-          "resource_type": "fetch",
-          "action_id": "CEN-IDT-13-A-01",
-          "request_headers": null,
-          "response_headers": {
-            "access-control-allow-origin": "*",
-            "connection": "keep-alive",
-            "date": "Thu, 26 Nov 2026 00:43:49 GMT",
-            "etag": "W/\"6953-navvEVDOnoCMTMSV7mvULHR6TRs\"",
-            "feature-policy": "payment 'self'",
-            "keep-alive": "timeout=5",
-            "x-content-type-options": "nosniff",
-            "x-frame-options": "SAMEORIGIN",
-            "x-recruiting": "/#/jobs"
-          },
-          "error": ""
-        },
-        {
-          "sequence": 39,
-          "timestamp": 1795653829.9176507,
-          "kind": "request",
-          "method": "GET",
-          "url": "http://127.0.0.1:3000/assets/public/favicon_js.ico",
-          "status": null,
-          "resource_type": "other",
-          "action_id": "CEN-IDT-13-A-01",
-          "request_headers": {
-            "accept": "image/jxl,image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
-            "accept-encoding": "gzip, deflate, br, zstd",
-            "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
-            "connection": "keep-alive",
-            "cookie": "<redacted>",
-            "host": "127.0.0.1:3000",
-            "if-modified-since": "Sun, 11 Oct 2026 22:37:21 GMT",
-            "if-none-match": "W/\"3aee-1a12d1d0ce8\"",
-            "referer": "http://127.0.0.1:3000/",
-            "sec-fetch-dest": "image",
-            "sec-fetch-mode": "no-cors",
-            "sec-fetch-site": "same-origin",
-            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/158.0.0.0 Safari/537.36",
-            "sec-ch-ua": "\"Not.A/Brand\";v=\"24\", \"Chromium\";v=\"158\"",
-            "sec-ch-ua-mobile": "?0",
-            "sec-ch-ua-platform": "\"Windows\""
-          },
-          "response_headers": null,
-          "error": ""
-        },
-        {
-          "sequence": 40,
-          "timestamp": 1795653829.918082,
-          "kind": "response",
-          "method": "GET",
-          "url": "http://127.0.0.1:3000/assets/public/favicon_js.ico",
-          "status": 200,
-          "resource_type": "other",
-          "action_id": "CEN-IDT-13-A-01",
-          "request_headers": null,
-          "response_headers": {
-            "accept-ranges": "bytes",
-            "access-control-allow-origin": "*",
-            "cache-control": "public, max-age=0",
-            "connection": "keep-alive",
-            "date": "Thu, 26 Nov 2026 00:43:49 GMT",
-            "etag": "W/\"3aee-1a12d1d0ce8\"",
-            "feature-policy": "payment 'self'",
-            "keep-alive": "timeout=5",
-            "last-modified": "Sun, 11 Oct 2026 22:37:21 GMT",
-            "x-content-type-options": "nosniff",
-            "x-frame-options": "SAMEORIGIN",
-            "x-recruiting": "/#/jobs"
-          },
-          "error": ""
-        },
-        {
-          "sequence": 41,
-          "timestamp": 1795653829.9751618,
-          "kind": "request",
-          "method": "GET",
-          "url": "http://127.0.0.1:3000/api/Quantitys/",
-          "status": null,
-          "resource_type": "fetch",
-          "action_id": "CEN-IDT-13-A-01",
-          "request_headers": {
-            "accept": "application/json, text/plain, */*",
-            "accept-encoding": "gzip, deflate, br, zstd",
-            "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
-            "authorization": "<redacted>",
-            "connection": "keep-alive",
-            "cookie": "<redacted>",
-            "host": "127.0.0.1:3000",
-            "if-none-match": "W/\"1dcc-iwTsJZz493tfxYfMt5JQcgOqy3k\"",
-            "referer": "http://127.0.0.1:3000/",
-            "sec-fetch-dest": "empty",
-            "sec-fetch-mode": "cors",
-            "sec-fetch-site": "same-origin",
-            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/158.0.0.0 Safari/537.36",
-            "sec-ch-ua": "\"Not.A/Brand\";v=\"24\", \"Chromium\";v=\"158\"",
-            "sec-ch-ua-mobile": "?0",
-            "sec-ch-ua-platform": "\"Windows\""
-          },
-          "response_headers": null,
-          "error": ""
-        },
-        {
-          "sequence": 42,
-          "timestamp": 1795653829.9758697,
-          "kind": "response",
-          "method": "GET",
-          "url": "http://127.0.0.1:3000/api/Quantitys/",
-          "status": 200,
-          "resource_type": "fetch",
-          "action_id": "CEN-IDT-13-A-01",
-          "request_headers": null,
-          "response_headers": {
-            "access-control-allow-origin": "*",
-            "connection": "keep-alive",
-            "date": "Thu, 26 Nov 2026 00:43:49 GMT",
-            "etag": "W/\"1dcc-iwTsJZz493tfxYfMt5JQcgOqy3k\"",
-            "feature-policy": "payment 'self'",
-            "keep-alive": "timeout=5",
-            "x-content-type-options": "nosniff",
-            "x-frame-options": "SAMEORIGIN",
-            "x-recruiting": "/#/jobs"
-          },
-          "error": ""
-        }
-      ],
-      "network_summary": {
-        "requests": 3,
-        "responses": 3,
-        "api_responses": 2,
-        "failed_requests": 0,
-        "methods": [
-          "GET"
-        ],
-        "status_codes": [
-          200
-        ]
-      },
+      "network": [],
+      "network_summary": "Coleta de rede não habilitada.",
       "controls": []
     },
     {
@@ -212,20 +38,13 @@
       "success": true,
       "screenshot": "C:/Users/Asus/Desktop/juice-shop-execution-v2/reports/executions/CEN-IDT-13_step_02.png",
       "error": null,
-      "timestamp": "2026-11-26T00:43:53.243637+00:00",
+      "timestamp": "2026-11-26T13:04:15.098838+00:00",
       "visible_text_before": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN",
       "visible_text_after": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN",
       "messages": [],
       "action_id": "CEN-IDT-13-A-02",
       "network": [],
-      "network_summary": {
-        "requests": 0,
-        "responses": 0,
-        "api_responses": 0,
-        "failed_requests": 0,
-        "methods": [],
-        "status_codes": []
-      },
+      "network_summary": "Coleta de rede não habilitada.",
       "controls": []
     }
   ],
@@ -235,21 +54,7 @@
     "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN"
   ],
   "final_url": "http://127.0.0.1:3000/#/privacy-security",
-  "network_summary": {
-    "requests": 21,
-    "responses": 21,
-    "api_responses": 16,
-    "failed_requests": 0,
-    "methods": [
-      "GET",
-      "POST"
-    ],
-    "status_codes": [
-      200,
-      201,
-      401
-    ]
-  },
+  "network_summary": "Coleta de rede não habilitada.",
   "final_visible_text": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN",
   "validation": {
     "passed": true,

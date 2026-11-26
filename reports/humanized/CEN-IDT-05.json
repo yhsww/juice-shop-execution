@@ -1,36 +1,36 @@
 {
   "scenario_id": "CEN-IDT-05",
-  "fingerprint": "706db08ee57cfc3cd17bd31cbc6813807868928815c4232fb7a1f8b267f2f86f",
+  "fingerprint": "e06c6e2c0a807ba5e1a49e3f377524d2ed93ebb51829d73c2006fc1a4a72e1ab",
   "content": {
-    "flow": "Na página inicial da loja, o usuário abriu o menu Account e selecionou a opção Logout para encerrar a sessão autenticada.",
+    "flow": "Na página inicial da loja, o usuário acessou o menu Account, selecionou a opção de encerramento de sessão (Logout) e a interface foi atualizada para o estado deslogado.",
     "precondition": "Usuário autenticado.",
-    "observed_result": "A sessão do usuário foi encerrada com sucesso, retornando à tela inicial da aplicação e exibindo o menu de navegação padrão com o botão Account sem dados de usuário logado.",
+    "observed_result": "A sessão do usuário foi encerrada com sucesso, retornando a interface para o estado não autenticado com a opção de login disponível.",
     "messages": [],
     "data": "Nenhum dado adicional.",
     "steps": [
       {
         "number": 1,
-        "action": "Abrir a rota /#/",
+        "action": "Abrir a rota inicial da aplicação.",
         "data": "/#/",
-        "response": "A página inicial da loja OWASP Juice Shop foi exibida com o catálogo de produtos e um aviso de cookies no canto inferior direito."
+        "response": "A página inicial foi carregada exibindo o catálogo de produtos e o banner de cookies."
       },
       {
         "number": 2,
-        "action": "Clicar em \"Account\"",
-        "data": "",
-        "response": "O menu suspenso de conta foi aberto, exibindo o e-mail do usuário autenticado e as opções Orders & Payment, Privacy & Security e Logout."
+        "action": "Clicar no elemento \"Account\" na barra de navegação superior.",
+        "data": "Account",
+        "response": "O menu suspenso foi aberto exibindo as opções do usuário autenticado, incluindo o endereço de e-mail, Orders & Payment, Privacy & Security e a opção de Logout."
       },
       {
         "number": 3,
-        "action": "Clicar em \"Logout\"",
-        "data": "",
-        "response": "A sessão foi encerrada e o menu suspenso da conta foi fechado."
+        "action": "Clicar na opção \"Logout\" no menu de conta.",
+        "data": "Logout",
+        "response": "A sessão foi encerrada, o menu de usuário foi fechado e a interface retornou ao estado padrão sem o usuário autenticado."
       },
       {
         "number": 4,
-        "action": "Aguardar a atualização da interface",
-        "data": "",
-        "response": "A interface permaneceu estável na página inicial com o catálogo de produtos e o aviso de cookies visíveis."
+        "action": "Aguardar a atualização da interface.",
+        "data": "Nenhum dado adicional.",
+        "response": "A interface permaneceu estável exibindo o catálogo de produtos na página inicial."
       }
     ]
   }

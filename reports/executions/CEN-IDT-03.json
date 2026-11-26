@@ -14,7 +14,7 @@
       "success": true,
       "screenshot": "C:/Users/Asus/Desktop/juice-shop-execution-v2/reports/executions/CEN-IDT-03_step_01.png",
       "error": null,
-      "timestamp": "2026-11-26T00:39:41.709490+00:00",
+      "timestamp": "2026-11-26T12:56:49.680744+00:00",
       "visible_text_before": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket Fruit Press 89.99¤ add_shopping_cart Add to Basket Grape Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Green Smoothie 1.99¤ add_shopping_cart Add to Basket Only 1 left Juice Shop \"Permafrost\" 2020 Edition 9999.99¤ add_shopping_cart Add to Basket Lemon Juice (500ml) 2.99¤ add_shopping_cart Add to Basket Items per page: 16 1 – 16 of 46 Language has been changed to English Force page reload Click for more information",
       "visible_text_after": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? Language has been changed to English Force page reload",
       "messages": [
@@ -40,135 +40,15 @@
         "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? Language has been changed to English Force page reload"
       ],
       "action_id": "CEN-IDT-03-A-01",
-      "network": [
-        {
-          "sequence": 1,
-          "timestamp": 1795653579.645211,
-          "kind": "request",
-          "method": "GET",
-          "url": "http://127.0.0.1:3000/rest/admin/application-configuration",
-          "status": null,
-          "resource_type": "fetch",
-          "action_id": "CEN-IDT-03-A-01",
-          "request_headers": {
-            "accept": "application/json, text/plain, */*",
-            "accept-encoding": "gzip, deflate, br, zstd",
-            "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
-            "connection": "keep-alive",
-            "cookie": "<redacted>",
-            "host": "127.0.0.1:3000",
-            "if-none-match": "W/\"8d3a-Cix2xcv1EnPBKILpdedEMIzttMw\"",
-            "referer": "http://127.0.0.1:3000/",
-            "sec-fetch-dest": "empty",
-            "sec-fetch-mode": "cors",
-            "sec-fetch-site": "same-origin",
-            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/158.0.0.0 Safari/537.36",
-            "sec-ch-ua": "\"Not.A/Brand\";v=\"24\", \"Chromium\";v=\"158\"",
-            "sec-ch-ua-mobile": "?0",
-            "sec-ch-ua-platform": "\"Windows\""
-          },
-          "response_headers": null,
-          "error": ""
-        },
-        {
-          "sequence": 2,
-          "timestamp": 1795653579.6468165,
-          "kind": "response",
-          "method": "GET",
-          "url": "http://127.0.0.1:3000/rest/admin/application-configuration",
-          "status": 200,
-          "resource_type": "fetch",
-          "action_id": "CEN-IDT-03-A-01",
-          "request_headers": null,
-          "response_headers": {
-            "access-control-allow-origin": "*",
-            "connection": "keep-alive",
-            "date": "Thu, 26 Nov 2026 00:39:39 GMT",
-            "etag": "W/\"8d3a-Cix2xcv1EnPBKILpdedEMIzttMw\"",
-            "feature-policy": "payment 'self'",
-            "keep-alive": "timeout=5",
-            "x-content-type-options": "nosniff",
-            "x-frame-options": "SAMEORIGIN",
-            "x-recruiting": "/#/jobs"
-          },
-          "error": ""
-        },
-        {
-          "sequence": 3,
-          "timestamp": 1795653579.6595807,
-          "kind": "request",
-          "method": "GET",
-          "url": "http://127.0.0.1:3000/assets/public/favicon_js.ico",
-          "status": null,
-          "resource_type": "other",
-          "action_id": "CEN-IDT-03-A-01",
-          "request_headers": {
-            "accept": "image/jxl,image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
-            "accept-encoding": "gzip, deflate, br, zstd",
-            "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
-            "connection": "keep-alive",
-            "cookie": "<redacted>",
-            "host": "127.0.0.1:3000",
-            "if-modified-since": "Sun, 11 Oct 2026 22:37:21 GMT",
-            "if-none-match": "W/\"3aee-1a12d1d0ce8\"",
-            "referer": "http://127.0.0.1:3000/",
-            "sec-fetch-dest": "image",
-            "sec-fetch-mode": "no-cors",
-            "sec-fetch-site": "same-origin",
-            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/158.0.0.0 Safari/537.36",
-            "sec-ch-ua": "\"Not.A/Brand\";v=\"24\", \"Chromium\";v=\"158\"",
-            "sec-ch-ua-mobile": "?0",
-            "sec-ch-ua-platform": "\"Windows\""
-          },
-          "response_headers": null,
-          "error": ""
-        },
-        {
-          "sequence": 4,
-          "timestamp": 1795653579.6601937,
-          "kind": "response",
-          "method": "GET",
-          "url": "http://127.0.0.1:3000/assets/public/favicon_js.ico",
-          "status": 200,
-          "resource_type": "other",
-          "action_id": "CEN-IDT-03-A-01",
-          "request_headers": null,
-          "response_headers": {
-            "accept-ranges": "bytes",
-            "access-control-allow-origin": "*",
-            "cache-control": "public, max-age=0",
-            "connection": "keep-alive",
-            "date": "Thu, 26 Nov 2026 00:39:39 GMT",
-            "etag": "W/\"3aee-1a12d1d0ce8\"",
-            "feature-policy": "payment 'self'",
-            "keep-alive": "timeout=5",
-            "last-modified": "Sun, 11 Oct 2026 22:37:21 GMT",
-            "x-content-type-options": "nosniff",
-            "x-frame-options": "SAMEORIGIN",
-            "x-recruiting": "/#/jobs"
-          },
-          "error": ""
-        }
-      ],
-      "network_summary": {
-        "requests": 2,
-        "responses": 2,
-        "api_responses": 1,
-        "failed_requests": 0,
-        "methods": [
-          "GET"
-        ],
-        "status_codes": [
-          200
-        ]
-      },
+      "network": [],
+      "network_summary": "Coleta de rede não habilitada.",
       "controls": []
     },
     {
       "step": 2,
       "action": "FILL",
       "user_action": "Preencher \"Email\"",
-      "data": "cen-cen-idt-03-1e5761eccc@example.com",
+      "data": "cen-cen-idt-03-8844647032@example.com",
       "url_before": "http://127.0.0.1:3000/#/login",
       "url_after": "http://127.0.0.1:3000/#/login",
       "observed_result": "Conteúdo/estrutura visível da página foi alterado. Texto transitório capturado: Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? | Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? | This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? Language has been changed to English Force page reload | Language has been changed to English Force page reload | This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? Mensagem transitória: Email | Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? | Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? | This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? Language has been changed to English Force page reload | Language has been changed to English Force page reload",
@@ -176,7 +56,7 @@
       "success": true,
       "screenshot": "C:/Users/Asus/Desktop/juice-shop-execution-v2/reports/executions/CEN-IDT-03_step_02.png",
       "error": null,
-      "timestamp": "2026-11-26T00:39:44.720977+00:00",
+      "timestamp": "2026-11-26T12:56:53.553870+00:00",
       "visible_text_before": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? Language has been changed to English Force page reload",
       "visible_text_after": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer?",
       "messages": [
@@ -189,14 +69,7 @@
       ],
       "action_id": "CEN-IDT-03-A-02",
       "network": [],
-      "network_summary": {
-        "requests": 0,
-        "responses": 0,
-        "api_responses": 0,
-        "failed_requests": 0,
-        "methods": [],
-        "status_codes": []
-      },
+      "network_summary": "Coleta de rede não habilitada.",
       "controls": []
     },
     {
@@ -211,7 +84,7 @@
       "success": true,
       "screenshot": "C:/Users/Asus/Desktop/juice-shop-execution-v2/reports/executions/CEN-IDT-03_step_03.png",
       "error": null,
-      "timestamp": "2026-11-26T00:39:47.446568+00:00",
+      "timestamp": "2026-11-26T12:56:57.276287+00:00",
       "visible_text_before": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer?",
       "visible_text_after": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer?",
       "messages": [
@@ -225,14 +98,7 @@
       ],
       "action_id": "CEN-IDT-03-A-03",
       "network": [],
-      "network_summary": {
-        "requests": 0,
-        "responses": 0,
-        "api_responses": 0,
-        "failed_requests": 0,
-        "methods": [],
-        "status_codes": []
-      },
+      "network_summary": "Coleta de rede não habilitada.",
       "controls": []
     },
     {
@@ -247,7 +113,7 @@
       "success": true,
       "screenshot": "C:/Users/Asus/Desktop/juice-shop-execution-v2/reports/executions/CEN-IDT-03_step_04.png",
       "error": null,
-      "timestamp": "2026-11-26T00:39:50.543455+00:00",
+      "timestamp": "2026-11-26T12:57:02.143160+00:00",
       "visible_text_before": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer?",
       "visible_text_after": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Invalid email or password. Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer?",
       "messages": [
@@ -264,187 +130,8 @@
         "Email"
       ],
       "action_id": "CEN-IDT-03-A-04",
-      "network": [
-        {
-          "sequence": 5,
-          "timestamp": 1795653588.4865196,
-          "kind": "request",
-          "method": "GET",
-          "url": "http://127.0.0.1:3000/rest/user/whoami?fields=email",
-          "status": null,
-          "resource_type": "fetch",
-          "action_id": "CEN-IDT-03-A-04",
-          "request_headers": {
-            "accept": "application/json, text/plain, */*",
-            "accept-encoding": "gzip, deflate, br, zstd",
-            "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
-            "connection": "keep-alive",
-            "cookie": "<redacted>",
-            "host": "127.0.0.1:3000",
-            "referer": "http://127.0.0.1:3000/",
-            "sec-fetch-dest": "empty",
-            "sec-fetch-mode": "cors",
-            "sec-fetch-site": "same-origin",
-            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/158.0.0.0 Safari/537.36",
-            "sec-ch-ua": "\"Not.A/Brand\";v=\"24\", \"Chromium\";v=\"158\"",
-            "sec-ch-ua-mobile": "?0",
-            "sec-ch-ua-platform": "\"Windows\""
-          },
-          "response_headers": null,
-          "error": ""
-        },
-        {
-          "sequence": 6,
-          "timestamp": 1795653588.4876535,
-          "kind": "response",
-          "method": "GET",
-          "url": "http://127.0.0.1:3000/rest/user/whoami?fields=email",
-          "status": 200,
-          "resource_type": "fetch",
-          "action_id": "CEN-IDT-03-A-04",
-          "request_headers": null,
-          "response_headers": {
-            "access-control-allow-origin": "*",
-            "connection": "keep-alive",
-            "content-length": "11",
-            "content-type": "application/json; charset=utf-8",
-            "date": "Thu, 26 Nov 2026 00:39:48 GMT",
-            "etag": "W/\"b-/5bSboVjVhGw3qRgvUfZjE1r1Ns\"",
-            "feature-policy": "payment 'self'",
-            "keep-alive": "timeout=5",
-            "vary": "Accept-Encoding",
-            "x-content-type-options": "nosniff",
-            "x-frame-options": "SAMEORIGIN",
-            "x-recruiting": "/#/jobs"
-          },
-          "error": ""
-        },
-        {
-          "sequence": 7,
-          "timestamp": 1795653588.5043397,
-          "kind": "request",
-          "method": "GET",
-          "url": "http://127.0.0.1:3000/rest/user/whoami",
-          "status": null,
-          "resource_type": "fetch",
-          "action_id": "CEN-IDT-03-A-04",
-          "request_headers": {
-            "accept": "application/json, text/plain, */*",
-            "accept-encoding": "gzip, deflate, br, zstd",
-            "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
-            "connection": "keep-alive",
-            "cookie": "<redacted>",
-            "host": "127.0.0.1:3000",
-            "referer": "http://127.0.0.1:3000/",
-            "sec-fetch-dest": "empty",
-            "sec-fetch-mode": "cors",
-            "sec-fetch-site": "same-origin",
-            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/158.0.0.0 Safari/537.36",
-            "sec-ch-ua": "\"Not.A/Brand\";v=\"24\", \"Chromium\";v=\"158\"",
-            "sec-ch-ua-mobile": "?0",
-            "sec-ch-ua-platform": "\"Windows\""
-          },
-          "response_headers": null,
-          "error": ""
-        },
-        {
-          "sequence": 8,
-          "timestamp": 1795653588.5061219,
-          "kind": "response",
-          "method": "GET",
-          "url": "http://127.0.0.1:3000/rest/user/whoami",
-          "status": 200,
-          "resource_type": "fetch",
-          "action_id": "CEN-IDT-03-A-04",
-          "request_headers": null,
-          "response_headers": {
-            "access-control-allow-origin": "*",
-            "connection": "keep-alive",
-            "content-length": "11",
-            "content-type": "application/json; charset=utf-8",
-            "date": "Thu, 26 Nov 2026 00:39:48 GMT",
-            "etag": "W/\"b-/5bSboVjVhGw3qRgvUfZjE1r1Ns\"",
-            "feature-policy": "payment 'self'",
-            "keep-alive": "timeout=5",
-            "vary": "Accept-Encoding",
-            "x-content-type-options": "nosniff",
-            "x-frame-options": "SAMEORIGIN",
-            "x-recruiting": "/#/jobs"
-          },
-          "error": ""
-        },
-        {
-          "sequence": 9,
-          "timestamp": 1795653588.5742311,
-          "kind": "request",
-          "method": "POST",
-          "url": "http://127.0.0.1:3000/rest/user/login",
-          "status": null,
-          "resource_type": "fetch",
-          "action_id": "CEN-IDT-03-A-04",
-          "request_headers": {
-            "accept": "application/json, text/plain, */*",
-            "accept-encoding": "gzip, deflate, br, zstd",
-            "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
-            "connection": "keep-alive",
-            "content-length": "74",
-            "content-type": "application/json",
-            "cookie": "<redacted>",
-            "host": "127.0.0.1:3000",
-            "origin": "http://127.0.0.1:3000",
-            "referer": "http://127.0.0.1:3000/",
-            "sec-fetch-dest": "empty",
-            "sec-fetch-mode": "cors",
-            "sec-fetch-site": "same-origin",
-            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/158.0.0.0 Safari/537.36",
-            "sec-ch-ua": "\"Not.A/Brand\";v=\"24\", \"Chromium\";v=\"158\"",
-            "sec-ch-ua-mobile": "?0",
-            "sec-ch-ua-platform": "\"Windows\""
-          },
-          "response_headers": null,
-          "error": ""
-        },
-        {
-          "sequence": 10,
-          "timestamp": 1795653588.575469,
-          "kind": "response",
-          "method": "POST",
-          "url": "http://127.0.0.1:3000/rest/user/login",
-          "status": 401,
-          "resource_type": "fetch",
-          "action_id": "CEN-IDT-03-A-04",
-          "request_headers": null,
-          "response_headers": {
-            "access-control-allow-origin": "*",
-            "connection": "keep-alive",
-            "content-length": "26",
-            "content-type": "text/html; charset=utf-8",
-            "date": "Thu, 26 Nov 2026 00:39:48 GMT",
-            "etag": "W/\"1a-ARJvVK+smzAF3QQve2mDSG+3Eus\"",
-            "feature-policy": "payment 'self'",
-            "keep-alive": "timeout=5",
-            "vary": "Accept-Encoding",
-            "x-content-type-options": "nosniff",
-            "x-frame-options": "SAMEORIGIN",
-            "x-recruiting": "/#/jobs"
-          },
-          "error": ""
-        }
-      ],
-      "network_summary": {
-        "requests": 3,
-        "responses": 3,
-        "api_responses": 3,
-        "failed_requests": 0,
-        "methods": [
-          "GET",
-          "POST"
-        ],
-        "status_codes": [
-          200,
-          401
-        ]
-      },
+      "network": [],
+      "network_summary": "Coleta de rede não habilitada.",
       "controls": []
     },
     {
@@ -459,20 +146,13 @@
       "success": true,
       "screenshot": "C:/Users/Asus/Desktop/juice-shop-execution-v2/reports/executions/CEN-IDT-03_step_05.png",
       "error": null,
-      "timestamp": "2026-11-26T00:39:51.718416+00:00",
+      "timestamp": "2026-11-26T12:57:03.430820+00:00",
       "visible_text_before": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Invalid email or password. Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer?",
       "visible_text_after": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Invalid email or password. Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer?",
       "messages": [],
       "action_id": "CEN-IDT-03-A-05",
       "network": [],
-      "network_summary": {
-        "requests": 0,
-        "responses": 0,
-        "api_responses": 0,
-        "failed_requests": 0,
-        "methods": [],
-        "status_codes": []
-      },
+      "network_summary": "Coleta de rede não habilitada.",
       "controls": []
     }
   ],
@@ -505,20 +185,7 @@
     "Invalid email or password."
   ],
   "final_url": "http://127.0.0.1:3000/#/login",
-  "network_summary": {
-    "requests": 5,
-    "responses": 5,
-    "api_responses": 4,
-    "failed_requests": 0,
-    "methods": [
-      "GET",
-      "POST"
-    ],
-    "status_codes": [
-      200,
-      401
-    ]
-  },
+  "network_summary": "Coleta de rede não habilitada.",
   "final_visible_text": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Invalid email or password. Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer?",
   "validation": {
     "passed": true,

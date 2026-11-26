@@ -1,45 +1,50 @@
 {
   "scenario_id": "CEN-IDT-03",
-  "fingerprint": "c145087ce8b0c35d77f273ad7dc34711cb55cf959355ece9e95937a3cdea1673",
+  "fingerprint": "021bff5b889b9a4268d6fc87b855e5544c9fba147a1215ccd0a4cd81c583adc8",
   "content": {
-    "flow": "Na tela de login da aplicação OWASP Juice Shop, o cliente informou o e-mail e a senha nos campos correspondentes e acionou o botão Log in para realizar a autenticação.",
-    "precondition": "Conta de teste disponível para autenticação.",
-    "observed_result": "Após acionar o botão Log in, a interface exibiu a mensagem de erro \"Invalid email or password.\" acima do campo de e-mail, indicando falha na autenticação.",
+    "flow": "Na página de login da aplicação OWASP Juice Shop, o usuário preencheu o campo de e-mail com o dado cen-cen-idt-03-8844647032@example.com, preencheu o campo de senha com Teste@12345 e acionou o botão Log in, resultando na exibição da mensagem de erro de autenticação.",
+    "precondition": "Conta de teste disponível para autenticação na rota de login.",
+    "observed_result": "A interface permaneceu na tela de login e exibiu a mensagem de erro em vermelho 'Invalid email or password.' acima do campo de e-mail.",
     "messages": [
       "Invalid email or password.",
-      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!"
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!",
+      "Language has been changed to English Force page reload",
+      "Forgot your password?",
+      "Log in",
+      "Remember me",
+      "Not yet a customer?"
     ],
-    "data": "E-mail: cen-cen-idt-03-1e5761eccc@example.com; senha: Teste@12345.",
+    "data": "E-mail: cen-cen-idt-03-8844647032@example.com; senha: Teste@12345.",
     "steps": [
       {
         "number": 1,
-        "action": "Abrir a rota de login da aplicação",
+        "action": "NAVIGATE",
         "data": "",
-        "response": "A página de login foi exibida contendo o título Login, os campos Email* e Password*, a opção Forgot your password?, o botão Log in, a opção Remember me, o botão Log in with Google e o link Not yet a customer?."
+        "response": "A aplicação foi aberta na rota de login exibindo o formulário com os campos Email*, Password*, os botões Log in, Log in with Google, e a caixa de diálogo de cookies no canto inferior direito com o botão Me want it!."
       },
       {
         "number": 2,
-        "action": "Preencher o campo \"Email\"",
-        "data": "cen-cen-idt-03-1e5761eccc@example.com",
-        "response": "O campo Email* foi preenchido com o endereço de e-mail informado."
+        "action": "FILL",
+        "data": "cen-cen-idt-03-8844647032@example.com",
+        "response": "O campo Email* foi preenchido com o texto cen-cen-idt-03-8844647032@example.com, mantendo os demais elementos do formulário visíveis."
       },
       {
         "number": 3,
-        "action": "Preencher o campo \"Password\"",
+        "action": "FILL",
         "data": "Teste@12345",
-        "response": "O campo Password* foi preenchido com caracteres ocultos representando a senha."
+        "response": "O campo Password* foi preenchido com caracteres mascarados correspondentes à senha informada, mantendo o ícone de visibilidade ocular à direita do campo."
       },
       {
         "number": 4,
-        "action": "Clicar no botão \"Log in\"",
+        "action": "CLICK",
         "data": "",
-        "response": "A aplicação processou a solicitação de login e exibiu a mensagem em vermelho \"Invalid email or password.\" no topo do formulário."
+        "response": "O botão Log in foi acionado e a interface atualizou a tela para exibir a mensagem de erro em vermelho 'Invalid email or password.' logo acima do campo de e-mail."
       },
       {
         "number": 5,
-        "action": "Aguardar a atualização da interface",
+        "action": "WAIT",
         "data": "",
-        "response": "A interface permaneceu estável com o formulário de login visível e a mensagem de erro mantida na tela."
+        "response": "A interface estabilizou na tela de login com a mensagem de erro 'Invalid email or password.' visível e o formulário preenchido."
       }
     ]
   }

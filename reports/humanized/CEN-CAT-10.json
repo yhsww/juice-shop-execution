@@ -1,10 +1,10 @@
 {
   "scenario_id": "CEN-CAT-10",
-  "fingerprint": "afab6ca71aa760706541441bdc3748cbdadbbd09f0755896386e4bcd7131fec1",
+  "fingerprint": "a2f9eb94896b10c0383854ba5a2a65765b1de537b5235b96fcd4e81d1218e72c",
   "content": {
-    "flow": "O cliente abriu a página inicial do catálogo na rota informada, onde visualizou os primeiros itens disponíveis. Em seguida, acionou a navegação para avançar de página, resultando na exibição dos itens subsequentes do catálogo correspondentes ao intervalo de paginação.",
-    "precondition": "Catálogo com quantidade suficiente para paginação e exibição dos produtos iniciais.",
-    "observed_result": "A listagem de produtos foi atualizada para exibir os itens da segunda página do catálogo, mostrando produtos como Melon Bike, Melon Juice e itens da marca OWASP Juice Shop, além do indicador de paginação atualizado para 17 – 32 of 46.",
+    "flow": "Na página inicial da loja, o cliente acessou o catálogo e navegou entre as páginas de produtos utilizando os controles de paginação para visualizar novos itens da listagem.",
+    "precondition": "Catálogo com quantidade suficiente de produtos para habilitar a paginação.",
+    "observed_result": "A interface exibiu os novos itens correspondentes à página seguinte (17 – 32 of 46), mostrando produtos como Melon Bike, Melon Juice, entre outros.",
     "messages": [
       "Language has been changed to English Force page reload",
       "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!"
@@ -13,21 +13,21 @@
     "steps": [
       {
         "number": 1,
-        "action": "O usuário abriu a rota da aplicação.",
+        "action": "Abrir a rota inicial do catálogo na aplicação.",
         "data": "/#/",
-        "response": "A página inicial foi carregada exibindo o título 'All Products', o banner de cookies na parte inferior com o botão 'Me want it!', e a listagem inicial contendo produtos como Apple Juice, Apple Pomace e Banana Juice, acompanhados de seus respectivos botões 'Add to Basket'."
+        "response": "A página inicial foi carregada exibindo a listagem dos primeiros produtos do catálogo, como Apple Juice, Apple Pomace e Banana Juice, acompanhada pelo aviso de cookies e indicador de itens por página."
       },
       {
         "number": 2,
-        "action": "O usuário clicou no elemento de paginação para avançar.",
+        "action": "Clicar no botão para avançar a página da listagem.",
         "data": "",
         "response": "A interface iniciou a transição para exibir a nova página de produtos do catálogo."
       },
       {
         "number": 3,
-        "action": "O usuário aguardou a atualização da interface.",
+        "action": "Aguardar a atualização completa da interface com a nova página de produtos.",
         "data": "",
-        "response": "A listagem de produtos foi atualizada para a próxima página, exibindo novos itens como Melon Bike, Melon Juice, OWASP Juice Shop Facemask e outros acessórios, com o rodapé da paginação indicando os itens 17 a 32 de um total de 46."
+        "response": "A listagem foi atualizada para exibir os itens da segunda página (17 – 32 of 46), contendo produtos como Melon Bike, Melon Juice e OWASP Juice Shop Facemask."
       }
     ]
   }

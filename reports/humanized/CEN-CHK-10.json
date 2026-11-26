@@ -1,29 +1,24 @@
 {
   "scenario_id": "CEN-CHK-10",
-  "fingerprint": "3dacc5a1aa4fd5005b5d6cd678168854e4ec47e3d1cdb7ab3172bed908a28446",
+  "fingerprint": "c806a1be55f046ec9e116d0d69d144e2327ecbc99337d7d47c90d3176b5dd8fe",
   "content": {
-    "flow": "Na tela de resumo do pedido, o cliente visualizou os dados consolidados da compra, incluindo o endereço de entrega, a forma de pagamento, os itens do carrinho e o sumário de valores com o botão Place your order and pay disponível.",
+    "flow": "O cliente navegou diretamente para a tela de resumo do pedido (Order Summary) para visualizar os dados consolidados da compra, incluindo o endereço de entrega, forma de pagamento, itens no carrinho e valores totais antes da confirmação.",
     "precondition": "Cliente autenticado; pedido com endereço, entrega e pagamento definidos.",
-    "observed_result": "A interface exibiu o resumo completo do pedido contendo a seção Delivery Address com os dados do cliente, Payment Method com o cartão terminado em 0002, Your Basket associado ao e-mail do usuário e o Order Summary com os valores zerados, além do botão Place your order and pay.",
-    "messages": [
-      "(cen-cen-chk-10-176deaf318@example.com)",
-      "Your Basket (cen-cen-chk-10-176deaf318@example.com)",
-      "Delivery Address Cliente Teste Rua Teste, 100, Fortaleza, CE, 60000000 Brazil Phone Number 8599999999 Payment Method Card ending in 0002 Card Holder\" Cliente Teste",
-      "Order Summary Items 0.00¤ Delivery 0.00¤ Promotion 0.00¤ Total Price 0.00¤ monetization_onPlace your order and pay You will gain 0 Bonus Points from this order!"
-    ],
+    "observed_result": "A tela de resumo do pedido foi exibida corretamente, apresentando o endereço de entrega de Cliente Teste na Rua Teste, 100 em Fortaleza/CE, o método de pagamento com cartão terminado em 0002, o resumo de valores zerados (Items 0.00¤, Delivery 0.00¤, Promotion 0.00¤, Total Price 0.00¤) e o botão Place your order and pay.",
+    "messages": [],
     "data": "Nenhum dado adicional.",
     "steps": [
       {
         "number": 1,
-        "action": "O usuário abriu a rota de resumo do pedido.",
+        "action": "Abrir a rota para a tela de resumo do pedido utilizando a URL.",
         "data": "",
-        "response": "A tela carregou com o painel de resumo exibindo o endereço de entrega para Cliente Teste, o método de pagamento com cartão terminando em 0002, o carrinho Your Basket com o e-mail do usuário e o sumário de valores do pedido com total de 0.00¤."
+        "response": "A interface exibiu a página Order Summary contendo as seções Delivery Address com os dados de Cliente Teste, Payment Method com o cartão terminado em 0002, o resumo financeiro com total de 0.00¤ e o botão Place your order and pay."
       },
       {
         "number": 2,
-        "action": "O usuário aguardou a atualização da interface.",
-        "data": "Nenhum dado adicional.",
-        "response": "Nenhuma mudança visual relevante detectada, mantendo o resumo do pedido visível com as informações consolidadas e o botão Place your order and pay."
+        "action": "Aguardar a atualização da interface para consolidação dos elementos visuais.",
+        "data": "",
+        "response": "Nenhuma mudança visual relevante detectada, mantendo o resumo do pedido visível na tela com os mesmos dados consolidados."
       }
     ]
   }

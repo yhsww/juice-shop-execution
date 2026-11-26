@@ -1,14 +1,14 @@
 {
   "scenario_id": "CEN-CHK-25",
-  "fingerprint": "e3b88cfa7f4eddefb4ec44bbf7547e2aea8ccbb14821111b37d440fc0d94b192",
+  "fingerprint": "d2e452a6ca9dcc7396ad4a2d0b1f7bf008a8032aa2df63ea9f31a2281e49901f",
   "content": {
-    "flow": "Na tela de opções de pagamento My Payment Options, o cliente acessou a etapa de checkout sem selecionar uma forma de pagamento, e a interface validou o bloqueio mantendo o botão Continue desabilitado.",
+    "flow": "Na tela de opções de pagamento, o cliente acessou a rota sem selecionar uma forma de pagamento e a interface manteve o botão Continue desabilitado para bloquear o avanço.",
     "precondition": "Cliente autenticado; método de entrega selecionado.",
-    "observed_result": "O botão Continue permaneceu desabilitado na seção My Payment Options, impedindo o avanço sem a seleção de uma forma de pagamento válida.",
+    "observed_result": "A interface exibiu a página My Payment Options contendo as seções Add new card, Pay using wallet com saldo 0.00 e botão Pay NaN¤, Add a coupon e Other payment options. O botão Continue permaneceu desabilitado, impedindo o avanço sem a seleção de uma forma de pagamento.",
     "messages": [
       "Pay NaN¤",
       "Pay using wallet Wallet Balance Pay NaN¤",
-      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card Pay using wallet Wallet Balance Pay NaN¤ Add a coupon Add a coupon code to receive discounts Other payment options navigate_before Back You can review this order before it is finalized. navigate_next Continue",
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card Pay using wallet Wallet Balance 0.00 Pay NaN¤ Add a coupon Add a coupon code to receive discounts Other payment options navigate_before Back You can review this order before it is finalized. navigate_next Continue",
       "0.00",
       "Wallet Balance 0.00",
       "Pay using wallet Wallet Balance 0.00 Pay NaN¤",
@@ -17,25 +17,25 @@
       "Add new card Add a credit or debit card",
       "My Payment Options Add new card Add a credit or debit card"
     ],
-    "data": "Nenhum dado adicional.",
+    "data": "",
     "steps": [
       {
         "number": 1,
-        "action": "O cliente abriu a rota de pagamento na interface.",
+        "action": "Abrir a rota de pagamento",
         "data": "",
-        "response": "A tela My Payment Options foi exibida contendo as opções Add new card, Pay using wallet com saldo Wallet Balance 0.00, Add a coupon e Other payment options, além dos botões Back e Continue."
+        "response": "A tela My Payment Options foi exibida, contendo os elementos Add new card, Pay using wallet com Wallet Balance 0.00 e Pay NaN¤, Add a coupon e Other payment options, além dos botões Back e Continue."
       },
       {
         "number": 2,
-        "action": "O sistema validou o estado desabilitado do botão de avanço sem seleção de pagamento.",
+        "action": "Validar que o botão de avanço está desabilitado",
         "data": "",
-        "response": "O botão Continue permaneceu com aspecto visual cinza e desabilitado na interface."
+        "response": "O botão Continue permaneceu desabilitado na interface, impedindo que o fluxo prosseguisse sem uma forma de pagamento selecionada."
       },
       {
         "number": 3,
-        "action": "O cliente aguardou a atualização da interface.",
+        "action": "Aguardar a atualização da interface",
         "data": "",
-        "response": "Nenhuma mudança visual adicional foi registrada, mantendo a página My Payment Options com o botão Continue bloqueado."
+        "response": "Nenhuma mudança visual adicional foi registrada, mantendo a tela My Payment Options estável com o botão Continue desabilitado."
       }
     ]
   }

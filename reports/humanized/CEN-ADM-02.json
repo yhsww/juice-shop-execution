@@ -1,27 +1,29 @@
 {
   "scenario_id": "CEN-ADM-02",
-  "fingerprint": "a4b1948d18f5d94d09d51cce8459e7d1b67d24cfa16c777e302c69a4303f2310",
+  "fingerprint": "0f228b5fc6cbdb95fc4c49b513955e8acad74af244fc6597264c543b379feaf1",
   "content": {
-    "flow": "Na página principal, o administrador acessou a seção de administração e visualizou a área de usuários cadastrados contendo a listagem de contas registradas e a seção de feedback de clientes.",
+    "flow": "O administrador navegou para a tela de administração da aplicação, acessando a seção de visualização de usuários cadastrados, onde a interface exibiu a lista de e-mails dos usuários registrados e a seção de feedbacks de clientes.",
     "precondition": "Administrador autenticado.",
-    "observed_result": "A tela de administração foi exibida com o título Administration, apresentando a seção Registered Users com uma listagem de e-mails de usuários cadastrados (como admin@juice-sh.op, jim@juice-sh.op, bender@juice-sh.op, entre outros) acompanhados de ícones de visualização, além da seção Customer Feedback ao lado e o banner de cookies na parte inferior.",
+    "observed_result": "A tela de administração foi carregada com sucesso, exibindo o título 'Administration', a tabela 'Registered Users' contendo os e-mails cadastrados (como admin@juice-sh.op, jim@juice-sh.op, bender@juice-sh.op, bjoern.kimminich@gmail.com, ciso@juice-sh.op, support@juice-sh.op, morty@juice-sh.op, mc.safesearch@juice-sh.op, J12934@juice-sh.op, wurstbrot@juice-sh.op) e a seção 'Customer Feedback'.",
     "messages": [
-      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!",
-      "Me want it!"
+      "Administration",
+      "Registered Users",
+      "Customer Feedback",
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!"
     ],
     "data": "Nenhum dado adicional.",
     "steps": [
       {
         "number": 1,
-        "action": "O administrador navegou para a rota de administração.",
+        "action": "Abrir a rota de administração utilizando o elemento de navegação.",
         "data": "",
-        "response": "A interface exibiu a página Administration contendo a tabela de Registered Users com a listagem de usuários cadastrados e a seção Customer Feedback."
+        "response": "A interface exibiu a página de administração contendo os blocos 'Registered Users' com a lista de usuários cadastrados e 'Customer Feedback', além do banner de cookies na parte inferior direita."
       },
       {
         "number": 2,
-        "action": "O administrador aguardou a estabilização da interface.",
-        "data": "Nenhum dado adicional.",
-        "response": "A página permaneceu estável com a exibição da listagem de usuários cadastrados e o banner de cookies visível no canto inferior direito."
+        "action": "Aguardar a atualização e estabilização da interface.",
+        "data": "",
+        "response": "A interface permaneceu estável na tela de administração, mantendo visível a lista de usuários registrados e feedbacks sem alterações adicionais."
       }
     ]
   }

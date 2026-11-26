@@ -1,10 +1,10 @@
 {
   "scenario_id": "CEN-CAT-08",
-  "fingerprint": "bc2462b538630e301d61c21f8a175ea5e6b2397efdd41b0db8d3f2e69427b0ac",
+  "fingerprint": "4126146512df1ec7ab4b9404854863187a850110a310131580f867a7aa0b1123",
   "content": {
-    "flow": "Na página de pesquisa da aplicação, o cliente acessou a rota sem informar nenhum termo de busca. Como resultado, a interface exibiu a listagem padrão de todos os produtos disponíveis na loja.",
+    "flow": "O cliente abriu a rota de pesquisa sem informar nenhum termo, navegando diretamente para a listagem geral de produtos da loja OWASP Juice Shop.",
     "precondition": "Catálogo disponível.",
-    "observed_result": "A tela de pesquisa foi aberta mantendo o catálogo completo de produtos visível, contendo itens como Apple Juice (1000ml), Apple Pomace, Banana Juice (1000ml) e Basil Smoothie, acompanhados de seus respectivos preços e botões Add to Basket, sem restrições ou mensagens de erro por falta de termo.",
+    "observed_result": "A interface exibiu a listagem completa de produtos na seção All Products, contendo itens como Apple Juice (1000ml), Apple Pomace, Banana Juice (1000ml) e Basil Smoothie, sem filtros aplicados e mantendo a navegação utilizável.",
     "messages": [
       "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!",
       "Language has been changed to English Force page reload"
@@ -13,15 +13,15 @@
     "steps": [
       {
         "number": 1,
-        "action": "O usuário abriu a rota de pesquisa na aplicação.",
+        "action": "O cliente abriu a rota de pesquisa no navegador.",
         "data": "",
-        "response": "A interface redirecionou para a página de pesquisa exibindo o cabeçalho com o logotipo OWASP Juice Shop, os menus de navegação Account e Your Basket 0, e a listagem de produtos com itens como Apple Juice (1000ml) por 1.99¤, Apple Pomace por 0.89¤, Banana Juice (1000ml) por 1.99¤ e Basil Smoothie por 2.99¤, todos com o botão Add to Basket. No canto inferior, um aviso de cookies e uma notificação de alteração de idioma foram apresentados."
+        "response": "A URL foi atualizada para a rota de pesquisa e a interface carregou a listagem completa de produtos com os itens Apple Juice (1000ml) por 1.99¤, Apple Pomace por 0.89¤, Banana Juice (1000ml) por 1.99¤ e Basil Smoothie por 2.99¤, acompanhados de seus respectivos botões Add to Basket."
       },
       {
         "number": 2,
-        "action": "O usuário aguardou a estabilização da interface após o carregamento sem parâmetros de busca.",
+        "action": "O cliente aguardou a atualização da interface.",
         "data": "",
-        "response": "Nenhuma mudança visual adicional foi registrada; a listagem de todos os produtos permaneceu inalterada na tela de pesquisa."
+        "response": "Nenhuma mudança visual relevante adicional foi detectada, mantendo a listagem de produtos visível e acessível na tela."
       }
     ]
   }

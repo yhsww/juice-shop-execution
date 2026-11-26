@@ -1,33 +1,33 @@
 {
   "scenario_id": "CEN-CAT-09",
-  "fingerprint": "db6a3c4d8430b06d028f93fbb70c4b19a0c28278dc4fd23dc75b8ad7413fbf23",
+  "fingerprint": "a25e3620fa561300f8b86084f532ea48dc9cedfaa49daf43833a709ff070df0b",
   "content": {
-    "flow": "Na página inicial do catálogo, o usuário navegou para o próximo bloco de itens acionando o botão de paginação avançada, atualizando a listagem para exibir a faixa de produtos de 17 a 32 de um total de 46.",
-    "precondition": "O catálogo da aplicação estava disponível exibindo a primeira página de produtos com os itens iniciais, como Apple Juice (1000ml), Apple Pomace, Banana Juice (1000ml) e Basil Smoothie.",
-    "observed_result": "A listagem de produtos foi atualizada com sucesso para a próxima página de itens, passando a exibir novos produtos como Melon Bike, Melon Juice, OWASP Juice Shop Facemask, entre outros, com o indicativo de paginação posicionado na faixa de 17 a 32 de 46.",
+    "flow": "Na página inicial do catálogo, o cliente abriu a rota da aplicação e avançou na paginação da listagem de produtos para visualizar o próximo conjunto de itens disponíveis.",
+    "precondition": "Catálogo disponível.",
+    "observed_result": "A listagem de produtos foi atualizada para exibir a próxima página contendo os itens de 17 a 32 de um total de 46 produtos, exibindo itens como Melon Bike, Melon Juice e OWASP Juice Shop Facemask.",
     "messages": [
-      "Language has been changed to English Force page reload Click for more information",
+      "Language has been changed to English Force page reload",
       "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!"
     ],
     "data": "Nenhum dado adicional.",
     "steps": [
       {
         "number": 1,
-        "action": "O usuário abriu a rota principal da aplicação em /#/",
+        "action": "Abrir a rota /#/",
         "data": "/#/",
-        "response": "A página inicial foi carregada com o cabeçalho contendo o logotipo OWASP Juice Shop, os menus de pesquisa, conta, Your Basket 0 e o seletor de idioma EN. A seção All Products exibiu a grade com os primeiros itens do catálogo, incluindo Apple Juice (1000ml) por 1.99¤ e Apple Pomace por 0.89¤, acompanhados de um banner flutuante de cookies."
+        "response": "A interface foi carregada exibindo o menu superior com o logotipo da OWASP Juice Shop, a barra de pesquisa, o ícone de conta, o carrinho Your Basket com 0 itens, o seletor de idioma em inglês (EN) e a primeira página de produtos contendo itens como Apple Juice (1000ml), Apple Pomace, Banana Juice (1000ml) e Basil Smoothie, além do banner de cookies na parte inferior."
       },
       {
         "number": 2,
-        "action": "O usuário avançou na paginação do catálogo clicando no botão para carregar os próximos itens",
+        "action": "Clicar em \"Next\"",
         "data": "",
-        "response": "A interface atualizou a listagem de produtos da seção All Products para a segunda página, exibindo novos itens como Melon Bike (Comeback-Product 2018 Edition) por 2999¤, Melon Juice (1000ml) por 2.49¤ e o indicador de paginação mostrando a faixa 17 – 32 of 46."
+        "response": "A interface atualizou a listagem de produtos para exibir a segunda página da paginação, indicando os itens de 17 a 32 de um total de 46, mostrando produtos como Melon Bike, Melon Juice, OWASP Juice Shop Facemask e OWASP Juice Shop CTF Girlie-Shirt."
       },
       {
         "number": 3,
-        "action": "O usuário aguardou a estabilização da interface após a navegação na paginação",
+        "action": "Aguardar a atualização da interface",
         "data": "",
-        "response": "Nenhuma mudança visual adicional foi registrada, mantendo a exibição estável dos itens da página atual."
+        "response": "Nenhuma mudança visual adicional foi registrada, mantendo a listagem de produtos da segunda página estabilizada."
       }
     ]
   }

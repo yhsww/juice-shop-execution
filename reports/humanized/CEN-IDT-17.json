@@ -1,22 +1,17 @@
 {
   "scenario_id": "CEN-IDT-17",
-  "fingerprint": "ef0d8d85387c187ecc9649234ea42995de76664e900ef67f2db8ced96562cbd0",
+  "fingerprint": "46dd174ab8bd8f46fb268a7ed9ed5e8dd91288598638593fae65a67a6bd324cf",
   "content": {
-    "flow": "Na tela de registro de usuário, o cliente acessou a rota de cadastro para verificar os campos disponíveis e o redirecionamento.",
+    "flow": "Na página inicial, o ator acessou a rota de registro para concluir o cadastro e verificar o redirecionamento, exibindo a interface de User Registration.",
     "precondition": "Cadastro válido concluído.",
-    "observed_result": "A interface exibiu a página User Registration contendo os campos Email, Password, Repeat Password, Security Question e Answer, além do botão Register desabilitado e do link Already a customer?.",
+    "observed_result": "A interface exibiu a página de User Registration contendo os campos Email, Password, Repeat Password, Security Question e Answer, além do botão Register desabilitado e a opção Already a customer?",
     "messages": [
-      "User Registration",
-      "Email*",
-      "Password*",
       "Password must be 5-40 characters long.",
-      "Repeat Password*",
-      "Show password advice",
-      "Security Question *",
       "This cannot be changed later!",
-      "Answer*",
-      "Already a customer?",
-      "Language has been changed to English"
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!",
+      "Language has been changed to English Force page reload",
+      "User Registration",
+      "Already a customer?"
     ],
     "data": "E-mail: usuário de teste; senha: senha de teste.",
     "steps": [
@@ -24,13 +19,13 @@
         "number": 1,
         "action": "Abrir a rota de registro",
         "data": "",
-        "response": "A página User Registration foi carregada exibindo os campos Email, Password com o aviso 0/20, Repeat Password com o aviso 0/40, a caixa de seleção Show password advice, o menu suspenso Security Question com o texto This cannot be changed later!, o campo Answer, o botão Register e a opção Already a customer?."
+        "response": "A página de User Registration foi carregada exibindo os campos Email, Password, Repeat Password, a opção Show password advice, Security Question, Answer, o botão Register e o link Already a customer?, além do banner de cookies na parte inferior."
       },
       {
         "number": 2,
         "action": "Aguardar a atualização da interface",
         "data": "",
-        "response": "A interface permaneceu inalterada na tela User Registration sem novas modificações visuais registradas."
+        "response": "A interface permaneceu estável na tela de User Registration sem novas alterações visuais relevantes."
       }
     ]
   }

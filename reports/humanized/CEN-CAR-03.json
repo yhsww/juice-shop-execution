@@ -1,12 +1,17 @@
 {
   "scenario_id": "CEN-CAR-03",
-  "fingerprint": "88c4ec9c6d25edab8086d6ffb8d88eb5da66098a862c1cbd5b2c61c206a7422f",
+  "fingerprint": "8e8d04a14c1d20c1d86f550ca01d930a25cc9da5020b55efd8fd4528913cb6c8",
   "content": {
-    "flow": "O cliente acessou a página Your Basket para consultar o carrinho, onde o produto Apple Juice (1000ml) estava listado com quantidade 1 e preço total de 1.99¤, acionou o botão de aumentar quantidade e aguardou a atualização da interface.",
+    "flow": "O cliente abriu a tela do carrinho de compras contendo o item Apple Juice (1000ml) e executou a tentativa de acionar o botão de incremento de quantidade, seguido de uma pausa para verificação do estado da interface.",
     "precondition": "Há pelo menos um produto no carrinho.",
-    "observed_result": "A tela do carrinho permaneceu exibindo o produto Apple Juice (1000ml) com o indicador de quantidade 1 e o preço total de 1.99¤.",
+    "observed_result": "O carrinho permaneceu exibindo o produto Apple Juice (1000ml) com a quantidade 1 e preço total de 1.99¤, sem alteração visível na quantidade após a ação de clique.",
     "messages": [
-      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!"
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!",
+      "Placed Apple Juice (1000ml) into basket. X",
+      "Your Basket (anonymous)",
+      "Total Price: 1.99¤",
+      "Checkout",
+      "You will gain 0 Bonus Points from this order!"
     ],
     "data": "Quantidade desejada: 2 unidades.",
     "steps": [
@@ -14,19 +19,19 @@
         "number": 1,
         "action": "Abrir a rota",
         "data": "",
-        "response": "A interface exibiu a página Your Basket (anonymous) contendo o produto Apple Juice (1000ml) com imagem ilustrativa, quantidade 1, botão de decrementar (-), botão de incrementar (+), preço unitário de 1.99¤, botão de exclusão e o valor Total Price: 1.99¤. O banner de cookies e uma notificação informando Placed Apple Juice (1000ml) into basket aparecem na tela."
+        "response": "A interface exibiu a página Your Basket (anonymous) contendo o item Apple Juice (1000ml), quantidade 1, preço unitário de 1.99¤, preço total de 1.99¤, o botão Checkout e a mensagem de inclusão do produto."
       },
       {
         "number": 2,
-        "action": "Clicar em Increase quantity",
-        "data": "Nenhum dado informado",
-        "response": "O menu lateral esquerdo da aplicação foi aberto, exibindo opções como Customer Feedback, AI Chat, About Us, Photo Wall, Score Board e GitHub, enquanto a seção Your Basket manteve o produto Apple Juice (1000ml) listado."
+        "action": "Clicar em \"Increase quantity\"",
+        "data": "",
+        "response": "O menu lateral de navegação foi aberto, exibindo opções de contato, feedback e links informativos, enquanto o carrinho permaneceu visível com o produto Apple Juice (1000ml) na quantidade 1."
       },
       {
         "number": 3,
         "action": "Aguardar a atualização da interface",
-        "data": "Nenhum dado informado",
-        "response": "Nenhuma mudança visual relevante adicional foi detectada, mantendo o painel do carrinho com a quantidade e preço vigentes."
+        "data": "",
+        "response": "Nenhuma mudança visual relevante detectada. A interface permaneceu com o menu lateral aberto e o carrinho mantendo a quantidade 1 do produto Apple Juice (1000ml)."
       }
     ]
   }

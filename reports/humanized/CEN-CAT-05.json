@@ -1,40 +1,42 @@
 {
   "scenario_id": "CEN-CAT-05",
-  "fingerprint": "1514eea9265f7bfa89739ed27e1c449eaa361d354b94786ba8bec9a17b85fc63",
+  "fingerprint": "e749d516b0c0188e35f33c232fe061174fb6f88e71ddae2e64a2b16039731b74",
   "content": {
-    "flow": "Na página inicial da loja de sucos, o usuário acessou a rota de pesquisa e preencheu o campo de busca com o termo ProdutoInexistenteXYZ. Ao pressionar Enter, a interface atualizou a visualização para exibir a seção de resultados indicando que nenhum item foi encontrado.",
+    "flow": "Na página inicial da aplicação, o cliente acessou a rota de pesquisa e digitou o termo ProdutoInexistenteXYZ no campo de busca. Em seguida, ao pressionar Enter, a interface atualizou a visualização para a página de resultados da pesquisa e exibiu o aviso de ausência de registros correspondentes.",
     "precondition": "Catálogo disponível.",
-    "observed_result": "A interface exibiu o título Search Results - ProdutoInexistenteXYZ, acompanhado de uma ilustração de lupa com nuvens e a mensagem No results found Try adjusting your search to find what you're looking for., com o indicador de paginação definindo 0 of 0 items.",
+    "observed_result": "A interface exibiu o título Search Results - ProdutoInexistenteXYZ acompanhado de uma ilustração de lupa, a mensagem No results found, o texto Try adjusting your search to find what you're looking for., além da paginação indicando 0 de 0 itens.",
     "messages": [
       "Search Results - ProdutoInexistenteXYZ",
       "No results found",
-      "Try adjusting your search to find what you're looking for."
+      "Try adjusting your search to find what you're looking for.",
+      "Items per page: 15",
+      "0 of 0"
     ],
-    "data": "Termo: ProdutoInexistenteXYZ.",
+    "data": "Termo: ProdutoInexistenteXYZ",
     "steps": [
       {
         "number": 1,
         "action": "Abrir a rota",
         "data": "",
-        "response": "A página principal foi carregada exibindo a listagem de produtos com cartões como Apple Juice (1000ml) e o banner de aviso de cookies no canto inferior direito."
+        "response": "A página inicial de produtos foi carregada exibindo a listagem padrão de itens e o banner de cookies no canto inferior direito."
       },
       {
         "number": 2,
-        "action": "Preencher \"Search\"",
+        "action": "Preencher o campo de busca Search",
         "data": "ProdutoInexistenteXYZ",
-        "response": "O campo de pesquisa foi preenchido com o texto ProdutoInexistenteXYZ mantendo a listagem atual de produtos na tela."
+        "response": "O termo ProdutoInexistenteXYZ foi inserido no campo de pesquisa, mantendo a listagem atual visível enquanto a busca aguardava confirmação."
       },
       {
         "number": 3,
-        "action": "Pressionar Enter",
-        "data": "Nenhuma",
-        "response": "A interface foi atualizada para a página de resultados de busca, exibindo o título Search Results - ProdutoInexistenteXYZ, a ilustração de lupa e o texto explicativo No results found Try adjusting your search to find what you're looking for."
+        "action": "Pressionar Enter para executar a pesquisa",
+        "data": "",
+        "response": "A URL foi alterada para incluir o parâmetro de busca e a tela foi atualizada para exibir o título Search Results - ProdutoInexistenteXYZ."
       },
       {
         "number": 4,
-        "action": "Aguardar a atualização da interface",
-        "data": "Nenhuma",
-        "response": "Nenhuma mudança visual adicional foi registrada, mantendo a tela de resultados vazios estável com o contador 0 of 0."
+        "action": "Aguardar a atualização completa da interface",
+        "data": "",
+        "response": "A interface estabilizou exibindo a ilustração de lupa com nuvens, o aviso No results found e a instrução Try adjusting your search to find what you're looking for., com a paginação indicando 0 de 0."
       }
     ]
   }

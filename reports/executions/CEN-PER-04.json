@@ -1,0 +1,63 @@
+{
+  "scenario_id": "CEN-PER-04",
+  "status": "PASSED",
+  "steps": [
+    {
+      "step": 1,
+      "action": "NAVIGATE",
+      "user_action": "Abrir a rota /#/privacy-security",
+      "data": "/#/privacy-security",
+      "url_before": "http://127.0.0.1:3000/#/search",
+      "url_after": "http://127.0.0.1:3000/#/privacy-security",
+      "observed_result": "URL: http://127.0.0.1:3000/#/search → http://127.0.0.1:3000/#/privacy-security Texto transitório capturado: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN | This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Mensagem transitória: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN | This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN",
+      "changed": true,
+      "success": true,
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop-execution-v2/reports/executions/CEN-PER-04_step_01.png",
+      "error": null,
+      "timestamp": "2026-11-26T13:16:32.379601+00:00",
+      "visible_text_before": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN All Products Items per page: 15 0 of 0",
+      "visible_text_after": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN",
+      "messages": [
+        "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN",
+        "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN"
+      ],
+      "action_id": "CEN-PER-04-A-01",
+      "network": [],
+      "network_summary": "Coleta de rede não habilitada.",
+      "controls": []
+    },
+    {
+      "step": 2,
+      "action": "WAIT",
+      "user_action": "Aguardar a atualização da interface",
+      "data": "",
+      "url_before": "http://127.0.0.1:3000/#/privacy-security",
+      "url_after": "http://127.0.0.1:3000/#/privacy-security",
+      "observed_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN",
+      "changed": false,
+      "success": true,
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop-execution-v2/reports/executions/CEN-PER-04_step_02.png",
+      "error": null,
+      "timestamp": "2026-11-26T13:16:33.724799+00:00",
+      "visible_text_before": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN",
+      "visible_text_after": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN",
+      "messages": [],
+      "action_id": "CEN-PER-04-A-02",
+      "network": [],
+      "network_summary": "Coleta de rede não habilitada.",
+      "controls": []
+    }
+  ],
+  "final_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN",
+  "messages": [
+    "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN",
+    "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN"
+  ],
+  "final_url": "http://127.0.0.1:3000/#/privacy-security",
+  "network_summary": "Coleta de rede não habilitada.",
+  "final_visible_text": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN",
+  "validation": {
+    "passed": true,
+    "message": "Todos os critérios observáveis foram atendidos."
+  }
+}

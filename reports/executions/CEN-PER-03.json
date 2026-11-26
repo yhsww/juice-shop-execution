@@ -1,0 +1,73 @@
+{
+  "scenario_id": "CEN-PER-03",
+  "status": "PASSED",
+  "steps": [
+    {
+      "step": 1,
+      "action": "NAVIGATE",
+      "user_action": "Abrir a rota /#/saved-payment-methods",
+      "data": "/#/saved-payment-methods",
+      "url_before": "http://127.0.0.1:3000/#/search",
+      "url_after": "http://127.0.0.1:3000/#/saved-payment-methods",
+      "observed_result": "URL: http://127.0.0.1:3000/#/search → http://127.0.0.1:3000/#/saved-payment-methods Texto visível: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card Texto transitório capturado: My Payment Options Add new card Add a credit or debit card | My Payment Options | Add new card | Add new card Add a credit or debit card | Add a credit or debit card Mensagem transitória: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card | This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card | My Payment Options Add new card Add a credit or debit card | My Payment Options | Add new card",
+      "changed": true,
+      "success": true,
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop-execution-v2/reports/executions/CEN-PER-03_step_01.png",
+      "error": null,
+      "timestamp": "2026-11-26T13:15:29.994904+00:00",
+      "visible_text_before": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN All Products Items per page: 15 0 of 0",
+      "visible_text_after": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card",
+      "messages": [
+        "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card",
+        "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card",
+        "My Payment Options Add new card Add a credit or debit card",
+        "My Payment Options",
+        "Add new card",
+        "Add new card Add a credit or debit card",
+        "Add a credit or debit card"
+      ],
+      "action_id": "CEN-PER-03-A-01",
+      "network": [],
+      "network_summary": "Coleta de rede não habilitada.",
+      "controls": []
+    },
+    {
+      "step": 2,
+      "action": "WAIT",
+      "user_action": "Aguardar a atualização da interface",
+      "data": "",
+      "url_before": "http://127.0.0.1:3000/#/saved-payment-methods",
+      "url_after": "http://127.0.0.1:3000/#/saved-payment-methods",
+      "observed_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card",
+      "changed": false,
+      "success": true,
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop-execution-v2/reports/executions/CEN-PER-03_step_02.png",
+      "error": null,
+      "timestamp": "2026-11-26T13:15:31.291667+00:00",
+      "visible_text_before": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card",
+      "visible_text_after": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card",
+      "messages": [],
+      "action_id": "CEN-PER-03-A-02",
+      "network": [],
+      "network_summary": "Coleta de rede não habilitada.",
+      "controls": []
+    }
+  ],
+  "final_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card",
+  "messages": [
+    "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card",
+    "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card",
+    "My Payment Options Add new card Add a credit or debit card",
+    "My Payment Options",
+    "Add new card",
+    "Add new card Add a credit or debit card",
+    "Add a credit or debit card"
+  ],
+  "final_url": "http://127.0.0.1:3000/#/saved-payment-methods",
+  "network_summary": "Coleta de rede não habilitada.",
+  "final_visible_text": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card",
+  "validation": {
+    "passed": true,
+    "message": "Todos os critérios observáveis foram atendidos."
+  }
+}

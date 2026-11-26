@@ -1,41 +1,40 @@
 {
   "scenario_id": "CEN-CAT-07",
-  "fingerprint": "ef89473a2b5cc1a8d5e4c02826147af0a9018a2b8b9fb893cb4864411e298035",
+  "fingerprint": "b035a1602bd0a60bde2d644b0c5d9b8fec2a05793fecfbc58c5e00b8b5df4765",
   "content": {
-    "flow": "Na tela inicial da loja OWASP Juice Shop, o cliente realizou a navegação para a rota de pesquisa e preencheu o campo de busca com caracteres especiais (Açaí / Limão). Ao pressionar Enter, a interface processou a consulta sem interrupções e exibiu a seção Search Results - Açaí / Limão indicando que nenhum resultado foi encontrado.",
-    "precondition": "Catálogo disponível.",
-    "observed_result": "A interface processou a pesquisa com caracteres especiais sem sofrer interrupções e exibiu a tela de resultados vazia com o cabeçalho Search Results - Açaí / Limão, a ilustração de uma lupa entre nuvens e a mensagem informando que nenhum resultado foi encontrado.",
+    "flow": "O cliente acessou a rota de pesquisa da loja, preencheu o campo de busca com o termo contendo caracteres especiais, acionou a tecla Enter para confirmar e a interface processou a consulta sem interrupções, exibindo o cabeçalho de resultados e a indicação de que nenhum item foi encontrado.",
+    "precondition": "Catálogo disponível e aplicação carregada.",
+    "observed_result": "A interface atualizou a visualização para a página de resultados da pesquisa com o título Search Results - Açaí / Limão, exibindo a mensagem No results found e a indicação de 0 of 0 itens, mantendo a estabilidade da aplicação sem interrupções.",
     "messages": [
       "Search Results - Açaí / Limão",
       "No results found",
-      "Try adjusting your search to find what you're looking for.",
-      "This website uses fruit cookies to ensure you get the juiciest tracking experience."
+      "Try adjusting your search to find what you're looking for."
     ],
-    "data": "Termo: Açaí / Limão.",
+    "data": "Termo: Açaí / Limão",
     "steps": [
       {
         "number": 1,
         "action": "Abrir a rota",
         "data": "",
-        "response": "A página inicial de produtos foi carregada exibindo a listagem de itens como Apple Juice, Apple Pomace, Banana Juice e Basil Smoothie, além do banner de cookies na parte inferior direita."
+        "response": "A página de listagem de produtos foi carregada exibindo o catálogo com itens como Apple Juice (1000ml), Apple Pomace e Banana Juice (1000ml), além do banner de cookies no canto inferior direito."
       },
       {
         "number": 2,
-        "action": "Preencher \"Search\"",
+        "action": "Preencher o campo de busca \"Search\"",
         "data": "Açaí / Limão",
-        "response": "O campo de pesquisa foi preenchido com o termo com caracteres especiais mantendo a interface estável e exibindo a listagem padrão de produtos."
+        "response": "O termo foi inserido no campo de pesquisa da interface mantendo a listagem atual de produtos visível."
       },
       {
         "number": 3,
         "action": "Pressionar Enter",
-        "data": "Nenhuma",
-        "response": "A tela foi atualizada para a seção Search Results - Açaí / Limão, exibindo o título correspondente, a mensagem de que nenhum resultado foi encontrado acompanhada de uma ilustração de lupa entre nuvens, e o rodapé de paginação indicando 0 de 0 itens."
+        "data": "Nenhum dado adicional",
+        "response": "A interface foi atualizada para a seção de resultados exibindo o título Search Results - Açaí / Limão, a ilustração de lupa com nuvens e o texto No results found com a mensagem Try adjusting your search to find what you're looking for."
       },
       {
         "number": 4,
         "action": "Aguardar a atualização da interface",
-        "data": "Nenhuma",
-        "response": "Nenhuma mudança visual adicional foi registrada, mantendo a exibição de nenhum resultado encontrado para o termo pesquisado."
+        "data": "Nenhum dado adicional",
+        "response": "A interface permaneceu estável na tela de resultados da busca vazia, exibindo 0 of 0 itens e o seletor de itens por página definido em 15."
       }
     ]
   }

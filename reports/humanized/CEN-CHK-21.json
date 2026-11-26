@@ -1,30 +1,28 @@
 {
   "scenario_id": "CEN-CHK-21",
-  "fingerprint": "cd0079b77e20e4c439c3e753883e74d78238d9a96ec2f93a9877a0fb1d0cc8c2",
+  "fingerprint": "93317fa808896881a5fcb152b471ea9aea86acfa6c9bbf5c4253b35348dfa272",
   "content": {
-    "flow": "Na tela Order History, o cliente visualizou os detalhes do pedido associado contendo o produto Apple Juice (1000ml), com o identificador #b3a8-3f56a97055242e35 e status In Transit. Em seguida, acionou o botão de impressão para acessar a confirmação do pedido em formato PDF.",
+    "flow": "O cliente abriu o histórico de pedidos na interface para consultar os detalhes do pedido concluído e acionou a opção de impressão da confirmação associada ao pedido de teste.",
     "precondition": "Cliente autenticado; pedido concluído.",
-    "observed_result": "O histórico de pedidos foi exibido com as informações do pedido concluído (#b3a8-3f56a97055242e35) contendo o item Apple Juice (1000ml) no valor de 1.99¤, e ao acionar a opção de impressão, a confirmação do pedido foi acessada com sucesso.",
+    "observed_result": "A URL foi alterada para a rota correspondente ao PDF do pedido de confirmação e a estrutura da página refletiu o acesso ao documento associado ao Order ID #1f6f-2da7a9098b6e5ac5.",
     "messages": [
       "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!",
-      "Order History",
-      "Order ID #b3a8-3f56a97055242e35 Total Price 1.99¤ Bonus 0 In Transit",
-      "Product Price Quantity Total Price Apple Juice (1000ml) 1.99¤ 1 1.99¤",
-      "Placed Apple Juice (1000ml) into basket."
+      "Placed Apple Juice (1000ml) into basket. X",
+      "Print Order Confirmation"
     ],
-    "data": "Pedido concluído disponível no histórico.",
+    "data": "Pedido concluído disponível no histórico com Order ID #1f6f-2da7a9098b6e5ac5, contendo o produto Apple Juice (1000ml), preço total de 1.99¤, quantidade 1 e status In Transit.",
     "steps": [
       {
         "number": 1,
-        "action": "Abrir a rota para acessar a página de histórico de pedidos.",
+        "action": "Abrir a rota correspondente ao histórico de pedidos.",
         "data": "",
-        "response": "A página Order History foi carregada exibindo o pedido com Order ID #b3a8-3f56a97055242e35, Total Price 1.99¤, status In Transit e o produto Apple Juice (1000ml) com quantidade 1 e preço 1.99¤."
+        "response": "A interface exibiu a seção Order History contendo a tabela com o pedido de ID #1f6f-2da7a9098b6e5ac5, preço total de 1.99¤, bônus 0, status In Transit e o item Apple Juice (1000ml) com quantidade 1 e preço 1.99¤."
       },
       {
         "number": 2,
-        "action": "Clicar no botão Print Order Confirmation associado ao registro do pedido.",
+        "action": "Clicar no botão ou ícone de impressão do pedido ('Print Order Confirmation').",
         "data": "",
-        "response": "O navegador direcionou para o documento PDF de confirmação do pedido correspondente ao identificador associado."
+        "response": "A URL foi alterada para o caminho do arquivo PDF de confirmação do pedido e a estrutura visível foi direcionada para a visualização do documento PDF associado."
       }
     ]
   }

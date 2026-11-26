@@ -1,27 +1,27 @@
 {
   "scenario_id": "CEN-IDT-07",
-  "fingerprint": "e9387581b9bea1d37c69f177e917b146f40a26f5b0ee6cc888e8da690a61c498",
+  "fingerprint": "f5d668e6247b916dc2138f37081cd6edc99dc3638909f9bcd0a7250b9dd52a89",
   "content": {
-    "flow": "Na página principal da loja, o cliente navegou para a seção de privacidade e segurança através da rota correspondente, exibindo o cabeçalho com o logotipo OWASP Juice Shop, os ícones de pesquisa, o botão Account, o carrinho Your Basket com indicador 0 e o seletor de idioma EN, além da caixa de diálogo de cookies no canto inferior direito.",
+    "flow": "O cliente abriu a rota correspondente às configurações de privacidade e segurança e aguardou a atualização da interface para verificação do estado da página.",
     "precondition": "Conta de teste disponível para autenticação.",
-    "observed_result": "A rota de privacidade e segurança foi aberta com sucesso e a interface permaneceu estável, exibindo os elementos de navegação padrão do cabeçalho e o aviso de cookies no canto inferior direito.",
+    "observed_result": "A URL foi atualizada para a rota de privacidade e segurança, exibindo o cabeçalho padrão com o menu do OWASP Juice Shop, a barra de pesquisa, a opção de conta Account, o carrinho Your Basket com indicador 0, a seleção de idioma EN e o banner de aviso de cookies na parte inferior, acompanhado de uma notificação verde de desafio resolvido.",
     "messages": [
-      "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN",
-      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN"
+      "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN You successfully solved a challenge: Error Handling (Provoke an error that is neither very gracefully nor consistently handled.) X",
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN You successfully solved a challenge: Error Handling (Provoke an error that is neither very gracefully nor consistently handled.) X"
     ],
     "data": "Dado de teste atualizado.",
     "steps": [
       {
         "number": 1,
-        "action": "O cliente abriu a rota de privacidade e segurança no navegador.",
+        "action": "Abrir a rota",
         "data": "",
-        "response": "A página foi carregada exibindo o cabeçalho superior contendo o logotipo OWASP Juice Shop, os controles de pesquisa, o botão Account, o carrinho Your Basket com o contador 0 e o menu de idioma EN. No canto inferior direito, a caixa azul de aviso de cookies é exibida com o texto sobre política de cookies e o botão verde Me want it!."
+        "response": "A URL mudou para A interface passou a exibir o menu superior com o logotipo do OWASP Juice Shop, barra de pesquisa, opções de conta e carrinho Your Basket com quantidade 0, além de uma mensagem verde indicando desafio resolvido e o banner azul de cookies no canto inferior direito."
       },
       {
         "number": 2,
-        "action": "O cliente aguardou a atualização da interface.",
+        "action": "Aguardar a atualização da interface",
         "data": "",
-        "response": "Nenhuma mudança visual relevante foi detectada na interface, mantendo os elementos de cabeçalho e o banner de cookies visíveis."
+        "response": "Nenhuma mudança visual relevante detectada. A página permaneceu exibindo o banner de cookies e a barra de navegação superior com os mesmos elementos."
       }
     ]
   }

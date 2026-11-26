@@ -1,50 +1,50 @@
 {
   "scenario_id": "CEN-CAR-07",
-  "fingerprint": "885dfb367e254d1c91c20193804023916585c3af7554ac7e8addba1f0f5462d7",
+  "fingerprint": "2ca58aeca79039e8d913f4a0089b78ccc3b44fcd9253d32c728e97fc0ee84840",
   "content": {
-    "flow": "Na página inicial, o cliente adicionou o produto Apple Juice ao carrinho, navegou para outra área do sistema e, em seguida, acessou o carrinho para verificar a persistência do item.",
+    "flow": "Na tela inicial de produtos, o usuário adicionou o item Apple Juice ao carrinho, navegou para outras rotas e posteriormente acessou o carrinho de compras para validar a persistência do item.",
     "precondition": "Catálogo disponível.",
-    "observed_result": "O produto Apple Juice (1000ml) permaneceu salvo no carrinho com quantidade 1 e preço unitário de 1.99¤, totalizando 1.99¤.",
+    "observed_result": "O produto Apple Juice permaneceu persistido no carrinho com quantidade 1 e preço unitário e total de 1.99¤.",
     "messages": [
       "Placed Apple Juice (1000ml) into basket."
     ],
-    "data": "Produto: Apple Juice",
+    "data": "Produto: Apple Juice.",
     "steps": [
       {
         "number": 1,
         "action": "Abrir a rota /#/",
         "data": "/#/",
-        "response": "A página inicial foi carregada exibindo o catálogo de produtos e o ícone Your Basket indicando 0 itens."
+        "response": "A página inicial foi carregada exibindo a listagem de produtos com o catálogo e o indicador do carrinho Your Basket com quantidade 0."
       },
       {
         "number": 2,
-        "action": "Clicar em Add to Basket no cartão do produto Apple Juice",
-        "data": "Apple Juice (1000ml)",
-        "response": "A mensagem Placed Apple Juice (1000ml) into basket. foi exibida e o indicador do carrinho Your Basket passou a exibir a quantidade 1."
+        "action": "Clicar em Add to Basket no produto Apple Juice (1000ml)",
+        "data": "",
+        "response": "O item foi adicionado ao carrinho, a notificação 'Placed Apple Juice (1000ml) into basket.' foi exibida e o indicador do carrinho mudou para 1."
       },
       {
         "number": 3,
-        "action": "Abrir a rota de pesquisa",
+        "action": "Abrir a rota",
         "data": "",
-        "response": "O navegador acessou a rota de pesquisa, mantendo o indicador Your Basket exibindo 1 item."
+        "response": "A interface navegou para a rota de pesquisa de produtos, mantendo o indicador Your Basket exibindo a quantidade 1."
       },
       {
         "number": 4,
         "action": "Aguardar a atualização da interface",
-        "data": "Nenhum dado informado",
-        "response": "A interface permaneceu estável com o estado do carrinho preservado."
+        "data": "",
+        "response": "Nenhuma mudança visual adicional foi registrada, mantendo o estado atual da interface."
       },
       {
         "number": 5,
-        "action": "Abrir a rota do carrinho",
+        "action": "Abrir a rota",
         "data": "",
-        "response": "A tela Your Basket foi aberta exibindo o produto Apple Juice (1000ml) com quantidade 1, preço de 1.99¤ e Total Price de 1.99¤."
+        "response": "A tela do carrinho Your Basket (anonymous) foi exibida contendo o produto Apple Juice (1000ml), quantidade 1, preço unitário de 1.99¤, Total Price de 1.99¤ e o botão Checkout."
       },
       {
         "number": 6,
         "action": "Aguardar a atualização da interface",
-        "data": "Nenhum dado informado",
-        "response": "O carrinho permaneceu persistido com o produto Apple Juice e o valor total calculados corretamente."
+        "data": "",
+        "response": "Nenhuma mudança visual adicional foi registrada, confirmando a persistência do carrinho."
       }
     ]
   }

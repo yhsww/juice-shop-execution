@@ -1,31 +1,27 @@
 {
   "scenario_id": "CEN-CAR-04",
-  "fingerprint": "02780a2420fc5fdfda9a75c48404938e7333b08340929482edc18804f98dedc5",
+  "fingerprint": "feaca2ab8817d172b10816c344a386dba8b02d3e80b6d176a2e3774ef05dc8c6",
   "content": {
-    "flow": "Na tela do carrinho Your Basket, o usuário acessou a rota do carrinho contendo o produto Apple Juice (1000ml) com quantidade 1 e preço unitário de 1.99¤, visualizando o valor Total Price correspondente a 1.99¤.",
+    "flow": "Na tela inicial da aplicação, o cliente acessou o carrinho de compras por meio da rota correspondente, visualizando o produto Apple Juice (1000ml) com quantidade 1, preço unitário de 1.99¤ e o valor total da compra exibido corretamente como 1.99¤.",
     "precondition": "Há pelo menos um produto no carrinho.",
-    "observed_result": "O carrinho exibiu o produto Apple Juice (1000ml) com quantidade 1, preço de 1.99¤ e o valor Total Price: 1.99¤ apresentado corretamente na seção Your Basket.",
+    "observed_result": "A interface exibiu a página Your Basket (anonymous) contendo o item Apple Juice (1000ml) com quantidade 1, valor unitário de 1.99¤ e o campo Total Price mostrando 1.99¤.",
     "messages": [
-      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!",
       "Placed Apple Juice (1000ml) into basket.",
-      "Your Basket (anonymous)",
-      "Total Price: 1.99¤",
-      "Checkout",
-      "You will gain 0 Bonus Points from this order!"
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!"
     ],
-    "data": "Apple Juice (1000ml), Quantidade: 1, Preço: 1.99¤",
+    "data": "Apple Juice (1000ml)",
     "steps": [
       {
         "number": 1,
-        "action": "Abrir a rota do carrinho de compras.",
+        "action": "Abrir a rota para acessar o carrinho de compras.",
         "data": "",
-        "response": "A interface exibiu a página Your Basket com o item Apple Juice (1000ml), a miniatura do produto, o seletor de quantidade indicando 1, o valor unitário de 1.99¤, o botão de exclusão, o botão Checkout, o aviso de pontos de bônus You will gain 0 Bonus Points from this order! e o Total Price: 1.99¤."
+        "response": "A tela Your Basket (anonymous) foi carregada, exibindo o produto Apple Juice (1000ml) na quantidade 1, com o preço unitário de 1.99¤ e o Total Price calculado em 1.99¤."
       },
       {
         "number": 2,
         "action": "Aguardar a atualização da interface.",
         "data": "",
-        "response": "Nenhuma mudança visual adicional foi registrada, mantendo o produto listado com o preço total de 1.99¤."
+        "response": "Nenhuma mudança visual relevante detectada, mantendo o produto Apple Juice (1000ml) listado com quantidade 1 e Total Price de 1.99¤."
       }
     ]
   }

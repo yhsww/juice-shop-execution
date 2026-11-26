@@ -1,44 +1,55 @@
 {
   "scenario_id": "CEN-CHK-05",
-  "fingerprint": "90a0606b520155013f6d2068e9e1cba1026f73fda6595d87b4c833af480ffaaa",
+  "fingerprint": "d651a4264862b6f529da5a6661a05841932975f83afc14fae68c4de09ea2c19b",
   "content": {
-    "flow": "Na tela de escolha de velocidade de entrega, o cliente selecionou a opção Standard Delivery e clicou no botão Continue para prosseguir para a tela de pagamento My Payment Options.",
-    "precondition": "Cliente autenticado; endereço de entrega previamente cadastrado e selecionado.",
-    "observed_result": "A opção Standard Delivery foi marcada com o botão de seleção preenchido, e após acionar o botão Continue, a interface redirecionou para a seção My Payment Options com as opções de pagamento disponíveis.",
+    "flow": "Na tela de seleção de método de entrega, o cliente escolheu a opção 'Standard Delivery' por meio do botão de seleção correspondente e acionou o botão 'Continue'. A interface realizou a transição para a tela de opções de pagamento.",
+    "precondition": "Cliente autenticado; endereço de entrega selecionado.",
+    "observed_result": "A interface navegou com sucesso para a tela de pagamento ('My Payment Options'), exibindo as opções de cartão, carteira com saldo, cupom e outras formas de pagamento, permitindo a revisão do pedido.",
     "messages": [
-      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!"
+      "Delivery Address Cliente Teste Rua Teste, 100, Fortaleza, CE, 60000000 Brazil Phone Number 8599999999 Choose a delivery speed Price Expected Delivery navigate_before Back navigate_nextContinue",
+      "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Delivery Address Cliente Teste Rua Teste, 100, Fortaleza, CE, 60000000 Brazil Phone Number 8599999999 Choose a delivery speed Price Expected Delivery navigate_before Back navigate_nextContinue",
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Delivery Address Cliente Teste Rua Teste, 100, Fortaleza, CE, 60000000 Brazil Phone Number 8599999999 Choose a delivery speed Price Expected Delivery navigate_before Back navigate_nextContinue",
+      "Delivery Address Cliente Teste Rua Teste, 100, Fortaleza, CE, 60000000 Brazil Phone Number 8599999999",
+      "Cliente Teste",
+      "Rua Teste, 100, Fortaleza, CE, 60000000",
+      "Brazil",
+      "Phone Number 8599999999",
+      "Delivery Address",
+      "Phone Number",
+      "Price Expected Delivery One Day Delivery 0.99¤ 1 Days Fast Delivery 0.50¤ 3 Days Standard Delivery 0.00¤ 5 Days",
+      "Choose a delivery speed Price Expected Delivery One Day Delivery 0.99¤ 1 Days Fast Delivery 0.50¤ 3 Days Standard Delivery 0.00¤ 5 Days"
     ],
-    "data": "Método de entrega exibido: Standard Delivery (0.00¤, 5 Days).",
+    "data": "Método de entrega exibido: Standard Delivery.",
     "steps": [
       {
         "number": 1,
-        "action": "Abrir a rota de métodos de entrega",
+        "action": "Abrir a rota",
         "data": "",
-        "response": "A tela exibe os dados do Delivery Address com o nome Cliente Teste, endereço, país Brazil e número de telefone, além da tabela Choose a delivery speed listando One Day Delivery, Fast Delivery e Standard Delivery."
+        "response": "A tela de seleção de método de entrega foi exibida, contendo o endereço cadastrado do cliente e a tabela com as velocidades de entrega disponíveis: One Day Delivery (0.99¤, 1 Days), Fast Delivery (0.50¤, 3 Days) e Standard Delivery (0.00¤, 5 Days)."
       },
       {
         "number": 2,
-        "action": "Clicar na opção \"Standard Delivery\"",
-        "data": "Standard Delivery",
-        "response": "O botão de seleção associado à linha Standard Delivery foi marcado visualmente."
+        "action": "Clicar em \"Standard Delivery\"",
+        "data": "",
+        "response": "O botão de opção referente à linha 'Standard Delivery' foi marcado, alterando seu estado visual para selecionado."
       },
       {
         "number": 3,
         "action": "Aguardar a atualização da interface",
-        "data": "Nenhum dado informado",
-        "response": "A interface manteve a seleção da Standard Delivery e o botão Continue ativo."
+        "data": "",
+        "response": "A interface manteve os elementos visíveis e o método 'Standard Delivery' selecionado, preparando o fluxo para a continuidade."
       },
       {
         "number": 4,
-        "action": "Clicar no botão \"Continue\"",
-        "data": "Nenhum dado informado",
-        "response": "A página foi redirecionada para a seção My Payment Options, exibindo os campos Add new card, Pay using wallet com saldo 0.00, Add a coupon e Other payment options."
+        "action": "Clicar em \"Continue\"",
+        "data": "",
+        "response": "A URL foi alterada para a etapa de pagamento e a interface exibiu o título 'My Payment Options', junto com as seções para adicionar cartão, pagar usando carteira (Wallet Balance 0.00), adicionar cupom e outras opções de pagamento."
       },
       {
         "number": 5,
         "action": "Aguardar a atualização da interface",
-        "data": "Nenhum dado informado",
-        "response": "Nenhuma resposta adicional registrada."
+        "data": "",
+        "response": "A tela de opções de pagamento permaneceu estável e pronta para a próxima interação do usuário."
       }
     ]
   }

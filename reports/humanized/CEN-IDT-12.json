@@ -1,26 +1,24 @@
 {
   "scenario_id": "CEN-IDT-12",
-  "fingerprint": "a26e6f870150728ea811b8ba5945974d370c96c160be65789638e3e93c833571",
+  "fingerprint": "53887b77daaa0bdb1e1db3d7131187c1857cdf91c16020cd32e0035bb5ddba10",
   "content": {
-    "flow": "O ator abriu a rota /dataerasure na aplicação, resultando na exibição de uma página de erro do servidor indicando atividade bloqueada.",
-    "precondition": "Conta de teste disponível para autenticação.",
-    "observed_result": "A tela exibiu um erro 500 informando atividade ilegal bloqueada (Blocked illegal activity) com detalhes de rastreamento de pilha (stack trace) da rota dataErasure.js.",
-    "messages": [
-      "500 Error: Blocked illegal activity by ::ffff:172.18.0.1"
-    ],
-    "data": "/dataerasure",
+    "flow": "O cliente tentou navegar diretamente para a rota de exclusão de dados (/dataerasure) no sistema, momento em que foi bloqueado pelo servidor com um erro de atividade ilegal.",
+    "precondition": "Conta de teste disponível para autenticação e acesso inicial à página principal da aplicação.",
+    "observed_result": "A aplicação exibiu um erro de sistema com a mensagem '500 Error: Blocked illegal activity' em vez de carregar a funcionalidade de exclusão de dados, impedindo o acesso à área pretendida.",
+    "messages": [],
+    "data": "Rota de navegação: /dataerasure",
     "steps": [
       {
         "number": 1,
-        "action": "Abrir a rota /dataerasure",
+        "action": "Navegação para a rota de exclusão de dados",
         "data": "/dataerasure",
-        "response": "A interface exibiu a página com o título OWASP Juice Shop (Express ^4.22.1) e o erro 500 com a mensagem Blocked illegal activity by ::ffff:172.18.0.1 acompanhada do rastreamento técnico."
+        "response": "A página redirecionou para o endereço /dataerasure e exibiu uma mensagem de erro de servidor: 'OWASP Juice Shop (Express ^4.22.1) 500 Error: Blocked illegal activity'."
       },
       {
         "number": 2,
-        "action": "Aguardar a atualização da interface",
-        "data": "",
-        "response": "Nenhuma mudança visual relevante detectada, mantendo a exibição do erro 500."
+        "action": "Aguardar carregamento da interface",
+        "data": "Nenhum dado adicional",
+        "response": "Nenhuma alteração na interface foi observada; a página persistiu na exibição do erro 500 sem carregar qualquer opção de exclusão de dados."
       }
     ]
   }

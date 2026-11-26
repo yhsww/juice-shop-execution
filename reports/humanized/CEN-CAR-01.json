@@ -1,34 +1,34 @@
 {
   "scenario_id": "CEN-CAR-01",
-  "fingerprint": "20d095160e10d6845e00f88d75e405645b3d358c268ba296656f8707f3dd2936",
+  "fingerprint": "40aca155d20454f6de38b1a8e7240a1bb80824bddaf9d03b8282af35252ba580",
   "content": {
-    "flow": "O cliente abriu a página principal da loja, visualizou o catálogo de produtos e selecionou o botão Add to Basket no item Apple Juice (1000ml). Em resposta, a interface atualizou o indicador do carrinho para exibir a quantidade 1 e exibiu a notificação de confirmação de inclusão.",
-    "precondition": "Catálogo disponível.",
-    "observed_result": "O produto Apple Juice (1000ml) foi adicionado com sucesso, o indicador Your Basket passou a exibir o valor 1 e a notificação de confirmação foi apresentada na tela.",
+    "flow": "Na página inicial da loja, o cliente localizou o produto Apple Juice (1000ml) no valor de 1.99¤ e clicou no botão Add to Basket associado a ele. Como resposta, o indicador numérico do carrinho na barra superior foi atualizado para 1 e uma notificação flutuante de confirmação foi exibida na interface.",
+    "precondition": "O navegador está aberto na rota principal da aplicação e o catálogo de produtos está carregado e disponível.",
+    "observed_result": "O produto Apple Juice (1000ml) foi incluído com sucesso no carrinho, fazendo com que o rótulo Your Basket passasse a exibir a quantidade 1 e a notificação de confirmação Placed Apple Juice (1000ml) into basket. fosse exibida na tela.",
     "messages": [
-      "Language has been changed to English Force page reload",
       "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!",
+      "Language has been changed to English Force page reload",
       "Placed Apple Juice (1000ml) into basket."
     ],
-    "data": "Produto: Apple Juice.",
+    "data": "Produto: Apple Juice (1000ml), Preço: 1.99¤, Quantidade: 1",
     "steps": [
       {
         "number": 1,
         "action": "Abrir a rota /#/",
         "data": "/#/",
-        "response": "A página principal foi carregada exibindo o catálogo de produtos, o cabeçalho com o indicador Your Basket em 0 e os itens disponíveis como Apple Juice (1000ml) com o preço 1.99¤ e o botão Add to Basket."
+        "response": "A página inicial da loja foi carregada, exibindo a listagem de produtos com seus respectivos títulos, imagens, preços e botões Add to Basket, incluindo o item Apple Juice (1000ml) por 1.99¤. O indicador de quantidade no botão Your Basket exibia 0."
       },
       {
         "number": 2,
-        "action": "Clicar em \"Add to Basket\" no produto Apple Juice (1000ml)",
-        "data": "",
-        "response": "O indicador Your Basket foi atualizado para 1 e a notificação Placed Apple Juice (1000ml) into basket. foi exibida na interface."
+        "action": "Clicar no botão \"Add to Basket\" correspondente ao produto Apple Juice (1000ml)",
+        "data": "Apple Juice (1000ml)",
+        "response": "O indicador Your Basket na barra superior foi atualizado para exibir a quantidade 1 e uma barra de notificação flutuante contendo o texto Placed Apple Juice (1000ml) into basket. com um botão de fechar (X) apareceu na parte inferior da tela."
       },
       {
         "number": 3,
         "action": "Aguardar a atualização da interface",
-        "data": "",
-        "response": "A interface permaneceu estável com o carrinho atualizado contendo o item e a mensagem de confirmação visível."
+        "data": "Nenhum dado informado",
+        "response": "Nenhuma mudança visual adicional foi registrada, mantendo o estado com o produto inserido no carrinho e a mensagem de confirmação visível na interface."
       }
     ]
   }

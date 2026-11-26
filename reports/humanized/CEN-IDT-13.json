@@ -1,27 +1,27 @@
 {
   "scenario_id": "CEN-IDT-13",
-  "fingerprint": "a87df100631c4478cc30a1ee13ee4ed0c35b8908006da7c5b7b6e5201121d892",
+  "fingerprint": "155dc955c744739b589301918c90f482aa83088a44c3e66f6e0c790efcc5fca4",
   "content": {
-    "flow": "Na página principal da aplicação OWASP Juice Shop, o usuário navegou para a rota de privacidade e segurança. A interface foi exibida com o menu superior contendo os elementos de busca, ícone de conta, o carrinho Your Basket com indicador zero e seleção de idioma EN, além do banner informativo de cookies no canto inferior direito.",
-    "precondition": "Conta de teste disponível para autenticação.",
-    "observed_result": "A área de privacidade e segurança foi carregada exibindo o cabeçalho padrão da aplicação com os menus de navegação, ícones de conta, carrinho com quantidade zero, seletor de idioma EN e o aviso de cookies rodapé com o botão Me want it!.",
+    "flow": "O cliente acessou diretamente a rota da área de privacidade e segurança do sistema. Após a navegação, a interface foi validada quanto à sua estabilidade e exibição correta dos elementos do cabeçalho e avisos de cookies.",
+    "precondition": "Conta de teste disponível para autenticação e o sistema encontrava-se na página inicial de busca.",
+    "observed_result": "A URL foi alterada com sucesso para a página de privacidade e segurança e a interface manteve os elementos de navegação padrão e a notificação de cookies visível no rodapé da página.",
     "messages": [
       "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN",
       "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN"
     ],
-    "data": "Nenhum dado adicional.",
+    "data": "Rota de destino:",
     "steps": [
       {
         "number": 1,
-        "action": "O usuário abriu a rota de privacidade e segurança da conta.",
+        "action": "Navegar para a rota de privacidade e segurança.",
         "data": "",
-        "response": "A interface exibiu a página solicitada mantendo o cabeçalho com o logotipo OWASP Juice Shop, barra de pesquisa, opções Account, Your Basket com quantidade 0, seletor language EN e o banner azul de cookies no canto inferior direito com o botão Me want it!."
+        "response": "A URL do navegador foi atualizada de para O cabeçalho contendo os menus, busca, conta e carrinho permaneceu inalterado, e um aviso de cookies foi apresentado no canto inferior direito."
       },
       {
         "number": 2,
-        "action": "O usuário aguardou a atualização da interface.",
-        "data": "",
-        "response": "Nenhuma mudança visual relevante detectada, mantendo o conteúdo da tela com o banner de cookies e o menu superior visíveis."
+        "action": "Aguardar a estabilização da interface após a navegação.",
+        "data": "Nenhum dado adicional.",
+        "response": "A interface permaneceu estável e sem alterações visuais relevantes, mantendo o aviso de cookies e a estrutura de navegação exibidos anteriormente."
       }
     ]
   }

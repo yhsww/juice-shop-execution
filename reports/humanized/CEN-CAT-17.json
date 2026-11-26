@@ -1,28 +1,37 @@
 {
   "scenario_id": "CEN-CAT-17",
-  "fingerprint": "334345e8b9603ec7a3e14e79861d7609b9a4ae55b0dfce78f307b369365d505a",
+  "fingerprint": "6f641d2b3e1809bfd507fea7fc7d78f14c2bd02d5c7d2fb464ef75206b60f191",
   "content": {
-    "flow": "O cliente acessou a página do Score Board e visualizou o painel de desafios do aplicativo OWASP Juice Shop, contendo indicadores de progresso de Hacking Challenges e Coding Challenges, além dos cartões de desafios disponíveis como Score Board, DOM XSS, Bonus Payload, Privacy Policy e Confidential Document.",
-    "precondition": "Catálogo disponível e aplicação carregada.",
-    "observed_result": "A tela do Score Board foi exibida com sucesso, mostrando os cards de categorias de desafios, filtros de dificuldade e status, além do banner de consentimento de cookies exibido no canto inferior direito.",
+    "flow": "O cliente abriu a rota correspondente ao Score Board e visualizou a listagem de desafios da aplicação, exibindo o painel de estatísticas e cartões de desafios.",
+    "precondition": "Catálogo disponível.",
+    "observed_result": "A página do Score Board foi carregada com sucesso, exibindo o aviso verde de sucesso referente ao desafio Score Board, além dos cartões de categorias de desafios e progresso.",
     "messages": [
-      "Shenanigans lightbulb_outlined 0/4",
-      "Broken Access Control SSRF Request a hidden resource on server through server. Code Analysis lightbulb_outlined 0/4",
-      "Injection SSTi Infect the server with juicy malware by abusing arbitrary command execution. (This challenge is potentially harmful on Docker!) Contraption Danger Zone Code Analysis info_outline lightbulb_outlined 0/4"
+      "You successfully solved a challenge: Score Board (Find the carefully hidden 'Score Board' page.)",
+      "Shenanigans Code Analysis",
+      "Shenanigans Code Analysis lightbulb_outlined 0/5",
+      "lightbulb_outlined 0/5",
+      "Shenanigans",
+      "lightbulb_outlined",
+      "Security Misconfiguration Login Support Team Log in with the support team's original user credentials without applying SQL Injection or any other bypass. Brute Force Code Analysis lightbulb_outlined 0/5",
+      "Login Support Team",
+      "Log in with the support team's original user credentials without applying SQL Injection or any other bypass.",
+      "Brute Force Code Analysis",
+      "Brute Force Code Analysis lightbulb_outlined 0/5",
+      "Broken Anti Automation Multiple Likes Like any review at least three times as the same user. lightbulb_outlined 0/4"
     ],
-    "data": "Caminho",
+    "data": "",
     "steps": [
       {
         "number": 1,
-        "action": "O usuário navegou para a rota do Score Board informando a URL específica.",
+        "action": "Abrir a rota",
         "data": "",
-        "response": "A interface do OWASP Juice Shop foi carregada exibindo o painel de Score Board com o cabeçalho contendo o progresso de 5% em Hacking Challenges e 0% em Coding Challenges, os cartões de desafios dispostos em grade e um banner de cookies com o botão Me want it! no canto inferior direito."
+        "response": "A interface exibiu a página do Score Board com o cabeçalho OWASP Juice Shop, barras de estatísticas de Hacking Challenges (4%), Coding Challenges (0%) e Challenges Solved (5/186), além de um banner verde de sucesso indicando a resolução do desafio do Score Board."
       },
       {
         "number": 2,
-        "action": "O usuário aguardou a estabilização e atualização completa da interface.",
-        "data": "Nenhum dado adicional.",
-        "response": "Nenhuma mudança visual adicional foi registrada, mantendo a listagem de desafios visível com os cartões de Score Board, DOM XSS e demais opções na tela."
+        "action": "Aguardar a atualização da interface",
+        "data": "",
+        "response": "Nenhuma mudança visual relevante detectada. A interface permaneceu estável exibindo o Score Board e o banner de aviso de cookies no canto inferior direito."
       }
     ]
   }

@@ -1,41 +1,32 @@
 {
   "scenario_id": "CEN-CHK-12",
-  "fingerprint": "6a700f5ea8a97ca7a45ba7a073afeef3136dba3aacab5cf0bc9d89d8df50f7b1",
+  "fingerprint": "153a792a01bc9b47d1f717d6b002a3cc0dec98851a23755427a1a2331d7eb944",
   "content": {
-    "flow": "Na tela My Payment Options, o usuário clicou na seção Other payment options para expandi-la e visualizar as formas de pagamento adicionais disponíveis na loja.",
+    "flow": "Na página de opções de pagamento, o cliente abriu a rota de pagamento e clicou na seção \"Other payment options\" para expandi-la e visualizar as alternativas disponíveis.",
     "precondition": "Cliente autenticado; etapa de pagamento acessível; seção 'Other payment options' disponível.",
-    "observed_result": "A seção Other payment options foi expandida, revelando as subseções Donations e Merchandise com os botões Credit Card, Spreadshirt (US), Spreadshirt (DE), StickerYou, Leanpub e OpenSea.",
+    "observed_result": "A seção \"Other payment options\" foi expandida com sucesso, exibindo as opções adicionais de doações (com o botão de pagamento via cartão de crédito Stripe) e mercadorias (com links para Spreadshirt US, Spreadshirt DE, StickerYou, Leanpub e OpenSea).",
     "messages": [
-      "Pay NaN¤",
-      "Pay using wallet Wallet Balance Pay NaN¤",
-      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card Pay using wallet Wallet Balance Pay NaN¤ Add a coupon Add a coupon code to receive discounts Other payment options navigate_before Back You can review this order before it is finalized. navigate_next Continue",
-      "0.00",
-      "Wallet Balance 0.00",
-      "Pay using wallet Wallet Balance 0.00 Pay NaN¤",
-      "Add a coupon Add a coupon code to receive discounts",
-      "Other payment options",
-      "Add new card Add a credit or debit card",
-      "My Payment Options Add new card Add a credit or debit card"
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!"
     ],
-    "data": "Nenhum dado adicional.",
+    "data": "",
     "steps": [
       {
         "number": 1,
         "action": "Abrir a rota",
         "data": "",
-        "response": "A tela My Payment Options é exibida contendo as seções Add new card, Pay using wallet com saldo Wallet Balance 0.00 e botão Pay NaN¤, Add a coupon e Other payment options recolhida."
+        "response": "A página \"My Payment Options\" foi carregada com os campos \"Add new card\", \"Pay using wallet\" (com saldo Wallet Balance 0.00 e botão Pay NaN¤), \"Add a coupon\" e \"Other payment options\" recolhido."
       },
       {
         "number": 2,
         "action": "Clicar em \"Other payment options\"",
         "data": "",
-        "response": "A seção Other payment options foi expandida, exibindo as opções Donations com o botão Credit Card e Merchandise com os botões Spreadshirt (US), Spreadshirt (DE), StickerYou, Leanpub e OpenSea."
+        "response": "A seção \"Other payment options\" foi expandida, exibindo os blocos \"Donations\" com o botão \"Credit Card\" e \"Merchandise\" contendo os botões de redirecionamento \"Spreadshirt (US)\", \"Spreadshirt (DE)\", \"StickerYou\", \"Leanpub\" e \"OpenSea\"."
       },
       {
         "number": 3,
         "action": "Aguardar a atualização da interface",
         "data": "",
-        "response": "Nenhuma resposta adicional registrada."
+        "response": "Nenhuma alteração visual adicional foi registrada; a interface permaneceu estável com as outras opções de pagamento expandidas."
       }
     ]
   }

@@ -1,27 +1,27 @@
 {
   "scenario_id": "CEN-CHK-18",
-  "fingerprint": "615a83e1ee84d45a958f186fc7a52f1dd4832c335c0aa2343062b42414f21d8d",
+  "fingerprint": "63979e3fafa8adc94893f76f160d4de860708b6121e93a2461e265061d935d43",
   "content": {
-    "flow": "Na tela de histórico de pedidos, o cliente acessou a seção Order History e visualizou o resumo do pedido contendo o identificador #7e68-fd494fea95fc4bf7, o preço total de 1.99¤, o bônus 0 e o status In Transit, além da listagem do produto Apple Juice (1000ml) com quantidade 1 e preço unitário e total de 1.99¤.",
+    "flow": "Na tela inicial da loja OWASP Juice Shop, o usuário acessou diretamente a rota do histórico de pedidos e visualizou as informações do pedido concluído contendo o produto Apple Juice (1000ml).",
     "precondition": "Cliente autenticado; pedido concluído.",
-    "observed_result": "A página Order History exibiu corretamente os dados do pedido de teste, contendo o Order ID #7e68-fd494fea95fc4bf7, o Total Price de 1.99¤, bônus 0, status In Transit e o produto Apple Juice (1000ml) listado com quantidade 1.",
+    "observed_result": "A interface exibiu a seção Order History contendo o Order ID #c5a7-329402f4209ddd21, preço total de 1.99¤, bônus 0, status In Transit, e a listagem do produto Apple Juice (1000ml) com preço unitário de 1.99¤, quantidade 1 e preço total de 1.99¤.",
     "messages": [
       "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!",
       "Placed Apple Juice (1000ml) into basket."
     ],
-    "data": "Pedido de teste, produto Apple Juice (1000ml), quantidade 1, preço 1.99¤, Order ID #7e68-fd494fea95fc4bf7",
+    "data": "Pedido de teste com o produto Apple Juice (1000ml), Order ID #c5a7-329402f4209ddd21, quantidade 1 e preço 1.99¤.",
     "steps": [
       {
         "number": 1,
-        "action": "O usuário abriu a rota correspondente ao histórico de pedidos.",
+        "action": "Abrir a rota do histórico de pedidos",
         "data": "",
-        "response": "A página Order History foi carregada exibindo o cartão do pedido com Order ID #7e68-fd494fea95fc4bf7, Total Price 1.99¤, Bonus 0, status In Transit e a tabela de produtos contendo o item Apple Juice (1000ml), quantidade 1, preço 1.99¤ e preço total de 1.99¤."
+        "response": "A URL foi alterada para o histórico de pedidos e a interface apresentou o título Order History com os detalhes do pedido #c5a7-329402f4209ddd21, status In Transit, Total Price 1.99¤, Bonus 0 e a tabela contendo o produto Apple Juice (1000ml), preço 1.99¤, quantidade 1 e total 1.99¤."
       },
       {
         "number": 2,
-        "action": "O usuário aguardou a atualização da interface para verificação dos dados apresentados.",
+        "action": "Aguardar a atualização da interface",
         "data": "",
-        "response": "Nenhuma mudança visual adicional foi registrada, mantendo visível a tabela com o produto Apple Juice (1000ml) e os detalhes do pedido no histórico."
+        "response": "Nenhuma mudança visual relevante detectada, mantendo exibidos os dados do pedido e o banner de cookies e notificação de item no carrinho."
       }
     ]
   }

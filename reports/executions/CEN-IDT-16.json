@@ -14,8 +14,8 @@
       "success": true,
       "screenshot": "C:/Users/Asus/Desktop/juice-shop-execution-v2/reports/executions/CEN-IDT-16_step_01.png",
       "error": null,
-      "timestamp": "2026-11-26T00:44:48.390938+00:00",
-      "visible_text_before": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket Fruit Press 89.99¤ add_shopping_cart Add to Basket Grape Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Green Smoothie 1.99¤ add_shopping_cart Add to Basket Only 1 left Juice Shop \"Permafrost\" 2020 Edition 9999.99¤ add_shopping_cart Add to Basket Lemon Juice (500ml) 2.99¤ add_shopping_cart Add to Basket Items per page: 16 1 – 16 of 46 Language has been changed to English Force page reload Click for more information",
+      "timestamp": "2026-11-26T13:06:29.789166+00:00",
+      "visible_text_before": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket Fruit Press 89.99¤ add_shopping_cart Add to Basket Grape Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Green Smoothie 1.99¤ add_shopping_cart Add to Basket Only 1 left Juice Shop \"Permafrost\" 2020 Edition 9999.99¤ add_shopping_cart Add to Basket Lemon Juice (500ml) 2.99¤ add_shopping_cart Add to Basket Items per page: 16 1 – 16 of 46 Language has been changed to English Force page reload",
       "visible_text_after": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? Language has been changed to English Force page reload",
       "messages": [
         "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer?",
@@ -40,131 +40,8 @@
         "Security Question"
       ],
       "action_id": "CEN-IDT-16-A-01",
-      "network": [
-        {
-          "sequence": 1,
-          "timestamp": 1795653886.3173087,
-          "kind": "request",
-          "method": "GET",
-          "url": "http://127.0.0.1:3000/api/SecurityQuestions/",
-          "status": null,
-          "resource_type": "fetch",
-          "action_id": "CEN-IDT-16-A-01",
-          "request_headers": {
-            "accept": "application/json, text/plain, */*",
-            "accept-encoding": "gzip, deflate, br, zstd",
-            "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
-            "connection": "keep-alive",
-            "cookie": "<redacted>",
-            "host": "127.0.0.1:3000",
-            "referer": "http://127.0.0.1:3000/",
-            "sec-fetch-dest": "empty",
-            "sec-fetch-mode": "cors",
-            "sec-fetch-site": "same-origin",
-            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/158.0.0.0 Safari/537.36",
-            "sec-ch-ua": "\"Not.A/Brand\";v=\"24\", \"Chromium\";v=\"158\"",
-            "sec-ch-ua-mobile": "?0",
-            "sec-ch-ua-platform": "\"Windows\""
-          },
-          "response_headers": null,
-          "error": ""
-        },
-        {
-          "sequence": 2,
-          "timestamp": 1795653886.318572,
-          "kind": "request",
-          "method": "GET",
-          "url": "http://127.0.0.1:3000/assets/public/favicon_js.ico",
-          "status": null,
-          "resource_type": "other",
-          "action_id": "CEN-IDT-16-A-01",
-          "request_headers": {
-            "accept": "image/jxl,image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
-            "accept-encoding": "gzip, deflate, br, zstd",
-            "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
-            "connection": "keep-alive",
-            "cookie": "<redacted>",
-            "host": "127.0.0.1:3000",
-            "if-modified-since": "Sun, 11 Oct 2026 22:37:21 GMT",
-            "if-none-match": "W/\"3aee-1a12d1d0ce8\"",
-            "referer": "http://127.0.0.1:3000/",
-            "sec-fetch-dest": "image",
-            "sec-fetch-mode": "no-cors",
-            "sec-fetch-site": "same-origin",
-            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/158.0.0.0 Safari/537.36",
-            "sec-ch-ua": "\"Not.A/Brand\";v=\"24\", \"Chromium\";v=\"158\"",
-            "sec-ch-ua-mobile": "?0",
-            "sec-ch-ua-platform": "\"Windows\""
-          },
-          "response_headers": null,
-          "error": ""
-        },
-        {
-          "sequence": 3,
-          "timestamp": 1795653886.3191574,
-          "kind": "response",
-          "method": "GET",
-          "url": "http://127.0.0.1:3000/api/SecurityQuestions/",
-          "status": 200,
-          "resource_type": "fetch",
-          "action_id": "CEN-IDT-16-A-01",
-          "request_headers": null,
-          "response_headers": {
-            "access-control-allow-origin": "*",
-            "connection": "keep-alive",
-            "content-encoding": "br",
-            "content-type": "application/json; charset=utf-8",
-            "date": "Thu, 26 Nov 2026 00:44:46 GMT",
-            "etag": "W/\"78e-tD3N5IsjpaWWgDy7v0nYUVpobXg\"",
-            "feature-policy": "payment 'self'",
-            "keep-alive": "timeout=5",
-            "transfer-encoding": "chunked",
-            "vary": "Accept-Encoding",
-            "x-content-type-options": "nosniff",
-            "x-frame-options": "SAMEORIGIN",
-            "x-recruiting": "/#/jobs"
-          },
-          "error": ""
-        },
-        {
-          "sequence": 4,
-          "timestamp": 1795653886.3194435,
-          "kind": "response",
-          "method": "GET",
-          "url": "http://127.0.0.1:3000/assets/public/favicon_js.ico",
-          "status": 200,
-          "resource_type": "other",
-          "action_id": "CEN-IDT-16-A-01",
-          "request_headers": null,
-          "response_headers": {
-            "accept-ranges": "bytes",
-            "access-control-allow-origin": "*",
-            "cache-control": "public, max-age=0",
-            "connection": "keep-alive",
-            "date": "Thu, 26 Nov 2026 00:44:46 GMT",
-            "etag": "W/\"3aee-1a12d1d0ce8\"",
-            "feature-policy": "payment 'self'",
-            "keep-alive": "timeout=5",
-            "last-modified": "Sun, 11 Oct 2026 22:37:21 GMT",
-            "x-content-type-options": "nosniff",
-            "x-frame-options": "SAMEORIGIN",
-            "x-recruiting": "/#/jobs"
-          },
-          "error": ""
-        }
-      ],
-      "network_summary": {
-        "requests": 2,
-        "responses": 2,
-        "api_responses": 1,
-        "failed_requests": 0,
-        "methods": [
-          "GET"
-        ],
-        "status_codes": [
-          200
-        ]
-      },
+      "network": [],
+      "network_summary": "Coleta de rede não habilitada.",
       "controls": []
     },
     {
@@ -174,32 +51,25 @@
       "data": "teste-sem-formato",
       "url_before": "http://127.0.0.1:3000/#/register",
       "url_after": "http://127.0.0.1:3000/#/register",
-      "observed_result": "Conteúdo/estrutura visível da página foi alterado. Texto transitório capturado: Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? Language has been changed to English Force page reload | Language has been changed to English Force page reload | This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Passwo Mensagem transitória: Email | Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? Language has been changed to English Force page reload | Language has been changed to English Force page reload",
+      "observed_result": "Conteúdo/estrutura visível da página foi alterado. Texto transitório capturado: This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? Language has been changed to English Force page reload | This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | Email | Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | User Registration Email Password Password must be 5-40 characters long. 0/20 Re Mensagem transitória: Language has been changed to English Force page reload | This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? Language has been changed to English Force page reload | This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | Email | Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer?",
       "changed": true,
       "success": true,
       "screenshot": "C:/Users/Asus/Desktop/juice-shop-execution-v2/reports/executions/CEN-IDT-16_step_02.png",
       "error": null,
-      "timestamp": "2026-11-26T00:44:51.508099+00:00",
+      "timestamp": "2026-11-26T13:06:34.993307+00:00",
       "visible_text_before": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? Language has been changed to English Force page reload",
       "visible_text_after": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer?",
       "messages": [
+        "Language has been changed to English Force page reload",
+        "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? Language has been changed to English Force page reload",
+        "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer?",
         "Email",
         "Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer?",
-        "User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer?",
-        "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? Language has been changed to English Force page reload",
-        "Language has been changed to English Force page reload",
-        "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer?"
+        "User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer?"
       ],
       "action_id": "CEN-IDT-16-A-02",
       "network": [],
-      "network_summary": {
-        "requests": 0,
-        "responses": 0,
-        "api_responses": 0,
-        "failed_requests": 0,
-        "methods": [],
-        "status_codes": []
-      },
+      "network_summary": "Coleta de rede não habilitada.",
       "controls": []
     },
     {
@@ -214,20 +84,13 @@
       "success": true,
       "screenshot": "C:/Users/Asus/Desktop/juice-shop-execution-v2/reports/executions/CEN-IDT-16_step_03.png",
       "error": null,
-      "timestamp": "2026-11-26T00:44:52.298610+00:00",
+      "timestamp": "2026-11-26T13:06:35.911190+00:00",
       "visible_text_before": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer?",
       "visible_text_after": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer?",
       "messages": [],
       "action_id": "CEN-IDT-16-A-03",
       "network": [],
-      "network_summary": {
-        "requests": 0,
-        "responses": 0,
-        "api_responses": 0,
-        "failed_requests": 0,
-        "methods": [],
-        "status_codes": []
-      },
+      "network_summary": "Coleta de rede não habilitada.",
       "controls": []
     }
   ],
@@ -256,18 +119,7 @@
     "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer?"
   ],
   "final_url": "http://127.0.0.1:3000/#/register",
-  "network_summary": {
-    "requests": 2,
-    "responses": 2,
-    "api_responses": 1,
-    "failed_requests": 0,
-    "methods": [
-      "GET"
-    ],
-    "status_codes": [
-      200
-    ]
-  },
+  "network_summary": "Coleta de rede não habilitada.",
   "final_visible_text": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer?",
   "validation": {
     "passed": true,

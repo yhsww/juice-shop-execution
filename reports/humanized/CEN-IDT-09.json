@@ -1,10 +1,10 @@
 {
   "scenario_id": "CEN-IDT-09",
-  "fingerprint": "4a8d5bbe6accddb6c351ce507dc0f48786a1156f9d1adc45dd1d266a80f9004f",
+  "fingerprint": "e05ab4b1289689a4ade9dac485174a6289bab977838e3eb5f399984d00b8d56c",
   "content": {
-    "flow": "O usuário abriu a rota de recuperação de senha, exibindo o formulário Forgot Password contendo os campos Email*, Security Question*, New Password* e Repeat New Password*, acompanhado do botão Change e da opção Show password advice.",
+    "flow": "O usuário abriu o fluxo de recuperação de senha acessando a rota correspondente. A interface foi carregada exibindo o formulário de redefinição contendo os campos Email, Security Question, New Password e Repeat New Password, além do botão Change e da opção Show password advice.",
     "precondition": "Usuário possui e-mail cadastrado.",
-    "observed_result": "A página de recuperação de senha foi exibida corretamente com os campos do formulário e o botão Change desabilitado ou aguardando preenchimento.",
+    "observed_result": "A tela Forgot Password foi exibida com sucesso, apresentando os campos Email, Security Question, New Password, Repeat New Password, o botão Change e o aviso de política de senha indicando o limite de 5 a 40 caracteres.",
     "messages": [
       "Forgot Password",
       "Email*",
@@ -12,22 +12,21 @@
       "New Password*",
       "Password must be 5-40 characters long.",
       "Repeat New Password*",
-      "Show password advice",
-      "Change"
+      "Show password advice"
     ],
-    "data": "E-mail: teste@example.com",
+    "data": "E-mail: teste@example.com.",
     "steps": [
       {
         "number": 1,
-        "action": "Abrir a rota para recuperação de senha",
+        "action": "O usuário abriu a rota de recuperação de senha.",
         "data": "",
-        "response": "A interface exibiu o formulário Forgot Password com os campos Email*, Security Question*, New Password* e Repeat New Password*, o controle Show password advice e o botão Change."
+        "response": "A página Forgot Password foi carregada exibindo o título principal, os campos de entrada para Email, Security Question, New Password e Repeat New Password, o botão Change e o banner de cookies no canto inferior direito."
       },
       {
         "number": 2,
-        "action": "Aguardar a atualização da interface",
+        "action": "O usuário aguardou a atualização da interface.",
         "data": "",
-        "response": "Nenhuma mudança visual adicional foi registrada, mantendo a tela de recuperação de senha visível com seus elementos originais."
+        "response": "Nenhuma mudança visual adicional foi registrada, mantendo o formulário de recuperação de senha totalmente visível e estável na tela."
       }
     ]
   }

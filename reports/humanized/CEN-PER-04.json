@@ -1,0 +1,28 @@
+{
+  "scenario_id": "CEN-PER-04",
+  "fingerprint": "f218f98320103225d4f63063ddaf97f6875f3c38ee91b83dbd0210496d727ea5",
+  "content": {
+    "flow": "O usuário, já autenticado no sistema, realizou a navegação direta para a rota de privacidade e segurança da conta, confirmada pela atualização da URL na interface do navegador.",
+    "precondition": "O cliente deve estar autenticado no sistema.",
+    "observed_result": "A interface redirecionou o usuário para a página de privacidade e segurança, com a URL alterada para mantendo a barra de navegação superior (menu, busca, conta, carrinho e idioma) e exibindo uma mensagem sobre cookies na parte inferior direita.",
+    "messages": [
+      "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN",
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN"
+    ],
+    "data": "Nenhum dado adicional foi utilizado além da navegação para o endpoint",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Navegação para a URL",
+        "data": "",
+        "response": "A URL foi atualizada de para O cabeçalho da aplicação permaneceu visível com os elementos de menu, busca e carrinho, enquanto uma mensagem de cookies apareceu no canto inferior direito."
+      },
+      {
+        "number": 2,
+        "action": "Aguardar estabilização da interface",
+        "data": "N/A",
+        "response": "Não foram detectadas mudanças visuais adicionais após a navegação; a interface manteve o layout e a mensagem de cookies exibidos no passo anterior."
+      }
+    ]
+  }
+}

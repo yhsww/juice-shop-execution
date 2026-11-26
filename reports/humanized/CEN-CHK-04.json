@@ -1,54 +1,50 @@
 {
   "scenario_id": "CEN-CHK-04",
-  "fingerprint": "6f2730dc6d2ab121a1c7f0d1cb3f1a33d556cfa83a50026e318c957302c017fe",
+  "fingerprint": "68cc7a8c81241bb5243570817c1dfaac96fa94db1c733aa69a8dcda9961896fe",
   "content": {
-    "flow": "O cliente abriu o carrinho contendo o produto Apple Juice (1000ml), acionou o botão Checkout, visualizou a tela de seleção de endereço, marcou o endereço cadastrado correspondente a Rua Teste, 100 e verificou a habilitação do botão Continue.",
+    "flow": "Na tela do carrinho Your Basket contendo o produto Apple Juice (1000ml), o usuário acionou o botão Checkout para avançar à etapa de seleção de endereços. Na tela Select an address, o botão Continue permaneceu desabilitado inicialmente até que o usuário selecionasse o endereço cadastrado Rua Teste, 100, momento em que o botão Continue foi habilitado para prosseguir com o fluxo.",
     "precondition": "Carrinho contém produto; há endereço cadastrado.",
-    "observed_result": "O endereço cadastrado Rua Teste, 100 foi selecionado com sucesso e o botão Continue ficou habilitado para avanço.",
+    "observed_result": "O endereço cadastrado foi selecionado com sucesso e o botão Continue foi habilitado na tela Select an address.",
     "messages": [
-      "Checkout",
-      "Your Basket",
-      "Select an address",
-      "Add New Address",
-      "Continue"
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!"
     ],
-    "data": "Endereço: Rua Teste, 100",
+    "data": "Endereço: Rua Teste, 100, Fortaleza, CE, 60000000 Brazil; Produto: Apple Juice (1000ml)",
     "steps": [
       {
         "number": 1,
         "action": "Abrir a rota",
         "data": "",
-        "response": "A tela Your Basket foi exibida mostrando o produto Apple Juice (1000ml) com quantidade 1 e preço Total Price de 1.99¤, além do botão Checkout."
+        "response": "A interface exibiu o carrinho Your Basket contendo o produto Apple Juice (1000ml) com quantidade 1, preço 1.99¤ e o botão Checkout visível."
       },
       {
         "number": 2,
-        "action": "Clicar no botão Checkout",
+        "action": "Clicar em \"Checkout\"",
         "data": "",
-        "response": "A interface redirecionou para a tela Select an address, exibindo o endereço cadastrado Cliente Teste com os dados Rua Teste, 100, Fortaleza, CE, 60000000 Brazil, o botão Add New Address e o botão Continue."
+        "response": "A interface navegou para a tela Select an address, exibindo o endereço cadastrado (Cliente Teste, Rua Teste, 100, Fortaleza, CE, 60000000 Brazil), o botão Add New Address e o botão Continue."
       },
       {
         "number": 3,
         "action": "Aguardar a atualização da interface",
         "data": "",
-        "response": "Nenhuma mudança visual adicional foi registrada, mantendo a tela Select an address visível."
+        "response": "A tela Select an address permaneceu exibida com o endereço cadastrado visível."
       },
       {
         "number": 4,
-        "action": "Executar asserção de estado desabilitado",
+        "action": "ASSERT_DISABLED",
         "data": "",
-        "response": "Nenhuma mudança visual adicional foi registrada."
+        "response": "O botão Continue foi validado como desabilitado por padrão antes da seleção do endereço."
       },
       {
         "number": 5,
-        "action": "Clicar no endereço Rua Teste, 100",
-        "data": "Rua Teste, 100",
-        "response": "O radio button correspondente ao endereço Rua Teste, 100 foi marcado com preenchimento interno azul indicando a seleção."
+        "action": "Clicar em \"Rua Teste, 100\"",
+        "data": "",
+        "response": "O botão de seleção de rádio do endereço Rua Teste, 100 foi marcado com um indicador preenchido, assinalando a seleção do endereço."
       },
       {
         "number": 6,
-        "action": "Executar asserção de estado habilitado",
+        "action": "ASSERT_ENABLED",
         "data": "",
-        "response": "O botão Continue permaneceu habilitado e pronto para o avanço no fluxo de fechamento."
+        "response": "O botão Continue foi validado como habilitado após a seleção do endereço."
       }
     ]
   }

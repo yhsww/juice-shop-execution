@@ -1,42 +1,52 @@
 {
   "scenario_id": "CEN-CHK-09",
-  "fingerprint": "fdf9d762d5ef2526f6fa2ee31369fc6ea734ab5c9658b3aff8023de811657162",
+  "fingerprint": "d6f828bbfbbb77a50579fb61ec2e44d8fed4ff0722f420aa8daf618b04f19077",
   "content": {
-    "flow": "Na tela My Payment Options, o cliente selecionou a linha correspondente ao cartão finalizado em 0002 e acionou o botão Continue. A interface realizou a transição para a tela de resumo do pedido, exibindo o endereço de entrega, o método de pagamento selecionado e o sumário com os valores e o botão Place your order and pay.",
+    "flow": "Na tela My Payment Options, o cliente selecionou a linha contendo o cartão de teste terminado em 0002 através do elemento de rádio e acionou o botão Continue. A interface respondeu redirecionando o fluxo para a tela de resumo do pedido (Order Summary), exibindo os detalhes do endereço de entrega, o método de pagamento selecionado e o botão Place your order and pay.",
     "precondition": "Cliente autenticado; método de entrega selecionado; cartão de teste cadastrado.",
-    "observed_result": "A interface navegou para a tela de resumo do pedido, exibindo o endereço de entrega cadastrado em nome de Cliente Teste, o método de pagamento com o cartão terminado em 0002 e a seção Order Summary contendo os itens, entrega, promoção, preço total e o botão Place your order and pay.",
-    "messages": [],
+    "observed_result": "A interface navegou para a página de resumo do pedido (Order Summary), exibindo o endereço de entrega do Cliente Teste, o método de pagamento com o cartão terminado em 0002 e as seções de itens, entrega, promoção e preço total.",
+    "messages": [
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!",
+      "My Payment Options",
+      "************0002 Cliente Teste 12/2090",
+      "You can review this order before it is finalized.",
+      "Order Summary",
+      "Delivery Address Cliente Teste Rua Teste, 100, Fortaleza, CE, 60000000 Brazil Phone Number 8599999999",
+      "Payment Method Card ending in 0002 Card Holder\" Cliente Teste",
+      "Place your order and pay",
+      "You will gain 0 Bonus Points from this order!"
+    ],
     "data": "Cartão de teste cadastrado terminado em 0002.",
     "steps": [
       {
         "number": 1,
-        "action": "Abrir a rota de opções de pagamento.",
+        "action": "Abrir a rota de opções de pagamento",
         "data": "",
-        "response": "A tela My Payment Options foi exibida contendo o cartão cadastrado terminado em 0002 (Cliente Teste, 12/2090), as opções de carteira e cupons, além dos botões Back e Continue."
+        "response": "A tela My Payment Options foi exibida contendo o cartão de teste listado com o número ************0002, portador Cliente Teste, data 12/2090, além dos botões Back e Continue."
       },
       {
         "number": 2,
-        "action": "Clicar na linha do cartão com final 0002.",
+        "action": "Clicar no elemento referente ao cartão terminado em 0002",
         "data": "",
-        "response": "O botão de rádio associado ao cartão terminado em 0002 foi selecionado visualmente, indicando a escolha da forma de pagamento."
+        "response": "O botão de rádio correspondente ao cartão terminado em 0002 foi selecionado, alterando seu estado visual para marcado."
       },
       {
         "number": 3,
-        "action": "Aguardar a atualização da interface.",
+        "action": "Aguardar a atualização da interface",
         "data": "",
-        "response": "A interface permaneceu estável com o cartão 0002 selecionado."
+        "response": "A interface manteve a exibição da tela My Payment Options com o cartão 0002 selecionado e o botão Continue habilitado."
       },
       {
         "number": 4,
-        "action": "Clicar no botão Continue.",
+        "action": "Clicar no botão Continue",
         "data": "",
-        "response": "A aplicação navegou para a tela de resumo do pedido, exibindo os detalhes do endereço de entrega, a forma de pagamento selecionada com o cartão terminado em 0002 e o painel Order Summary com o preço total e o botão Place your order and pay."
+        "response": "A aplicação navegou para a URL de resumo do pedido, exibindo as seções Delivery Address com os dados do Cliente Teste, Payment Method indicando o cartão terminado em 0002, Order Summary com o somatório de valores zerados e o botão Place your order and pay."
       },
       {
         "number": 5,
-        "action": "Aguardar a atualização da interface.",
+        "action": "Aguardar a atualização da interface",
         "data": "",
-        "response": "Nenhuma resposta adicional registrada."
+        "response": "A tela de resumo do pedido permaneceu estável com todas as informações de entrega, pagamento e totais visíveis."
       }
     ]
   }

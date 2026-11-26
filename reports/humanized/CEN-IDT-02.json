@@ -1,47 +1,49 @@
 {
   "scenario_id": "CEN-IDT-02",
-  "fingerprint": "d7935281a91b6cb7853928075333719b54ceaf20fe46c9ba66246bf7875cf537",
+  "fingerprint": "740cc0870b71f846ce04c8cbf682cc24941adcd8f6eeec7c980d40eb9a81d3c9",
   "content": {
-    "flow": "Na tela User Registration, o cliente preencheu os campos Email*, Password* e Repeat Password* com dados específicos, exibindo os contadores de caracteres atualizados abaixo dos campos de senha.",
-    "precondition": "Tela de cadastro aberta em",
-    "observed_result": "O formulário de cadastro exibe os campos preenchidos com o e-mail teste2@example.com, e as senhas informadas com contadores indicando 11/20 no campo Password* e 10/40 no campo Repeat Password*, mantendo o botão Register desabilitado.",
+    "flow": "Na tela de cadastro de usuário, o ator preencheu o campo de e-mail, informou senhas diferentes nos campos Password e Repeat Password para validar o comportamento do formulário e aguardou a estabilização da interface.",
+    "precondition": "Tela de cadastro aberta.",
+    "observed_result": "Os campos de e-mail e de senhas foram preenchidos com os valores fornecidos, exibindo os contadores de caracteres atualizados (11/20 no Password e 10/40 no Repeat Password) sob a respectiva estrutura do formulário de registro.",
     "messages": [
       "Password must be 5-40 characters long.",
       "This cannot be changed later!",
+      "User Registration",
       "Show password advice",
-      "User Registration"
+      "Already a customer?",
+      "Register"
     ],
-    "data": "Email: teste2@example.com; Senha: Teste@12345; repetição: Teste@1234",
+    "data": "Senha: Teste@12345; repetição: Teste@1234; e-mail: teste2@example.com",
     "steps": [
       {
         "number": 1,
         "action": "Abrir a rota de registro",
         "data": "",
-        "response": "A página User Registration foi exibida contendo os campos Email*, Password*, Repeat Password*, Security Question* e Answer*, além de um banner de cookies no canto inferior direito."
+        "response": "A interface exibiu a página User Registration contendo os campos Email*, Password*, Repeat Password*, Security Question* e Answer*, além do botão desabilitado Register."
       },
       {
         "number": 2,
-        "action": "Preencher o campo Email*",
+        "action": "Preencher o campo Email address",
         "data": "teste2@example.com",
-        "response": "O campo Email* foi preenchido com o valor teste2@example.com e a interface permaneceu na tela de cadastro."
+        "response": "O campo Email* foi preenchido com o endereço informado e a estrutura do formulário permaneceu visível."
       },
       {
         "number": 3,
-        "action": "Preencher o campo Password*",
+        "action": "Preencher o campo Password",
         "data": "Teste@12345",
-        "response": "O campo Password* foi preenchido com caracteres ocultos e o contador abaixo passou a exibir 11/20 ao lado do texto Password must be 5-40 characters long."
+        "response": "O campo Password* foi preenchido e o indicador de caracteres abaixo dele foi atualizado para 11/20."
       },
       {
         "number": 4,
-        "action": "Preencher o campo Repeat Password*",
+        "action": "Preencher o campo Repeat Password",
         "data": "Teste@1234",
-        "response": "O campo Repeat Password* foi preenchido com caracteres ocultos e o contador abaixo passou a exibir 10/40."
+        "response": "O campo Repeat Password* foi preenchido com a senha divergente e o indicador de caracteres abaixo dele foi atualizado para 10/40."
       },
       {
         "number": 5,
         "action": "Aguardar a atualização da interface",
         "data": "",
-        "response": "Nenhuma mudança visual adicional foi registrada, mantendo o estado atual do formulário com os contadores de caracteres visíveis."
+        "response": "A interface permaneceu estável com todos os campos preenchidos e sem alteração adicional de estado."
       }
     ]
   }

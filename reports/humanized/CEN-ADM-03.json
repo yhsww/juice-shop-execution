@@ -1,26 +1,26 @@
 {
   "scenario_id": "CEN-ADM-03",
-  "fingerprint": "982375cdb395fccdea132fff3c65e0db4826ac5752d5f10e624953019a09a793",
+  "fingerprint": "372f2a2d8ad8cb6a6cf533cc2bff061fce160ea3a34cfafa8365c2ce30c94a2e",
   "content": {
-    "flow": "Na tela inicial da aplicação, o administrador abriu a página de administração para verificar as seções de usuários registrados e de feedback dos clientes.",
+    "flow": "O administrador navegou para a rota de administração, exibindo as seções de Registered Users e Customer Feedback contendo os feedbacks enviados pelos clientes.",
     "precondition": "Administrador autenticado.",
-    "observed_result": "A tela de Administração foi exibida contendo duas seções principais: Registered Users, listando os usuários cadastrados com botões de visualização, e Customer Feedback, exibindo os feedbacks enviados por clientes com classificações por estrelas e opção de exclusão.",
+    "observed_result": "A tela de administração foi exibida com sucesso, apresentando a listagem de usuários registrados e a área de Customer Feedback com os comentários e avaliações dos clientes.",
     "messages": [
       "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!"
     ],
-    "data": "Nenhum dado adicional.",
+    "data": "",
     "steps": [
       {
         "number": 1,
-        "action": "O administrador acessou a rota de administração da aplicação.",
+        "action": "Abrir a rota de administração",
         "data": "",
-        "response": "A interface exibiu a página Administration, contendo a lista de usuários registrados à esquerda e a seção Customer Feedback à direita com os comentários dos clientes e avaliações em estrelas."
+        "response": "A interface carregou a página Administration contendo os blocos Registered Users e Customer Feedback, exibindo os itens de feedback com avaliações em estrelas e o banner de cookies no canto inferior direito."
       },
       {
         "number": 2,
-        "action": "O administrador aguardou a atualização completa da interface.",
+        "action": "Aguardar a atualização da interface",
         "data": "",
-        "response": "A tela permaneceu estável com a exibição dos dados de administração e o aviso de cookies no canto inferior direito."
+        "response": "Nenhuma mudança visual relevante detectada, mantendo a exibição da tela de administração e seus componentes de feedback."
       }
     ]
   }
