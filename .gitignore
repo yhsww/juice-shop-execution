@@ -3,11 +3,9 @@ __pycache__/
 .pytest_cache/
 .venv/
 .env
-reports/executions/*
-!reports/executions/.gitkeep
-screenshots/*
-!screenshots/.gitkeep
-reports/docx/*
-!reports/docx/.gitkeep
-reports/humanized/*
-!reports/humanized/.gitkeep
+
+# Generated execution artifacts are intentionally versioned:
+# - reports/executions: JSON/MD execution evidence and screenshots
+# - reports/humanized: LLM/deterministic humanized JSON
+# - reports/docx: final DOCX reports
+# - screenshots: legacy location, if used
