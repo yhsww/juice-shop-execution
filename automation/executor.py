@@ -1121,13 +1121,9 @@ async def execute(page: Page, action: dict) -> ActionResult:
                 await _click_target(page, target)
 
         elif kind == "CLICK_ALL":
-            # Repeated semantic removal action. Angular re-renders the basket
-            # after each mutation, so the control is resolved again every time.
-            # Use the real DOM click event first: Playwright actionability can
-            # wait on a transient render layer for the entire action budget even
-            # though Angular's click handler is already attached to the live
-            # button. If the DOM event does not mutate the UI, fall back to the
-            # normal bounded click primitive.
+            # Repeated UI mutation (for example, removing every basket item).
+            # Resolve the control fresh after each Angular re-render, but never
+            # let locator resolution consume the whole action timeout.
             max_clicks = max(1, min(int(action.get("max_clicks", 20)), 100))
             clicked = 0
 
@@ -1136,22 +1132,30 @@ async def execute(page: Page, action: dict) -> ActionResult:
                 if locator is None:
                     break
 
+                before = await observe(page)
+
                 try:
-                    await locator.evaluate("(el) => el.click()")
-                    await page.wait_for_timeout(120)
-                except Exception:
                     await _click(locator)
+                except Exception:
+                    # The control was already resolved semantically. A short
+                    # forced click is a bounded recovery for transient Angular
+                    # actionability layers.
+                    try:
+                        await locator.click(timeout=1200, force=True)
+                    except Exception:
+                        break
 
                 clicked += 1
+                await page.wait_for_timeout(180)
 
-                # Angular may replace the clicked node immediately. Re-resolve
-                # on the next iteration rather than retaining a stale Locator.
-                # The short settle interval is deliberately below the global
-                # action budget and is only synchronization for this repeated
-                # UI mutation.
-                await page.wait_for_timeout(
-                    min(180, max(50, settings.action_timeout_ms // 60))
-                )
+                # The important stop condition is a real UI mutation. This
+                # prevents the runner from repeatedly resolving a stale/hidden
+                # "Remove" control after the basket has already changed.
+                after = await _safe_observe(page, before)
+                if not meaningful_change(before, after):
+                    break
+
+                await page.wait_for_timeout(120)
 
             if clicked == 0:
                 raise RuntimeError(
