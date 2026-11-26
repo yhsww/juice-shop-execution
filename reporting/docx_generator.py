@@ -3,7 +3,6 @@ from __future__ import annotations
 import argparse
 import json
 import subprocess
-from collections import Counter
 from datetime import datetime
 from pathlib import Path
 from typing import Any
@@ -75,13 +74,6 @@ def add_table(doc: Document, headers: list[str], rows: list[list[str]]) -> None:
     return table
 
 
-def add_text(doc: Document, label: str, value: Any) -> None:
-    paragraph = doc.add_paragraph()
-    run = paragraph.add_run(f"{label}: ")
-    run.bold = True
-    paragraph.add_run(normalize(value) or "Não registrado.")
-
-
 def action_description(action: dict[str, Any]) -> str:
     typ = str(action.get("type", "")).upper()
     target = action.get("target") or {}
@@ -106,7 +98,10 @@ def action_description(action: dict[str, Any]) -> str:
     if typ == "SELECT":
         return f'Selecionar "{action.get("value", "")}" em {target_text}.'
     if typ == "CLICK_ALL":
-        return f'Acionar os elementos {target_text}, respeitando o limite de {action.get("max_clicks", "não informado")} interações.'
+        return (
+            f'Acionar os elementos {target_text}, respeitando o limite de '
+            f'{action.get("max_clicks", "não informado")} interações.'
+        )
     return f'Executar a ação "{typ}" com os parâmetros definidos no catálogo.'
 
 
@@ -437,10 +432,16 @@ def create_domain_doc(
             ["Cenários no catálogo", str(len(selected))],
             ["Cenários com execução", str(sum(s["id"] in executions for s in selected))],
             ["Aprovados", str(sum(status_is_passed(executions.get(s["id"])) for s in selected))],
-            ["Não aprovados", str(sum(
-                bool(executions.get(s["id"])) and not status_is_passed(executions.get(s["id"]))
-                for s in selected
-            ))],
+            [
+                "Não aprovados",
+                str(
+                    sum(
+                        bool(executions.get(s["id"]))
+                        and not status_is_passed(executions.get(s["id"]))
+                        for s in selected
+                    )
+                ),
+            ],
         ],
     )
 
