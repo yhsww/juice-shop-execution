@@ -1209,9 +1209,55 @@ async def execute(page: Page, action: dict) -> ActionResult:
                                 const nodes = Array.from(
                                     document.querySelectorAll(
                                         "button,a,[role='button'],[role='link'],"
-                                        + "mat-icon,[aria-label],[title],[mat-icon-button]"
+                                        + "mat-icon,i,[aria-label],[title],[mat-icon-button]"
                                     )
                                 );
+
+                                // Some Angular Material controls expose no text or
+                                // accessible name at all. For a removal target,
+                                // the actionable host can still be identified by
+                                // a descendant icon whose class semantically means
+                                // trash/delete. This is resolved from the live DOM,
+                                // not from a scenario-specific CSS path.
+                                if (
+                                    ["remove", "delete", "trash", "trash-alt"].includes(wanted)
+                                ) {
+                                    const iconButtons = Array.from(
+                                        document.querySelectorAll(
+                                            "button, [role='button'], [mat-icon-button]"
+                                        )
+                                    );
+
+                                    for (const button of iconButtons) {
+                                        if (!visible(button)) continue;
+
+                                        const descendants = Array.from(
+                                            button.querySelectorAll("i,mat-icon,svg,[class]")
+                                        );
+                                        const iconText = normalize(
+                                            [
+                                                button.getAttribute?.("class"),
+                                                ...descendants.flatMap(el => [
+                                                    el.getAttribute?.("class"),
+                                                    el.getAttribute?.("aria-label"),
+                                                    el.getAttribute?.("title"),
+                                                    el.textContent
+                                                ].filter(Boolean))
+                                            ].join(" ")
+                                        );
+
+                                        if (
+                                            /trash|trash-alt|delete|remove/.test(iconText)
+                                        ) {
+                                            button.scrollIntoView({
+                                                block: "center",
+                                                inline: "nearest"
+                                            });
+                                            button.click();
+                                            return true;
+                                        }
+                                    }
+                                }
 
                                 for (const node of nodes) {
                                     if (!visible(node)) continue;
