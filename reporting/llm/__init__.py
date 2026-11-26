@@ -1,0 +1,1 @@
+# Integração de humanização por LLM para os relatórios.\n
