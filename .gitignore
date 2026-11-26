@@ -7,3 +7,5 @@ reports/executions/*
 !reports/executions/.gitkeep
 screenshots/*
 !screenshots/.gitkeep
+reports/docx/*
+!reports/docx/.gitkeep
