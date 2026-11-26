@@ -1132,21 +1132,49 @@ async def execute(page: Page, action: dict) -> ActionResult:
                 locator = await resolve(page, action.get("target", {}))
                 if locator is None:
                     break
+
                 try:
-                    await _click(locator)
-                except PlaywrightTimeoutError:
-                    # CLICK_ALL is explicitly a destructive/repetitive UI action.
-                    # When Angular leaves the visible remove control covered by a
-                    # transient render layer, a bounded native/forced click is a
-                    # valid recovery for the same visible control. Re-resolving
-                    # happens on the next iteration after the list re-renders.
-                    await locator.click(
-                        timeout=min(1500, max(500, int(settings.action_timeout_ms))),
-                        force=True,
+                    await asyncio.wait_for(
+                        _click(locator),
+                        timeout=min(
+                            4.0,
+                            max(1.5, settings.action_timeout_ms / 1000),
+                        ),
                     )
+                except asyncio.TimeoutError:
+                    # A repeated destructive action must not spend the whole
+                    # scenario timeout waiting on one stale Angular control.
+                    # Re-resolve first: if the control disappeared, the last
+                    # click already changed the state and the action is done.
+                    fresh = await resolve(page, action.get("target", {}))
+                    if fresh is None:
+                        break
+
+                    try:
+                        await fresh.click(
+                            timeout=1200,
+                            force=True,
+                        )
+                    except Exception as exc:
+                        raise RuntimeError(
+                            "A ação repetitiva não conseguiu acionar o controle "
+                            "visível após a atualização da interface."
+                        ) from exc
+                except PlaywrightTimeoutError:
+                    fresh = await resolve(page, action.get("target", {}))
+                    if fresh is None:
+                        break
+                    try:
+                        await fresh.click(timeout=1200, force=True)
+                    except Exception as exc:
+                        raise RuntimeError(
+                            "A ação repetitiva não conseguiu acionar o controle "
+                            "visível após a atualização da interface."
+                        ) from exc
+
                 clicked += 1
                 await page.wait_for_timeout(
-                    min(250, max(50, settings.action_timeout_ms // 40))
+                    min(250, max(50, settings.action_timeout_ms // 40)
                 )
 
             if clicked == 0:
