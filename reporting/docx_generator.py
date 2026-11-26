@@ -173,6 +173,7 @@ def load_environment(path: Path) -> dict[str, str]:
 
 
 def action_description(action: dict[str, Any]) -> str:
+    """Converte uma ação técnica do catálogo em ação funcional curta."""
     typ = str(action.get("type", "")).upper()
     target = action.get("target") or {}
     target_name = (
@@ -206,6 +207,64 @@ def action_description(action: dict[str, Any]) -> str:
     if typ == "ASSERT_SELECTED":
         return f'Verificar se "{target_name}" está selecionado'
     return f'Executar a ação "{typ}"'
+
+
+def detailed_flow(
+    scenario: dict[str, Any],
+    execution: dict[str, Any] | None,
+) -> str:
+    """Enriquece o fluxo sem criar uma nova seção ou repetir o resultado.
+
+    A primeira frase preserva o fluxo funcional definido no catálogo. A segunda
+    identifica, de forma objetiva, as principais interações executadas.
+    """
+    base = normalize(scenario.get("flow"))
+    actions = scenario.get("actions") or []
+
+    key_actions: list[str] = []
+    for action in actions:
+        typ = str(action.get("type", "")).upper()
+        if typ in {"WAIT", "ASSERT_ENABLED", "ASSERT_DISABLED", "ASSERT_SELECTED"}:
+            continue
+        description = action_description(action)
+        if description:
+            key_actions.append(description)
+
+    # Quando o artefato de execução contém uma ação funcional melhor descrita,
+    # prioriza-a para os passos do fluxo.
+    if execution:
+        runtime_actions = [
+            normalize(step.get("user_action"))
+            for step in execution.get("steps", [])
+            if normalize(step.get("user_action"))
+        ]
+        if runtime_actions:
+            key_actions = runtime_actions
+
+    if not base:
+        base = normalize(scenario.get("name")) or "Executar o cenário."
+
+    if not key_actions:
+        return base
+
+    # Mantém no máximo as interações que explicam o fluxo; não transforma
+    # detalhes técnicos da automação em narrativa.
+    unique: list[str] = []
+    seen: set[str] = set()
+    for item in key_actions:
+        key = item.casefold()
+        if key not in seen:
+            seen.add(key)
+            unique.append(item)
+
+    if len(unique) > 4:
+        unique = unique[:3] + [unique[-1]]
+
+    interaction_text = ", ".join(unique)
+    return normalize(
+        f"{base} A interação envolve {interaction_text}.",
+        1400,
+    )
 
 
 def observed_result(execution: dict[str, Any] | None) -> str:
@@ -279,7 +338,7 @@ def add_scenario(doc: Document, scenario: dict[str, Any], execution: dict[str, A
         ["Domínio", f"{domain} — {DOMAINS.get(domain, '')}".strip(" —")],
         ["Nome do cenário", scenario.get("name", "")],
         ["Ator", scenario.get("actor", "")],
-        ["Fluxo", scenario.get("flow", "")],
+        ["Fluxo", detailed_flow(scenario, execution)],
         ["Pré-condição (estado inicial)", scenario.get("precondition", "")],
         ["Resultado observado (mudança de estado)", observed_result(execution)],
         ["Mensagens exibidas ao usuário", observed_messages(execution)],
@@ -304,15 +363,25 @@ def add_scenario(doc: Document, scenario: dict[str, Any], execution: dict[str, A
         for step in execution.get("steps", []):
             response = normalize(step.get("observed_result"))
             if not response or "Nenhuma mudança visual relevante detectada." in response:
+                # Não inventa uma resposta: mantém somente a ausência de
+                # evidência adicional registrada pelo executor.
                 response = "Nenhuma resposta adicional registrada."
 
             if step.get("error"):
                 response = f"Falha durante a execução: {normalize(step.get('error'))}"
 
+            raw_action = step.get("user_action")
+            if raw_action:
+                user_action = normalize(raw_action)
+            elif isinstance(step.get("action"), dict):
+                user_action = action_description(step["action"])
+            else:
+                user_action = normalize(step.get("action")) or "Ação não registrada."
+
             step_rows.append(
                 [
                     str(step.get("step", "")),
-                    normalize(step.get("user_action") or step.get("action")),
+                    user_action,
                     normalize(step.get("data")) or "—",
                     response,
                 ]
