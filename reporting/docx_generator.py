@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import subprocess
 from datetime import datetime
 from pathlib import Path
 from typing import Any
@@ -211,18 +210,6 @@ def load_executions(
 
     return executions, sorted(set(extras))
 
-
-def git_value(args: list[str], default: str) -> str:
-    try:
-        value = subprocess.check_output(
-            args,
-            cwd=ROOT,
-            text=True,
-            stderr=subprocess.DEVNULL,
-        ).strip()
-        return value or default
-    except Exception:
-        return default
 
 
 def load_environment(path: Path) -> dict[str, str]:
@@ -535,36 +522,27 @@ def main() -> int:
 
     humanized: dict[str, dict[str, Any]] = {}
     if args.humanize in {"auto", "llm"}:
-        import os
-
-        has_key = bool(os.getenv("OPENAI_API_KEY", "").strip())
-        if args.humanize == "llm" and not has_key:
-            raise SystemExit(
-                "Humanização LLM solicitada, mas OPENAI_API_KEY não está configurada."
-            )
-
-        if has_key:
-            for scenario in scenarios:
-                sid = str(scenario.get("id") or "")
-                execution = executions.get(sid)
-                if not execution:
-                    continue
-                try:
-                    humanized[sid] = humanize_scenario(
-                        scenario,
-                        execution,
-                        args.humanized,
-                        force=args.force_humanize,
-                    )
-                except Exception as exc:
-                    if args.humanize == "llm":
-                        raise SystemExit(
-                            f"Falha na humanização LLM de {sid}: {exc}"
-                        ) from exc
-                    print(
-                        f"[DOCX] LLM indisponível para {sid}; "
-                        f"usando descrição determinística: {exc}"
-                    )
+        for scenario in scenarios:
+            sid = str(scenario.get("id") or "")
+            execution = executions.get(sid)
+            if not execution:
+                continue
+            try:
+                humanized[sid] = humanize_scenario(
+                    scenario,
+                    execution,
+                    args.humanized,
+                    force=args.force_humanize,
+                )
+            except Exception as exc:
+                if args.humanize == "llm":
+                    raise SystemExit(
+                        f"Falha na humanização LLM de {sid}: {exc}"
+                    ) from exc
+                print(
+                    f"[DOCX] LLM indisponível para {sid}; "
+                    f"usando descrição determinística: {exc}"
+                )
 
     domains = sorted(
         {str(item.get("domain")).upper() for item in scenarios if item.get("domain")}
