@@ -336,11 +336,23 @@ Para gerar a documentação sem LLM:
 python -m reporting.docx_generator --humanize deterministic
 ```
 
+Essa opção utiliza apenas as evidências registradas pelo executor e não depende de um provedor externo.
+
 Os documentos são gerados em:
 
 ```text
 reports/docx/
 ```
+
+O gerador cria um relatório geral e um relatório separado para cada domínio da suíte. A versão do Juice Shop usada na ficha de ambiente é obtida da imagem configurada no `juice-shop/docker-compose.yml`, e o sistema operacional é identificado automaticamente durante a geração.
+
+Para regenerar os documentos após uma nova execução, use:
+
+```powershell
+python -m reporting.docx_generator --humanize auto --force-humanize
+```
+
+O parâmetro `--force-humanize` força a atualização das descrições humanizadas antes da montagem do DOCX.
 
 ## 6. Fluxo completo recomendado
 
@@ -406,7 +418,8 @@ Isso permite validar a execução e a geração do relatório mesmo sem uma chav
 
 ## 8. Documentação DOCX
 
-A estrutura do DOCX é fixa e segue a ficha definida para o projeto.
+A estrutura do DOCX é fixa e segue a ficha definida para o projeto. O gerador não cria seções adicionais de resumo, integridade ou detalhes técnicos de automação.
+
 
 Cada relatório contém:
 
@@ -415,6 +428,15 @@ Cada relatório contém:
 3. **Ficha de Cenário**
 4. **Passos Executados**
 5. Screenshots vinculadas às evidências dos passos
+
+Os artefatos gerados ficam organizados em `reports/`:
+
+- `reports/executions/` — JSONs e screenshots das execuções;
+- `reports/final/` — relatórios Markdown;
+- `reports/humanized/` — JSONs produzidos pela humanização;
+- `reports/docx/` — documentos DOCX finais.
+
+Quando esses artefatos forem versionados no repositório, não devem conter chaves, tokens, senhas reais ou outras informações sensíveis.
 
 A ficha de cenário contempla:
 
