@@ -214,13 +214,63 @@ def _request_openai_compatible(
             time.sleep(5 * (2 ** attempt))
 
     if response is None:
+        if last_error is not None:
+            raise _format_provider_error(
+                provider=provider,
+                model=model,
+                exc=last_error,
+            ) from last_error
         if not use_schema:
-            raise last_error or RuntimeError("Falha desconhecida ao consultar a LLM.")
+            raise RuntimeError("Falha desconhecida ao consultar a LLM.")
         kwargs.pop("response_format", None)
-        response = client.chat.completions.create(**kwargs)
+        try:
+            response = client.chat.completions.create(**kwargs)
+        except Exception as exc:
+            raise _format_provider_error(
+                provider=provider,
+                model=model,
+                exc=exc,
+            ) from exc
 
     content = response.choices[0].message.content
     return (content or "").strip()
+
+
+def _format_provider_error(
+    *,
+    provider: str,
+    model: str,
+    exc: Exception,
+) -> LLMHumanizerError:
+    status_code = getattr(exc, "status_code", None)
+    body = getattr(exc, "body", None)
+    response = getattr(exc, "response", None)
+    if status_code is None and response is not None:
+        status_code = getattr(response, "status_code", None)
+
+    details: list[str] = []
+    if status_code is not None:
+        details.append(f"HTTP {status_code}")
+
+    if isinstance(body, dict):
+        error = body.get("error")
+        if isinstance(error, dict):
+            for key in ("status", "code", "message"):
+                value = error.get(key)
+                if value:
+                    details.append(f"{key}={value}")
+        elif error:
+            details.append(f"error={error}")
+    elif body:
+        details.append(f"body={str(body)[:1200]}")
+
+    if not details:
+        details.append(str(exc))
+
+    return LLMHumanizerError(
+        f"Falha ao consultar a LLM ({provider}, modelo {model}): "
+        + " | ".join(details)
+    )
 
 
 def _humanize_claude(
