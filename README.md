@@ -350,19 +350,21 @@ A humanização considera as evidências estruturadas e as screenshots para prod
 
 ### Passo 13 — Gerar os relatórios DOCX
 
-Para gerar os DOCX utilizando humanização automática:
+Para gerar os DOCX finais com as descrições humanizadas por LLM, use:
+
+```powershell
+python -m reporting.docx_generator --humanize llm --force-humanize
+```
+
+Esse é o comando recomendado para a entrega final: ele atualiza a humanização antes de montar os documentos DOCX.
+
+Para gerar os DOCX usando humanização automática, permitindo fallback determinístico quando a LLM estiver indisponível:
 
 ```powershell
 python -m reporting.docx_generator --humanize auto
 ```
 
-Para exigir o uso da LLM:
-
-```powershell
-python -m reporting.docx_generator --humanize llm
-```
-
-Para gerar a documentação sem LLM:
+Para gerar os DOCX sem LLM:
 
 ```powershell
 python -m reporting.docx_generator --humanize deterministic
@@ -376,15 +378,37 @@ Os documentos são gerados em:
 reports/docx/
 ```
 
-O gerador cria um relatório geral e um relatório separado para cada domínio da suíte. A versão do Juice Shop usada na ficha de ambiente é obtida da imagem configurada no `juice-shop/docker-compose.yml`, e o sistema operacional é identificado automaticamente durante a geração.
+O gerador cria **1 relatório geral consolidado com os 78 cenários** e **1 relatório separado para cada domínio** (ADM, CAR, CAT, CHK, IDT e PER). A versão do Juice Shop usada na ficha de ambiente é obtida da imagem configurada no `juice-shop/docker-compose.yml`, e o sistema operacional é identificado automaticamente durante a geração.
 
 Para regenerar os documentos após uma nova execução, use:
 
 ```powershell
-python -m reporting.docx_generator --humanize auto --force-humanize
+python -m reporting.docx_generator --humanize llm --force-humanize
 ```
 
 O parâmetro `--force-humanize` força a atualização das descrições humanizadas antes da montagem do DOCX.
+
+### Comando único recomendado para a entrega final
+
+Depois que os 78 cenários forem executados e as evidências estiverem em `reports/executions/`:
+
+```powershell
+python -m reporting.humanizer --all --force
+python -m reporting.docx_generator --humanize llm --force-humanize
+```
+
+Resultado esperado:
+
+```text
+reports/docx/
+├── ADM_relatorio.docx
+├── CAR_relatorio.docx
+├── CAT_relatorio.docx
+├── CHK_relatorio.docx
+├── IDT_relatorio.docx
+├── PER_relatorio.docx
+└── JUICE_SHOP_RELATORIO_GERAL.docx
+```
 
 ## 6. Fluxo completo recomendado
 
