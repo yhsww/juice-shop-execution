@@ -28,7 +28,7 @@ A LLM é utilizada somente para **interpretar e organizar a documentação**. El
 
 ## 2. Escopo atual
 
-A suíte principal possui **78 cenários funcionais**, incluindo o domínio PER:
+A suíte principal possui **78 cenários funcionais**:
 
 | Domínio | Cenários |
 |---|---:|
