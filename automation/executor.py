@@ -1168,13 +1168,44 @@ async def execute(page: Page, action: dict) -> ActionResult:
                                     el.getAttribute?.("aria-label"),
                                     el.getAttribute?.("title"),
                                     el.getAttribute?.("mattooltip"),
+                                    el.className,
                                     el.innerText,
-                                    el.textContent
+                                    el.textContent,
+                                    ...Array.from(el.querySelectorAll?.("*") || [])
+                                        .slice(0, 8)
+                                        .map(child => [
+                                            child.getAttribute?.("aria-label"),
+                                            child.getAttribute?.("title"),
+                                            child.getAttribute?.("mattooltip"),
+                                            child.className,
+                                            child.innerText,
+                                            child.textContent
+                                        ].filter(Boolean).join(" "))
                                 ].filter(Boolean).join(" "));
 
+                                const semanticMatches = (value, wanted) => {
+                                    if (value.includes(wanted)) return true;
+
+                                    // The basket UI exposes the remove action as
+                                    // a trash icon without an accessible text
+                                    // label. Keep the mapping semantic and
+                                    // generic so CLICK_ALL can recover from
+                                    // icon-only controls without using a
+                                    // scenario-specific selector.
+                                    const aliases = {
+                                        remove: ["delete", "trash", "trash-alt"],
+                                        delete: ["remove", "trash", "trash-alt"],
+                                        trash: ["remove", "delete", "trash-alt"]
+                                    };
+
+                                    return (aliases[wanted] || []).some(alias =>
+                                        value.includes(alias)
+                                    );
+                                };
+
                                 // Inspect both interactive hosts and descendants
-                                // such as mat-icon. When the label is exposed by
-                                // a child icon, click its nearest real control.
+                                // such as icon elements. When the label is exposed
+                                // by a child icon, click its nearest real control.
                                 const nodes = Array.from(
                                     document.querySelectorAll(
                                         "button,a,[role='button'],[role='link'],"
@@ -1186,7 +1217,7 @@ async def execute(page: Page, action: dict) -> ActionResult:
                                     if (!visible(node)) continue;
 
                                     const value = semantic(node);
-                                    if (!value.includes(wanted)) continue;
+                                    if (!semanticMatches(value, wanted)) continue;
 
                                     let control = node;
                                     if (!/^(BUTTON|A|MAT-ICON-BUTTON)$/.test(control.tagName)
