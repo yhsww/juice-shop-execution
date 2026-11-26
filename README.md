@@ -28,7 +28,7 @@ A LLM é utilizada somente para **interpretar e organizar a documentação**. El
 
 ## 2. Escopo atual
 
-A suíte principal possui **72 cenários funcionais**:
+A suíte principal possui **78 cenários funcionais**, incluindo o domínio PER:
 
 | Domínio | Cenários |
 |---|---:|
@@ -37,7 +37,8 @@ A suíte principal possui **72 cenários funcionais**:
 | CAT | 17 |
 | CHK | 28 |
 | IDT | 17 |
-| **Total** | **72** |
+| PER | 6 |
+| **Total** | **78** |
 
 Os cenários são mantidos em:
 
@@ -85,7 +86,7 @@ juice-shop-execution/
 ├── config/                  # Configurações do ambiente
 ├── reporting/               # Evidências, relatórios e humanização
 │   └── llm/                 # Cliente e prompt da LLM
-├── scenarios/               # Catálogo dos 72 cenários
+├── scenarios/               # Catálogo dos 78 cenários
 ├── tests/                   # Testes do projeto
 ├── juice-shop/              # Docker Compose da aplicação alvo
 ├── reports/
@@ -284,7 +285,7 @@ python run.py --start-app --domain CHK
 python run.py --start-app --domain CHK --domain IDT
 ```
 
-### Passo 10 — Executar todos os 72 cenários
+### Passo 10 — Executar todos os 78 cenários
 
 Para executar a suíte completa:
 
@@ -295,7 +296,7 @@ python run.py --start-app --all
 O executor apresenta o resultado de cada cenário e, ao final, um resumo:
 
 ```text
-[summary] X/72 cenários aprovados; Y com falha.
+[summary] X/78 cenários aprovados; Y com falha.
 ```
 
 Para iniciar e encerrar automaticamente o ambiente Docker ao final:
@@ -420,7 +421,7 @@ Resultado esperado:
 ```text
 Execução
    ↓
-72 cenários
+78 cenários
    ↓
 JSON + screenshots
    ↓
