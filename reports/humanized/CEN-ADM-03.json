@@ -1,0 +1,27 @@
+{
+  "scenario_id": "CEN-ADM-03",
+  "fingerprint": "982375cdb395fccdea132fff3c65e0db4826ac5752d5f10e624953019a09a793",
+  "content": {
+    "flow": "Na tela inicial da aplicação, o administrador abriu a página de administração para verificar as seções de usuários registrados e de feedback dos clientes.",
+    "precondition": "Administrador autenticado.",
+    "observed_result": "A tela de Administração foi exibida contendo duas seções principais: Registered Users, listando os usuários cadastrados com botões de visualização, e Customer Feedback, exibindo os feedbacks enviados por clientes com classificações por estrelas e opção de exclusão.",
+    "messages": [
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!"
+    ],
+    "data": "Nenhum dado adicional.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O administrador acessou a rota de administração da aplicação.",
+        "data": "",
+        "response": "A interface exibiu a página Administration, contendo a lista de usuários registrados à esquerda e a seção Customer Feedback à direita com os comentários dos clientes e avaliações em estrelas."
+      },
+      {
+        "number": 2,
+        "action": "O administrador aguardou a atualização completa da interface.",
+        "data": "",
+        "response": "A tela permaneceu estável com a exibição dos dados de administração e o aviso de cookies no canto inferior direito."
+      }
+    ]
+  }
+}

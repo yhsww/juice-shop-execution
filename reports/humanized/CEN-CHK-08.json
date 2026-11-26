@@ -1,0 +1,45 @@
+{
+  "scenario_id": "CEN-CHK-08",
+  "fingerprint": "d6027e3bb32c3f242263e9abd8cb9f951c064b4c86869ebaa4f7b3b651c163df",
+  "content": {
+    "flow": "Na tela My Payment Options, o usuário selecionou a linha do cartão de teste cadastrado terminada em 0002. Após a seleção, o botão de seleção do cartão foi marcado indicando que o pagamento foi escolhido.",
+    "precondition": "Cliente autenticado; método de entrega selecionado; cartão de teste cadastrado.",
+    "observed_result": "O cartão de teste terminado em 0002 permaneceu selecionado na seção My Payment Options, com o indicador visual de opção marcada preenchido.",
+    "messages": [
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!",
+      "My Payment Options",
+      "Add new card Add a credit or debit card",
+      "Pay using wallet Wallet Balance 0.00 Pay NaN¤",
+      "Add a coupon Add a coupon code to receive discounts",
+      "Other payment options",
+      "You can review this order before it is finalized."
+    ],
+    "data": "Cartão de teste cadastrado terminado em 0002.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Abrir a rota de opções de pagamento",
+        "data": "",
+        "response": "A tela My Payment Options foi exibida contendo o cartão de teste cadastrado com final 0002, nome Cliente Teste, validade 12/2090, além das opções Add new card, Pay using wallet, Add a coupon e Other payment options."
+      },
+      {
+        "number": 2,
+        "action": "Aguardar a atualização da interface",
+        "data": "",
+        "response": "A interface permaneceu estável com o cartão de teste final 0002 listado e o botão Back e Continue visíveis."
+      },
+      {
+        "number": 3,
+        "action": "Clicar no cartão com os quatro últimos dígitos 0002",
+        "data": "0002",
+        "response": "O elemento de seleção do cartão correspondente aos dígitos 0002 foi preenchido, indicando que a forma de pagamento foi escolhida."
+      },
+      {
+        "number": 4,
+        "action": "Aguardar a atualização da interface",
+        "data": "",
+        "response": "O estado selecionado do cartão com final 0002 foi mantido na tela My Payment Options."
+      }
+    ]
+  }
+}

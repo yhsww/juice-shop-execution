@@ -1,0 +1,47 @@
+# Ficha de Cenário
+
+**ID do cenário:** CEN-IDT-06
+**Domínio:** IDT
+**Nome do cenário:** Acesso ao perfil
+**Ator:** Cliente
+**Fluxo:** Abrir a área de perfil após autenticação.
+
+## Pré-condição (estado inicial)
+
+Conta de teste disponível para autenticação.
+
+## Descrição do cenário
+
+Cliente executa o fluxo 'Abrir a área de perfil após autenticação.'. A descrição corresponde ao cenário 'Acesso ao perfil' e deve ser interpretada em conjunto com as evidências registradas nos passos.
+
+## Resultado observado (mudança de estado)
+
+URL: http://127.0.0.1:3000/#/ → http://127.0.0.1:3000/profile Texto visível: OWASP Juice Shop (Express ^4.22.1) 500 Error: Blocked illegal activity by ::ffff:172.18.0.1 at /juice-shop/build/routes/userProfile.js:69:18 Texto observado durante a ação: OWASP Juice Shop (Express ^4.22.1) 500 Error: Blocked illegal activity by ::ffff:172.18.0.1 at /juice-shop/build/routes/userProfile.js:69:18
+
+## Mensagens exibidas ao usuário
+
+Nenhuma mensagem transitória relevante capturada.
+
+## Dados manipulados
+
+Dados declarados no cenário: Nenhum dado adicional.
+Passo 1: /profile
+
+## Coerente com loja de sucos?
+
+Sim.
+
+## Justificativa
+
+O perfil concentra informações da conta.
+
+## Descrição funcional do cenário
+
+Cliente executa o fluxo 'Abrir a área de perfil após autenticação.'. A descrição corresponde ao cenário 'Acesso ao perfil' e deve ser interpretada em conjunto com as evidências registradas nos passos.
+
+## Passos Executados
+
+| # | Ação do usuário | Dados informados | Resposta da interface |
+|---|---|---|---|
+| 1 | Abrir a rota /profile | /profile | URL: http://127.0.0.1:3000/#/ → http://127.0.0.1:3000/profile Texto visível: OWASP Juice Shop (Express ^4.22.1) 500 Error: Blocked illegal activity by ::ffff:172.18.0.1 at /juice-shop/build/routes/userProfile.js:69:18 Texto observado durante a ação: OWASP Juice Shop (Express ^4.22.1) 500 Error: Blocked illegal activity by ::ffff:172.18.0.1 at /juice-shop/build/routes/userProfile.js:69:18 |
+| 2 | Aguardar a atualização da interface |  | Nenhuma mudança visual relevante detectada. Texto observado durante a ação: OWASP Juice Shop (Express ^4.22.1) 500 Error: Blocked illegal activity by ::ffff:172.18.0.1 at /juice-shop/build/routes/userProfile.js:69:18 |

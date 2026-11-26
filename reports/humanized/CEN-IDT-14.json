@@ -1,0 +1,63 @@
+{
+  "scenario_id": "CEN-IDT-14",
+  "fingerprint": "4d92476019b42c6cf4417edb23b4f77a03234f46905cc502de139167082af864",
+  "content": {
+    "flow": "O cliente acessou a tela de registro de usuário (User Registration), preencheu o campo Email com teste@example.com, informou os campos Password e Repeat Password com Teste@12345, selecionou a pergunta de segurança Your favorite book? e preencheu a resposta com a. Por fim, acionou o botão Register para tentar concluir o cadastro com um e-mail já existente.",
+    "precondition": "Existe usuário com o e-mail informado.",
+    "observed_result": "A interface exibiu a mensagem de erro informando que o e-mail deve ser único na parte superior do formulário de registro.",
+    "messages": [
+      "Email must be unique"
+    ],
+    "data": "E-mail: teste@example.com.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Abrir a rota de registro",
+        "data": "",
+        "response": "A tela User Registration foi exibida contendo os campos Email, Password, Repeat Password, Security Question e Answer, além do botão Register."
+      },
+      {
+        "number": 2,
+        "action": "Preencher o campo \"Email address\"",
+        "data": "teste@example.com",
+        "response": "O valor teste@example.com foi preenchido no campo Email."
+      },
+      {
+        "number": 3,
+        "action": "Preencher o campo \"Password\"",
+        "data": "Teste@12345",
+        "response": "O campo Password foi preenchido e o contador de caracteres exibiu 11/20."
+      },
+      {
+        "number": 4,
+        "action": "Preencher o campo \"Repeat Password\"",
+        "data": "Teste@12345",
+        "response": "O campo Repeat Password foi preenchido e o contador de caracteres exibiu 11/40."
+      },
+      {
+        "number": 5,
+        "action": "Selecionar \"Security Question\"",
+        "data": "Your favorite book?",
+        "response": "A pergunta de segurança Your favorite book? foi selecionada no campo correspondente."
+      },
+      {
+        "number": 6,
+        "action": "Preencher o campo \"Answer\"",
+        "data": "a",
+        "response": "O caractere a foi preenchido no campo Answer."
+      },
+      {
+        "number": 7,
+        "action": "Clicar em \"Register\"",
+        "data": "",
+        "response": "A interface processou a solicitação e exibiu a mensagem de erro Email must be unique acima do campo Email."
+      },
+      {
+        "number": 8,
+        "action": "Aguardar a atualização da interface",
+        "data": "",
+        "response": "A interface permaneceu estável exibindo o formulário de cadastro com a mensagem de e-mail duplicado."
+      }
+    ]
+  }
+}

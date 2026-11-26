@@ -1,0 +1,29 @@
+{
+  "scenario_id": "CEN-CAT-17",
+  "fingerprint": "334345e8b9603ec7a3e14e79861d7609b9a4ae55b0dfce78f307b369365d505a",
+  "content": {
+    "flow": "O cliente acessou a página do Score Board e visualizou o painel de desafios do aplicativo OWASP Juice Shop, contendo indicadores de progresso de Hacking Challenges e Coding Challenges, além dos cartões de desafios disponíveis como Score Board, DOM XSS, Bonus Payload, Privacy Policy e Confidential Document.",
+    "precondition": "Catálogo disponível e aplicação carregada.",
+    "observed_result": "A tela do Score Board foi exibida com sucesso, mostrando os cards de categorias de desafios, filtros de dificuldade e status, além do banner de consentimento de cookies exibido no canto inferior direito.",
+    "messages": [
+      "Shenanigans lightbulb_outlined 0/4",
+      "Broken Access Control SSRF Request a hidden resource on server through server. Code Analysis lightbulb_outlined 0/4",
+      "Injection SSTi Infect the server with juicy malware by abusing arbitrary command execution. (This challenge is potentially harmful on Docker!) Contraption Danger Zone Code Analysis info_outline lightbulb_outlined 0/4"
+    ],
+    "data": "Caminho",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário navegou para a rota do Score Board informando a URL específica.",
+        "data": "",
+        "response": "A interface do OWASP Juice Shop foi carregada exibindo o painel de Score Board com o cabeçalho contendo o progresso de 5% em Hacking Challenges e 0% em Coding Challenges, os cartões de desafios dispostos em grade e um banner de cookies com o botão Me want it! no canto inferior direito."
+      },
+      {
+        "number": 2,
+        "action": "O usuário aguardou a estabilização e atualização completa da interface.",
+        "data": "Nenhum dado adicional.",
+        "response": "Nenhuma mudança visual adicional foi registrada, mantendo a listagem de desafios visível com os cartões de Score Board, DOM XSS e demais opções na tela."
+      }
+    ]
+  }
+}

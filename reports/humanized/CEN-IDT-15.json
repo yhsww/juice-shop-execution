@@ -1,0 +1,39 @@
+{
+  "scenario_id": "CEN-IDT-15",
+  "fingerprint": "f7f92dca5ebd1516f32d8fafab5d2f42f59c23f7e65386a1a04084524f537ac6",
+  "content": {
+    "flow": "Na tela de cadastro de usuário, o cliente selecionou o campo de e-mail e em seguida pressionou a tecla Tab sem inserir nenhum dado, acionando a validação de obrigatoriedade do campo.",
+    "precondition": "A tela de cadastro de usuário (User Registration) está aberta.",
+    "observed_result": "O campo obrigatório de e-mail permaneceu vazio, o foco mudou para o campo de senha, e a mensagem de validação em vermelho indicando a ausência do dado passou a ser exibida logo abaixo do campo Email.",
+    "messages": [
+      "Please provide an email address."
+    ],
+    "data": "Campos obrigatórios deixados vazios.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário abriu a rota de cadastro na aplicação.",
+        "data": "",
+        "response": "A página User Registration foi exibida contendo os campos Email, Password, Repeat Password, Security Question e Answer."
+      },
+      {
+        "number": 2,
+        "action": "O usuário clicou no campo Email.",
+        "data": "Nenhum dado informado.",
+        "response": "O campo Email ficou com a borda destacada, indicando foco ativo."
+      },
+      {
+        "number": 3,
+        "action": "O usuário pressionou a tecla Tab.",
+        "data": "Nenhum dado informado.",
+        "response": "A interface exibiu a mensagem de erro em vermelho Please provide an email address abaixo do campo Email, e o foco deslocou-se para o campo Password."
+      },
+      {
+        "number": 4,
+        "action": "O usuário aguardou a atualização da interface.",
+        "data": "Nenhum dado informado.",
+        "response": "A tela manteve o estado atual com a mensagem de validação visível para o campo Email."
+      }
+    ]
+  }
+}

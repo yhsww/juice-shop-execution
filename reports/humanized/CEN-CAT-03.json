@@ -1,0 +1,40 @@
+{
+  "scenario_id": "CEN-CAT-03",
+  "fingerprint": "8eb879428fabdafa4079b15a6bc846de763ec41f8e8bed0db7571f4e0dcf7136",
+  "content": {
+    "flow": "Na tela inicial da aplicação, o cliente acessou o catálogo e preencheu o termo Apple no campo de pesquisa. Após pressionar Enter, a listagem de produtos foi atualizada para exibir os itens correspondentes encontrados.",
+    "precondition": "Catálogo disponível.",
+    "observed_result": "A listagem de produtos foi filtrada com o título \"Search Results - Apple\" e exibiu 3 itens correspondentes: Apple Juice (1000ml) por 1.99¤, Apple Pomace por 0.89¤ e Pineapple Juice (1000ml) por 2.99¤.",
+    "messages": [
+      "Search Results - Apple",
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!"
+    ],
+    "data": "Termo: Apple",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Abrir a rota de pesquisa no catálogo.",
+        "data": "",
+        "response": "A tela do catálogo foi carregada exibindo o título \"All Products\" e diversos itens disponíveis para compra."
+      },
+      {
+        "number": 2,
+        "action": "Preencher o campo de pesquisa \"Search\" com o termo informado.",
+        "data": "Apple",
+        "response": "O texto \"Apple\" foi inserido no campo de pesquisa da interface."
+      },
+      {
+        "number": 3,
+        "action": "Pressionar a tecla Enter para executar a busca.",
+        "data": "Nenhuma",
+        "response": "A URL foi atualizada com o parâmetro de busca e a interface exibiu o título \"Search Results - Apple\" contendo os produtos Apple Juice (1000ml), Apple Pomace e Pineapple Juice (1000ml)."
+      },
+      {
+        "number": 4,
+        "action": "Aguardar a atualização da interface.",
+        "data": "Nenhuma",
+        "response": "Nenhuma mudança visual adicional foi registrada, mantendo os resultados da busca visíveis na tela."
+      }
+    ]
+  }
+}

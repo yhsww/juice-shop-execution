@@ -1,0 +1,48 @@
+{
+  "scenario_id": "CEN-IDT-02",
+  "fingerprint": "d7935281a91b6cb7853928075333719b54ceaf20fe46c9ba66246bf7875cf537",
+  "content": {
+    "flow": "Na tela User Registration, o cliente preencheu os campos Email*, Password* e Repeat Password* com dados específicos, exibindo os contadores de caracteres atualizados abaixo dos campos de senha.",
+    "precondition": "Tela de cadastro aberta em",
+    "observed_result": "O formulário de cadastro exibe os campos preenchidos com o e-mail teste2@example.com, e as senhas informadas com contadores indicando 11/20 no campo Password* e 10/40 no campo Repeat Password*, mantendo o botão Register desabilitado.",
+    "messages": [
+      "Password must be 5-40 characters long.",
+      "This cannot be changed later!",
+      "Show password advice",
+      "User Registration"
+    ],
+    "data": "Email: teste2@example.com; Senha: Teste@12345; repetição: Teste@1234",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Abrir a rota de registro",
+        "data": "",
+        "response": "A página User Registration foi exibida contendo os campos Email*, Password*, Repeat Password*, Security Question* e Answer*, além de um banner de cookies no canto inferior direito."
+      },
+      {
+        "number": 2,
+        "action": "Preencher o campo Email*",
+        "data": "teste2@example.com",
+        "response": "O campo Email* foi preenchido com o valor teste2@example.com e a interface permaneceu na tela de cadastro."
+      },
+      {
+        "number": 3,
+        "action": "Preencher o campo Password*",
+        "data": "Teste@12345",
+        "response": "O campo Password* foi preenchido com caracteres ocultos e o contador abaixo passou a exibir 11/20 ao lado do texto Password must be 5-40 characters long."
+      },
+      {
+        "number": 4,
+        "action": "Preencher o campo Repeat Password*",
+        "data": "Teste@1234",
+        "response": "O campo Repeat Password* foi preenchido com caracteres ocultos e o contador abaixo passou a exibir 10/40."
+      },
+      {
+        "number": 5,
+        "action": "Aguardar a atualização da interface",
+        "data": "",
+        "response": "Nenhuma mudança visual adicional foi registrada, mantendo o estado atual do formulário com os contadores de caracteres visíveis."
+      }
+    ]
+  }
+}

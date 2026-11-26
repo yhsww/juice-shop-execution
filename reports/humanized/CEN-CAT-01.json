@@ -1,0 +1,28 @@
+{
+  "scenario_id": "CEN-CAT-01",
+  "fingerprint": "ad70627f6e278aa20b8ec4229c86ad64968918071617114ba9b4a68b9b862249",
+  "content": {
+    "flow": "O cliente acessou a rota raiz da aplicação OWASP Juice Shop e verificou a exibição do catálogo de produtos contendo itens como Apple Juice, Apple Pomace, Banana Juice e Basil Smoothie, acompanhado da barra de navegação com os elementos Account, Your Basket e o banner de cookies.",
+    "precondition": "Juice Shop em execução.",
+    "observed_result": "A página inicial foi carregada com sucesso exibindo o título OWASP Juice Shop, o cabeçalho com opções de conta e carrinho Your Basket com indicador 0, o aviso de cookies com o botão Me want it!, e a grade de produtos All Products listando itens com seus respectivos preços e botões Add to Basket.",
+    "messages": [
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!",
+      "Language has been changed to English Force page reload"
+    ],
+    "data": "Nenhum dado de entrada.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O cliente abriu a rota /#/",
+        "data": "/#/",
+        "response": "A interface exibiu a página inicial com o logotipo OWASP Juice Shop, os menus de pesquisa, conta e Your Basket 0, além da listagem de produtos All Products contendo itens como Apple Juice (1000ml) por 1.99¤, Apple Pomace por 0.89¤, Banana Juice (1000ml) por 1.99¤ e Basil Smoothie por 2.99¤, cada um com o respectivo botão Add to Basket. Também foram exibidos o banner de aviso de cookies no canto inferior direito e a notificação de idioma no rodapé."
+      },
+      {
+        "number": 2,
+        "action": "O cliente aguardou a atualização da interface",
+        "data": "",
+        "response": "Nenhuma mudança visual relevante detectada, mantendo a listagem do catálogo de produtos e os elementos de navegação visíveis."
+      }
+    ]
+  }
+}

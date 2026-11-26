@@ -1,0 +1,45 @@
+{
+  "scenario_id": "CEN-CHK-13",
+  "fingerprint": "335fbb5cf316d8d70880035eb76794abeb64bac9b56d86741ba8efb80d9c16d2",
+  "content": {
+    "flow": "Na tela My Payment Options, o usuário expandiu a seção Other payment options, visualizou as opções de doação e merchandise, e clicou no botão Credit Card sob Donations, sendo direcionado para a página externa de documentação e suporte a doações do projeto.",
+    "precondition": "Cliente autenticado; etapa de pagamento acessível; seção 'Other payment options' disponível.",
+    "observed_result": "A interface expandiu a seção de opções de pagamento alternativas exibindo as categorias Donations e Merchandise. Ao acionar o botão Credit Card, o navegador abriu a página externa de orientações de doações do OWASP Juice Shop.",
+    "messages": [
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!"
+    ],
+    "data": "Nenhum pagamento real.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Abrir a rota de pagamento na aplicação.",
+        "data": "",
+        "response": "A tela My Payment Options foi exibida contendo os campos Add new card, Pay using wallet com saldo 0.00 e botão Pay NaN, Add a coupon e Other payment options."
+      },
+      {
+        "number": 2,
+        "action": "Clicar em Other payment options.",
+        "data": "Nenhum dado adicional.",
+        "response": "A seção Other payment options foi expandida, exibindo as opções Donations com o botão Credit Card e Merchandise com os links Spreadshirt (US), Spreadshirt (DE), StickerYou, Leanpub e OpenSea."
+      },
+      {
+        "number": 3,
+        "action": "Aguardar a atualização da interface.",
+        "data": "Nenhum dado adicional.",
+        "response": "Nenhuma mudança visual adicional ocorreu na tela My Payment Options."
+      },
+      {
+        "number": 4,
+        "action": "Clicar em Credit Card.",
+        "data": "Nenhum dado adicional.",
+        "response": "O navegador redirecionou para a página externa de doações do projeto, exibindo o guia Supporting Juice Shop."
+      },
+      {
+        "number": 5,
+        "action": "Aguardar a atualização da interface.",
+        "data": "Nenhum dado adicional.",
+        "response": "A página externa de documentação permaneceu aberta exibindo os detalhes e instruções para apoio financeiro ao OWASP Juice Shop."
+      }
+    ]
+  }
+}

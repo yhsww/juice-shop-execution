@@ -1,0 +1,28 @@
+{
+  "scenario_id": "CEN-CAT-08",
+  "fingerprint": "bc2462b538630e301d61c21f8a175ea5e6b2397efdd41b0db8d3f2e69427b0ac",
+  "content": {
+    "flow": "Na página de pesquisa da aplicação, o cliente acessou a rota sem informar nenhum termo de busca. Como resultado, a interface exibiu a listagem padrão de todos os produtos disponíveis na loja.",
+    "precondition": "Catálogo disponível.",
+    "observed_result": "A tela de pesquisa foi aberta mantendo o catálogo completo de produtos visível, contendo itens como Apple Juice (1000ml), Apple Pomace, Banana Juice (1000ml) e Basil Smoothie, acompanhados de seus respectivos preços e botões Add to Basket, sem restrições ou mensagens de erro por falta de termo.",
+    "messages": [
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!",
+      "Language has been changed to English Force page reload"
+    ],
+    "data": "Termo vazio.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário abriu a rota de pesquisa na aplicação.",
+        "data": "",
+        "response": "A interface redirecionou para a página de pesquisa exibindo o cabeçalho com o logotipo OWASP Juice Shop, os menus de navegação Account e Your Basket 0, e a listagem de produtos com itens como Apple Juice (1000ml) por 1.99¤, Apple Pomace por 0.89¤, Banana Juice (1000ml) por 1.99¤ e Basil Smoothie por 2.99¤, todos com o botão Add to Basket. No canto inferior, um aviso de cookies e uma notificação de alteração de idioma foram apresentados."
+      },
+      {
+        "number": 2,
+        "action": "O usuário aguardou a estabilização da interface após o carregamento sem parâmetros de busca.",
+        "data": "",
+        "response": "Nenhuma mudança visual adicional foi registrada; a listagem de todos os produtos permaneceu inalterada na tela de pesquisa."
+      }
+    ]
+  }
+}

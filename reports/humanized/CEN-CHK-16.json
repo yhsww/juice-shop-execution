@@ -1,0 +1,47 @@
+{
+  "scenario_id": "CEN-CHK-16",
+  "fingerprint": "44687bd12002500bcaeb12c25cb84ac74619c5f57696a9238710b781d997c1d0",
+  "content": {
+    "flow": "Na página Order History, o cliente localizou o pedido concluído contendo o produto Apple Juice (1000ml), com ID #9fa9-8b15d6b2d3f6ff24 e Total Price de 1.99¤, e acionou o ícone de documento para abrir a opção de impressão da confirmação do pedido.",
+    "precondition": "Cliente autenticado; pedido concluído.",
+    "observed_result": "A opção de impressão da confirmação do pedido foi acionada com sucesso na tela Order History, exibindo o detalhamento do pedido concluído contendo o item Apple Juice (1000ml), o ID #9fa9-8b15d6b2d3f6ff24 e o status In Transit.",
+    "messages": [
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!",
+      "Placed Apple Juice (1000ml) into basket. X",
+      "Order History",
+      "Order ID #9fa9-8b15d6b2d3f6ff24",
+      "Total Price 1.99¤",
+      "Bonus 0",
+      "In Transit",
+      "Apple Juice (1000ml)",
+      "Print Order Confirmation"
+    ],
+    "data": "Pedido concluído de teste, ID #9fa9-8b15d6b2d3f6ff24, produto Apple Juice (1000ml), quantidade 1, preço 1.99¤.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário acessou a rota de histórico de pedidos no menu Order History.",
+        "data": "",
+        "response": "A tela Order History foi exibida, contendo o pedido com ID #9fa9-8b15d6b2d3f6ff24, Total Price de 1.99¤, status In Transit, e a lista de itens com o produto Apple Juice (1000ml), preço 1.99¤, quantidade 1 e total de 1.99¤."
+      },
+      {
+        "number": 2,
+        "action": "O usuário aguardou a atualização da interface.",
+        "data": "",
+        "response": "Nenhuma mudança visual relevante detectada, mantendo o histórico de pedidos visível."
+      },
+      {
+        "number": 3,
+        "action": "O usuário clicou na opção Print Order Confirmation associada ao pedido concluído.",
+        "data": "",
+        "response": "A interface exibiu o rótulo Print Order Confirmation indicando a abertura da opção de impressão para o pedido selecionado."
+      },
+      {
+        "number": 4,
+        "action": "O usuário aguardou a estabilização da interface.",
+        "data": "",
+        "response": "Nenhuma resposta adicional registrada, permanecendo na tela Order History com a confirmação pronta para impressão."
+      }
+    ]
+  }
+}

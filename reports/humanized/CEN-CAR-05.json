@@ -1,0 +1,33 @@
+{
+  "scenario_id": "CEN-CAR-05",
+  "fingerprint": "9e2d0ff5b7a5a8d0f7681c2ce35bdd230f487f07ef634000c1700a8d8c0419e3",
+  "content": {
+    "flow": "Na tela do carrinho Your Basket, o usuário localizou o produto Apple Juice (1000ml) e acionou o botão de remoção representado pelo ícone de lixeira. Após a remoção, o item foi excluído da lista e o preço total passou a ser 0¤ com o indicador do carrinho zerado.",
+    "precondition": "Há pelo menos um produto no carrinho.",
+    "observed_result": "O produto Apple Juice (1000ml) foi completamente removido do carrinho, o preço total foi atualizado para 0¤, o contador no menu superior Your Basket passou de 1 para 0 e o botão Checkout tornou-se desabilitado.",
+    "messages": [
+      "Placed Apple Juice (1000ml) into basket."
+    ],
+    "data": "Apple Juice (1000ml)",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Abrir a rota do carrinho",
+        "data": "",
+        "response": "A tela Your Basket foi exibida mostrando o item Apple Juice (1000ml) com quantidade 1, preço unitário de 1.99¤, preço total de 1.99¤, o ícone de lixeira para remoção, e o menu superior Your Basket indicando a quantidade 1."
+      },
+      {
+        "number": 2,
+        "action": "Clicar no botão de remoção (lixeira) associado ao produto Apple Juice (1000ml)",
+        "data": "",
+        "response": "O produto Apple Juice (1000ml) desapareceu da listagem do carrinho, o preço total foi alterado para 0¤ e o indicador Your Basket no menu superior foi atualizado para 0."
+      },
+      {
+        "number": 3,
+        "action": "Aguardar a atualização da interface",
+        "data": "",
+        "response": "Nenhuma mudança visual adicional registrada, mantendo o carrinho vazio com o preço total em 0¤."
+      }
+    ]
+  }
+}

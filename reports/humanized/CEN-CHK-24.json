@@ -1,0 +1,31 @@
+{
+  "scenario_id": "CEN-CHK-24",
+  "fingerprint": "0950734c72c29f224463243e8dce632b2082b8d880e9d731c5effce43b4faa33",
+  "content": {
+    "flow": "Na tela de método de entrega, o cliente acessou a etapa correspondente exibindo o endereço selecionado Cliente Teste e as opções de velocidade de entrega One Day Delivery, Fast Delivery e Standard Delivery, sem selecionar nenhuma delas.",
+    "precondition": "Endereço selecionado.",
+    "observed_result": "A interface exibiu a seção Delivery Address com os dados do cliente Cliente Teste e a tabela Choose a delivery speed listando as opções One Day Delivery (0.99¤, 1 Days), Fast Delivery (0.50¤, 3 Days) e Standard Delivery (0.00¤, 5 Days) com botões de seleção desmarcados, além do botão Continue desativado.",
+    "messages": [
+      "Delivery Address Cliente Teste Rua Teste, 100, Fortaleza, CE, 60000000 Brazil Phone Number 8599999999",
+      "Choose a delivery speed",
+      "One Day Delivery 0.99¤ 1 Days",
+      "Fast Delivery 0.50¤ 3 Days",
+      "Standard Delivery 0.00¤ 5 Days"
+    ],
+    "data": "Nenhum dado adicional.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O cliente abriu a rota de método de entrega.",
+        "data": "",
+        "response": "A tela de método de entrega foi carregada, exibindo as informações do endereço do Cliente Teste e a tabela de velocidades de entrega contendo One Day Delivery, Fast Delivery e Standard Delivery."
+      },
+      {
+        "number": 2,
+        "action": "O cliente aguardou a atualização da interface sem selecionar nenhum método de entrega.",
+        "data": "Nenhum dado informado.",
+        "response": "Nenhuma mudança visual adicional foi registrada; as opções de entrega permaneceram desmarcadas e o botão Continue permaneceu indisponível."
+      }
+    ]
+  }
+}

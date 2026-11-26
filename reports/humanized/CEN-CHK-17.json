@@ -1,0 +1,33 @@
+{
+  "scenario_id": "CEN-CHK-17",
+  "fingerprint": "3ee9174176c29664ba63540e0da556cee4947391744e778159e5ae138e236931",
+  "content": {
+    "flow": "O cliente abriu a rota de histórico de pedidos para consultar as compras realizadas, visualizando o detalhamento do pedido concluído contendo o ID #37f0-a41ac2ee45a0f4f5, o produto Apple Juice (1000ml) com quantidade 1, preço unitário e total de 1.99¤, status In Transit e bônus 0.",
+    "precondition": "Cliente autenticado; pedido concluído.",
+    "observed_result": "A tela de histórico de pedidos foi exibida com sucesso, mostrando o cartão Order History com o ID do pedido #37f0-a41ac2ee45a0f4f5, o status In Transit, o preço total de 1.99¤, bônus 0 e a listagem do produto Apple Juice (1000ml) com quantidade 1 e preço total de 1.99¤.",
+    "messages": [
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!",
+      "Placed Apple Juice (1000ml) into basket.",
+      "Order History",
+      "Order ID #37f0-a41ac2ee45a0f4f5",
+      "Total Price 1.99¤",
+      "Bonus 0",
+      "In Transit"
+    ],
+    "data": "Produto: Apple Juice (1000ml), Quantidade: 1, Preço Total: 1.99¤, Order ID: #37f0-a41ac2ee45a0f4f5",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Abrir a rota do histórico de pedidos",
+        "data": "",
+        "response": "A página Order History foi carregada, exibindo o pedido com Order ID #37f0-a41ac2ee45a0f4f5, Total Price 1.99¤, Bonus 0, status In Transit e o produto Apple Juice (1000ml) com quantidade 1 e preço 1.99¤."
+      },
+      {
+        "number": 2,
+        "action": "Aguardar a atualização da interface",
+        "data": "Nenhum dado adicional.",
+        "response": "Nenhuma mudança visual relevante detectada, mantendo o histórico de pedidos visível com os mesmos dados da compra."
+      }
+    ]
+  }
+}

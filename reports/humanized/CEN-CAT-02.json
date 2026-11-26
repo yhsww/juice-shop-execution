@@ -1,0 +1,31 @@
+{
+  "scenario_id": "CEN-CAT-02",
+  "fingerprint": "76ec544b95836818781f5c1c771e579be60facf488b1fab6b17d146888e97f1d",
+  "content": {
+    "flow": "Na tela do catálogo de produtos, o usuário selecionou o item Apple Juice (1000ml) para abrir sua visualização detalhada. Como resultado, um modal com a imagem do produto, título, descrição \"The all-time classic.\", preço \"1.99¤\" e a seção de avaliações \"Reviews (2)\" foi exibido na tela.",
+    "precondition": "Catálogo de produtos disponível na tela inicial.",
+    "observed_result": "O modal de detalhes do produto Apple Juice (1000ml) foi aberto com sucesso, exibindo a imagem do suco com maçã, a descrição \"The all-time classic.\", o preço de 1.99¤, a seção Reviews (2) e o botão Close.",
+    "messages": [],
+    "data": "Produto: Apple Juice (1000ml)",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário abriu a rota inicial da aplicação.",
+        "data": "/#/",
+        "response": "A página inicial da loja foi carregada exibindo a grade de produtos, incluindo o item Apple Juice (1000ml) com preço de 1.99¤ e botão Add to Basket, além de um banner de cookies na parte inferior direita."
+      },
+      {
+        "number": 2,
+        "action": "O usuário clicou no cartão do produto Apple Juice.",
+        "data": "",
+        "response": "Um modal centralizado foi aberto sobre a interface, exibindo a imagem do produto, o título Apple Juice (1000ml), a descrição \"The all-time classic.\", o preço 1.99¤, a seção expandida de avaliações \"Reviews (2)\" e o botão de fechamento Close."
+      },
+      {
+        "number": 3,
+        "action": "O usuário aguardou a estabilização da interface.",
+        "data": "",
+        "response": "O modal de detalhes do produto permaneceu visível na tela sem alterações adicionais."
+      }
+    ]
+  }
+}

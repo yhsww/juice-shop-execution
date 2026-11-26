@@ -1,0 +1,33 @@
+{
+  "scenario_id": "CEN-CAR-06",
+  "fingerprint": "198c6dd86428171a16e06f0f38f50912662454a28326eee6b15e99ebca962fee",
+  "content": {
+    "flow": "O cliente acessou a tela do carrinho de compras contendo o item Apple Juice (1000ml), realizou a ação de clique global para remover o produto, e conferiu o estado final da interface.",
+    "precondition": "Há produtos no carrinho.",
+    "observed_result": "O produto Apple Juice (1000ml) foi removido do carrinho, o preço total foi atualizado para 0¤ e o indicador de quantidade no menu superior mudou de 1 para 0.",
+    "messages": [
+      "Placed Apple Juice (1000ml) into basket."
+    ],
+    "data": "Apple Juice (1000ml)",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário abriu a rota do carrinho na aplicação.",
+        "data": "",
+        "response": "A página Your Basket exibiu o produto Apple Juice (1000ml) com quantidade 1, preço unitário de 1.99¤, preço total de 1.99¤ e o indicador de quantidade no menu superior marcou 1."
+      },
+      {
+        "number": 2,
+        "action": "O usuário executou a ação de clique global para remover os itens do carrinho.",
+        "data": "Nenhum dado adicional.",
+        "response": "A estrutura do carrinho foi atualizada, o produto Apple Juice (1000ml) deixou de ser exibido na lista, o preço total foi alterado para 0¤ e o indicador de quantidade no menu superior passou a exibir 0."
+      },
+      {
+        "number": 3,
+        "action": "O usuário aguardou a atualização da interface.",
+        "data": "Nenhum dado adicional.",
+        "response": "Nenhuma mudança visual adicional foi detectada, mantendo o carrinho vazio com o preço total em 0¤."
+      }
+    ]
+  }
+}

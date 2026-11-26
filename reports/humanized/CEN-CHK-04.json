@@ -1,0 +1,55 @@
+{
+  "scenario_id": "CEN-CHK-04",
+  "fingerprint": "6f2730dc6d2ab121a1c7f0d1cb3f1a33d556cfa83a50026e318c957302c017fe",
+  "content": {
+    "flow": "O cliente abriu o carrinho contendo o produto Apple Juice (1000ml), acionou o botão Checkout, visualizou a tela de seleção de endereço, marcou o endereço cadastrado correspondente a Rua Teste, 100 e verificou a habilitação do botão Continue.",
+    "precondition": "Carrinho contém produto; há endereço cadastrado.",
+    "observed_result": "O endereço cadastrado Rua Teste, 100 foi selecionado com sucesso e o botão Continue ficou habilitado para avanço.",
+    "messages": [
+      "Checkout",
+      "Your Basket",
+      "Select an address",
+      "Add New Address",
+      "Continue"
+    ],
+    "data": "Endereço: Rua Teste, 100",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Abrir a rota",
+        "data": "",
+        "response": "A tela Your Basket foi exibida mostrando o produto Apple Juice (1000ml) com quantidade 1 e preço Total Price de 1.99¤, além do botão Checkout."
+      },
+      {
+        "number": 2,
+        "action": "Clicar no botão Checkout",
+        "data": "",
+        "response": "A interface redirecionou para a tela Select an address, exibindo o endereço cadastrado Cliente Teste com os dados Rua Teste, 100, Fortaleza, CE, 60000000 Brazil, o botão Add New Address e o botão Continue."
+      },
+      {
+        "number": 3,
+        "action": "Aguardar a atualização da interface",
+        "data": "",
+        "response": "Nenhuma mudança visual adicional foi registrada, mantendo a tela Select an address visível."
+      },
+      {
+        "number": 4,
+        "action": "Executar asserção de estado desabilitado",
+        "data": "",
+        "response": "Nenhuma mudança visual adicional foi registrada."
+      },
+      {
+        "number": 5,
+        "action": "Clicar no endereço Rua Teste, 100",
+        "data": "Rua Teste, 100",
+        "response": "O radio button correspondente ao endereço Rua Teste, 100 foi marcado com preenchimento interno azul indicando a seleção."
+      },
+      {
+        "number": 6,
+        "action": "Executar asserção de estado habilitado",
+        "data": "",
+        "response": "O botão Continue permaneceu habilitado e pronto para o avanço no fluxo de fechamento."
+      }
+    ]
+  }
+}

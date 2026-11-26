@@ -1,0 +1,45 @@
+{
+  "scenario_id": "CEN-CHK-05",
+  "fingerprint": "90a0606b520155013f6d2068e9e1cba1026f73fda6595d87b4c833af480ffaaa",
+  "content": {
+    "flow": "Na tela de escolha de velocidade de entrega, o cliente selecionou a opção Standard Delivery e clicou no botão Continue para prosseguir para a tela de pagamento My Payment Options.",
+    "precondition": "Cliente autenticado; endereço de entrega previamente cadastrado e selecionado.",
+    "observed_result": "A opção Standard Delivery foi marcada com o botão de seleção preenchido, e após acionar o botão Continue, a interface redirecionou para a seção My Payment Options com as opções de pagamento disponíveis.",
+    "messages": [
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!"
+    ],
+    "data": "Método de entrega exibido: Standard Delivery (0.00¤, 5 Days).",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Abrir a rota de métodos de entrega",
+        "data": "",
+        "response": "A tela exibe os dados do Delivery Address com o nome Cliente Teste, endereço, país Brazil e número de telefone, além da tabela Choose a delivery speed listando One Day Delivery, Fast Delivery e Standard Delivery."
+      },
+      {
+        "number": 2,
+        "action": "Clicar na opção \"Standard Delivery\"",
+        "data": "Standard Delivery",
+        "response": "O botão de seleção associado à linha Standard Delivery foi marcado visualmente."
+      },
+      {
+        "number": 3,
+        "action": "Aguardar a atualização da interface",
+        "data": "Nenhum dado informado",
+        "response": "A interface manteve a seleção da Standard Delivery e o botão Continue ativo."
+      },
+      {
+        "number": 4,
+        "action": "Clicar no botão \"Continue\"",
+        "data": "Nenhum dado informado",
+        "response": "A página foi redirecionada para a seção My Payment Options, exibindo os campos Add new card, Pay using wallet com saldo 0.00, Add a coupon e Other payment options."
+      },
+      {
+        "number": 5,
+        "action": "Aguardar a atualização da interface",
+        "data": "Nenhum dado informado",
+        "response": "Nenhuma resposta adicional registrada."
+      }
+    ]
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "scenario_id": "CEN-CAT-13",
+  "fingerprint": "d724686a73ec8de6ffa6d3247ccf7a9a4d9bfc3813431f58e55b3e88695b7cc6",
+  "content": {
+    "flow": "Na página de produtos, o cliente realizou uma pesquisa utilizando o campo de busca com um termo contendo acento, barra e caracteres especiais. Após submeter o termo, a interface processou a consulta e exibiu o resultado indicando que nenhum item foi encontrado.",
+    "precondition": "Catálogo disponível.",
+    "observed_result": "A interface foi atualizada para exibir o título Search Results - Limão / Açaí com a mensagem No results found Try adjusting your search to find what you're looking for, indicando zero ocorrências para o termo pesquisado.",
+    "messages": [
+      "Search Results - Limão / Açaí",
+      "No results found",
+      "Try adjusting your search to find what you're looking for.",
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience."
+    ],
+    "data": "Termo: Limão / Açaí",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Abrir a rota",
+        "data": "",
+        "response": "A página de produtos foi exibida contendo a listagem inicial com itens como Apple Juice (1000ml), Apple Pomace e Banana Juice (1000ml)."
+      },
+      {
+        "number": 2,
+        "action": "Preencher Search",
+        "data": "Limão / Açaí",
+        "response": "O campo de pesquisa recebeu o termo informado com acentos, barra e caracteres especiais."
+      },
+      {
+        "number": 3,
+        "action": "Pressionar Enter",
+        "data": "",
+        "response": "A página de listagem foi substituída pela tela de resultados de pesquisa contendo o cabeçalho Search Results - Limão / Açaí e a indicação de nenhum resultado encontrado."
+      },
+      {
+        "number": 4,
+        "action": "Aguardar a atualização da interface",
+        "data": "",
+        "response": "A interface permaneceu estável exibindo a mensagem No results found Try adjusting your search to find what you're looking for com o contador de itens zerado."
+      }
+    ]
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "scenario_id": "CEN-CHK-02",
+  "fingerprint": "03387251286b4662c493961cf8f2b498fd3f63dda4445f04d117928a75adf1a8",
+  "content": {
+    "flow": "O usuário autenticado acessou o carrinho contendo o produto Apple Juice (1000ml) no valor de 1.99¤, acionou o botão Checkout para ir à tela de seleção de endereços, clicou em Add New Address e preencheu todos os campos obrigatórios do novo endereço com os dados informados (País: Brazil, Nome: Cliente Teste, Mobile Number: 8599999999, ZIP Code: 60000000, Address: Rua Teste, 100, City: Fortaleza, State: CE), finalizando com a submissão do formulário pelo botão Submit.",
+    "precondition": "Cliente autenticado; carrinho contém produto.",
+    "observed_result": "O novo endereço cadastrado (Cliente Teste, Rua Teste, 100, Fortaleza, CE, 60000000, Brazil) passou a ser listado na tela Select an address e a mensagem de sucesso foi exibida na interface.",
+    "messages": [
+      "The address at Fortaleza has been successfully added to your addresses."
+    ],
+    "data": "País: Brazil; nome: Cliente Teste; telefone: 8599999999; CEP: 60000000; endereço: Rua Teste, 100; cidade: Fortaleza; estado: CE.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Abrir a rota do carrinho",
+        "data": "",
+        "response": "A tela Your Basket foi exibida contendo o usuário logado, o produto Apple Juice (1000ml) com quantidade 1, preço 1.99¤ e o botão Checkout disponível."
+      },
+      {
+        "number": 2,
+        "action": "Clicar em \"Checkout\"",
+        "data": "",
+        "response": "A interface navegou para a tela Select an address, exibindo o botão Add New Address e o botão Continue."
+      },
+      {
+        "number": 3,
+        "action": "Aguardar a atualização da interface",
+        "data": "",
+        "response": "Nenhuma mudança visual adicional foi registrada, mantendo a tela Select an address."
+      },
+      {
+        "number": 4,
+        "action": "Clicar em \"Add a new address\"",
+        "data": "",
+        "response": "O formulário Add New Address foi aberto com os campos Country*, Name*, Mobile Number*, ZIP Code*, Address*, City* e State, além dos botões Back e Submit."
+      },
+      {
+        "number": 5,
+        "action": "Aguardar a atualização da interface",
+        "data": "",
+        "response": "Nenhuma mudança visual adicional foi registrada, mantendo o formulário Add New Address visível."
+      },
+      {
+        "number": 6,
+        "action": "Preencher \"Country\"",
+        "data": "Brazil",
+        "response": "O campo Country foi preenchido com o texto Brazil."
+      },
+      {
+        "number": 7,
+        "action": "Preencher \"Name\"",
+        "data": "Cliente Teste",
+        "response": "O campo Name foi preenchido com o texto Cliente Teste."
+      },
+      {
+        "number": 8,
+        "action": "Preencher \"Mobile Number\"",
+        "data": "8599999999",
+        "response": "O campo Mobile Number foi preenchido com o valor 8599999999."
+      },
+      {
+        "number": 9,
+        "action": "Preencher \"ZIP Code\"",
+        "data": "60000000",
+        "response": "O campo ZIP Code foi preenchido com 60000000 e o contador indicou 8/8 caracteres."
+      },
+      {
+        "number": 10,
+        "action": "Preencher \"Address\"",
+        "data": "Rua Teste, 100",
+        "response": "O campo Address foi preenchido com Rua Teste, 100 e o contador indicou 14/160 caracteres."
+      },
+      {
+        "number": 11,
+        "action": "Preencher \"City\"",
+        "data": "Fortaleza",
+        "response": "O campo City foi preenchido com o texto Fortaleza."
+      },
+      {
+        "number": 12,
+        "action": "Preencher \"State\"",
+        "data": "CE",
+        "response": "O campo State foi preenchido com o texto CE."
+      },
+      {
+        "number": 13,
+        "action": "Clicar em \"Submit\"",
+        "data": "",
+        "response": "A interface retornou para a tela Select an address, exibindo o endereço recém-cadastrado na lista e a mensagem de sucesso de cadastro."
+      },
+      {
+        "number": 14,
+        "action": "Aguardar a atualização da interface",
+        "data": "",
+        "response": "A tela permaneceu estável exibindo o endereço cadastrado e a mensagem de sucesso."
+      }
+    ]
+  }
+}

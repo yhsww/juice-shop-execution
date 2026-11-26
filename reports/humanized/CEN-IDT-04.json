@@ -1,0 +1,45 @@
+{
+  "scenario_id": "CEN-IDT-04",
+  "fingerprint": "d9ef2056df4f8386e05744e4574144b6411b5649b3e8ba1d563330aab0c8c380",
+  "content": {
+    "flow": "O cliente abriu a página de login, informou um e-mail válido no campo Email e uma senha incorreta no campo Password, e acionou o botão Log in.",
+    "precondition": "Conta de teste disponível para autenticação.",
+    "observed_result": "O sistema exibiu a mensagem de erro informando que o e-mail ou a senha são inválidos, mantendo a interface na tela de autenticação.",
+    "messages": [
+      "Invalid email or password."
+    ],
+    "data": "E-mail: cen-cen-idt-04-b59dc94cf9@example.com, Senha incorreta: SenhaErrada@123",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário abriu a rota de login.",
+        "data": "",
+        "response": "A tela de Login foi exibida contendo os campos Email e Password, além das opções de recuperação de senha e login com Google."
+      },
+      {
+        "number": 2,
+        "action": "O usuário preencheu o campo Email.",
+        "data": "cen-cen-idt-04-b59dc94cf9@example.com",
+        "response": "O campo Email foi preenchido com o endereço de e-mail fornecido."
+      },
+      {
+        "number": 3,
+        "action": "O usuário preencheu o campo Password.",
+        "data": "SenhaErrada@123",
+        "response": "O campo Password foi preenchido com a senha incorreta mascarada por caracteres ocultos."
+      },
+      {
+        "number": 4,
+        "action": "O usuário clicou no botão Log in.",
+        "data": "",
+        "response": "A interface apresentou a mensagem de erro \"Invalid email or password.\" em destaque vermelho acima do campo de e-mail."
+      },
+      {
+        "number": 5,
+        "action": "O usuário aguardou a atualização da interface.",
+        "data": "",
+        "response": "Nenhuma resposta adicional registrada, permanecendo a mensagem de erro visível na página."
+      }
+    ]
+  }
+}

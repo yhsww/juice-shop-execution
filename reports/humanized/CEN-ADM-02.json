@@ -1,0 +1,28 @@
+{
+  "scenario_id": "CEN-ADM-02",
+  "fingerprint": "a4b1948d18f5d94d09d51cce8459e7d1b67d24cfa16c777e302c69a4303f2310",
+  "content": {
+    "flow": "Na página principal, o administrador acessou a seção de administração e visualizou a área de usuários cadastrados contendo a listagem de contas registradas e a seção de feedback de clientes.",
+    "precondition": "Administrador autenticado.",
+    "observed_result": "A tela de administração foi exibida com o título Administration, apresentando a seção Registered Users com uma listagem de e-mails de usuários cadastrados (como admin@juice-sh.op, jim@juice-sh.op, bender@juice-sh.op, entre outros) acompanhados de ícones de visualização, além da seção Customer Feedback ao lado e o banner de cookies na parte inferior.",
+    "messages": [
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!",
+      "Me want it!"
+    ],
+    "data": "Nenhum dado adicional.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O administrador navegou para a rota de administração.",
+        "data": "",
+        "response": "A interface exibiu a página Administration contendo a tabela de Registered Users com a listagem de usuários cadastrados e a seção Customer Feedback."
+      },
+      {
+        "number": 2,
+        "action": "O administrador aguardou a estabilização da interface.",
+        "data": "Nenhum dado adicional.",
+        "response": "A página permaneceu estável com a exibição da listagem de usuários cadastrados e o banner de cookies visível no canto inferior direito."
+      }
+    ]
+  }
+}

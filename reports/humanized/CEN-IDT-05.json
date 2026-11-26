@@ -1,0 +1,37 @@
+{
+  "scenario_id": "CEN-IDT-05",
+  "fingerprint": "706db08ee57cfc3cd17bd31cbc6813807868928815c4232fb7a1f8b267f2f86f",
+  "content": {
+    "flow": "Na página inicial da loja, o usuário abriu o menu Account e selecionou a opção Logout para encerrar a sessão autenticada.",
+    "precondition": "Usuário autenticado.",
+    "observed_result": "A sessão do usuário foi encerrada com sucesso, retornando à tela inicial da aplicação e exibindo o menu de navegação padrão com o botão Account sem dados de usuário logado.",
+    "messages": [],
+    "data": "Nenhum dado adicional.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Abrir a rota /#/",
+        "data": "/#/",
+        "response": "A página inicial da loja OWASP Juice Shop foi exibida com o catálogo de produtos e um aviso de cookies no canto inferior direito."
+      },
+      {
+        "number": 2,
+        "action": "Clicar em \"Account\"",
+        "data": "",
+        "response": "O menu suspenso de conta foi aberto, exibindo o e-mail do usuário autenticado e as opções Orders & Payment, Privacy & Security e Logout."
+      },
+      {
+        "number": 3,
+        "action": "Clicar em \"Logout\"",
+        "data": "",
+        "response": "A sessão foi encerrada e o menu suspenso da conta foi fechado."
+      },
+      {
+        "number": 4,
+        "action": "Aguardar a atualização da interface",
+        "data": "",
+        "response": "A interface permaneceu estável na página inicial com o catálogo de produtos e o aviso de cookies visíveis."
+      }
+    ]
+  }
+}

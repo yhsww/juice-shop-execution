@@ -1,0 +1,37 @@
+{
+  "scenario_id": "CEN-IDT-17",
+  "fingerprint": "ef0d8d85387c187ecc9649234ea42995de76664e900ef67f2db8ced96562cbd0",
+  "content": {
+    "flow": "Na tela de registro de usuário, o cliente acessou a rota de cadastro para verificar os campos disponíveis e o redirecionamento.",
+    "precondition": "Cadastro válido concluído.",
+    "observed_result": "A interface exibiu a página User Registration contendo os campos Email, Password, Repeat Password, Security Question e Answer, além do botão Register desabilitado e do link Already a customer?.",
+    "messages": [
+      "User Registration",
+      "Email*",
+      "Password*",
+      "Password must be 5-40 characters long.",
+      "Repeat Password*",
+      "Show password advice",
+      "Security Question *",
+      "This cannot be changed later!",
+      "Answer*",
+      "Already a customer?",
+      "Language has been changed to English"
+    ],
+    "data": "E-mail: usuário de teste; senha: senha de teste.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Abrir a rota de registro",
+        "data": "",
+        "response": "A página User Registration foi carregada exibindo os campos Email, Password com o aviso 0/20, Repeat Password com o aviso 0/40, a caixa de seleção Show password advice, o menu suspenso Security Question com o texto This cannot be changed later!, o campo Answer, o botão Register e a opção Already a customer?."
+      },
+      {
+        "number": 2,
+        "action": "Aguardar a atualização da interface",
+        "data": "",
+        "response": "A interface permaneceu inalterada na tela User Registration sem novas modificações visuais registradas."
+      }
+    ]
+  }
+}

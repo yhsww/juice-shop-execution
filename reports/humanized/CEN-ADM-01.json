@@ -1,0 +1,58 @@
+{
+  "scenario_id": "CEN-ADM-01",
+  "fingerprint": "7df8b4e858aaa08b006a4b162f0389c909d7d70c273f456184867779b9c962fd",
+  "content": {
+    "flow": "O administrador acessou a página de login do OWASP Juice Shop, preencheu as credenciais válidas no campo Email e no campo Password, acionou o botão de login e posteriormente navegou para a rota de administração para consultar o painel restrito de gerenciamento.",
+    "precondition": "Juice Shop em execução; usuário administrador disponível.",
+    "observed_result": "A aplicação efetuou a autenticação com sucesso, redirecionou para o catálogo de produtos e permitiu o acesso à página de Administração, exibindo o painel restrito contendo as seções Registered Users com a listagem de usuários cadastrados (destacando admin@juice-sh.op) e Customer Feedback com as avaliações dos clientes.",
+    "messages": [
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!",
+      "Language has been changed to English Force page reload"
+    ],
+    "data": "E-mail: admin@juice-sh.op; Senha: admin123",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Abriu a rota de login",
+        "data": "",
+        "response": "A página de login foi exibida contendo o formulário com os campos Email e Password, o botão Log in e a caixa de diálogo de cookies no canto inferior direito."
+      },
+      {
+        "number": 2,
+        "action": "Preencheu o campo Email",
+        "data": "admin@juice-sh.op",
+        "response": "O campo Email foi preenchido com o endereço informado e a interface manteve os demais elementos do formulário de login visíveis."
+      },
+      {
+        "number": 3,
+        "action": "Preencheu o campo Password",
+        "data": "admin123",
+        "response": "O campo Password foi preenchido com a senha mascarada por caracteres ocultos, mantendo o botão Log in habilitado."
+      },
+      {
+        "number": 4,
+        "action": "Clicou no botão Log in",
+        "data": "Nenhum dado adicional",
+        "response": "A aplicação processou a autenticação, redirecionou o usuário para a tela principal contendo a grade de produtos All Products e atualizou o indicador do carrinho para Your Basket 6."
+      },
+      {
+        "number": 5,
+        "action": "Aguardou a atualização da interface",
+        "data": "Nenhum dado adicional",
+        "response": "A interface permaneceu estável na tela de produtos com o catálogo e o aviso de cookies visíveis."
+      },
+      {
+        "number": 6,
+        "action": "Abriu a rota de administração",
+        "data": "",
+        "response": "A tela de Administração foi carregada exibindo os painéis Registered Users, com a lista de e-mails cadastrados, e Customer Feedback, com as avaliações dos clientes."
+      },
+      {
+        "number": 7,
+        "action": "Aguardou a atualização da interface",
+        "data": "Nenhum dado adicional",
+        "response": "O painel administrativo permaneceu exibindo perfeitamente as seções de usuários registrados e feedbacks dos clientes."
+      }
+    ]
+  }
+}

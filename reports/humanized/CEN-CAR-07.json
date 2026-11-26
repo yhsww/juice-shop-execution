@@ -1,0 +1,51 @@
+{
+  "scenario_id": "CEN-CAR-07",
+  "fingerprint": "885dfb367e254d1c91c20193804023916585c3af7554ac7e8addba1f0f5462d7",
+  "content": {
+    "flow": "Na página inicial, o cliente adicionou o produto Apple Juice ao carrinho, navegou para outra área do sistema e, em seguida, acessou o carrinho para verificar a persistência do item.",
+    "precondition": "Catálogo disponível.",
+    "observed_result": "O produto Apple Juice (1000ml) permaneceu salvo no carrinho com quantidade 1 e preço unitário de 1.99¤, totalizando 1.99¤.",
+    "messages": [
+      "Placed Apple Juice (1000ml) into basket."
+    ],
+    "data": "Produto: Apple Juice",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Abrir a rota /#/",
+        "data": "/#/",
+        "response": "A página inicial foi carregada exibindo o catálogo de produtos e o ícone Your Basket indicando 0 itens."
+      },
+      {
+        "number": 2,
+        "action": "Clicar em Add to Basket no cartão do produto Apple Juice",
+        "data": "Apple Juice (1000ml)",
+        "response": "A mensagem Placed Apple Juice (1000ml) into basket. foi exibida e o indicador do carrinho Your Basket passou a exibir a quantidade 1."
+      },
+      {
+        "number": 3,
+        "action": "Abrir a rota de pesquisa",
+        "data": "",
+        "response": "O navegador acessou a rota de pesquisa, mantendo o indicador Your Basket exibindo 1 item."
+      },
+      {
+        "number": 4,
+        "action": "Aguardar a atualização da interface",
+        "data": "Nenhum dado informado",
+        "response": "A interface permaneceu estável com o estado do carrinho preservado."
+      },
+      {
+        "number": 5,
+        "action": "Abrir a rota do carrinho",
+        "data": "",
+        "response": "A tela Your Basket foi aberta exibindo o produto Apple Juice (1000ml) com quantidade 1, preço de 1.99¤ e Total Price de 1.99¤."
+      },
+      {
+        "number": 6,
+        "action": "Aguardar a atualização da interface",
+        "data": "Nenhum dado informado",
+        "response": "O carrinho permaneceu persistido com o produto Apple Juice e o valor total calculados corretamente."
+      }
+    ]
+  }
+}

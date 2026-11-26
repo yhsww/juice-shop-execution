@@ -1,0 +1,27 @@
+{
+  "scenario_id": "CEN-IDT-06",
+  "fingerprint": "1cd9076e86f432c366c0f6d2baf7333d28a9c890f4180589070ef9e45bdfb1d9",
+  "content": {
+    "flow": "O cliente tentou abrir a área de perfil navegando para a rota /profile, mas a interface retornou um erro interno do servidor indicando bloqueio de atividade.",
+    "precondition": "Conta de teste disponível para autenticação.",
+    "observed_result": "A tela exibiu uma mensagem de erro 500 informando atividade bloqueada e o caminho do erro no servidor.",
+    "messages": [
+      "500 Error: Blocked illegal activity by ::ffff:172.18.0.1 at /juice-shop/build/routes/userProfile.js:69:18"
+    ],
+    "data": "Nenhum dado adicional.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O cliente abriu a rota /profile na aplicação.",
+        "data": "/profile",
+        "response": "A interface exibiu o cabeçalho OWASP Juice Shop (Express ^4.22.1) acompanhado da mensagem 500 Error: Blocked illegal activity by ::ffff:172.18.0.1 at /juice-shop/build/routes/userProfile.js:69:18."
+      },
+      {
+        "number": 2,
+        "action": "O cliente aguardou a atualização da interface.",
+        "data": "",
+        "response": "Nenhuma mudança visual relevante detectada, mantendo a tela de erro exibida no passo anterior."
+      }
+    ]
+  }
+}

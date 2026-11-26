@@ -1,0 +1,40 @@
+{
+  "scenario_id": "CEN-CHK-15",
+  "fingerprint": "9b28df62ac991b6653a161bc11dad5880241f27ce80f8118c794163cf0717205",
+  "content": {
+    "flow": "Na tela My Payment Options, o usuário expandiu a seção Add a coupon, preencheu o campo Coupon com o código inválido TESTE12345 e acionou o botão Redeem. O sistema processou a solicitação e exibiu a mensagem de erro indicando que o cupom é inválido.",
+    "precondition": "Cliente autenticado; etapa de pagamento acessível; campo de cupom disponível.",
+    "observed_result": "O campo de cupom foi limpo após o envio e a mensagem de erro 'Invalid coupon.' passou a ser exibida em vermelho acima do campo de cupom, com o contador ajustado para 0/10 e o botão Redeem desabilitado.",
+    "messages": [
+      "Invalid coupon.",
+      "Need a coupon code? Follow us on BlueSky or Reddit for monthly coupons and other spam!"
+    ],
+    "data": "TESTE12345",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Abrir a rota de opções de pagamento.",
+        "data": "",
+        "response": "A tela My Payment Options foi exibida, contendo as opções Add new card, Pay using wallet, Add a coupon e Other payment options."
+      },
+      {
+        "number": 2,
+        "action": "Preencher o campo Coupon com o código de teste.",
+        "data": "TESTE12345",
+        "response": "O campo Coupon foi preenchido com TESTE12345, o contador exibiu 10/10 e o botão Redeem tornou-se habilitado."
+      },
+      {
+        "number": 3,
+        "action": "Clicar no botão Redeem.",
+        "data": "",
+        "response": "A interface processou o código, exibiu a mensagem de erro em vermelho 'Invalid coupon.', zerou o campo de cupom e o contador passou a exibir 0/10 com o botão Redeem desabilitado."
+      },
+      {
+        "number": 4,
+        "action": "Aguardar a atualização da interface.",
+        "data": "",
+        "response": "Nenhuma resposta adicional registrada, mantendo o estado anterior com a rejeição do cupom visível."
+      }
+    ]
+  }
+}

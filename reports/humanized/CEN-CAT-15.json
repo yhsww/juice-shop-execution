@@ -1,0 +1,43 @@
+{
+  "scenario_id": "CEN-CAT-15",
+  "fingerprint": "13118b400c1a8c09d125b87f08cb21d91bc979e6bcd663594a6b89bf6d2b900c",
+  "content": {
+    "flow": "Na página inicial do catálogo, o cliente clicou no elemento \"Account\" no menu superior, exibindo a opção de login. Em seguida, clicou no botão \"Login\" para acessar a tela de autenticação da loja.",
+    "precondition": "Catálogo disponível.",
+    "observed_result": "A tela de login foi exibida com sucesso, contendo os campos \"Email\" e \"Password\", o botão \"Log in\", as opções \"Remember me\", \"Log in with Google\" e os links para recuperação de senha e cadastro.",
+    "messages": [],
+    "data": "/#/",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Abrir a rota /#/",
+        "data": "/#/",
+        "response": "A página inicial da loja OWASP Juice Shop foi exibida com o catálogo de produtos e a barra de navegação superior contendo os itens \"Account\", \"Your Basket 0\" e o seletor de idioma \"EN\"."
+      },
+      {
+        "number": 2,
+        "action": "Clicar em \"Account\"",
+        "data": "",
+        "response": "O menu suspenso de conta foi aberto, exibindo a opção de acesso com o rótulo \"Login\" e um ícone de porta."
+      },
+      {
+        "number": 3,
+        "action": "Aguardar a atualização da interface",
+        "data": "",
+        "response": "Nenhuma alteração adicional foi registrada, mantendo o menu de conta aberto com a opção \"Login\" visível."
+      },
+      {
+        "number": 4,
+        "action": "Clicar em \"Login\"",
+        "data": "",
+        "response": "A interface navegou para a página de login, exibindo os campos \"Email\" e \"Password\", o botão de submissão \"Log in\", a opção \"Remember me\", o botão \"Log in with Google\" e o link \"Forgot your password?\"."
+      },
+      {
+        "number": 5,
+        "action": "Aguardar a atualização da interface",
+        "data": "",
+        "response": "A página de login permaneceu estável e carregada com todos os elementos funcionais de autenticação."
+      }
+    ]
+  }
+}

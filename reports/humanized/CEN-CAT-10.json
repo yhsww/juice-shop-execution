@@ -1,0 +1,34 @@
+{
+  "scenario_id": "CEN-CAT-10",
+  "fingerprint": "afab6ca71aa760706541441bdc3748cbdadbbd09f0755896386e4bcd7131fec1",
+  "content": {
+    "flow": "O cliente abriu a página inicial do catálogo na rota informada, onde visualizou os primeiros itens disponíveis. Em seguida, acionou a navegação para avançar de página, resultando na exibição dos itens subsequentes do catálogo correspondentes ao intervalo de paginação.",
+    "precondition": "Catálogo com quantidade suficiente para paginação e exibição dos produtos iniciais.",
+    "observed_result": "A listagem de produtos foi atualizada para exibir os itens da segunda página do catálogo, mostrando produtos como Melon Bike, Melon Juice e itens da marca OWASP Juice Shop, além do indicador de paginação atualizado para 17 – 32 of 46.",
+    "messages": [
+      "Language has been changed to English Force page reload",
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!"
+    ],
+    "data": "Nenhum dado adicional.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário abriu a rota da aplicação.",
+        "data": "/#/",
+        "response": "A página inicial foi carregada exibindo o título 'All Products', o banner de cookies na parte inferior com o botão 'Me want it!', e a listagem inicial contendo produtos como Apple Juice, Apple Pomace e Banana Juice, acompanhados de seus respectivos botões 'Add to Basket'."
+      },
+      {
+        "number": 2,
+        "action": "O usuário clicou no elemento de paginação para avançar.",
+        "data": "",
+        "response": "A interface iniciou a transição para exibir a nova página de produtos do catálogo."
+      },
+      {
+        "number": 3,
+        "action": "O usuário aguardou a atualização da interface.",
+        "data": "",
+        "response": "A listagem de produtos foi atualizada para a próxima página, exibindo novos itens como Melon Bike, Melon Juice, OWASP Juice Shop Facemask e outros acessórios, com o rodapé da paginação indicando os itens 17 a 32 de um total de 46."
+      }
+    ]
+  }
+}

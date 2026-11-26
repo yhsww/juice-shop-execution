@@ -1,0 +1,31 @@
+{
+  "scenario_id": "CEN-CHK-23",
+  "fingerprint": "72cf826c4fad74482ece630d62fc81f9c257f31e47f363334a0f053b2853fd4f",
+  "content": {
+    "flow": "O cliente iniciou o fluxo de checkout acessando a tela de seleção de endereço sem possuir um endereço selecionado.",
+    "precondition": "Carrinho com produto e nenhum endereço selecionado.",
+    "observed_result": "A tela \"Select an address\" foi exibida contendo o endereço cadastrado do Cliente Teste (Rua Teste, 100, Fortaleza, CE, 60000000, Brazil) com o botão \"Continue\" desativado e a opção de adicionar um novo endereço disponível.",
+    "messages": [
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!",
+      "Select an address",
+      "Cliente Teste Rua Teste, 100, Fortaleza, CE, 60000000 Brazil",
+      "Add New Address",
+      "Continue"
+    ],
+    "data": "Nenhum dado adicional.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Abrir a rota de seleção de endereço.",
+        "data": "",
+        "response": "A interface exibiu a página \"Select an address\" com o endereço do Cliente Teste listado, o botão \"Add New Address\" e o botão \"Continue\" desativado."
+      },
+      {
+        "number": 2,
+        "action": "Aguardar a atualização da interface.",
+        "data": "",
+        "response": "Nenhuma mudança visual relevante detectada, mantendo o estado da tela de seleção de endereço."
+      }
+    ]
+  }
+}

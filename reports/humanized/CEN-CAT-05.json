@@ -1,0 +1,41 @@
+{
+  "scenario_id": "CEN-CAT-05",
+  "fingerprint": "1514eea9265f7bfa89739ed27e1c449eaa361d354b94786ba8bec9a17b85fc63",
+  "content": {
+    "flow": "Na página inicial da loja de sucos, o usuário acessou a rota de pesquisa e preencheu o campo de busca com o termo ProdutoInexistenteXYZ. Ao pressionar Enter, a interface atualizou a visualização para exibir a seção de resultados indicando que nenhum item foi encontrado.",
+    "precondition": "Catálogo disponível.",
+    "observed_result": "A interface exibiu o título Search Results - ProdutoInexistenteXYZ, acompanhado de uma ilustração de lupa com nuvens e a mensagem No results found Try adjusting your search to find what you're looking for., com o indicador de paginação definindo 0 of 0 items.",
+    "messages": [
+      "Search Results - ProdutoInexistenteXYZ",
+      "No results found",
+      "Try adjusting your search to find what you're looking for."
+    ],
+    "data": "Termo: ProdutoInexistenteXYZ.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Abrir a rota",
+        "data": "",
+        "response": "A página principal foi carregada exibindo a listagem de produtos com cartões como Apple Juice (1000ml) e o banner de aviso de cookies no canto inferior direito."
+      },
+      {
+        "number": 2,
+        "action": "Preencher \"Search\"",
+        "data": "ProdutoInexistenteXYZ",
+        "response": "O campo de pesquisa foi preenchido com o texto ProdutoInexistenteXYZ mantendo a listagem atual de produtos na tela."
+      },
+      {
+        "number": 3,
+        "action": "Pressionar Enter",
+        "data": "Nenhuma",
+        "response": "A interface foi atualizada para a página de resultados de busca, exibindo o título Search Results - ProdutoInexistenteXYZ, a ilustração de lupa e o texto explicativo No results found Try adjusting your search to find what you're looking for."
+      },
+      {
+        "number": 4,
+        "action": "Aguardar a atualização da interface",
+        "data": "Nenhuma",
+        "response": "Nenhuma mudança visual adicional foi registrada, mantendo a tela de resultados vazios estável com o contador 0 of 0."
+      }
+    ]
+  }
+}

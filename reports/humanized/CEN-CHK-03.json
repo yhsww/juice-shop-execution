@@ -1,0 +1,62 @@
+{
+  "scenario_id": "CEN-CHK-03",
+  "fingerprint": "b0da16bb58f354126c6e799b29a26ef141bb6a893e9c12feb4b3983fa452e4bc",
+  "content": {
+    "flow": "Na tela do carrinho Your Basket contendo o item Apple Juice (1000ml), o cliente clicou no botão Checkout para acessar a etapa de seleção de endereço. Na tela Select an address, o cliente selecionou a linha do endereço correspondente a Rua Teste, 100, Fortaleza, CE, e clicou no botão Continue para avançar até a etapa de escolha da velocidade de entrega.",
+    "precondition": "Carrinho contém produto; há endereço cadastrado.",
+    "observed_result": "A interface avançou para a tela Delivery Address and Choose a delivery speed, exibindo o endereço selecionado (Cliente Teste, Rua Teste, 100, Fortaleza, CE, 60000000, Brazil, Phone Number 8599999999) e as opções de velocidade de entrega com os botões Back e Continue disponíveis.",
+    "messages": [
+      "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Your Basket Total Price: 0¤ Checkout You will gain 0 Bonus Points from this order!",
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Your Basket Total Price: 0¤ Checkout You will gain 0 Bonus Points from this order!",
+      "Your Basket Total Price: 0¤ Checkout You will gain 0 Bonus Points from this order!",
+      "Checkout",
+      "You will gain 0 Bonus Points from this order!",
+      "Your Basket",
+      "Your Basket Total Price: 0¤",
+      "Total Price: 0¤",
+      "(cen-cen-chk-03-1903429188@example.com)",
+      "Your Basket (cen-cen-chk-03-1903429188@example.com)",
+      "Your Basket (cen-cen-chk-03-1903429188@example.com) Total Price: 0¤",
+      "Your Basket (cen-cen-chk-03-1903429188@example.com) Total Price: 0¤ Checkout You will gain 0 Bonus Points from this order!"
+    ],
+    "data": "Endereço: Rua Teste, 100; cidade: Fortaleza; estado: CE.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Abrir a rota para o carrinho",
+        "data": "",
+        "response": "A tela Your Basket exibiu o produto Apple Juice (1000ml) com quantidade 1, preço unitário 1.99¤, Total Price de 1.99¤ e o botão Checkout."
+      },
+      {
+        "number": 2,
+        "action": "Clicar no botão Checkout",
+        "data": "",
+        "response": "A interface exibiu a tela Select an address contendo o endereço cadastrado Cliente Teste com os dados Rua Teste, 100, Fortaleza, CE, 60000000 Brazil, o botão Add New Address e o botão Continue."
+      },
+      {
+        "number": 3,
+        "action": "Aguardar a atualização da interface",
+        "data": "",
+        "response": "Nenhuma mudança visual adicional foi registrada, mantendo a tela Select an address visível."
+      },
+      {
+        "number": 4,
+        "action": "Clicar na linha do endereço Rua Teste, 100",
+        "data": "Rua Teste, 100",
+        "response": "O elemento de seleção do endereço foi marcado com um indicador circular preenchido, destacando o endereço Cliente Teste na Rua Teste, 100, Fortaleza, CE."
+      },
+      {
+        "number": 5,
+        "action": "Clicar no botão Continue",
+        "data": "",
+        "response": "A interface mudou para a tela de entrega, exibindo o título Delivery Address com os dados completos do endereço selecionado, o número de telefone 8599999999 e a seção Choose a delivery speed com as opções One Day Delivery, Fast Delivery e Standard Delivery."
+      },
+      {
+        "number": 6,
+        "action": "Aguardar a atualização da interface",
+        "data": "",
+        "response": "Nenhuma mudança visual adicional foi registrada, mantendo a tela de seleção de velocidade de entrega ativa."
+      }
+    ]
+  }
+}

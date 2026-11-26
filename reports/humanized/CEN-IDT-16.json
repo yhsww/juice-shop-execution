@@ -1,0 +1,35 @@
+{
+  "scenario_id": "CEN-IDT-16",
+  "fingerprint": "24910c8a8a3837aa06ab631f8e6efd857ea7fb7a13599194202f6877d8af7f57",
+  "content": {
+    "flow": "Na tela de cadastro de usuário, o cliente preencheu o campo Email com um dado em formato inválido e aguardou a atualização da interface.",
+    "precondition": "A tela de cadastro de usuário está aberta.",
+    "observed_result": "O campo Email exibe o valor preenchido e a interface mantém a estrutura do formulário de registro, sem alteração adicional de estado após a espera.",
+    "messages": [
+      "Password must be 5-40 characters long.",
+      "This cannot be changed later!",
+      "Already a customer?"
+    ],
+    "data": "E-mail: teste-sem-formato",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Abrir a rota de cadastro",
+        "data": "",
+        "response": "A página User Registration foi carregada exibindo os campos Email, Password, Repeat Password, Security Question e Answer, além do botão Register desabilitado."
+      },
+      {
+        "number": 2,
+        "action": "Preencher o campo Email address",
+        "data": "teste-sem-formato",
+        "response": "O texto informando o e-mail sem formato válido passou a ser exibido dentro do campo Email."
+      },
+      {
+        "number": 3,
+        "action": "Aguardar a atualização da interface",
+        "data": "Nenhum dado informado",
+        "response": "Nenhuma mudança visual adicional foi detectada na interface."
+      }
+    ]
+  }
+}

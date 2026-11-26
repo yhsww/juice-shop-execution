@@ -1,0 +1,52 @@
+{
+  "scenario_id": "CEN-IDT-08",
+  "fingerprint": "7c36babc077cb7589b2e17139e10719a65427bc282fd73232d1c1a1b58d0d49b",
+  "content": {
+    "flow": "Na tela inicial da aplicação, o ator acessou a rota de alteração de senha e preencheu os campos Current Password, New Password e Repeat New Password com os dados de teste informados, acionando em seguida o botão Change para confirmar a operação.",
+    "precondition": "Conta de teste disponível para autenticação.",
+    "observed_result": "A senha da conta foi alterada com sucesso, exibindo a mensagem de confirmação de que a alteração ocorreu com êxito na interface.",
+    "messages": [
+      "Your password was successfully changed.",
+      "Password must be 5-40 characters long."
+    ],
+    "data": "Senha atual: Teste@12345; Nova senha: Teste@123456",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Abrir a rota de alteração de senha",
+        "data": "",
+        "response": "A tela Change Password foi exibida contendo os campos Current Password*, New Password* e Repeat New Password*, acompanhada do botão Change e do banner de cookies."
+      },
+      {
+        "number": 2,
+        "action": "Preencher o campo Current Password",
+        "data": "Teste@12345",
+        "response": "O campo Current Password foi preenchido com caracteres ocultos correspondentes à senha atual informada."
+      },
+      {
+        "number": 3,
+        "action": "Preencher o campo New Password",
+        "data": "Teste@123456",
+        "response": "O campo New Password foi preenchido e o contador indicou 12/40 caracteres preenchidos."
+      },
+      {
+        "number": 4,
+        "action": "Preencher o campo Repeat New Password",
+        "data": "Teste@123456",
+        "response": "O campo Repeat New Password foi preenchido para confirmação da nova senha, com o contador exibindo 12/20 caracteres."
+      },
+      {
+        "number": 5,
+        "action": "Clicar no botão Change",
+        "data": "Nenhum dado adicional",
+        "response": "A alteração foi submetida e a mensagem Your password was successfully changed. passou a ser exibida na tela."
+      },
+      {
+        "number": 6,
+        "action": "Aguardar a atualização da interface",
+        "data": "Nenhum dado adicional",
+        "response": "A interface permaneceu estável com a confirmação visível de sucesso na alteração da senha."
+      }
+    ]
+  }
+}

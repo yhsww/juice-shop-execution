@@ -1,0 +1,69 @@
+{
+  "scenario_id": "CEN-CHK-07",
+  "fingerprint": "ccd2ee5ad5d213fac0739f54710de3e40987d584d5166c5ac4dedb23515eb7cd",
+  "content": {
+    "flow": "Na tela de opções de pagamento, o cliente expandiu a seção Add new card, preencheu os campos Name com Cliente Teste, Card Number com 4000000000000002, selecionou Expiry Month 12 e Expiry Year 2090, e acionou o botão Submit para salvar o cartão de crédito.",
+    "precondition": "Cliente autenticado; método de entrega selecionado.",
+    "observed_result": "O cartão de crédito cadastrado foi listado na seção My Payment Options exibindo o final ************0002, o nome Cliente Teste e a validade 12/2090, acompanhado da mensagem de confirmação de salvamento.",
+    "messages": [
+      "Your card ending with 0002 has been saved for your convenience."
+    ],
+    "data": "Número de teste: 4000000000000002; Nome: Cliente Teste; Mês: 12; Ano: 2090",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Abrir a rota",
+        "data": "",
+        "response": "A página My Payment Options foi exibida contendo as seções Add new card, Pay using wallet, Add a coupon e Other payment options."
+      },
+      {
+        "number": 2,
+        "action": "Clicar em \"Add new card\"",
+        "data": "",
+        "response": "A seção Add new card foi expandida exibindo os campos Name, Card Number, Expiry Month, Expiry Year e o botão Submit."
+      },
+      {
+        "number": 3,
+        "action": "Aguardar a atualização da interface",
+        "data": "",
+        "response": "A interface permaneceu estável com o formulário de cadastro de cartão exibido."
+      },
+      {
+        "number": 4,
+        "action": "Preencher \"Name\"",
+        "data": "Cliente Teste",
+        "response": "O campo Name foi preenchido com o texto Cliente Teste."
+      },
+      {
+        "number": 5,
+        "action": "Preencher \"Card Number\"",
+        "data": "4000000000000002",
+        "response": "O campo Card Number foi preenchido com o número 4000000000000002 e o indicador de tamanho passou a exibir 16/16."
+      },
+      {
+        "number": 6,
+        "action": "Selecionar \"Expiry Month\"",
+        "data": "12",
+        "response": "O mês 12 foi selecionado no campo Expiry Month."
+      },
+      {
+        "number": 7,
+        "action": "Selecionar \"Expiry Year\"",
+        "data": "2090",
+        "response": "O ano 2090 foi selecionado no campo Expiry Year."
+      },
+      {
+        "number": 8,
+        "action": "Clicar em \"Submit\"",
+        "data": "",
+        "response": "O cartão cadastrado ************0002 com o nome Cliente Teste e validade 12/2090 apareceu listado na parte superior da página e a notificação Your card ending with 0002 has been saved for your convenience. foi exibida."
+      },
+      {
+        "number": 9,
+        "action": "Aguardar a atualização da interface",
+        "data": "",
+        "response": "Nenhuma resposta adicional registrada."
+      }
+    ]
+  }
+}

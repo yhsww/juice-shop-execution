@@ -1,0 +1,56 @@
+{
+  "scenario_id": "CEN-CHK-14",
+  "fingerprint": "03b0bd63f2500e7bc2576242dc8360104b9e50df8dab0441b4e014fb29b3f065",
+  "content": {
+    "flow": "Na tela de opções de pagamento, o cliente expandiu a seção Other payment options para visualizar as alternativas de merchandise e acionou a opção Spreadshirt (US), sendo redirecionado para a página externa do parceiro onde foi exibida uma mensagem de indisponibilidade de serviço regional.",
+    "precondition": "Cliente autenticado; etapa de pagamento acessível; seção 'Other payment options' disponível.",
+    "observed_result": "O navegador foi redirecionado para a página do parceiro spreadshop, exibindo a mensagem indicando que o serviço está indisponível na região.",
+    "messages": [
+      "Pay NaN¤",
+      "Pay using wallet Wallet Balance Pay NaN¤",
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card Pay using wallet Wallet Balance Pay NaN¤ Add a coupon Add a coupon code to receive discounts Other payment options navigate_before Back You can review this order before it is finalized. navigate_next Continue",
+      "0.00",
+      "Wallet Balance 0.00",
+      "Pay using wallet Wallet Balance 0.00 Pay NaN¤",
+      "Add a coupon Add a coupon code to receive discounts",
+      "My Payment Options Add new card Add a credit or debit card Pay using wallet Wallet Balance 0.00 Pay NaN¤ Add a coupon Add a coupon code to receive discounts Other payment options navigate_before Back You can review this order before it is finalized. navigate_next Continue",
+      "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card Pay using wallet Wallet Balance 0.00 Pay NaN¤ Add a coupon Add a coupon code to receive discounts Other payment options navigate_before Back You can review this order before it is finalized. navigate_next Continue",
+      "Other payment options",
+      "Add new card Add a credit or debit card",
+      "My Payment Options Add new card Add a credit or debit card"
+    ],
+    "data": "Nenhum pagamento real.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Abrir a rota de opções de pagamento exibindo a interface My Payment Options com os campos de cartões, carteira, cupons e Other payment options.",
+        "data": "",
+        "response": "A tela My Payment Options foi exibida contendo o cabeçalho e os botões de ação e navegação inferior."
+      },
+      {
+        "number": 2,
+        "action": "Clicar na opção \"Other payment options\" para expandir a seção de merchandise.",
+        "data": "",
+        "response": "A seção foi expandida exibindo as opções de Donations e Merchandise com os botões Spreadshirt (US), Spreadshirt (DE), StickerYou, Leanpub e OpenSea."
+      },
+      {
+        "number": 3,
+        "action": "Aguardar a atualização da interface com as opções abertas.",
+        "data": "",
+        "response": "Nenhuma resposta adicional registrada."
+      },
+      {
+        "number": 4,
+        "action": "Clicar no botão \"Spreadshirt (US)\" na seção de Merchandise.",
+        "data": "",
+        "response": "A página externa do parceiro foi aberta exibindo o título spreadshop e o aviso de serviço indisponível na região."
+      },
+      {
+        "number": 5,
+        "action": "Aguardar a atualização da interface com a mensagem de indisponibilidade.",
+        "data": "",
+        "response": "A mensagem de serviço indisponível na região permaneceu exibida na tela."
+      }
+    ]
+  }
+}

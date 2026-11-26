@@ -1,0 +1,37 @@
+{
+  "scenario_id": "CEN-CHK-11",
+  "fingerprint": "5a65f8be8aab07e4fc3d31116157c474a468734037b19d6c03496f560cfaaa54",
+  "content": {
+    "flow": "O cliente acessou o resumo do pedido contendo os detalhes de entrega, método de pagamento e os itens do carrinho, e em seguida acionou o botão de confirmação para concluir a compra.",
+    "precondition": "Cliente autenticado; resumo do pedido acessível.",
+    "observed_result": "O pedido foi processado com sucesso, exibindo a tela de confirmação com a mensagem de agradecimento pela compra, prazo de entrega estimado em 5 dias e o resumo detalhado do pedido.",
+    "messages": [
+      "Thank you for your purchase!",
+      "Your order has been placed and is being processed.",
+      "You can check for status updates on our Track Orders page.",
+      "Your order will be delivered in 5 days.",
+      "You have gained 0 Bonus Points from this order!"
+    ],
+    "data": "Nenhum dado adicional.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário abriu a rota de resumo do pedido.",
+        "data": "",
+        "response": "A interface exibiu os detalhes do endereço de entrega para Cliente Teste (Rua Teste, 100, Fortaleza, CE, 60000000 Brazil), o método de pagamento com cartão terminando em 0002, o resumo de preços com totais zerados e o botão Place your order and pay."
+      },
+      {
+        "number": 2,
+        "action": "O usuário clicou no botão \"Place your order and pay\".",
+        "data": "",
+        "response": "A aplicação redirecionou para a página de conclusão de pedido e exibiu a mensagem de agradecimento \"Thank you for your purchase!\", juntamente com o aviso de que o pedido está sendo processado e será entregue em 5 dias."
+      },
+      {
+        "number": 3,
+        "action": "O usuário aguardou a atualização da interface.",
+        "data": "",
+        "response": "Nenhuma resposta adicional registrada, mantendo a exibição da confirmação de compra, endereço de entrega e resumo de itens."
+      }
+    ]
+  }
+}

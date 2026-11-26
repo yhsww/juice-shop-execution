@@ -1,0 +1,34 @@
+{
+  "scenario_id": "CEN-CHK-20",
+  "fingerprint": "a0389d7a48e487ca602a112924827a84014c62840702c8ce92f760bbfe4f55eb",
+  "content": {
+    "flow": "Na tela Order History, o cliente localizou o pedido com ID #44a3-4f3afa9378fad1f6 exibindo o status In Transit. Em seguida, clicou no ícone de rastreamento associado ao pedido para conferir os detalhes logísticos, sendo redirecionado para a tela Search Results com a previsão de entrega de 5 dias e a listagem do produto Apple Juice (1000ml).",
+    "precondition": "Cliente autenticado; pedido concluído.",
+    "observed_result": "A tela de resultados de rastreamento exibiu o ID do pedido #44a3-4f3afa9378fad1f6, a indicação de entrega esperada em 5 dias, a relação de produtos encomendados contendo Apple Juice (1000ml) com quantidade 1 e preço total de 1.99¤, além da pontuação de bônus obtida.",
+    "messages": [
+      "Placed Apple Juice (1000ml) into basket.",
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!"
+    ],
+    "data": "Pedido de teste com ID #44a3-4f3afa9378fad1f6 e produto Apple Juice (1000ml).",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Abrir a rota para acessar o histórico de pedidos.",
+        "data": "",
+        "response": "A página Order History foi exibida contendo o pedido com ID #44a3-4f3afa9378fad1f6, preço total de 1.99¤, bônus 0, status In Transit e a tabela de produtos listando Apple Juice (1000ml) com quantidade 1 e preço 1.99¤."
+      },
+      {
+        "number": 2,
+        "action": "Clicar no ícone de rastreamento na linha do pedido correspondente.",
+        "data": "",
+        "response": "A interface foi redirecionada para a tela de rastreamento exibindo o título Search Results - 44a3-4f3afa9378fad1f6, o ícone gráfico de progresso de entrega, a previsão de Expected Delivery 5 Days e os produtos encomendados contendo Apple Juice (1000ml)."
+      },
+      {
+        "number": 3,
+        "action": "Aguardar a atualização da interface.",
+        "data": "",
+        "response": "Nenhuma resposta adicional registrada."
+      }
+    ]
+  }
+}

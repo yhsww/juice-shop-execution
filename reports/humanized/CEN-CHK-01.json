@@ -1,0 +1,41 @@
+{
+  "scenario_id": "CEN-CHK-01",
+  "fingerprint": "a73c6ce35815b53f619249bf42ddb5a20bb29f6446656ce1d58bae23e759e1c9",
+  "content": {
+    "flow": "Na tela de produtos, o cliente abriu a rota do carrinho contendo o item Apple Juice (1000ml) e clicou no botão Checkout. Após a ação, a interface redirecionou para a tela de seleção de endereço.",
+    "precondition": "Carrinho contém produto.",
+    "observed_result": "A interface redirecionou para a tela de seleção de endereço exibindo o título Select an address, acompanhado pelos botões Add New Address e Continue.",
+    "messages": [
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!",
+      "Placed Apple Juice (1000ml) into basket.",
+      "Your Basket (cen-cen-chk-01-c9711f2c0b@example.com)",
+      "Apple Juice (1000ml)",
+      "Total Price: 1.99¤",
+      "Checkout",
+      "Select an address",
+      "Add New Address",
+      "Continue"
+    ],
+    "data": "Apple Juice (1000ml), quantidade 1, valor 1.99¤",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Abrir a rota do carrinho",
+        "data": "",
+        "response": "A tela Your Basket foi exibida listando o produto Apple Juice (1000ml) com quantidade 1, preço unitário de 1.99¤, preço total de 1.99¤ e o botão Checkout disponível."
+      },
+      {
+        "number": 2,
+        "action": "Clicar em Checkout",
+        "data": "",
+        "response": "A interface mudou para a página Select an address, exibindo o botão Add New Address e o botão Continue."
+      },
+      {
+        "number": 3,
+        "action": "Aguardar a atualização da interface",
+        "data": "",
+        "response": "Nenhuma mudança visual adicional foi registrada, mantendo a tela Select an address visível."
+      }
+    ]
+  }
+}

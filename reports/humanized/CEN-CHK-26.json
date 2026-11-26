@@ -1,0 +1,38 @@
+{
+  "scenario_id": "CEN-CHK-26",
+  "fingerprint": "74bab3494f5930642b5c41ade03b88cca08c9454dd6d162955e30b17502a5a3e",
+  "content": {
+    "flow": "Na página de resumo do pedido, o cliente conferiu os detalhes do carrinho contendo o item Apple Juice (1000ml) com quantidade 1 e preço unitário de 1.99¤, comparando-o com os valores do resumo de pedido que exibem 1.99¤ para Items, 0.00¤ para Delivery, 0.00¤ para Promotion e Total Price de 1.99¤.",
+    "precondition": "Carrinho e checkout preparados.",
+    "observed_result": "A interface exibiu corretamente a seção Your Basket contendo o produto Apple Juice (1000ml) com quantidade 1 e o valor de 1.99¤, além da seção Order Summary informando Items 1.99¤, Delivery 0.00¤, Promotion 0.00¤ e Total Price 1.99¤.",
+    "messages": [
+      "1.99¤",
+      "Items 1.99¤",
+      "Items 1.99¤ Delivery 0.00¤ Promotion 0.00¤ Total Price 1.99¤",
+      "Order Summary Items 1.99¤ Delivery 0.00¤ Promotion 0.00¤ Total Price 1.99¤ monetization_onPlace your order and pay You will gain 0 Bonus Points from this order!",
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Delivery Address Cliente Teste Rua Teste, 100, Fortaleza, CE, 60000000 Brazil Phone Number 8599999999 Payment Method Card ending in 0002 Card Holder\" Cliente Teste Your Basket (cen-cen-chk-26-ef07fe1fdc@example.com) Apple Juice (1000ml) 1 1.99¤ Order Summary Items 1.99¤ Delivery 0.00¤ Promotion 0.00¤ Total Price 1.99¤ monetization_onPlace your order and pay You will gain 0 Bonus Points from this order!",
+      "Total Price 1.99¤",
+      "Apple Juice (1000ml) 1 1.99¤",
+      "Your Basket (cen-cen-chk-26-ef07fe1fdc@example.com) Apple Juice (1000ml) 1 1.99¤",
+      "Delivery Address Cliente Teste Rua Teste, 100, Fortaleza, CE, 60000000 Brazil Phone Number 8599999999 Payment Method Card ending in 0002 Card Holder\" Cliente Teste Your Basket (cen-cen-chk-26-ef07fe1fdc@example.com) Apple Juice (1000ml) 1 1.99¤",
+      "Delivery Address Cliente Teste Rua Teste, 100, Fortaleza, CE, 60000000 Brazil Phone Number 8599999999 Payment Method Card ending in 0002 Card Holder\" Cliente Teste Your Basket (cen-cen-chk-26-ef07fe1fdc@example.com) Apple Juice (1000ml) 1 1.99¤ Order Summary Items 1.99¤ Delivery 0.00¤ Promotion 0.00¤ Total Price 1.99¤ monetization_onPlace your order and pay You will gain 0 Bonus Points from this order!",
+      "Apple Juice (1000ml)",
+      "1"
+    ],
+    "data": "Produto: Apple Juice (1000ml), Quantidade: 1, Valor do item: 1.99¤, Total Price: 1.99¤",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O cliente abriu a rota de resumo do pedido.",
+        "data": "",
+        "response": "A tela carregou exibindo o endereço de entrega, o método de pagamento selecionado, o item Apple Juice (1000ml) com quantidade 1 e preço 1.99¤ no carrinho, e o sumário do pedido com Total Price de 1.99¤."
+      },
+      {
+        "number": 2,
+        "action": "O cliente aguardou a atualização da interface.",
+        "data": "",
+        "response": "Nenhuma mudança visual relevante detectada, mantendo o resumo do pedido e os valores validados visíveis na tela."
+      }
+    ]
+  }
+}

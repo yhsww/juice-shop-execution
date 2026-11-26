@@ -1,0 +1,37 @@
+{
+  "scenario_id": "CEN-CAT-04",
+  "fingerprint": "82184c0bc948fe20ff2d57ee28eb3f9fa03c3552ebb34a9a15ad5dda9236c100",
+  "content": {
+    "flow": "O usuário abriu a rota de pesquisa do catálogo, digitou o termo parcial Appl no campo de busca e pressionou Enter para filtrar os produtos correspondentes.",
+    "precondition": "O catálogo da loja estava disponível para consulta.",
+    "observed_result": "A interface exibiu o título Search Results - Appl contendo uma listagem filtrada com 4 itens correspondentes: Apple Juice (1000ml) por 1.99¤, Apple Pomace por 0.89¤, OWASP Snakes and Ladders - Web Applications por 0.01¤ e Pineapple Juice (1000ml) por 2.99¤, todos com seus respectivos botões Add to Basket.",
+    "messages": [],
+    "data": "Termo: Appl",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário abriu a rota de pesquisa.",
+        "data": "",
+        "response": "A tela de listagem geral foi carregada exibindo diversos produtos como Apple Juice, Apple Pomace, Banana Juice e Basil Smoothie com seus respectivos preços e botões Add to Basket."
+      },
+      {
+        "number": 2,
+        "action": "O usuário preencheu o campo de pesquisa com o termo parcial.",
+        "data": "Appl",
+        "response": "O campo Search recebeu o texto inserido e a interface permaneceu na listagem geral aguardando a confirmação da busca."
+      },
+      {
+        "number": 3,
+        "action": "O usuário pressionou Enter para executar a busca.",
+        "data": "",
+        "response": "A interface foi atualizada exibindo o título Search Results - Appl e restringe a exibição para 4 itens correspondentes: Apple Juice (1000ml), Apple Pomace, OWASP Snakes and Ladders - Web Applications e Pineapple Juice (1000ml), acompanhado pelo indicador de paginação 1 – 4 of 4."
+      },
+      {
+        "number": 4,
+        "action": "O usuário aguardou a atualização da interface.",
+        "data": "",
+        "response": "A página manteve a listagem filtrada de 4 itens correspondentes ao termo parcial sem novas alterações visuais."
+      }
+    ]
+  }
+}

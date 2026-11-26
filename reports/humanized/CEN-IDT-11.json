@@ -1,0 +1,37 @@
+{
+  "scenario_id": "CEN-IDT-11",
+  "fingerprint": "49ecb474002bfc12ddc6040de749641c119b840adb098c6b7db2def3492b8113",
+  "content": {
+    "flow": "O cliente abriu a área de privacidade para exportação de dados pessoais, exibindo o cartão Request Data Export com as opções de formato JSON, PDF e Excel.",
+    "precondition": "Conta de teste disponível para autenticação.",
+    "observed_result": "A interface exibiu a seção Request Data Export contendo o rótulo Export Format com as opções de rádio para JSON, PDF e Excel, além do botão Request e do aviso informando que a exportação abrirá em uma nova janela do navegador.",
+    "messages": [
+      "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Request Data Export Export Format : JSON PDF Excel Request (Your data export will open in a new Browser window.)",
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Request Data Export Export Format : JSON PDF Excel Request (Your data export will open in a new Browser window.)",
+      "Request Data Export Export Format : JSON PDF Excel Request (Your data export will open in a new Browser window.)",
+      "Request",
+      "Export Format : JSON PDF Excel",
+      "JSON",
+      "PDF",
+      "Excel",
+      "Request Data Export",
+      "Export Format :",
+      "(Your data export will open in a new Browser window.)"
+    ],
+    "data": "Nenhum dado adicional.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário abriu a rota de exportação de dados pessoais.",
+        "data": "",
+        "response": "A interface carregou a tela de exportação de dados, exibindo o título Request Data Export, os formatos de exportação JSON, PDF e Excel, o botão Request e um banner azul de cookies no canto inferior direito com o botão Me want it!."
+      },
+      {
+        "number": 2,
+        "action": "O usuário aguardou a atualização da interface.",
+        "data": "",
+        "response": "Nenhuma mudança visual relevante detectada, mantendo o cartão Request Data Export visível com os formatos de arquivo e o banner de cookies."
+      }
+    ]
+  }
+}

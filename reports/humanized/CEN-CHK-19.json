@@ -1,0 +1,34 @@
+{
+  "scenario_id": "CEN-CHK-19",
+  "fingerprint": "5862f255b2435b238b15ab49a5fdf81f4ad4fde3e248595fdfc0714f78f6383d",
+  "content": {
+    "flow": "O cliente acessou o histórico de pedidos para consultar o pedido concluído e visualizou os detalhes do rastreamento correspondentes.",
+    "precondition": "Cliente autenticado; pedido concluído.",
+    "observed_result": "A interface exibiu os resultados da pesquisa e o rastreamento do pedido #126c-ab23f4fe9e437314, apresentando a entrega esperada em 5 dias, a lista de produtos comprados contendo Apple Juice (1000ml) com preço de 1.99¤, quantidade 1, total de 1.99¤, e a indicação de 0 pontos de bônus ganhos.",
+    "messages": [
+      "Placed Apple Juice (1000ml) into basket.",
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!"
+    ],
+    "data": "Pedido de teste com ID #126c-ab23f4fe9e437314 e produto Apple Juice (1000ml).",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Abrir a rota do histórico de pedidos",
+        "data": "",
+        "response": "A tela exibe a seção Order History contendo o Order ID #126c-ab23f4fe9e437314, o preço total de 1.99¤, bônus 0, status In Transit acompanhado de ícones de caminhão e nota, e a tabela de produtos listando o Apple Juice (1000ml) com preço 1.99¤, quantidade 1 e total 1.99¤."
+      },
+      {
+        "number": 2,
+        "action": "Clicar na opção de rastreamento do pedido",
+        "data": "",
+        "response": "A interface redireciona para a página de resultados de pesquisa do pedido, exibindo o título Search Results - 126c-ab23f4fe9e437314, o indicador de Expected Delivery de 5 dias com ícones de fluxo logístico, a listagem do produto Apple Juice (1000ml) e o rodapé indicando Bonus Points Earned: 0."
+      },
+      {
+        "number": 3,
+        "action": "Aguardar a atualização da interface",
+        "data": "",
+        "response": "Nenhuma mudança visual adicional foi registrada, mantendo visível a tela de rastreamento do pedido com os detalhes de entrega e os produtos ordenados."
+      }
+    ]
+  }
+}

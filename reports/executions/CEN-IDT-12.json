@@ -1,0 +1,142 @@
+{
+  "scenario_id": "CEN-IDT-12",
+  "status": "PASSED",
+  "steps": [
+    {
+      "step": 1,
+      "action": "NAVIGATE",
+      "user_action": "Abrir a rota /dataerasure",
+      "data": "/dataerasure",
+      "url_before": "http://127.0.0.1:3000/#/",
+      "url_after": "http://127.0.0.1:3000/dataerasure",
+      "observed_result": "URL: http://127.0.0.1:3000/#/ → http://127.0.0.1:3000/dataerasure Texto visível: OWASP Juice Shop (Express ^4.22.1) 500 Error: Blocked illegal activity by ::ffff:172.18.0.1 at /juice-shop/build/routes/dataErasure.js:62:18 at /juice-shop/build/routes/dataErasure.js:98:7 at Layer.handle [as handle_request] (/juice-shop/node_modules/express/lib/router/layer.js:95:5) at next (/juice-shop/node_modules/express/lib/router/route.js:149:13) at Route.dispatch (/juice-shop/node_modules/express/lib/router/route.js:119:3) at Layer.handle [as handle_request] (/juice-shop/node_modules/express/lib/router/layer.js:95:5) at /juice-shop/node_modules/express/lib/router/index.js:284:15 at router.process_params (/juice-shop/node_modules/express/lib/router/index.js:346:12) at next (/juice-shop Texto observado durante a ação: OWASP Juice Shop (Express ^4.22.1) 500 Error: Blocked illegal activity by ::ffff:172.18.0.1 at /juice-shop/build/routes/dataErasure.js:62:18 at /juice-shop/build/routes/dataErasure.js:98:7 at Layer.handle [as handle_request] (/juice-shop/node_modules/express/lib/router/layer.js:95:5) at next (/juice-shop/node_modules/express/lib/router/route.js:149:13) at Route.dispatch (/juice-shop/node_modules/express/lib/router/route.js:119:3) at Layer.handle [as handle_request] (/juice-shop/node_modules/express/lib/router/layer.js:95:5) at /juice-shop/node_modules/express/lib/router/index.js:284:15 at router.process_params (/juice-shop/node_modules/express/lib/router/index.js:346:12) at next (/juice-shop/node_modules/express/lib/router/index.js:280:10) at router.handle (/juice-shop/node_modules/express/lib/router/index.js:175:3) at router (/juice-shop/node_modules/express/lib/router/index.js:47:12) a",
+      "changed": true,
+      "success": true,
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop-execution-v2/reports/executions/CEN-IDT-12_step_01.png",
+      "error": null,
+      "timestamp": "2026-11-26T00:43:15.501936+00:00",
+      "visible_text_before": "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket Fruit Press 89.99¤ add_shopping_cart Add to Basket Grape Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Green Smoothie 1.99¤ add_shopping_cart Add to Basket Only 1 left Juice Shop \"Permafrost\" 2020 Edition 9999.99¤ add_shopping_cart Add to Basket Lemon Juice (500ml) 2.99¤ add_shopping_cart Add to Basket Items per page: 16 1 – 16 of 46 Language has been changed to English Force page reload Click for more information",
+      "visible_text_after": "OWASP Juice Shop (Express ^4.22.1) 500 Error: Blocked illegal activity by ::ffff:172.18.0.1 at /juice-shop/build/routes/dataErasure.js:62:18 at /juice-shop/build/routes/dataErasure.js:98:7 at Layer.handle [as handle_request] (/juice-shop/node_modules/express/lib/router/layer.js:95:5) at next (/juice-shop/node_modules/express/lib/router/route.js:149:13) at Route.dispatch (/juice-shop/node_modules/express/lib/router/route.js:119:3) at Layer.handle [as handle_request] (/juice-shop/node_modules/express/lib/router/layer.js:95:5) at /juice-shop/node_modules/express/lib/router/index.js:284:15 at router.process_params (/juice-shop/node_modules/express/lib/router/index.js:346:12) at next (/juice-shop/node_modules/express/lib/router/index.js:280:10) at router.handle (/juice-shop/node_modules/express/lib/router/index.js:175:3) at router (/juice-shop/node_modules/express/lib/router/index.js:47:12) at Layer.handle [as handle_request] (/juice-shop/node_modules/express/lib/router/layer.js:95:5) at trim_prefix (/juice-shop/node_modules/express/lib/router/index.js:328:13) at /juice-shop/node_modules/express/lib/router/index.js:286:9 at router.process_params (/juice-shop/node_modules/express/lib/router/index.js:346:12) at next (/juice-shop/node_modules/express/lib/router/index.js:280:10)",
+      "messages": [],
+      "action_id": "CEN-IDT-12-A-01",
+      "network": [
+        {
+          "sequence": 1,
+          "timestamp": 1795653793.4964957,
+          "kind": "request",
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/dataerasure",
+          "status": null,
+          "resource_type": "document",
+          "action_id": "CEN-IDT-12-A-01",
+          "request_headers": {
+            "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/jxl,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+            "accept-encoding": "gzip, deflate, br, zstd",
+            "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+            "connection": "keep-alive",
+            "cookie": "<redacted>",
+            "host": "127.0.0.1:3000",
+            "sec-fetch-dest": "document",
+            "sec-fetch-mode": "navigate",
+            "sec-fetch-site": "none",
+            "sec-fetch-user": "?1",
+            "upgrade-insecure-requests": "1",
+            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/158.0.0.0 Safari/537.36",
+            "sec-ch-ua": "\"Not.A/Brand\";v=\"24\", \"Chromium\";v=\"158\"",
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": "\"Windows\""
+          },
+          "response_headers": null,
+          "error": ""
+        },
+        {
+          "sequence": 2,
+          "timestamp": 1795653793.4990544,
+          "kind": "response",
+          "method": "GET",
+          "url": "http://127.0.0.1:3000/dataerasure",
+          "status": 500,
+          "resource_type": "document",
+          "action_id": "CEN-IDT-12-A-01",
+          "request_headers": null,
+          "response_headers": {
+            "access-control-allow-origin": "*",
+            "connection": "keep-alive",
+            "content-encoding": "br",
+            "content-type": "text/html; charset=utf-8",
+            "date": "Thu, 26 Nov 2026 00:43:13 GMT",
+            "feature-policy": "payment 'self'",
+            "keep-alive": "timeout=5",
+            "transfer-encoding": "chunked",
+            "vary": "Accept-Encoding",
+            "x-content-type-options": "nosniff",
+            "x-frame-options": "SAMEORIGIN",
+            "x-recruiting": "/#/jobs"
+          },
+          "error": ""
+        }
+      ],
+      "network_summary": {
+        "requests": 1,
+        "responses": 1,
+        "api_responses": 0,
+        "failed_requests": 0,
+        "methods": [
+          "GET"
+        ],
+        "status_codes": [
+          500
+        ]
+      },
+      "controls": []
+    },
+    {
+      "step": 2,
+      "action": "WAIT",
+      "user_action": "Aguardar a atualização da interface",
+      "data": "",
+      "url_before": "http://127.0.0.1:3000/dataerasure",
+      "url_after": "http://127.0.0.1:3000/dataerasure",
+      "observed_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: OWASP Juice Shop (Express ^4.22.1) 500 Error: Blocked illegal activity by ::ffff:172.18.0.1 at /juice-shop/build/routes/dataErasure.js:62:18 at /juice-shop/build/routes/dataErasure.js:98:7 at Layer.handle [as handle_request] (/juice-shop/node_modules/express/lib/router/layer.js:95:5) at next (/juice-shop/node_modules/express/lib/router/route.js:149:13) at Route.dispatch (/juice-shop/node_modules/express/lib/router/route.js:119:3) at Layer.handle [as handle_request] (/juice-shop/node_modules/express/lib/router/layer.js:95:5) at /juice-shop/node_modules/express/lib/router/index.js:284:15 at router.process_params (/juice-shop/node_modules/express/lib/router/index.js:346:12) at next (/juice-shop/node_modules/express/lib/router/index.js:280:10) at router.handle (/juice-shop/node_modules/express/lib/router/index.js:175:3) at router (/juice-shop/node_modules/express/lib/router/index.js:47:12) a",
+      "changed": false,
+      "success": true,
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop-execution-v2/reports/executions/CEN-IDT-12_step_02.png",
+      "error": null,
+      "timestamp": "2026-11-26T00:43:16.387807+00:00",
+      "visible_text_before": "OWASP Juice Shop (Express ^4.22.1) 500 Error: Blocked illegal activity by ::ffff:172.18.0.1 at /juice-shop/build/routes/dataErasure.js:62:18 at /juice-shop/build/routes/dataErasure.js:98:7 at Layer.handle [as handle_request] (/juice-shop/node_modules/express/lib/router/layer.js:95:5) at next (/juice-shop/node_modules/express/lib/router/route.js:149:13) at Route.dispatch (/juice-shop/node_modules/express/lib/router/route.js:119:3) at Layer.handle [as handle_request] (/juice-shop/node_modules/express/lib/router/layer.js:95:5) at /juice-shop/node_modules/express/lib/router/index.js:284:15 at router.process_params (/juice-shop/node_modules/express/lib/router/index.js:346:12) at next (/juice-shop/node_modules/express/lib/router/index.js:280:10) at router.handle (/juice-shop/node_modules/express/lib/router/index.js:175:3) at router (/juice-shop/node_modules/express/lib/router/index.js:47:12) at Layer.handle [as handle_request] (/juice-shop/node_modules/express/lib/router/layer.js:95:5) at trim_prefix (/juice-shop/node_modules/express/lib/router/index.js:328:13) at /juice-shop/node_modules/express/lib/router/index.js:286:9 at router.process_params (/juice-shop/node_modules/express/lib/router/index.js:346:12) at next (/juice-shop/node_modules/express/lib/router/index.js:280:10)",
+      "visible_text_after": "OWASP Juice Shop (Express ^4.22.1) 500 Error: Blocked illegal activity by ::ffff:172.18.0.1 at /juice-shop/build/routes/dataErasure.js:62:18 at /juice-shop/build/routes/dataErasure.js:98:7 at Layer.handle [as handle_request] (/juice-shop/node_modules/express/lib/router/layer.js:95:5) at next (/juice-shop/node_modules/express/lib/router/route.js:149:13) at Route.dispatch (/juice-shop/node_modules/express/lib/router/route.js:119:3) at Layer.handle [as handle_request] (/juice-shop/node_modules/express/lib/router/layer.js:95:5) at /juice-shop/node_modules/express/lib/router/index.js:284:15 at router.process_params (/juice-shop/node_modules/express/lib/router/index.js:346:12) at next (/juice-shop/node_modules/express/lib/router/index.js:280:10) at router.handle (/juice-shop/node_modules/express/lib/router/index.js:175:3) at router (/juice-shop/node_modules/express/lib/router/index.js:47:12) at Layer.handle [as handle_request] (/juice-shop/node_modules/express/lib/router/layer.js:95:5) at trim_prefix (/juice-shop/node_modules/express/lib/router/index.js:328:13) at /juice-shop/node_modules/express/lib/router/index.js:286:9 at router.process_params (/juice-shop/node_modules/express/lib/router/index.js:346:12) at next (/juice-shop/node_modules/express/lib/router/index.js:280:10)",
+      "messages": [],
+      "action_id": "CEN-IDT-12-A-02",
+      "network": [],
+      "network_summary": {
+        "requests": 0,
+        "responses": 0,
+        "api_responses": 0,
+        "failed_requests": 0,
+        "methods": [],
+        "status_codes": []
+      },
+      "controls": []
+    }
+  ],
+  "final_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: OWASP Juice Shop (Express ^4.22.1) 500 Error: Blocked illegal activity by ::ffff:172.18.0.1 at /juice-shop/build/routes/dataErasure.js:62:18 at /juice-shop/build/routes/dataErasure.js:98:7 at Layer.handle [as handle_request] (/juice-shop/node_modules/express/lib/router/layer.js:95:5) at next (/juice-shop/node_modules/express/lib/router/route.js:149:13) at Route.dispatch (/juice-shop/node_modules/express/lib/router/route.js:119:3) at Layer.handle [as handle_request] (/juice-shop/node_modules/express/lib/router/layer.js:95:5) at /juice-shop/node_modules/express/lib/router/index.js:284:15 at router.process_params (/juice-shop/node_modules/express/lib/router/index.js:346:12) at next (/juice-shop/node_modules/express/lib/router/index.js:280:10) at router.handle (/juice-shop/node_modules/express/lib/router/index.js:175:3) at router (/juice-shop/node_modules/express/lib/router/index.js:47:12) a",
+  "messages": [],
+  "final_url": "http://127.0.0.1:3000/dataerasure",
+  "network_summary": {
+    "requests": 1,
+    "responses": 1,
+    "api_responses": 0,
+    "failed_requests": 0,
+    "methods": [
+      "GET"
+    ],
+    "status_codes": [
+      500
+    ]
+  },
+  "final_visible_text": "OWASP Juice Shop (Express ^4.22.1) 500 Error: Blocked illegal activity by ::ffff:172.18.0.1 at /juice-shop/build/routes/dataErasure.js:62:18 at /juice-shop/build/routes/dataErasure.js:98:7 at Layer.handle [as handle_request] (/juice-shop/node_modules/express/lib/router/layer.js:95:5) at next (/juice-shop/node_modules/express/lib/router/route.js:149:13) at Route.dispatch (/juice-shop/node_modules/express/lib/router/route.js:119:3) at Layer.handle [as handle_request] (/juice-shop/node_modules/express/lib/router/layer.js:95:5) at /juice-shop/node_modules/express/lib/router/index.js:284:15 at router.process_params (/juice-shop/node_modules/express/lib/router/index.js:346:12) at next (/juice-shop/node_modules/express/lib/router/index.js:280:10) at router.handle (/juice-shop/node_modules/express/lib/router/index.js:175:3) at router (/juice-shop/node_modules/express/lib/router/index.js:47:12) at Layer.handle [as handle_request] (/juice-shop/node_modules/express/lib/router/layer.js:95:5) at trim_prefix (/juice-shop/node_modules/express/lib/router/index.js:328:13) at /juice-shop/node_modules/express/lib/router/index.js:286:9 at router.process_params (/juice-shop/node_modules/express/lib/router/index.js:346:12) at next (/juice-shop/node_modules/express/lib/router/index.js:280:10)",
+  "validation": {
+    "passed": true,
+    "message": "Todos os critérios observáveis foram atendidos."
+  }
+}

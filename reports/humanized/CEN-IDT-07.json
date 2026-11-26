@@ -1,0 +1,28 @@
+{
+  "scenario_id": "CEN-IDT-07",
+  "fingerprint": "e9387581b9bea1d37c69f177e917b146f40a26f5b0ee6cc888e8da690a61c498",
+  "content": {
+    "flow": "Na página principal da loja, o cliente navegou para a seção de privacidade e segurança através da rota correspondente, exibindo o cabeçalho com o logotipo OWASP Juice Shop, os ícones de pesquisa, o botão Account, o carrinho Your Basket com indicador 0 e o seletor de idioma EN, além da caixa de diálogo de cookies no canto inferior direito.",
+    "precondition": "Conta de teste disponível para autenticação.",
+    "observed_result": "A rota de privacidade e segurança foi aberta com sucesso e a interface permaneceu estável, exibindo os elementos de navegação padrão do cabeçalho e o aviso de cookies no canto inferior direito.",
+    "messages": [
+      "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN",
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it! menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN"
+    ],
+    "data": "Dado de teste atualizado.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O cliente abriu a rota de privacidade e segurança no navegador.",
+        "data": "",
+        "response": "A página foi carregada exibindo o cabeçalho superior contendo o logotipo OWASP Juice Shop, os controles de pesquisa, o botão Account, o carrinho Your Basket com o contador 0 e o menu de idioma EN. No canto inferior direito, a caixa azul de aviso de cookies é exibida com o texto sobre política de cookies e o botão verde Me want it!."
+      },
+      {
+        "number": 2,
+        "action": "O cliente aguardou a atualização da interface.",
+        "data": "",
+        "response": "Nenhuma mudança visual relevante foi detectada na interface, mantendo os elementos de cabeçalho e o banner de cookies visíveis."
+      }
+    ]
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "scenario_id": "CEN-CHK-22",
+  "fingerprint": "2d21278e32ab283b742c3ca635722f3cd60e70910c8f592e415040f3b97d714f",
+  "content": {
+    "flow": "O cliente autenticado abriu a tela do carrinho Your Basket, onde é exibido o usuário cen-cen-chk-22-a3a45b746f@example.com, o preço total de 0¤ e o botão Checkout, verificando que o produto comprado não permanece como item pendente na listagem.",
+    "precondition": "Cliente autenticado; pedido concluído com sucesso.",
+    "observed_result": "A tela do carrinho Your Basket foi aberta exibindo o preço total de 0¤ para a conta cen-cen-chk-22-a3a45b746f@example.com, confirmando que nenhum item pendente permaneceu após a conclusão do pedido.",
+    "messages": [
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!",
+      "Placed Apple Juice (1000ml) into basket."
+    ],
+    "data": "Pedido de teste concluído; o produto utilizado no pedido foi Apple Juice (1000ml).",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário abriu a rota do carrinho navegando para",
+        "data": "",
+        "response": "A tela Your Basket foi carregada exibindo o cabeçalho com o e-mail cen-cen-chk-22-a3a45b746f@example.com, o preço total de 0¤, o botão de Checkout desativado, o banner de cookies no canto inferior direito e a notificação flutuante com a mensagem Placed Apple Juice (1000ml) into basket."
+      },
+      {
+        "number": 2,
+        "action": "O usuário aguardou a atualização da interface para consolidação do estado do carrinho.",
+        "data": "",
+        "response": "Nenhuma mudança visual adicional foi registrada; a interface permaneceu estável exibindo o carrinho vazio com o preço total de 0¤."
+      }
+    ]
+  }
+}
