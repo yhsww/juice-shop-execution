@@ -14,6 +14,7 @@ from docx.shared import Inches, Pt
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 
+from reporting.humanizer import humanize_scenario
 from reporting.report import _observed_behavior, _observed_data, _observed_messages
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -21,6 +22,7 @@ DEFAULT_SCENARIOS = ROOT / "scenarios" / "scenarios.json"
 DEFAULT_EXECUTIONS = ROOT / "reports" / "executions"
 DEFAULT_OUT = ROOT / "reports" / "docx"
 DEFAULT_ENV = ROOT / ".report-environment.json"
+DEFAULT_HUMANIZED = ROOT / "reports" / "humanized"
 
 DOMAINS = {
     "ADM": "Administração",
@@ -342,7 +344,12 @@ def add_domain_header(doc: Document, domain: str) -> None:
     )
 
 
-def add_scenario(doc: Document, scenario: dict[str, Any], execution: dict[str, Any] | None) -> None:
+def add_scenario(
+    doc: Document,
+    scenario: dict[str, Any],
+    execution: dict[str, Any] | None,
+    humanized: dict[str, Any] | None = None,
+) -> None:
     # Estrutura mantida na mesma ordem e com os mesmos campos do modelo fornecido.
     doc.add_heading("Ficha de Cenário", level=2)
 
@@ -352,11 +359,11 @@ def add_scenario(doc: Document, scenario: dict[str, Any], execution: dict[str, A
         ["Domínio", f"{domain} — {DOMAINS.get(domain, '')}".strip(" —")],
         ["Nome do cenário", scenario.get("name", "")],
         ["Ator", scenario.get("actor", "")],
-        ["Fluxo", detailed_flow(scenario, execution)],
-        ["Pré-condição (estado inicial)", scenario.get("precondition", "")],
-        ["Resultado observado (mudança de estado)", observed_result(execution)],
-        ["Mensagens exibidas ao usuário", observed_messages(execution)],
-        ["Dados manipulados", observed_data(scenario, execution)],
+        ["Fluxo", humanized.get("flow") if humanized else detailed_flow(scenario, execution)],
+        ["Pré-condição (estado inicial)", humanized.get("precondition") if humanized else scenario.get("precondition", "")],
+        ["Resultado observado (mudança de estado)", humanized.get("observed_result") if humanized else observed_result(execution)],
+        ["Mensagens exibidas ao usuário", "\n".join(humanized.get("messages", [])) if humanized else observed_messages(execution)],
+        ["Dados manipulados", humanized.get("data") if humanized else observed_data(scenario, execution)],
         ["Coerente com loja de sucos?", scenario.get("coherent", "") or "Sim"],
         ["Justificativa", scenario.get("justification", "")],
         ["Requisito candidato (opcional)", scenario.get("requirement", "")],
@@ -384,19 +391,37 @@ def add_scenario(doc: Document, scenario: dict[str, Any], execution: dict[str, A
             if step.get("error"):
                 response = f"Falha durante a execução: {normalize(step.get('error'))}"
 
-            raw_action = step.get("user_action")
-            if raw_action:
-                user_action = normalize(raw_action)
-            elif isinstance(step.get("action"), dict):
-                user_action = action_description(step["action"])
+            if humanized and scenario.get("id"):
+                humanized_step = next(
+                    (
+                        item
+                        for item in humanized.get("steps", [])
+                        if str(item.get("number")) == str(step.get("step"))
+                    ),
+                    None,
+                )
             else:
-                user_action = normalize(step.get("action")) or "Ação não registrada."
+                humanized_step = None
+
+            if humanized_step:
+                user_action = normalize(humanized_step.get("action"))
+                step_data = normalize(humanized_step.get("data")) or "—"
+                response = normalize(humanized_step.get("response")) or response
+            else:
+                raw_action = step.get("user_action")
+                if raw_action:
+                    user_action = normalize(raw_action)
+                elif isinstance(step.get("action"), dict):
+                    user_action = action_description(step["action"])
+                else:
+                    user_action = normalize(step.get("action")) or "Ação não registrada."
+                step_data = normalize(step.get("data")) or "—"
 
             step_rows.append(
                 [
                     str(step.get("step", "")),
                     user_action,
-                    normalize(step.get("data")) or "—",
+                    step_data,
                     response,
                 ]
             )
@@ -437,6 +462,7 @@ def create_document(
     scenarios: list[dict[str, Any]],
     env: dict[str, str],
     executions: dict[str, dict[str, Any]],
+    humanized: dict[str, dict[str, Any]],
     out: Path,
     domains: list[str],
     filename: str,
@@ -461,7 +487,7 @@ def create_document(
         for scenario_index, scenario in enumerate(selected):
             if scenario_index:
                 doc.add_page_break()
-            add_scenario(doc, scenario, executions.get(str(scenario.get("id"))))
+            add_scenario(doc, scenario, executions.get(str(scenario.get("id"))), humanized.get(str(scenario.get("id"))))
 
     doc.save(out / filename)
 
@@ -475,6 +501,14 @@ def main() -> int:
     parser.add_argument("--results", type=Path, default=None)
     parser.add_argument("--environment", type=Path, default=DEFAULT_ENV)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUT)
+    parser.add_argument(
+        "--humanize",
+        choices=["auto", "llm", "deterministic"],
+        default="auto",
+        help="Humanização das descrições: LLM, determinística ou automática.",
+    )
+    parser.add_argument("--humanized", type=Path, default=DEFAULT_HUMANIZED)
+    parser.add_argument("--force-humanize", action="store_true")
     args = parser.parse_args()
 
     scenarios = load_scenarios(args.scenarios)
@@ -499,6 +533,39 @@ def main() -> int:
     env = load_environment(args.environment)
     args.output.mkdir(parents=True, exist_ok=True)
 
+    humanized: dict[str, dict[str, Any]] = {}
+    if args.humanize in {"auto", "llm"}:
+        import os
+
+        has_key = bool(os.getenv("OPENAI_API_KEY", "").strip())
+        if args.humanize == "llm" and not has_key:
+            raise SystemExit(
+                "Humanização LLM solicitada, mas OPENAI_API_KEY não está configurada."
+            )
+
+        if has_key:
+            for scenario in scenarios:
+                sid = str(scenario.get("id") or "")
+                execution = executions.get(sid)
+                if not execution:
+                    continue
+                try:
+                    humanized[sid] = humanize_scenario(
+                        scenario,
+                        execution,
+                        args.humanized,
+                        force=args.force_humanize,
+                    )
+                except Exception as exc:
+                    if args.humanize == "llm":
+                        raise SystemExit(
+                            f"Falha na humanização LLM de {sid}: {exc}"
+                        ) from exc
+                    print(
+                        f"[DOCX] LLM indisponível para {sid}; "
+                        f"usando descrição determinística: {exc}"
+                    )
+
     domains = sorted(
         {str(item.get("domain")).upper() for item in scenarios if item.get("domain")}
     )
@@ -509,6 +576,7 @@ def main() -> int:
             scenarios,
             env,
             executions,
+            humanized,
             args.output,
             [domain],
             f"{domain}_relatorio.docx",
@@ -519,6 +587,7 @@ def main() -> int:
         scenarios,
         env,
         executions,
+        humanized,
         args.output,
         domains,
         "JUICE_SHOP_RELATORIO_GERAL.docx",
