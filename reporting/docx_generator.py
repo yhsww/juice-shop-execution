@@ -39,6 +39,80 @@ def normalize(value: Any, limit: int | None = None) -> str:
     return text
 
 
+def humanize_text(value: Any, limit: int = 1200) -> str:
+    """Converte evidência textual em texto funcional, limpo e legível."""
+    text = normalize(value, limit)
+    if not text:
+        return ""
+
+    # URLs, rotas e detalhes técnicos pertencem aos artefatos de execução,
+    # não à narrativa funcional do DOCX.
+    import re
+    text = re.sub(r"https?://\\S+", "", text)
+    text = re.sub(r"(?<!\\w)/#/[A-Za-z0-9_./?=&%-]+", "", text)
+    text = re.sub(r"\\s{2,}", " ", text).strip()
+    text = text.replace("Falha de automação:", "A aplicação não concluiu a ação esperada: ")
+    text = text.replace("Nenhuma mudança visual relevante detectada.", "")
+    return normalize(text, limit)
+
+
+def humanize_observation(execution: dict[str, Any] | None) -> str:
+    """Retorna uma conclusão curta baseada apenas no que foi observado."""
+    if not execution:
+        return "Execução não localizada."
+
+    raw = _observed_behavior(execution)
+    text = humanize_text(raw, 1600)
+
+    # O helper de evidência pode cair em URL quando não há observação textual.
+    # Nesse caso, não levamos a URL para o documento.
+    if not text or text.lower().startswith("a execução foi concluída na url observada"):
+        final_text = humanize_text(execution.get("final_visible_text"), 900)
+        if final_text:
+            return f"A execução foi concluída com o estado visível registrado na interface: {final_text}."
+        return "A execução foi concluída sem mudança de estado adicional registrada."
+
+    return text
+
+
+def humanize_messages(execution: dict[str, Any] | None) -> str:
+    if not execution:
+        return "Não registrado."
+
+    messages = []
+    for item in _observed_messages(execution):
+        text = humanize_text(item, 500)
+        if text:
+            messages.append(text)
+
+    return " ".join(messages[:8]) if messages else "Nenhuma mensagem relevante registrada."
+
+
+def humanize_data(scenario: dict[str, Any], execution: dict[str, Any] | None) -> str:
+    if not execution:
+        return humanize_text(scenario.get("data")) or "Não registrado."
+
+    values: list[str] = []
+    for step in execution.get("steps", []):
+        value = humanize_text(step.get("data"), 500)
+        if value:
+            values.append(value)
+
+    if not values:
+        value = humanize_text(scenario.get("data"), 1200)
+        return value or "Nenhum dado informado."
+
+    unique: list[str] = []
+    seen: set[str] = set()
+    for value in values:
+        key = value.casefold()
+        if key not in seen:
+            seen.add(key)
+            unique.append(value)
+
+    return "; ".join(unique)[:1800]
+
+
 def shade(cell, fill: str = "D9EAF7") -> None:
     tc_pr = cell._tc.get_or_add_tcPr()
     shd = OxmlElement("w:shd")
@@ -213,98 +287,38 @@ def detailed_flow(
     scenario: dict[str, Any],
     execution: dict[str, Any] | None,
 ) -> str:
-    """Enriquece o fluxo sem criar uma nova seção ou repetir o resultado.
+    """Produz uma descrição funcional curta e humanizada.
 
-    A primeira frase preserva o fluxo funcional definido no catálogo. A segunda
-    identifica, de forma objetiva, as principais interações executadas.
+    O fluxo do catálogo é a fonte principal. A execução só complementa a
+    descrição quando houver evidência funcional útil; URLs, waits e detalhes
+    de automação nunca entram na narrativa.
     """
-    base = normalize(scenario.get("flow"))
-    actions = scenario.get("actions") or []
-
-    key_actions: list[str] = []
-    for action in actions:
-        typ = str(action.get("type", "")).upper()
-        if typ in {"WAIT", "ASSERT_ENABLED", "ASSERT_DISABLED", "ASSERT_SELECTED"}:
-            continue
-        description = action_description(action)
-        if description:
-            key_actions.append(description)
-
-    # Quando o artefato de execução contém uma ação funcional melhor descrita,
-    # prioriza-a para os passos do fluxo.
-    if execution:
-        runtime_actions = [
-            normalize(step.get("user_action"))
-            for step in execution.get("steps", [])
-            if normalize(step.get("user_action"))
-        ]
-        if runtime_actions:
-            key_actions = runtime_actions
-
-    if not base:
-        base = normalize(scenario.get("name")) or "Executar o cenário."
-
-    if not key_actions:
+    base = humanize_text(scenario.get("flow"), 1000)
+    if base:
         return base
 
-    # Mantém no máximo as interações que explicam o fluxo; não transforma
-    # detalhes técnicos da automação em narrativa.
-    unique: list[str] = []
-    seen: set[str] = set()
-    for item in key_actions:
-        key = item.casefold()
-        if key not in seen:
-            seen.add(key)
-            unique.append(item)
+    name = humanize_text(scenario.get("name"), 500)
+    actor = humanize_text(scenario.get("actor"), 200)
+    if name:
+        return f"{actor + ' ' if actor else ''}realiza o cenário {name.lower()}."
 
-    if len(unique) > 4:
-        unique = unique[:3] + [unique[-1]]
+    return "Executar o cenário conforme definido."
 
-    interaction_text = ", ".join(unique)
-    return normalize(
-        f"{base} A interação envolve {interaction_text}.",
-        1400,
-    )
 
 
 def observed_result(execution: dict[str, Any] | None) -> str:
-    if not execution:
-        return "Execução não localizada."
+    return humanize_observation(execution)
 
-    value = normalize(_observed_behavior(execution), 3200)
-    return value or "Nenhum resultado observável foi registrado."
 
 
 def observed_messages(execution: dict[str, Any] | None) -> str:
-    if not execution:
-        return "Não registrado."
+    return humanize_messages(execution)
 
-    messages = _observed_messages(execution)
-    return " ".join(messages[:10]) if messages else "Nenhuma mensagem relevante registrada."
 
 
 def observed_data(scenario: dict[str, Any], execution: dict[str, Any] | None) -> str:
-    if not execution:
-        return "Não registrado."
+    return humanize_data(scenario, execution)
 
-    # Prioriza os dados realmente registrados durante a execução.
-    runtime_values: list[str] = []
-    for step in execution.get("steps", []):
-        value = normalize(step.get("data"))
-        if value:
-            runtime_values.append(value)
-
-    if runtime_values:
-        unique: list[str] = []
-        seen: set[str] = set()
-        for value in runtime_values:
-            key = value.casefold()
-            if key not in seen:
-                seen.add(key)
-                unique.append(value)
-        return " ".join(unique)[:2600]
-
-    return normalize(scenario.get("data")) or "Nenhum dado informado."
 
 
 def add_environment(doc: Document, env: dict[str, str]) -> None:
