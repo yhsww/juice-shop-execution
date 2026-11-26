@@ -13,13 +13,31 @@ class LLMHumanizerError(RuntimeError):
     """Erro controlado ao gerar documentação com LLM."""
 
 
-def humanize(payload: dict[str, Any]) -> dict[str, Any]:
-    api_key = os.getenv("OPENAI_API_KEY", "").strip()
-    if not api_key:
-        raise LLMHumanizerError("OPENAI_API_KEY não configurada.")
+def _config() -> tuple[str, str, str]:
+    provider = os.getenv("REPORTING_LLM_PROVIDER", "kimi").strip().lower()
+    if provider == "kimi":
+        api_key = os.getenv("KIMI_API_KEY", "").strip()
+        base_url = os.getenv("KIMI_API_BASE_URL", "https://api.moonshot.ai/v1").strip()
+        model = os.getenv("REPORTING_LLM_MODEL", "kimi-k3.1-pro").strip()
+    elif provider == "openai":
+        api_key = os.getenv("OPENAI_API_KEY", "").strip()
+        base_url = os.getenv("OPENAI_API_BASE_URL", "https://api.openai.com/v1").strip()
+        model = os.getenv("REPORTING_LLM_MODEL", "gpt-6.2-sol").strip()
+    else:
+        raise LLMHumanizerError(
+            f"REPORTING_LLM_PROVIDER inválido: {provider}. Use 'kimi' ou 'openai'."
+        )
 
-    model = os.getenv("REPORTING_LLM_MODEL", "gpt-6.2-sol").strip()
-    client = OpenAI(api_key=api_key)
+    if not api_key:
+        env_name = "KIMI_API_KEY" if provider == "kimi" else "OPENAI_API_KEY"
+        raise LLMHumanizerError(f"{env_name} não configurada.")
+
+    return provider, api_key, base_url, model
+
+
+def humanize(payload: dict[str, Any]) -> dict[str, Any]:
+    provider, api_key, base_url, model = _config()
+    client = OpenAI(api_key=api_key, base_url=base_url)
 
     response = client.responses.create(
         model=model,
@@ -40,7 +58,7 @@ def humanize(payload: dict[str, Any]) -> dict[str, Any]:
 
     raw = response.output_text.strip()
     if not raw:
-        raise LLMHumanizerError("A LLM retornou uma resposta vazia.")
+        raise LLMHumanizerError(f"A LLM ({provider}) retornou uma resposta vazia.")
 
     try:
         result = json.loads(raw)
