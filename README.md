@@ -101,6 +101,37 @@ juice-shop-execution/
 
 ## 5. Passo a passo para executar o projeto
 
+### Fluxo rápido
+
+Se você já possui Python, Docker e o repositório configurados, a execução completa segue esta ordem:
+
+1. Atualizar a branch `main`.
+2. Ativar o ambiente virtual Python.
+3. Instalar as dependências.
+4. Instalar o Chromium do Playwright.
+5. Configurar o `.env`.
+6. Iniciar o Juice Shop pelo Docker.
+7. Executar os cenários.
+8. Conferir os JSONs, Markdown e screenshots em `reports/executions/`.
+9. Gerar a humanização em `reports/humanized/`.
+10. Gerar os DOCX finais em `reports/docx/`.
+
+### Execução completa em sequência
+
+```powershell
+cd C:\Users\Asus\Desktop\juice-shop-execution-v2
+git pull --ff-only origin main
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+python -m playwright install chromium
+python run.py --start-app --all
+python -m reporting.humanizer --all --force
+python -m reporting.docx_generator --humanize auto --force-humanize
+```
+
+Para uma execução do zero, os passos detalhados abaixo devem ser seguidos na ordem apresentada.
+
+
 ### Passo 1 — Pré-requisitos
 
 Instale:
