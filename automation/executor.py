@@ -1174,7 +1174,7 @@ async def execute(page: Page, action: dict) -> ActionResult:
 
                 clicked += 1
                 await page.wait_for_timeout(
-                    min(250, max(50, settings.action_timeout_ms // 40)
+                    min(250, max(50, settings.action_timeout_ms // 40))
                 )
 
             if clicked == 0:
