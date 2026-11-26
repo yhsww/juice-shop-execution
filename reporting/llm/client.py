@@ -4,6 +4,7 @@ import base64
 import json
 import os
 import re
+import time
 from pathlib import Path
 from typing import Any
 
@@ -199,11 +200,22 @@ def _request_openai_compatible(
             },
         }
 
-    try:
-        response = client.chat.completions.create(**kwargs)
-    except Exception:
+    response = None
+    last_error: Exception | None = None
+    for attempt in range(3):
+        try:
+            response = client.chat.completions.create(**kwargs)
+            break
+        except Exception as exc:
+            last_error = exc
+            if "429" not in str(exc) or attempt == 2:
+                break
+            # Rate limit temporário: aguarda antes de repetir a mesma requisição.
+            time.sleep(5 * (2 ** attempt))
+
+    if response is None:
         if not use_schema:
-            raise
+            raise last_error or RuntimeError("Falha desconhecida ao consultar a LLM.")
         kwargs.pop("response_format", None)
         response = client.chat.completions.create(**kwargs)
 
