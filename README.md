@@ -89,8 +89,7 @@ juice-shop-execution/
 ├── juice-shop/              # Docker Compose da aplicação alvo
 ├── reports/
 │   ├── executions/          # Evidências das execuções
-│   ├── humanized/           # JSONs humanizados
-│   └── final-claude/        # DOCX finais da entrega
+│   └── docx/                # DOCX finais da entrega
 ├── .env.example             # Modelo de variáveis de ambiente
 ├── requirements.txt         # Dependências Python
 ├── run.py                   # Entrada principal da execução
@@ -300,11 +299,7 @@ catálogo do cenário
 JSON humanizado
 ```
 
-Os resultados ficam em:
-
-```text
-reports/humanized/
-```
+Os JSONs humanizados são artefatos intermediários da geração dos relatórios e não fazem parte da entrega final versionada. A entrega final mantém os DOCX consolidados em `reports/docx/`.
 
 ### Humanizar um cenário
 
@@ -356,20 +351,16 @@ python -m reporting.docx_generator --scenario CEN-ADM-01 --humanize llm --force-
 
 ### Gerar todos os relatórios a partir dos humanizados existentes
 
-Se os 78 JSONs de `reports/humanized/` já estiverem prontos, use:
+Se os 78 JSONs humanizados já estiverem disponíveis localmente, os DOCX podem ser recriados em uma pasta de trabalho e, após validação, consolidados em `reports/docx/`.
 
-```powershell
-python -m reporting.docx_generator --output .\reports\final-claude
-```
-
-Esse comando monta novamente os documentos sem precisar executar os cenários.
+A árvore versionada final não mantém os JSONs humanizados intermediários; mantém somente os relatórios DOCX finais e as evidências de execução.
 
 ## 13. Relatórios finais
 
-A entrega final validada contém **7 DOCX**:
+A entrega final validada contém **7 DOCX**, versionados em:
 
 ```text
-reports/final-claude/
+reports/docx/
 ├── ADM_relatorio.docx
 ├── CAR_relatorio.docx
 ├── CAT_relatorio.docx
@@ -378,6 +369,8 @@ reports/final-claude/
 ├── PER_relatorio.docx
 └── JUICE_SHOP_RELATORIO_GERAL.docx
 ```
+
+Os relatórios foram gerados e validados com **Claude** e consolidados em seis relatórios por domínio mais um relatório geral.
 
 São gerados:
 
@@ -432,13 +425,13 @@ Valide o resumo final. Para a entrega com Claude:
 
 ```powershell
 python -m reporting.humanizer --all --force
-python -m reporting.docx_generator --humanize llm --force-humanize --output .\reports\final-claude
+python -m reporting.docx_generator --humanize llm --force-humanize --output .\reports\docx
 ```
 
 Se a humanização dos 78 cenários já estiver pronta e apenas os DOCX precisarem ser recriados:
 
 ```powershell
-python -m reporting.docx_generator --output .\reports\final-claude
+python -m reporting.docx_generator --output .\reports\docx
 ```
 
 ## 15. Testes do projeto
