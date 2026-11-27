@@ -89,65 +89,19 @@ def humanize(payload: dict[str, Any]) -> dict[str, Any]:
 
     try:
         if provider == "claude":
-            raw = _humanize_claude(payload, api_key, base_url, model)
-        else:
-            raw = _humanize_openai_compatible(
-                payload, provider, api_key, base_url, model
-            )
+            # Claude usa a Messages API nativa e structured outputs. A API
+            # restringe a saída ao schema, evitando depender de parsing
+            # heurístico de JSON produzido livremente pelo modelo.
+            return _humanize_claude(payload, api_key, base_url, model)
+        return _humanize_openai_compatible(
+            payload, provider, api_key, base_url, model
+        )
     except LLMHumanizerError:
         raise
     except Exception as exc:
         raise LLMHumanizerError(
             f"Falha ao consultar a LLM ({provider}, modelo {model}): {exc}"
         ) from exc
-
-    if not raw:
-        raise LLMHumanizerError(
-            f"A LLM ({provider}) retornou uma resposta vazia."
-        )
-
-    result = _parse_and_validate(raw)
-    if result is not None:
-        return result
-
-    retry_prompt = (
-        _build_input(payload)
-        + "\n\nA resposta anterior não pôde ser interpretada como JSON válido. "
-        "Gere novamente a mesma documentação. Retorne SOMENTE um objeto JSON válido, "
-        "sem Markdown, sem blocos de código, sem explicações e sem texto antes ou depois do objeto."
-    )
-
-    try:
-        if provider == "claude":
-            retry_raw = _humanize_claude(
-                payload,
-                api_key,
-                base_url,
-                model,
-                retry_prompt=retry_prompt,
-            )
-        else:
-            retry_raw = _request_openai_compatible(
-                payload=payload,
-                provider=provider,
-                api_key=api_key,
-                base_url=base_url,
-                model=model,
-                use_schema=False,
-                user_content=retry_prompt,
-            )
-    except Exception as exc:
-        raise LLMHumanizerError(
-            f"A LLM retornou JSON inválido e a segunda tentativa falhou: {exc}"
-        ) from exc
-
-    result = _parse_and_validate(retry_raw)
-    if result is None:
-        raise LLMHumanizerError(
-            "A LLM retornou JSON inválido após duas tentativas."
-        )
-
-    return result
 
 
 def _humanize_openai_compatible(
@@ -318,6 +272,12 @@ def _humanize_claude(
                 "content": user_content,
             }
         ],
+        output_config={
+            "format": {
+                "type": "json_schema",
+                "schema": HUMANIZER_SCHEMA,
+            }
+        },
     )
 
     parts = [
