@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 import base64
 import json
@@ -118,15 +118,24 @@ def humanize(payload: dict[str, Any]) -> dict[str, Any]:
     )
 
     try:
-        retry_raw = _request_openai_compatible(
-            payload=payload,
-            provider=provider,
-            api_key=api_key,
-            base_url=base_url,
-            model=model,
-            use_schema=False,
-            user_content=retry_prompt,
-        )
+        if provider == "claude":
+            retry_raw = _humanize_claude(
+                payload,
+                api_key,
+                base_url,
+                model,
+                retry_prompt=retry_prompt,
+            )
+        else:
+            retry_raw = _request_openai_compatible(
+                payload=payload,
+                provider=provider,
+                api_key=api_key,
+                base_url=base_url,
+                model=model,
+                use_schema=False,
+                user_content=retry_prompt,
+            )
     except Exception as exc:
         raise LLMHumanizerError(
             f"A LLM retornou JSON inválido e a segunda tentativa falhou: {exc}"
@@ -278,6 +287,7 @@ def _humanize_claude(
     api_key: str,
     base_url: str,
     model: str,
+    retry_prompt: str | None = None,
 ) -> str:
     try:
         from anthropic import Anthropic
@@ -292,6 +302,12 @@ def _humanize_claude(
         base_url=base_url,
     )
 
+    user_content = retry_prompt or (
+        _build_input(payload)
+        + "\n\nRETORNE SOMENTE JSON VÁLIDO. "
+        "NÃO use Markdown, comentários ou texto fora do JSON."
+    )
+
     response = client.messages.create(
         model=model,
         max_tokens=2400,
@@ -299,11 +315,7 @@ def _humanize_claude(
         messages=[
             {
                 "role": "user",
-                "content": (
-                    _build_input(payload)
-                    + "\n\nRETORNE SOMENTE JSON VÁLIDO. "
-                    "NÃO use Markdown, comentários ou texto fora do JSON."
-                ),
+                "content": user_content,
             }
         ],
     )
