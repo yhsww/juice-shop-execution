@@ -89,9 +89,10 @@ def humanize(payload: dict[str, Any]) -> dict[str, Any]:
 
     try:
         if provider == "claude":
-            # Claude usa a Messages API nativa e structured outputs. A API
-            # restringe a saída ao schema, evitando depender de parsing
-            # heurístico de JSON produzido livremente pelo modelo.
+            # Claude usa a Messages API nativa e Structured Outputs. A API
+            # restringe a saída ao schema; o SDK ainda entrega o JSON
+            # estruturado como texto no bloco de conteúdo, então a conversão
+            # para dict é feita dentro de _humanize_claude.
             return _humanize_claude(payload, api_key, base_url, model)
         return _humanize_openai_compatible(
             payload, provider, api_key, base_url, model
@@ -286,7 +287,28 @@ def _humanize_claude(
         if getattr(block, "type", None) == "text"
     ]
 
-    return "\n".join(parts).strip()
+    raw = "\n".join(parts).strip()
+    if not raw:
+        raise LLMHumanizerError(
+            f"Claude ({model}) retornou conteúdo vazio."
+        )
+
+    try:
+        result = json.loads(raw)
+    except json.JSONDecodeError as exc:
+        raise LLMHumanizerError(
+            f"Claude ({model}) retornou Structured Output que não pôde ser "
+            f"decodificado como JSON: {exc}"
+        ) from exc
+
+    try:
+        _validate(result)
+    except LLMHumanizerError as exc:
+        raise LLMHumanizerError(
+            f"Claude ({model}) retornou JSON fora do schema esperado: {exc}"
+        ) from exc
+
+    return result
 
 
 def _build_input(payload: dict[str, Any]) -> str:
