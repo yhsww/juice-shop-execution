@@ -141,6 +141,21 @@ def fingerprint(catalog: dict[str, Any], execution: dict[str, Any], model: str) 
     return hashlib.sha256(raw.encode("utf-8")).hexdigest()
 
 
+def configured_model() -> str:
+    provider = os.environ.get("REPORTING_LLM_PROVIDER", "gemini").strip().lower()
+    model_vars = {
+        "groq": "GROQ_LLM_MODEL",
+        "openai": "OPENAI_LLM_MODEL",
+        "kimi": "KIMI_LLM_MODEL",
+        "gemini": "GEMINI_LLM_MODEL",
+        "claude": "CLAUDE_LLM_MODEL",
+    }
+    env_name = model_vars.get(provider)
+    if env_name:
+        return os.environ.get(env_name, "").strip()
+    return ""
+
+
 def humanize_scenario(
     scenario: dict[str, Any],
     execution: dict[str, Any],
@@ -148,7 +163,7 @@ def humanize_scenario(
     force: bool = False,
     executions_dir: Path | None = None,
 ) -> dict[str, Any]:
-    model = os.environ.get("REPORTING_LLM_MODEL", "gemini-3.5-flash-lite")
+    model = configured_model() or "unknown-model"
     catalog = prepare_catalog(scenario)
     evidence = prepare_execution(execution)
     evidence["artifacts"] = collect_artifacts(
