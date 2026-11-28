@@ -52,3 +52,14 @@ def test_reporting_loads_every_catalog_file():
 
     folder = Path(__file__).resolve().parents[1] / "scenarios"
     assert len(docx_load(folder)) == len(load_catalog(folder)) == 140
+
+
+def test_docx_lists_each_domain_in_numeric_order():
+    from reporting.docx_generator import load_scenarios, scenario_order
+
+    catalog = load_scenarios(Path(__file__).resolve().parents[1] / "scenarios")
+    for domain in {s["domain"] for s in catalog}:
+        ids = [s["id"] for s in sorted((s for s in catalog if s["domain"] == domain), key=scenario_order)]
+        numbers = [int(i.rsplit("-", 1)[1]) for i in ids]
+        assert numbers == sorted(numbers), domain
+    assert scenario_order({"id": "CEN-CHK-07"}) < scenario_order({"id": "CEN-CHK-23"})

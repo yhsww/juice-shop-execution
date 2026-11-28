@@ -16,7 +16,7 @@ from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 
 from reporting.humanizer import humanize_scenario
-from reporting.report import _observed_behavior, _observed_data, _observed_messages
+from reporting.report import _observed_behavior, _observed_messages
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_SCENARIOS = ROOT / "scenarios"
@@ -293,7 +293,7 @@ def action_description(action: dict[str, Any]) -> str:
     if typ == "UNCHECK":
         return f'Desmarcar "{target_name}"'
     if typ == "WAIT":
-        return f'Aguardar a estabilização da interface'
+        return 'Aguardar a estabilização da interface'
     if typ == "ASSERT_ENABLED":
         return f'Verificar se "{target_name}" está habilitado'
     if typ == "ASSERT_DISABLED":
@@ -487,6 +487,15 @@ def add_scenario(
                     pass
 
 
+def scenario_order(scenario: dict[str, Any]) -> tuple[str, int, str]:
+    """Chave de ordenação: domínio e número do cenário (CEN-CHK-07 -> CHK, 7)."""
+    scenario_id = str(scenario.get("id") or "")
+    match = re.search(r"([A-Z]+)-(\d+)$", scenario_id)
+    if not match:
+        return (scenario_id, 0, scenario_id)
+    return (match.group(1), int(match.group(2)), scenario_id)
+
+
 def create_document(
     scenarios: list[dict[str, Any]],
     env: dict[str, str],
@@ -510,11 +519,16 @@ def create_document(
 
         add_domain_header(doc, domain)
 
-        selected = [
-            scenario
-            for scenario in scenarios
-            if str(scenario.get("domain", "")).upper() == domain
-        ]
+        # Ordem numérica dentro do domínio (CHK-01, CHK-02, ... CHK-44),
+        # independente da ordem em que os cenários aparecem nos catálogos.
+        selected = sorted(
+            (
+                scenario
+                for scenario in scenarios
+                if str(scenario.get("domain", "")).upper() == domain
+            ),
+            key=scenario_order,
+        )
 
         for scenario_index, scenario in enumerate(selected):
             if scenario_index:
