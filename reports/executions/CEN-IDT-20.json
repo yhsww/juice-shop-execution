@@ -12,9 +12,9 @@
       "observed_result": "URL: http://127.0.0.1:3000/#/ → http://127.0.0.1:3000/#/login Texto visível: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Email Password visibility Forgot your password? | exit_to_app Log in Remember me or Log in with Google Not yet a customer? Texto transitório capturado: Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? | Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? | or | Log in with Google Mensagem transitória: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language placeholder Login Email Password visibility Forgot your password? exit_to_app Log in Remember me Not yet a customer? | Login Email Password visibility Forgot your password? exit_to_app Log in Remember me Not yet a customer? | Login | Forgot your password? | Email Password visibility Forgot your password? exit_to_app Log in Remember me Not yet a customer?",
       "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-IDT-20_step_01.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-IDT-20_step_01.png",
       "error": null,
-      "timestamp": "2026-11-28T10:12:45.546514+00:00",
+      "timestamp": "2026-11-28T13:43:30.359036+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language placeholder All Products Items per page: 15 0 of 0",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer?",
       "messages": [
@@ -40,23 +40,25 @@
         "Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer?"
       ],
       "action_id": "CEN-IDT-20-A-01",
-      "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network": [
+        "GET /rest/admin/application-configuration -> 200"
+      ],
+      "network_summary": "1 requisição(ões) de API",
       "controls": []
     },
     {
       "step": 2,
       "action": "FILL",
       "user_action": "Preencher \"Email\"",
-      "data": "nao-existe-cen-cen-idt-20-6692d371c8@example.com",
+      "data": "nao-existe-cen-cen-idt-20-eb5ce960ed@example.com",
       "url_before": "http://127.0.0.1:3000/#/login",
       "url_after": "http://127.0.0.1:3000/#/login",
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto transitório capturado: Email | Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? | Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? Mensagem transitória: Email | Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? | Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer?",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-IDT-20_step_02.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-IDT-20_step_02.png",
       "error": null,
-      "timestamp": "2026-11-28T10:12:48.065355+00:00",
+      "timestamp": "2026-11-28T13:43:34.545276+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer?",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer?",
       "messages": [
@@ -67,7 +69,7 @@
       ],
       "action_id": "CEN-IDT-20-A-02",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -80,9 +82,9 @@
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto transitório capturado: Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? | Password visibility | Password | exit_to_app Log in Mensagem transitória: Email | Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? | Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? | Password visibility",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-IDT-20_step_03.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-IDT-20_step_03.png",
       "error": null,
-      "timestamp": "2026-11-28T10:12:50.540789+00:00",
+      "timestamp": "2026-11-28T13:43:38.895144+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer?",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer?",
       "messages": [
@@ -96,7 +98,7 @@
       ],
       "action_id": "CEN-IDT-20-A-03",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -109,9 +111,9 @@
       "observed_result": "Conteúdo/estrutura visível da página foi alterado. Texto transitório capturado: Password visibility | Login Invalid email or password. Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Invalid email or password. Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? | Invalid email or password. | Email Mensagem transitória: exit_to_app Log in | Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? | Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? | Password visibility",
       "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-IDT-20_step_04.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-IDT-20_step_04.png",
       "error": null,
-      "timestamp": "2026-11-28T10:12:53.099551+00:00",
+      "timestamp": "2026-11-28T13:43:43.013098+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer?",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Invalid email or password. Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer?",
       "messages": [
@@ -126,8 +128,12 @@
         "Email"
       ],
       "action_id": "CEN-IDT-20-A-04",
-      "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network": [
+        "GET /rest/user/whoami -> 200",
+        "GET /rest/user/whoami -> 200",
+        "POST /rest/user/login -> 401"
+      ],
+      "network_summary": "3 requisição(ões) de API",
       "controls": []
     },
     {
@@ -140,15 +146,15 @@
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Invalid email or password. Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer?",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-IDT-20_step_05.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-IDT-20_step_05.png",
       "error": null,
-      "timestamp": "2026-11-28T10:12:54.266172+00:00",
+      "timestamp": "2026-11-28T13:43:44.325584+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Invalid email or password. Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer?",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Invalid email or password. Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer?",
       "messages": [],
       "action_id": "CEN-IDT-20-A-05",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     }
   ],
@@ -181,10 +187,36 @@
     "Invalid email or password."
   ],
   "final_url": "http://127.0.0.1:3000/#/login",
-  "network_summary": "Coleta de rede não habilitada.",
+  "network_summary": "28 requisição(ões) de API registradas em CEN-IDT-20.har.",
   "final_visible_text": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Invalid email or password. Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer?",
   "validation": {
     "passed": true,
     "message": "Todos os critérios observáveis foram atendidos."
-  }
+  },
+  "network_precondition": [
+    "GET /rest/admin/application-version -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Challenges/ -> 200",
+    "GET /rest/languages -> 200",
+    "GET /rest/admin/application-version -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Challenges/ -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Quantitys/ -> 200",
+    "GET /rest/products/search -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /rest/admin/application-version -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Challenges/ -> 200",
+    "GET /rest/languages -> 200",
+    "GET /rest/admin/application-version -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Challenges/ -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Quantitys/ -> 200",
+    "GET /rest/products/search -> 200"
+  ]
 }

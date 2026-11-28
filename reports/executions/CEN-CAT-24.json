@@ -12,9 +12,9 @@
       "observed_result": "URL: http://127.0.0.1:3000/#/ → http://127.0.0.1:3000/#/search Texto visível: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping Texto transitório capturado: 1 – 16 of 46 | 16 | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket Fruit Press 89.99¤ add_shopping_cart Add to Basket Grape Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Green Smoothie 1.99¤ add_shopping_cart Add to Basket Only 1 left Juice Shop \"Permafrost\" 2020 Edition 9999.99¤ add_shopping_cart Add to Basket Lemon Juice (500ml) 2.99¤ add_shopping_cart Add to Basket Items per page: 16 1 – 16 of 46 | Items per page: 16 | Items per page: 16 1 – 16 of Mensagem transitória: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language placeholder All Products Items per page: 15 0 of 0 | All Products Items per page: 15 0 of 0 | All Products | Items per page: 15 0 of 0 | Items per page: 15",
       "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-CAT-24_step_01.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-CAT-24_step_01.png",
       "error": null,
-      "timestamp": "2026-11-28T10:19:05.249858+00:00",
+      "timestamp": "2026-11-28T13:50:55.779867+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language placeholder All Products Items per page: 15 0 of 0",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket Fruit Press 89.99¤ add_shopping_cart Add to Basket Grape Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Green Smoothie 1.99¤ add_shopping_cart Add to Basket Only 1 left Juice Shop \"Permafrost\" 2020 Edition 9999.99¤ add_shopping_cart Add to Basket Lemon Juice (500ml) 2.99¤ add_shopping_cart Add to Basket Items per page: 16 1 – 16 of 46",
       "messages": [
@@ -40,8 +40,11 @@
         "Basil Smoothie 2.99¤ add_shopping_cart Add to Basket"
       ],
       "action_id": "CEN-CAT-24-A-01",
-      "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network": [
+        "GET /api/Quantitys/ -> 200",
+        "GET /rest/products/search -> 200"
+      ],
+      "network_summary": "2 requisição(ões) de API",
       "controls": []
     },
     {
@@ -54,9 +57,9 @@
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto transitório capturado: search search close | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket Fruit Press 89.99¤ add_shopping_cart Add to Basket Grape Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Green Smoothie 1.99¤ add_shopping_cart Add to Basket Only 1 left Juice Shop \"Permafrost\" 2020 Edition 9999.99¤ add_shopping_cart Add to Basket Lemon Juice (500ml) 2.99¤ add_sh Mensagem transitória: search search close | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket Fruit Press 89.99¤ add_shopping_cart Add to Basket Grape Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Green Smoothie 1.99¤ add_shopping_cart Add to Basket Only 1 left Juice Shop \"Permafrost\" 2020 Edition 9999.99¤ add_shopping_cart Add to Basket Lemon Juice (500ml) 2.99¤ add_shopping_cart Add to Basket Items per page: 16 1 – 16 of 46",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-CAT-24_step_02.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-CAT-24_step_02.png",
       "error": null,
-      "timestamp": "2026-11-28T10:19:10.200677+00:00",
+      "timestamp": "2026-11-28T13:51:01.047917+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket Fruit Press 89.99¤ add_shopping_cart Add to Basket Grape Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Green Smoothie 1.99¤ add_shopping_cart Add to Basket Only 1 left Juice Shop \"Permafrost\" 2020 Edition 9999.99¤ add_shopping_cart Add to Basket Lemon Juice (500ml) 2.99¤ add_shopping_cart Add to Basket Items per page: 16 1 – 16 of 46",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket Fruit Press 89.99¤ add_shopping_cart Add to Basket Grape Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Green Smoothie 1.99¤ add_shopping_cart Add to Basket Only 1 left Juice Shop \"Permafrost\" 2020 Edition 9999.99¤ add_shopping_cart Add to Basket Lemon Juice (500ml) 2.99¤ add_shopping_cart Add to Basket Items per page: 16 1 – 16 of 46",
       "messages": [
@@ -66,7 +69,7 @@
       ],
       "action_id": "CEN-CAT-24-A-02",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -79,9 +82,9 @@
       "observed_result": "URL: http://127.0.0.1:3000/#/search → http://127.0.0.1:3000/#/search?q=Artwork Texto transitório capturado: Search Results - | Artwork | Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket | 1 – 1 of 1 | Items per page: 16 1 – 1 of 1 Mensagem transitória: Search Results - Artwork | Search Results - Artwork Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Items per page: 16 1 – 1 of 1 | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Search Results - Artwork Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Items per page: 16 1 – 1 of 1 | Search Results - | Artwork",
       "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-CAT-24_step_03.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-CAT-24_step_03.png",
       "error": null,
-      "timestamp": "2026-11-28T10:19:13.656773+00:00",
+      "timestamp": "2026-11-28T13:51:05.723800+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket Fruit Press 89.99¤ add_shopping_cart Add to Basket Grape Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Green Smoothie 1.99¤ add_shopping_cart Add to Basket Only 1 left Juice Shop \"Permafrost\" 2020 Edition 9999.99¤ add_shopping_cart Add to Basket Lemon Juice (500ml) 2.99¤ add_shopping_cart Add to Basket Items per page: 16 1 – 16 of 46",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Search Results - Artwork Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Items per page: 16 1 – 1 of 1",
       "messages": [
@@ -96,7 +99,7 @@
       ],
       "action_id": "CEN-CAT-24-A-03",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -109,15 +112,15 @@
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Search Results - Artwork Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Items per page: 16 1 – 1 of 1",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-CAT-24_step_04.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-CAT-24_step_04.png",
       "error": null,
-      "timestamp": "2026-11-28T10:19:15.055103+00:00",
+      "timestamp": "2026-11-28T13:51:07.252873+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Search Results - Artwork Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Items per page: 16 1 – 1 of 1",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Search Results - Artwork Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Items per page: 16 1 – 1 of 1",
       "messages": [],
       "action_id": "CEN-CAT-24-A-04",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -130,9 +133,9 @@
       "observed_result": "Texto visível: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Search Results - Artwork Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Items per page: 16 1 – 1 of 1 Best Juice Shop Salesman Artwork Unique digital painting depicting Stan, our most qualified and almost profitable salesman. | He made a succesful carreer in selling used ships, coffins, krypts, crosses, real estate, life insurance, restaurant supplies, voodoo enhanced asbestos and courtroom souvenirs before finally adding his expertise to the Juice Shop marketing team. | 5000¤ 500 Reviews (2) close Close Texto transitório capturado: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Search Results - Artwork Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Items per page: 16 1 – 1 of 1 Best Juice Shop Salesman Artwork Unique digital painting depicting Stan, our most qualified and almost profitable salesman. He made a succesful carreer in selling used ships, coffins, krypts, crosses, real estate, life insurance, restaurant supplies, voodoo enhanced asbestos and courtroom souvenirs before finally adding his expertise to the Juice Shop marketing team. 5000¤ 500 Reviews () close Close | (2) | Reviews (2) | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Search Results - Artwork Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Items per page: 16 1 – 1 of 1 Best Juice Shop Salesman Artwork Unique digital painting depicting Stan, our most qualified and almost profitable salesman. He made a succesful carreer in selling used ships, coffins, krypts, crosses, real estate, life insurance, restaurant supplies, voodoo enhanced asbestos and courtroom Mensagem transitória: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Search Results - Artwork Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Items per page: 16 1 – 1 of 1 Click for more information | Click for more information | Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket | Search Results - Artwork Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Items per page: 16 1 – 1 of 1 | search search close",
       "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-CAT-24_step_05.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-CAT-24_step_05.png",
       "error": null,
-      "timestamp": "2026-11-28T10:19:17.544781+00:00",
+      "timestamp": "2026-11-28T13:51:11.354455+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Search Results - Artwork Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Items per page: 16 1 – 1 of 1",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Search Results - Artwork Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Items per page: 16 1 – 1 of 1 Best Juice Shop Salesman Artwork Unique digital painting depicting Stan, our most qualified and almost profitable salesman. He made a succesful carreer in selling used ships, coffins, krypts, crosses, real estate, life insurance, restaurant supplies, voodoo enhanced asbestos and courtroom souvenirs before finally adding his expertise to the Juice Shop marketing team. 5000¤ 500 Reviews (2) close Close",
       "messages": [
@@ -158,8 +161,13 @@
         "close Close"
       ],
       "action_id": "CEN-CAT-24-A-05",
-      "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network": [
+        "GET /rest/user/whoami -> 200",
+        "GET /rest/products/42/reviews -> 200",
+        "GET /rest/products/42/reviews -> 200",
+        "GET /rest/products/42/reviews -> 200"
+      ],
+      "network_summary": "4 requisição(ões) de API",
       "controls": []
     },
     {
@@ -172,15 +180,15 @@
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Search Results - Artwork Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Items per page: 16 1 – 1 of 1 Best Juice Shop Salesman Artwork Unique digital painting depicting Stan, our most qualified and almost profitable salesman. He made a succesful carreer in selling used ships, coffins, krypts, crosses, real estate, life insurance, restaurant supplies, voodoo enhanced asbestos and courtroom souvenirs before finally adding his expertise to the Juice Shop marketing team. 5000¤ 500 Reviews (2) close Close",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-CAT-24_step_06.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-CAT-24_step_06.png",
       "error": null,
-      "timestamp": "2026-11-28T10:19:18.693851+00:00",
+      "timestamp": "2026-11-28T13:51:12.798992+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Search Results - Artwork Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Items per page: 16 1 – 1 of 1 Best Juice Shop Salesman Artwork Unique digital painting depicting Stan, our most qualified and almost profitable salesman. He made a succesful carreer in selling used ships, coffins, krypts, crosses, real estate, life insurance, restaurant supplies, voodoo enhanced asbestos and courtroom souvenirs before finally adding his expertise to the Juice Shop marketing team. 5000¤ 500 Reviews (2) close Close",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Search Results - Artwork Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Items per page: 16 1 – 1 of 1 Best Juice Shop Salesman Artwork Unique digital painting depicting Stan, our most qualified and almost profitable salesman. He made a succesful carreer in selling used ships, coffins, krypts, crosses, real estate, life insurance, restaurant supplies, voodoo enhanced asbestos and courtroom souvenirs before finally adding his expertise to the Juice Shop marketing team. 5000¤ 500 Reviews (2) close Close",
       "messages": [],
       "action_id": "CEN-CAT-24-A-06",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     }
   ],
@@ -234,10 +242,36 @@
     "close Close"
   ],
   "final_url": "http://127.0.0.1:3000/#/search?q=Artwork",
-  "network_summary": "Coleta de rede não habilitada.",
+  "network_summary": "30 requisição(ões) de API registradas em CEN-CAT-24.har.",
   "final_visible_text": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Search Results - Artwork Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Items per page: 16 1 – 1 of 1 Best Juice Shop Salesman Artwork Unique digital painting depicting Stan, our most qualified and almost profitable salesman. He made a succesful carreer in selling used ships, coffins, krypts, crosses, real estate, life insurance, restaurant supplies, voodoo enhanced asbestos and courtroom souvenirs before finally adding his expertise to the Juice Shop marketing team. 5000¤ 500 Reviews (2) close Close",
   "validation": {
     "passed": true,
     "message": "Todos os critérios observáveis foram atendidos."
-  }
+  },
+  "network_precondition": [
+    "GET /rest/admin/application-version -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Challenges/ -> 200",
+    "GET /rest/languages -> 200",
+    "GET /rest/admin/application-version -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Challenges/ -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Quantitys/ -> 200",
+    "GET /rest/products/search -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /rest/admin/application-version -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Challenges/ -> 200",
+    "GET /rest/languages -> 200",
+    "GET /rest/admin/application-version -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Challenges/ -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Quantitys/ -> 200",
+    "GET /rest/products/search -> 200"
+  ]
 }

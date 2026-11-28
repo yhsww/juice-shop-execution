@@ -12,9 +12,9 @@
       "observed_result": "URL: http://127.0.0.1:3000/#/ → http://127.0.0.1:3000/#/address/create Texto visível: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. | 160 characters 0/160 City State navigate_before Back send Submit Placed Apple Juice (1000ml) into basket. Texto transitório capturado: ZIP Code | Address | 0/8 | Max. 160 characters 0/160 | Max. 160 characters Mensagem transitória: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit Placed Apple Juice (1000ml) into basket. X | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | Add New Address | navigate_before",
       "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-CHK-31_step_01.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-CHK-31_step_01.png",
       "error": null,
-      "timestamp": "2026-11-28T10:26:53.877589+00:00",
+      "timestamp": "2026-11-28T14:01:25.031967+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket Fruit Press 89.99¤ add_shopping_cart Add to Basket Grape Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Green Smoothie 1.99¤ add_shopping_cart Add to Basket Only 1 left Juice Shop \"Permafrost\" 2020 Edition 9999.99¤ add_shopping_cart Add to Basket Lemon Juice (500ml) 2.99¤ add_shopping_cart Add to Basket Items per page: 16 1 – 16 of 46 Placed Apple Juice (1000ml) into basket. X",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit Placed Apple Juice (1000ml) into basket. X",
       "messages": [
@@ -41,7 +41,7 @@
       ],
       "action_id": "CEN-CHK-31-A-01",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -54,15 +54,15 @@
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit Placed Apple Juice (1000ml) into basket. X",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-CHK-31_step_02.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-CHK-31_step_02.png",
       "error": null,
-      "timestamp": "2026-11-28T10:26:54.847027+00:00",
+      "timestamp": "2026-11-28T14:01:25.988682+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit Placed Apple Juice (1000ml) into basket. X",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit Placed Apple Juice (1000ml) into basket. X",
       "messages": [],
       "action_id": "CEN-CHK-31-A-02",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -75,9 +75,9 @@
       "observed_result": "Conteúdo/estrutura visível da página foi alterado. Texto transitório capturado: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit Placed Apple Juice (1000ml) into basket. X | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | Name | Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit Mensagem transitória: Placed Apple Juice (1000ml) into basket. X | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit Placed Apple Juice (1000ml) into basket. X | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | Name | Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit",
       "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-CHK-31_step_03.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-CHK-31_step_03.png",
       "error": null,
-      "timestamp": "2026-11-28T10:26:59.585101+00:00",
+      "timestamp": "2026-11-28T14:01:30.117780+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit Placed Apple Juice (1000ml) into basket. X",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit",
       "messages": [
@@ -90,7 +90,7 @@
       ],
       "action_id": "CEN-CHK-31-A-03",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -103,9 +103,9 @@
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto transitório capturado: Name | Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | Mobile Number Mensagem transitória: Name | Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | Mobile Number",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-CHK-31_step_04.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-CHK-31_step_04.png",
       "error": null,
-      "timestamp": "2026-11-28T10:27:02.586089+00:00",
+      "timestamp": "2026-11-28T14:01:34.028789+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit",
       "messages": [
@@ -117,7 +117,7 @@
       ],
       "action_id": "CEN-CHK-31-A-04",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -130,9 +130,9 @@
       "observed_result": "Conteúdo/estrutura visível da página foi alterado. Texto transitório capturado: 8/8 | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | ZIP Code 8/8 | Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit Mensagem transitória: Mobile Number | Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | ZIP Code 0/8",
       "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-CHK-31_step_05.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-CHK-31_step_05.png",
       "error": null,
-      "timestamp": "2026-11-28T10:27:05.668423+00:00",
+      "timestamp": "2026-11-28T14:01:38.640317+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit",
       "messages": [
@@ -150,7 +150,7 @@
       ],
       "action_id": "CEN-CHK-31-A-05",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -163,9 +163,9 @@
       "observed_result": "Conteúdo/estrutura visível da página foi alterado. Texto transitório capturado: Max. 160 characters 20/160 | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit | Address Max. 160 characters 20/160 | Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit | Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit Mensagem transitória: ZIP Code 8/8 | Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | ZIP Code",
       "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-CHK-31_step_06.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-CHK-31_step_06.png",
       "error": null,
-      "timestamp": "2026-11-28T10:27:08.681971+00:00",
+      "timestamp": "2026-11-28T14:01:42.994924+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit",
       "messages": [
@@ -185,7 +185,7 @@
       ],
       "action_id": "CEN-CHK-31-A-06",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -198,9 +198,9 @@
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto transitório capturado: Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit | Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit | Address | City Mensagem transitória: Address Max. 160 characters 20/160 | Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit | Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit | Address",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-CHK-31_step_07.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-CHK-31_step_07.png",
       "error": null,
-      "timestamp": "2026-11-28T10:27:14.028143+00:00",
+      "timestamp": "2026-11-28T14:01:47.388657+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit",
       "messages": [
@@ -213,7 +213,7 @@
       ],
       "action_id": "CEN-CHK-31-A-07",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -226,9 +226,9 @@
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto transitório capturado: City | Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit | Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit | State Mensagem transitória: City | Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit | Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit | State",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-CHK-31_step_08.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-CHK-31_step_08.png",
       "error": null,
-      "timestamp": "2026-11-28T10:27:19.001383+00:00",
+      "timestamp": "2026-11-28T14:01:52.036303+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit",
       "messages": [
@@ -240,7 +240,7 @@
       ],
       "action_id": "CEN-CHK-31-A-08",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -253,15 +253,15 @@
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-CHK-31_step_09.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-CHK-31_step_09.png",
       "error": null,
-      "timestamp": "2026-11-28T10:27:19.696554+00:00",
+      "timestamp": "2026-11-28T14:01:52.776355+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit",
       "messages": [],
       "action_id": "CEN-CHK-31-A-09",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -274,15 +274,15 @@
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-CHK-31_step_10.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-CHK-31_step_10.png",
       "error": null,
-      "timestamp": "2026-11-28T10:27:22.688984+00:00",
+      "timestamp": "2026-11-28T14:01:56.796611+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit",
       "messages": [],
       "action_id": "CEN-CHK-31-A-10",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     }
   ],
@@ -323,10 +323,60 @@
     "Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit"
   ],
   "final_url": "http://127.0.0.1:3000/#/address/create",
-  "network_summary": "Coleta de rede não habilitada.",
+  "network_summary": "48 requisição(ões) de API registradas em CEN-CHK-31.har.",
   "final_visible_text": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit",
   "validation": {
     "passed": true,
     "message": "Todos os critérios observáveis foram atendidos."
-  }
+  },
+  "network_precondition": [
+    "GET /rest/admin/application-version -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Challenges/ -> 200",
+    "GET /rest/languages -> 200",
+    "GET /rest/admin/application-version -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Challenges/ -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Quantitys/ -> 200",
+    "GET /rest/products/search -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /rest/admin/application-version -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Challenges/ -> 200",
+    "GET /rest/languages -> 200",
+    "GET /rest/admin/application-version -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Challenges/ -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Quantitys/ -> 200",
+    "GET /rest/products/search -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /rest/user/whoami -> 200",
+    "GET /rest/user/whoami -> 200",
+    "POST /rest/user/login -> 401",
+    "GET /api/SecurityQuestions/ -> 200",
+    "POST /api/Users/ -> 201",
+    "POST /api/SecurityAnswers/ -> 201",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /rest/user/whoami -> 200",
+    "GET /rest/user/whoami -> 200",
+    "POST /rest/user/login -> 200",
+    "GET /rest/basket/187 -> 200",
+    "GET /rest/user/whoami -> 200",
+    "GET /rest/user/whoami -> 200",
+    "GET /api/Quantitys/ -> 200",
+    "GET /rest/products/search -> 200",
+    "GET /rest/basket/187 -> 200",
+    "GET /rest/user/whoami -> 200",
+    "GET /api/Quantitys/ -> 200",
+    "GET /rest/products/search -> 200",
+    "GET /rest/basket/187 -> 200",
+    "POST /api/BasketItems/ -> 200",
+    "GET /api/Products/1 -> 200",
+    "GET /rest/basket/187 -> 200"
+  ]
 }

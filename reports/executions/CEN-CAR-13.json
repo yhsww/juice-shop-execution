@@ -9,15 +9,16 @@
       "data": "/#/",
       "url_before": "http://127.0.0.1:3000/#/",
       "url_after": "http://127.0.0.1:3000/#/",
-      "observed_result": "Texto visível: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping Texto transitório capturado: 1 – 16 of 46 | 16 | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket Fruit Press 89.99¤ add_shopping_cart Add to Basket Grape Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Green Smoothie 1.99¤ add_shopping_cart Add to Basket Only 1 left Juice Shop \"Permafrost\" 2020 Edition 9999.99¤ add_shopping_cart Add to Basket Lemon Juice (500ml) 2.99¤ add_shopping_cart Add to Basket Items per page: 16 1 – 16 of 46 | Items per page: 16 | Items per page: 16 1 – 16 of Mensagem transitória: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN All Products Items per page: 15 0 of 0 | EN | language EN | account_circle Account shopping_cart Your Basket 0 language EN | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN",
+      "observed_result": "Texto visível: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping Texto transitório capturado: 1 – 16 of 46 | 16 | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket Fruit Press 89.99¤ add_shopping_cart Add to Basket Grape Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Green Smoothie 1.99¤ add_shopping_cart Add to Basket Only 1 left Juice Shop \"Permafrost\" 2020 Edition 9999.99¤ add_shopping_cart Add to Basket Lemon Juice (500ml) 2.99¤ add_shopping_cart Add to Basket Items per page: 16 1 – 16 of 46 | Items per page: 16 | Items per page: 16 1 – 16 of Mensagem transitória: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language placeholder All Products Items per page: 15 0 of 0 | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN All Products Items per page: 15 0 of 0 | EN | language EN | account_circle Account shopping_cart Your Basket 0 language EN",
       "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-CAR-13_step_01.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-CAR-13_step_01.png",
       "error": null,
-      "timestamp": "2026-11-28T10:23:07.201491+00:00",
+      "timestamp": "2026-11-28T13:56:33.576201+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language placeholder All Products Items per page: 15 0 of 0",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket Fruit Press 89.99¤ add_shopping_cart Add to Basket Grape Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Green Smoothie 1.99¤ add_shopping_cart Add to Basket Only 1 left Juice Shop \"Permafrost\" 2020 Edition 9999.99¤ add_shopping_cart Add to Basket Lemon Juice (500ml) 2.99¤ add_shopping_cart Add to Basket Items per page: 16 1 – 16 of 46",
       "messages": [
+        "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language placeholder All Products Items per page: 15 0 of 0",
         "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN All Products Items per page: 15 0 of 0",
         "EN",
         "language EN",
@@ -36,12 +37,11 @@
         "Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket",
         "Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket",
         "Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket",
-        "Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket",
-        "Fruit Press 89.99¤ add_shopping_cart Add to Basket"
+        "Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket"
       ],
       "action_id": "CEN-CAR-13-A-01",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -54,9 +54,9 @@
       "observed_result": "Texto visível: X Texto transitório capturado: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket Fruit Press 89.99¤ add_shopping_cart Add to Basket Grape Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Green Smoothie 1.99¤ add_shopping_cart Add to Basket Only 1 left Juice Shop \"Permafrost\" 2020 Edition 9999.99¤ add_shopping_cart Add to Basket Lemon Juice (500ml) 2.99¤ add_shopping_cart Add to Basket Items per page: 16 1 – 16 of 46 | menu OWASP Juice Shop search search close account_circle Account shop Mensagem transitória: add_shopping_cart Add to Basket | 1.99¤ add_shopping_cart Add to Basket | Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket Fruit Press 89.99¤ add_shopping_cart Add to Basket Grape Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Green Smoothie 1.99¤ add_shopping_cart Add to Basket Only 1 left Juice Shop \"Permafrost\" 2020 Edition 9999.99¤ add_shopping_cart Add to Basket Lemon Juice (500ml) 2.99¤ add_shopping_cart Add to Basket Items per page: 16 1 – 16 of 46 | 1",
       "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-CAR-13_step_02.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-CAR-13_step_02.png",
       "error": null,
-      "timestamp": "2026-11-28T10:23:12.562339+00:00",
+      "timestamp": "2026-11-28T13:56:39.903156+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket Fruit Press 89.99¤ add_shopping_cart Add to Basket Grape Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Green Smoothie 1.99¤ add_shopping_cart Add to Basket Only 1 left Juice Shop \"Permafrost\" 2020 Edition 9999.99¤ add_shopping_cart Add to Basket Lemon Juice (500ml) 2.99¤ add_shopping_cart Add to Basket Items per page: 16 1 – 16 of 46",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket Fruit Press 89.99¤ add_shopping_cart Add to Basket Grape Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Green Smoothie 1.99¤ add_shopping_cart Add to Basket Only 1 left Juice Shop \"Permafrost\" 2020 Edition 9999.99¤ add_shopping_cart Add to Basket Lemon Juice (500ml) 2.99¤ add_shopping_cart Add to Basket Items per page: 16 1 – 16 of 46 Placed Apple Juice (1000ml) into basket. X",
       "messages": [
@@ -72,8 +72,10 @@
         "X"
       ],
       "action_id": "CEN-CAR-13-A-02",
-      "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network": [
+        "GET /api/Products/1 -> 200"
+      ],
+      "network_summary": "1 requisição(ões) de API",
       "controls": []
     },
     {
@@ -86,15 +88,15 @@
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket Fruit Press 89.99¤ add_shopping_cart Add to Basket Grape Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Gree",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-CAR-13_step_03.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-CAR-13_step_03.png",
       "error": null,
-      "timestamp": "2026-11-28T10:23:13.960601+00:00",
+      "timestamp": "2026-11-28T13:56:41.350021+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket Fruit Press 89.99¤ add_shopping_cart Add to Basket Grape Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Green Smoothie 1.99¤ add_shopping_cart Add to Basket Only 1 left Juice Shop \"Permafrost\" 2020 Edition 9999.99¤ add_shopping_cart Add to Basket Lemon Juice (500ml) 2.99¤ add_shopping_cart Add to Basket Items per page: 16 1 – 16 of 46 Placed Apple Juice (1000ml) into basket. X",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket Fruit Press 89.99¤ add_shopping_cart Add to Basket Grape Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Green Smoothie 1.99¤ add_shopping_cart Add to Basket Only 1 left Juice Shop \"Permafrost\" 2020 Edition 9999.99¤ add_shopping_cart Add to Basket Lemon Juice (500ml) 2.99¤ add_shopping_cart Add to Basket Items per page: 16 1 – 16 of 46 Placed Apple Juice (1000ml) into basket. X",
       "messages": [],
       "action_id": "CEN-CAR-13-A-03",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -107,9 +109,9 @@
       "observed_result": "URL: http://127.0.0.1:3000/#/ → http://127.0.0.1:3000/#/basket Texto visível: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Your Basket (anonymous) Apple Juice (1000ml) 1 1.99¤ Total Price: 1.99¤ Checkout You will gain 0 Bonus Points from this order! Texto transitório capturado: Apple Juice (1000ml) 1 1.99¤ | Apple Juice (1000ml) | 1 | 1.99¤ | Placed Apple Juice (1000ml) into basket. X Mensagem transitória: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Your Basket (anonymous) Total Price: 0¤ Checkout You will gain 0 Bonus Points from this order! Placed Apple Juice (1000ml) into basket. X | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Your Basket (anonymous) Total Price: 0¤ Checkout You will gain 0 Bonus Points from this order! | Your Basket (anonymous) Total Price: 0¤ Checkout You will gain 0 Bonus Points from this order! | Checkout | You will gain 0 Bonus Points from this order!",
       "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-CAR-13_step_04.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-CAR-13_step_04.png",
       "error": null,
-      "timestamp": "2026-11-28T10:23:16.100673+00:00",
+      "timestamp": "2026-11-28T13:56:43.507384+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket Fruit Press 89.99¤ add_shopping_cart Add to Basket Grape Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Green Smoothie 1.99¤ add_shopping_cart Add to Basket Only 1 left Juice Shop \"Permafrost\" 2020 Edition 9999.99¤ add_shopping_cart Add to Basket Lemon Juice (500ml) 2.99¤ add_shopping_cart Add to Basket Items per page: 16 1 – 16 of 46 Placed Apple Juice (1000ml) into basket. X",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Your Basket (anonymous) Apple Juice (1000ml) 1 1.99¤ Total Price: 1.99¤ Checkout You will gain 0 Bonus Points from this order!",
       "messages": [
@@ -134,8 +136,11 @@
         "Placed Apple Juice (1000ml) into basket. X"
       ],
       "action_id": "CEN-CAR-13-A-04",
-      "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network": [
+        "GET /api/Quantitys/ -> 200",
+        "GET /api/Products/1 -> 200"
+      ],
+      "network_summary": "2 requisição(ões) de API",
       "controls": []
     },
     {
@@ -148,15 +153,15 @@
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Your Basket (anonymous) Apple Juice (1000ml) 1 1.99¤ Total Price: 1.99¤ Checkout You will gain 0 Bonus Points from this order!",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-CAR-13_step_05.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-CAR-13_step_05.png",
       "error": null,
-      "timestamp": "2026-11-28T10:23:17.105793+00:00",
+      "timestamp": "2026-11-28T13:56:44.457188+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Your Basket (anonymous) Apple Juice (1000ml) 1 1.99¤ Total Price: 1.99¤ Checkout You will gain 0 Bonus Points from this order!",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Your Basket (anonymous) Apple Juice (1000ml) 1 1.99¤ Total Price: 1.99¤ Checkout You will gain 0 Bonus Points from this order!",
       "messages": [],
       "action_id": "CEN-CAR-13-A-05",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -169,9 +174,9 @@
       "observed_result": "URL: http://127.0.0.1:3000/#/basket → http://127.0.0.1:3000/#/register Texto visível: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN User Registration Email Password Password must be 5-40 characters long. | 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! | Answer person_add Register Already a customer? Texto transitório capturado: Security Question | Password must be 5-40 characters long. 0/20 | 0/40 | This cannot be changed later! | Password must be 5-40 characters long. Mensagem transitória: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | User Registration | Show password advice | Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer?",
       "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-CAR-13_step_06.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-CAR-13_step_06.png",
       "error": null,
-      "timestamp": "2026-11-28T10:23:19.233407+00:00",
+      "timestamp": "2026-11-28T13:56:46.694690+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Your Basket (anonymous) Apple Juice (1000ml) 1 1.99¤ Total Price: 1.99¤ Checkout You will gain 0 Bonus Points from this order!",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer?",
       "messages": [
@@ -197,23 +202,25 @@
         "0/40"
       ],
       "action_id": "CEN-CAR-13-A-06",
-      "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network": [
+        "GET /api/SecurityQuestions/ -> 200"
+      ],
+      "network_summary": "1 requisição(ões) de API",
       "controls": []
     },
     {
       "step": 7,
       "action": "FILL",
       "user_action": "Preencher \"Email address\"",
-      "data": "cen-cen-car-13-875883e477@example.com",
+      "data": "cen-cen-car-13-341dbf1612@example.com",
       "url_before": "http://127.0.0.1:3000/#/register",
       "url_after": "http://127.0.0.1:3000/#/register",
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto transitório capturado: Email | Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? Mensagem transitória: Email | Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer?",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-CAR-13_step_07.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-CAR-13_step_07.png",
       "error": null,
-      "timestamp": "2026-11-28T10:23:23.655533+00:00",
+      "timestamp": "2026-11-28T13:56:50.222167+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer?",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer?",
       "messages": [
@@ -224,7 +231,7 @@
       ],
       "action_id": "CEN-CAR-13-A-07",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -237,9 +244,9 @@
       "observed_result": "Conteúdo/estrutura visível da página foi alterado. Texto transitório capturado: Password must be 5-40 characters long. 11/20 | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | Password Password must be 5-40 characters long. 11/20 | Email Password Password must be 5-40 characters long. 11/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? Mensagem transitória: Email | Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | Password Password must be 5-40 characters long. 0/20",
       "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-CAR-13_step_08.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-CAR-13_step_08.png",
       "error": null,
-      "timestamp": "2026-11-28T10:23:27.126225+00:00",
+      "timestamp": "2026-11-28T13:56:54.027717+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer?",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer?",
       "messages": [
@@ -258,7 +265,7 @@
       ],
       "action_id": "CEN-CAR-13-A-08",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -271,9 +278,9 @@
       "observed_result": "Conteúdo/estrutura visível da página foi alterado. Texto transitório capturado: 11/40 | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | Repeat Password 11/40 | Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? Mensagem transitória: Password Password must be 5-40 characters long. 11/20 | Email Password Password must be 5-40 characters long. 11/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | Password",
       "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-CAR-13_step_09.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-CAR-13_step_09.png",
       "error": null,
-      "timestamp": "2026-11-28T10:23:30.729982+00:00",
+      "timestamp": "2026-11-28T13:56:57.798072+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer?",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer?",
       "messages": [
@@ -292,7 +299,7 @@
       ],
       "action_id": "CEN-CAR-13-A-09",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -305,9 +312,9 @@
       "observed_result": "Conteúdo/estrutura visível da página foi alterado. Texto transitório capturado: User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question Your favorite book? Your eldest siblings middle name? Mother's maiden name? Mother's birth date? (MM/DD/YY) Father's birth date? (MM/DD/YY) Maternal grandmother's first name? Paternal grandmother's first name? Name of your favorite pet? Last name of dentist when you were a teenager? (Do not include 'Dr.') Your ZIP/postal code when you were a teenager? Company you first work for as an adult? Your favorite book? Your favorite movie? Number of one of your customer or ID cards? What's your favorite place to go hiking? This cannot be changed later! Answer person_add Register Already a customer? | Security Question Your favorite book? Your eldest siblings middle name? Mother's maiden name? Mother's birth date? (MM/DD/YY) Father's birth date? (MM/DD/YY) Maternal grandmother's first name? Paternal grandmother's first name? Name of your favorite pet? Last name of dentist when you were a teenager? (Do not include 'Dr.') Your ZIP/postal code when you were a teenager? Company you first work for as an adult? Your favorite book? Your favorite movie? Number of Mensagem transitória: Repeat Password 11/40 | Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | Repeat Password",
       "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-CAR-13_step_10.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-CAR-13_step_10.png",
       "error": null,
-      "timestamp": "2026-11-28T10:23:34.548298+00:00",
+      "timestamp": "2026-11-28T13:57:02.178593+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer?",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question Your favorite book? This cannot be changed later! Answer person_add Register Already a customer?",
       "messages": [
@@ -334,7 +341,7 @@
       ],
       "action_id": "CEN-CAR-13-A-10",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -347,9 +354,9 @@
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto transitório capturado: User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question Your favorite book? This cannot be changed later! Answer person_add Register Already a customer? | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question Your favorite book? This cannot be changed later! Answer person_add Register Already a customer? | Security Question Your favorite book? | Answer | person_add Register Mensagem transitória: Security Question Your favorite book? This cannot be changed later! | Security Question Your favorite book? This cannot be changed later! Answer | Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question Your favorite book? This cannot be changed later! Answer person_add Register Already a customer? | User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question Your favorite book? This cannot be changed later! Answer person_add Register Already a customer? | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question Your favorite book? This cannot be changed later! Answer person_add Register Already a customer?",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-CAR-13_step_11.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-CAR-13_step_11.png",
       "error": null,
-      "timestamp": "2026-11-28T10:23:38.618088+00:00",
+      "timestamp": "2026-11-28T13:57:05.955795+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question Your favorite book? This cannot be changed later! Answer person_add Register Already a customer?",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question Your favorite book? This cannot be changed later! Answer person_add Register Already a customer?",
       "messages": [
@@ -364,7 +371,7 @@
       ],
       "action_id": "CEN-CAR-13-A-11",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -377,9 +384,9 @@
       "observed_result": "URL: http://127.0.0.1:3000/#/register → http://127.0.0.1:3000/#/login Texto visível: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Login Email Password visibility Forgot your password? | exit_to_app Log in Remember me or Log in with Google Not yet a customer? | Registration completed successfully. | You can now log in. | X Texto transitório capturado: Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? Registration completed successfully. You can now log in. X | or | Log in with Google Mensagem transitória: person_add Register | Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question Your favorite book? This cannot be changed later! Answer person_add Register Already a customer? | User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question Your favorite book? This cannot be changed later! Answer person_add Register Already a customer? | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question Your favorite book? This cannot be changed later! Answer person_add Register Already a customer? | Answer",
       "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-CAR-13_step_12.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-CAR-13_step_12.png",
       "error": null,
-      "timestamp": "2026-11-28T10:23:42.225200+00:00",
+      "timestamp": "2026-11-28T13:57:10.108051+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question Your favorite book? This cannot be changed later! Answer person_add Register Already a customer?",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? Registration completed successfully. You can now log in. X",
       "messages": [
@@ -405,8 +412,12 @@
         "Not yet a customer?"
       ],
       "action_id": "CEN-CAR-13-A-12",
-      "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network": [
+        "POST /api/Users/ -> 201",
+        "POST /api/SecurityAnswers/ -> 201",
+        "GET /rest/admin/application-configuration -> 200"
+      ],
+      "network_summary": "3 requisição(ões) de API",
       "controls": []
     },
     {
@@ -419,15 +430,15 @@
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? Registration completed successfully. You can now log in. X",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-CAR-13_step_13.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-CAR-13_step_13.png",
       "error": null,
-      "timestamp": "2026-11-28T10:23:43.737062+00:00",
+      "timestamp": "2026-11-28T13:57:11.664258+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? Registration completed successfully. You can now log in. X",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? Registration completed successfully. You can now log in. X",
       "messages": [],
       "action_id": "CEN-CAR-13-A-13",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -437,33 +448,37 @@
       "data": "/#/login",
       "url_before": "http://127.0.0.1:3000/#/login",
       "url_after": "http://127.0.0.1:3000/#/login",
-      "observed_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? Registration completed successfully. You can now log in. X",
-      "changed": false,
+      "observed_result": "Conteúdo/estrutura visível da página foi alterado. Texto transitório capturado: Registration completed successfully. You can now log in. X | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? Registration completed successfully. You can now log in. X | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? Mensagem transitória: Registration completed successfully. You can now log in. X | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? Registration completed successfully. You can now log in. X | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer?",
+      "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-CAR-13_step_14.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-CAR-13_step_14.png",
       "error": null,
-      "timestamp": "2026-11-28T10:23:45.831981+00:00",
+      "timestamp": "2026-11-28T13:57:13.828171+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? Registration completed successfully. You can now log in. X",
-      "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? Registration completed successfully. You can now log in. X",
-      "messages": [],
+      "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer?",
+      "messages": [
+        "Registration completed successfully. You can now log in. X",
+        "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? Registration completed successfully. You can now log in. X",
+        "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer?"
+      ],
       "action_id": "CEN-CAR-13-A-14",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
       "step": 15,
       "action": "FILL",
       "user_action": "Preencher \"Email\"",
-      "data": "cen-cen-car-13-875883e477@example.com",
+      "data": "cen-cen-car-13-341dbf1612@example.com",
       "url_before": "http://127.0.0.1:3000/#/login",
       "url_after": "http://127.0.0.1:3000/#/login",
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto transitório capturado: Email | Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? | Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? Mensagem transitória: Email | Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? | Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer?",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-CAR-13_step_15.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-CAR-13_step_15.png",
       "error": null,
-      "timestamp": "2026-11-28T10:23:49.217461+00:00",
+      "timestamp": "2026-11-28T13:57:17.689880+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer?",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer?",
       "messages": [
@@ -474,7 +489,7 @@
       ],
       "action_id": "CEN-CAR-13-A-15",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -487,9 +502,9 @@
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto transitório capturado: Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? | Password visibility | Password | exit_to_app Log in Mensagem transitória: Email | Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? | Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? | Password visibility",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-CAR-13_step_16.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-CAR-13_step_16.png",
       "error": null,
-      "timestamp": "2026-11-28T10:23:52.294401+00:00",
+      "timestamp": "2026-11-28T13:57:21.505248+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer?",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer?",
       "messages": [
@@ -503,7 +518,7 @@
       ],
       "action_id": "CEN-CAR-13-A-16",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -516,9 +531,9 @@
       "observed_result": "URL: http://127.0.0.1:3000/#/login → http://127.0.0.1:3000/#/search Texto visível: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping Texto transitório capturado: 1 – 16 of 46 | 16 | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket Fruit Press 89.99¤ add_shopping_cart Add to Basket Grape Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Green Smoothie 1.99¤ add_shopping_cart Add to Basket Only 1 left Juice Shop \"Permafrost\" 2020 Edition 9999.99¤ add_shopping_cart Add to Basket Lemon Juice (500ml) 2.99¤ add_shopping_cart Add to Basket Items per page: 16 1 – 16 of 46 | Items per page: 16 | Items per page: 16 1 – 16 of Mensagem transitória: exit_to_app Log in | Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? | Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? | Password visibility",
       "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-CAR-13_step_17.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-CAR-13_step_17.png",
       "error": null,
-      "timestamp": "2026-11-28T10:23:55.688305+00:00",
+      "timestamp": "2026-11-28T13:57:25.636296+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer?",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket Fruit Press 89.99¤ add_shopping_cart Add to Basket Grape Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Green Smoothie 1.99¤ add_shopping_cart Add to Basket Only 1 left Juice Shop \"Permafrost\" 2020 Edition 9999.99¤ add_shopping_cart Add to Basket Lemon Juice (500ml) 2.99¤ add_shopping_cart Add to Basket Items per page: 16 1 – 16 of 46",
       "messages": [
@@ -544,8 +559,20 @@
         "Basil Smoothie 2.99¤ add_shopping_cart Add to Basket"
       ],
       "action_id": "CEN-CAR-13-A-17",
-      "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network": [
+        "GET /rest/user/whoami -> 200",
+        "GET /rest/user/whoami -> 200",
+        "POST /rest/user/login -> 200",
+        "GET /rest/basket/183 -> 200",
+        "POST /api/BasketItems/ -> 200",
+        "GET /rest/basket/183 -> 200",
+        "GET /rest/basket/183 -> 200",
+        "GET /rest/user/whoami -> 200",
+        "GET /rest/user/whoami -> 200",
+        "GET /api/Quantitys/ -> 200",
+        "GET /rest/products/search -> 200"
+      ],
+      "network_summary": "11 requisição(ões) de API",
       "controls": []
     },
     {
@@ -558,15 +585,15 @@
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket Fruit Press 89.99¤ add_shopping_cart Add to Basket Grape Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Gree",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-CAR-13_step_18.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-CAR-13_step_18.png",
       "error": null,
-      "timestamp": "2026-11-28T10:23:57.135546+00:00",
+      "timestamp": "2026-11-28T13:57:27.208436+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket Fruit Press 89.99¤ add_shopping_cart Add to Basket Grape Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Green Smoothie 1.99¤ add_shopping_cart Add to Basket Only 1 left Juice Shop \"Permafrost\" 2020 Edition 9999.99¤ add_shopping_cart Add to Basket Lemon Juice (500ml) 2.99¤ add_shopping_cart Add to Basket Items per page: 16 1 – 16 of 46",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket Fruit Press 89.99¤ add_shopping_cart Add to Basket Grape Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Green Smoothie 1.99¤ add_shopping_cart Add to Basket Only 1 left Juice Shop \"Permafrost\" 2020 Edition 9999.99¤ add_shopping_cart Add to Basket Lemon Juice (500ml) 2.99¤ add_shopping_cart Add to Basket Items per page: 16 1 – 16 of 46",
       "messages": [],
       "action_id": "CEN-CAR-13-A-18",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -576,14 +603,14 @@
       "data": "/#/basket",
       "url_before": "http://127.0.0.1:3000/#/search",
       "url_after": "http://127.0.0.1:3000/#/basket",
-      "observed_result": "URL: http://127.0.0.1:3000/#/search → http://127.0.0.1:3000/#/basket Texto visível: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Your Basket (cen-cen-car-13-875883e477@example.com) Apple Juice (1000ml) 1 1.99¤ Total Price: 1.99¤ Checkout You will gain 0 Bonus Points from this order! Texto transitório capturado: Your Basket (cen-cen-car-13-875883e477@example.com) Apple Juice (1000ml) 1 1.99¤ Total Price: 1.99¤ | Apple Juice (1000ml) 1 1.99¤ | Apple Juice (1000ml) | 1 | 1.99¤ Mensagem transitória: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Your Basket Total Price: 0¤ Checkout You will gain 0 Bonus Points from this order! | Your Basket Total Price: 0¤ Checkout You will gain 0 Bonus Points from this order! | Checkout | You will gain 0 Bonus Points from this order! | Your Basket",
+      "observed_result": "URL: http://127.0.0.1:3000/#/search → http://127.0.0.1:3000/#/basket Texto visível: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Your Basket (cen-cen-car-13-341dbf1612@example.com) Apple Juice (1000ml) 1 1.99¤ Total Price: 1.99¤ Checkout You will gain 0 Bonus Points from this order! Texto transitório capturado: Your Basket (cen-cen-car-13-341dbf1612@example.com) Apple Juice (1000ml) 1 1.99¤ Total Price: 1.99¤ | Apple Juice (1000ml) 1 1.99¤ | Apple Juice (1000ml) | 1 | 1.99¤ Mensagem transitória: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Your Basket Total Price: 0¤ Checkout You will gain 0 Bonus Points from this order! | Your Basket Total Price: 0¤ Checkout You will gain 0 Bonus Points from this order! | Checkout | You will gain 0 Bonus Points from this order! | Your Basket",
       "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-CAR-13_step_19.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-CAR-13_step_19.png",
       "error": null,
-      "timestamp": "2026-11-28T10:23:59.281625+00:00",
+      "timestamp": "2026-11-28T13:57:29.476837+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket Fruit Press 89.99¤ add_shopping_cart Add to Basket Grape Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Green Smoothie 1.99¤ add_shopping_cart Add to Basket Only 1 left Juice Shop \"Permafrost\" 2020 Edition 9999.99¤ add_shopping_cart Add to Basket Lemon Juice (500ml) 2.99¤ add_shopping_cart Add to Basket Items per page: 16 1 – 16 of 46",
-      "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Your Basket (cen-cen-car-13-875883e477@example.com) Apple Juice (1000ml) 1 1.99¤ Total Price: 1.99¤ Checkout You will gain 0 Bonus Points from this order!",
+      "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Your Basket (cen-cen-car-13-341dbf1612@example.com) Apple Juice (1000ml) 1 1.99¤ Total Price: 1.99¤ Checkout You will gain 0 Bonus Points from this order!",
       "messages": [
         "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Your Basket Total Price: 0¤ Checkout You will gain 0 Bonus Points from this order!",
         "Your Basket Total Price: 0¤ Checkout You will gain 0 Bonus Points from this order!",
@@ -592,23 +619,26 @@
         "Your Basket",
         "Your Basket Total Price: 0¤",
         "Total Price: 0¤",
-        "(cen-cen-car-13-875883e477@example.com)",
-        "Your Basket (cen-cen-car-13-875883e477@example.com)",
-        "Your Basket (cen-cen-car-13-875883e477@example.com) Total Price: 0¤",
-        "Your Basket (cen-cen-car-13-875883e477@example.com) Total Price: 0¤ Checkout You will gain 0 Bonus Points from this order!",
-        "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Your Basket (cen-cen-car-13-875883e477@example.com) Total Price: 0¤ Checkout You will gain 0 Bonus Points from this order!",
-        "Your Basket (cen-cen-car-13-875883e477@example.com) Apple Juice (1000ml) 1 1.99¤ Total Price: 1.99¤ Checkout You will gain 0 Bonus Points from this order!",
-        "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Your Basket (cen-cen-car-13-875883e477@example.com) Apple Juice (1000ml) 1 1.99¤ Total Price: 1.99¤ Checkout You will gain 0 Bonus Points from this order!",
+        "(cen-cen-car-13-341dbf1612@example.com)",
+        "Your Basket (cen-cen-car-13-341dbf1612@example.com)",
+        "Your Basket (cen-cen-car-13-341dbf1612@example.com) Total Price: 0¤",
+        "Your Basket (cen-cen-car-13-341dbf1612@example.com) Total Price: 0¤ Checkout You will gain 0 Bonus Points from this order!",
+        "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Your Basket (cen-cen-car-13-341dbf1612@example.com) Total Price: 0¤ Checkout You will gain 0 Bonus Points from this order!",
+        "Your Basket (cen-cen-car-13-341dbf1612@example.com) Apple Juice (1000ml) 1 1.99¤ Total Price: 1.99¤ Checkout You will gain 0 Bonus Points from this order!",
+        "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Your Basket (cen-cen-car-13-341dbf1612@example.com) Apple Juice (1000ml) 1 1.99¤ Total Price: 1.99¤ Checkout You will gain 0 Bonus Points from this order!",
         "Total Price: 1.99¤",
-        "Your Basket (cen-cen-car-13-875883e477@example.com) Apple Juice (1000ml) 1 1.99¤ Total Price: 1.99¤",
+        "Your Basket (cen-cen-car-13-341dbf1612@example.com) Apple Juice (1000ml) 1 1.99¤ Total Price: 1.99¤",
         "Apple Juice (1000ml) 1 1.99¤",
         "Apple Juice (1000ml)",
         "1",
         "1.99¤"
       ],
       "action_id": "CEN-CAR-13-A-19",
-      "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network": [
+        "GET /rest/basket/183 -> 200",
+        "GET /rest/user/whoami -> 200"
+      ],
+      "network_summary": "2 requisição(ões) de API",
       "controls": []
     },
     {
@@ -618,23 +648,24 @@
       "data": "",
       "url_before": "http://127.0.0.1:3000/#/basket",
       "url_after": "http://127.0.0.1:3000/#/basket",
-      "observed_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Your Basket (cen-cen-car-13-875883e477@example.com) Apple Juice (1000ml) 1 1.99¤ Total Price: 1.99¤ Checkout You will gain 0 Bonus Points from this order!",
+      "observed_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Your Basket (cen-cen-car-13-341dbf1612@example.com) Apple Juice (1000ml) 1 1.99¤ Total Price: 1.99¤ Checkout You will gain 0 Bonus Points from this order!",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-CAR-13_step_20.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-CAR-13_step_20.png",
       "error": null,
-      "timestamp": "2026-11-28T10:24:00.495862+00:00",
-      "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Your Basket (cen-cen-car-13-875883e477@example.com) Apple Juice (1000ml) 1 1.99¤ Total Price: 1.99¤ Checkout You will gain 0 Bonus Points from this order!",
-      "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Your Basket (cen-cen-car-13-875883e477@example.com) Apple Juice (1000ml) 1 1.99¤ Total Price: 1.99¤ Checkout You will gain 0 Bonus Points from this order!",
+      "timestamp": "2026-11-28T13:57:30.813855+00:00",
+      "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Your Basket (cen-cen-car-13-341dbf1612@example.com) Apple Juice (1000ml) 1 1.99¤ Total Price: 1.99¤ Checkout You will gain 0 Bonus Points from this order!",
+      "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Your Basket (cen-cen-car-13-341dbf1612@example.com) Apple Juice (1000ml) 1 1.99¤ Total Price: 1.99¤ Checkout You will gain 0 Bonus Points from this order!",
       "messages": [],
       "action_id": "CEN-CAR-13-A-20",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     }
   ],
-  "final_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Your Basket (cen-cen-car-13-875883e477@example.com) Apple Juice (1000ml) 1 1.99¤ Total Price: 1.99¤ Checkout You will gain 0 Bonus Points from this order!",
+  "final_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Your Basket (cen-cen-car-13-341dbf1612@example.com) Apple Juice (1000ml) 1 1.99¤ Total Price: 1.99¤ Checkout You will gain 0 Bonus Points from this order!",
   "messages": [
+    "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language placeholder All Products Items per page: 15 0 of 0",
     "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN All Products Items per page: 15 0 of 0",
     "EN",
     "language EN",
@@ -654,7 +685,6 @@
     "Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket",
     "Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket",
     "Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket",
-    "Fruit Press 89.99¤ add_shopping_cart Add to Basket",
     "add_shopping_cart Add to Basket",
     "1.99¤ add_shopping_cart Add to Basket",
     "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket Fruit Press 89.99¤ add_shopping_cart Add to Basket Grape Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Green Smoothie 1.99¤ add_shopping_cart Add to Basket Only 1 left Juice Shop \"Permafrost\" 2020 Edition 9999.99¤ add_shopping_cart Add to Basket Lemon Juice (500ml) 2.99¤ add_shopping_cart Add to Basket Items per page: 16 1 – 16 of 46",
@@ -743,9 +773,10 @@
     "Log in",
     "Remember me",
     "Not yet a customer?",
+    "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? Registration completed successfully. You can now log in. X",
+    "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer?",
     "Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer?",
     "Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer?",
-    "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer?",
     "Password visibility",
     "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN All Products Items per page: 15 0 of 0",
     "All Products Items per page: 15 0 of 0",
@@ -760,20 +791,46 @@
     "Your Basket Total Price: 0¤ Checkout You will gain 0 Bonus Points from this order!",
     "Your Basket",
     "Your Basket Total Price: 0¤",
-    "(cen-cen-car-13-875883e477@example.com)",
-    "Your Basket (cen-cen-car-13-875883e477@example.com)",
-    "Your Basket (cen-cen-car-13-875883e477@example.com) Total Price: 0¤",
-    "Your Basket (cen-cen-car-13-875883e477@example.com) Total Price: 0¤ Checkout You will gain 0 Bonus Points from this order!",
-    "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Your Basket (cen-cen-car-13-875883e477@example.com) Total Price: 0¤ Checkout You will gain 0 Bonus Points from this order!",
-    "Your Basket (cen-cen-car-13-875883e477@example.com) Apple Juice (1000ml) 1 1.99¤ Total Price: 1.99¤ Checkout You will gain 0 Bonus Points from this order!",
-    "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Your Basket (cen-cen-car-13-875883e477@example.com) Apple Juice (1000ml) 1 1.99¤ Total Price: 1.99¤ Checkout You will gain 0 Bonus Points from this order!",
-    "Your Basket (cen-cen-car-13-875883e477@example.com) Apple Juice (1000ml) 1 1.99¤ Total Price: 1.99¤"
+    "(cen-cen-car-13-341dbf1612@example.com)",
+    "Your Basket (cen-cen-car-13-341dbf1612@example.com)",
+    "Your Basket (cen-cen-car-13-341dbf1612@example.com) Total Price: 0¤",
+    "Your Basket (cen-cen-car-13-341dbf1612@example.com) Total Price: 0¤ Checkout You will gain 0 Bonus Points from this order!",
+    "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Your Basket (cen-cen-car-13-341dbf1612@example.com) Total Price: 0¤ Checkout You will gain 0 Bonus Points from this order!",
+    "Your Basket (cen-cen-car-13-341dbf1612@example.com) Apple Juice (1000ml) 1 1.99¤ Total Price: 1.99¤ Checkout You will gain 0 Bonus Points from this order!",
+    "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Your Basket (cen-cen-car-13-341dbf1612@example.com) Apple Juice (1000ml) 1 1.99¤ Total Price: 1.99¤ Checkout You will gain 0 Bonus Points from this order!",
+    "Your Basket (cen-cen-car-13-341dbf1612@example.com) Apple Juice (1000ml) 1 1.99¤ Total Price: 1.99¤"
   ],
   "final_url": "http://127.0.0.1:3000/#/basket",
-  "network_summary": "Coleta de rede não habilitada.",
-  "final_visible_text": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Your Basket (cen-cen-car-13-875883e477@example.com) Apple Juice (1000ml) 1 1.99¤ Total Price: 1.99¤ Checkout You will gain 0 Bonus Points from this order!",
+  "network_summary": "44 requisição(ões) de API registradas em CEN-CAR-13.har.",
+  "final_visible_text": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 1 language EN Your Basket (cen-cen-car-13-341dbf1612@example.com) Apple Juice (1000ml) 1 1.99¤ Total Price: 1.99¤ Checkout You will gain 0 Bonus Points from this order!",
   "validation": {
     "passed": true,
     "message": "Todos os critérios observáveis foram atendidos."
-  }
+  },
+  "network_precondition": [
+    "GET /rest/admin/application-version -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Challenges/ -> 200",
+    "GET /rest/languages -> 200",
+    "GET /rest/admin/application-version -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Challenges/ -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Quantitys/ -> 200",
+    "GET /rest/products/search -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /rest/admin/application-version -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Challenges/ -> 200",
+    "GET /rest/languages -> 200",
+    "GET /rest/admin/application-version -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Challenges/ -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Quantitys/ -> 200",
+    "GET /rest/products/search -> 200"
+  ]
 }

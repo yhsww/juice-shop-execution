@@ -12,9 +12,9 @@
       "observed_result": "URL: http://127.0.0.1:3000/#/ → http://127.0.0.1:3000/#/register Texto visível: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. | 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! | Answer person_add Register Already a customer? Texto transitório capturado: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | EN | language EN | account_circle Account shopping_cart Your Basket 0 language EN | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Mensagem transitória: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language placeholder User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | User Registration | Show password advice | Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer?",
       "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-IDT-25_step_01.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-IDT-25_step_01.png",
       "error": null,
-      "timestamp": "2026-11-28T10:14:23.353858+00:00",
+      "timestamp": "2026-11-28T13:45:52.276397+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language placeholder All Products Items per page: 15 0 of 0",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer?",
       "messages": [
@@ -40,23 +40,25 @@
         "0/40"
       ],
       "action_id": "CEN-IDT-25-A-01",
-      "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network": [
+        "GET /api/SecurityQuestions/ -> 200"
+      ],
+      "network_summary": "1 requisição(ões) de API",
       "controls": []
     },
     {
       "step": 2,
       "action": "FILL",
       "user_action": "Preencher \"Email address\"",
-      "data": "cen-cen-idt-25-fcf9e57df5@example.com",
+      "data": "cen-cen-idt-25-4881ced32b@example.com",
       "url_before": "http://127.0.0.1:3000/#/register",
       "url_after": "http://127.0.0.1:3000/#/register",
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto transitório capturado: Email | Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? Mensagem transitória: Email | Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer?",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-IDT-25_step_02.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-IDT-25_step_02.png",
       "error": null,
-      "timestamp": "2026-11-28T10:14:26.041168+00:00",
+      "timestamp": "2026-11-28T13:45:56.625896+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer?",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer?",
       "messages": [
@@ -67,7 +69,7 @@
       ],
       "action_id": "CEN-IDT-25-A-02",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -80,9 +82,9 @@
       "observed_result": "Conteúdo/estrutura visível da página foi alterado. Texto transitório capturado: Password must be 5-40 characters long. 11/20 | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | Password Password must be 5-40 characters long. 11/20 | Email Password Password must be 5-40 characters long. 11/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? Mensagem transitória: Email | Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | Password Password must be 5-40 characters long. 0/20",
       "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-IDT-25_step_03.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-IDT-25_step_03.png",
       "error": null,
-      "timestamp": "2026-11-28T10:14:28.592571+00:00",
+      "timestamp": "2026-11-28T13:46:00.593578+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 0/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer?",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer?",
       "messages": [
@@ -101,7 +103,7 @@
       ],
       "action_id": "CEN-IDT-25-A-03",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -114,9 +116,9 @@
       "observed_result": "Conteúdo/estrutura visível da página foi alterado. Texto transitório capturado: 11/40 | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | Repeat Password 11/40 | Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? Mensagem transitória: Password Password must be 5-40 characters long. 11/20 | Email Password Password must be 5-40 characters long. 11/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | Password",
       "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-IDT-25_step_04.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-IDT-25_step_04.png",
       "error": null,
-      "timestamp": "2026-11-28T10:14:31.205642+00:00",
+      "timestamp": "2026-11-28T13:46:05.163984+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 0/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer?",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer?",
       "messages": [
@@ -135,7 +137,7 @@
       ],
       "action_id": "CEN-IDT-25-A-04",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -148,9 +150,9 @@
       "observed_result": "Conteúdo/estrutura visível da página foi alterado. Texto transitório capturado: User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question Your favorite book? Your eldest siblings middle name? Mother's maiden name? Mother's birth date? (MM/DD/YY) Father's birth date? (MM/DD/YY) Maternal grandmother's first name? Paternal grandmother's first name? Name of your favorite pet? Last name of dentist when you were a teenager? (Do not include 'Dr.') Your ZIP/postal code when you were a teenager? Company you first work for as an adult? Your favorite book? Your favorite movie? Number of one of your customer or ID cards? What's your favorite place to go hiking? This cannot be changed later! Answer person_add Register Already a customer? | Security Question Your favorite book? Your eldest siblings middle name? Mother's maiden name? Mother's birth date? (MM/DD/YY) Father's birth date? (MM/DD/YY) Maternal grandmother's first name? Paternal grandmother's first name? Name of your favorite pet? Last name of dentist when you were a teenager? (Do not include 'Dr.') Your ZIP/postal code when you were a teenager? Company you first work for as an adult? Your favorite book? Your favorite movie? Number of Mensagem transitória: Repeat Password 11/40 | Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer? | Repeat Password",
       "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-IDT-25_step_05.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-IDT-25_step_05.png",
       "error": null,
-      "timestamp": "2026-11-28T10:14:34.044696+00:00",
+      "timestamp": "2026-11-28T13:46:09.526834+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question This cannot be changed later! Answer person_add Register Already a customer?",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question Your favorite book? This cannot be changed later! Answer person_add Register Already a customer?",
       "messages": [
@@ -177,7 +179,7 @@
       ],
       "action_id": "CEN-IDT-25-A-05",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -190,9 +192,9 @@
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto transitório capturado: User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question Your favorite book? This cannot be changed later! Answer person_add Register Already a customer? | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question Your favorite book? This cannot be changed later! Answer person_add Register Already a customer? | Security Question Your favorite book? | Answer | person_add Register Mensagem transitória: Security Question Your favorite book? This cannot be changed later! | Security Question Your favorite book? This cannot be changed later! Answer | Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question Your favorite book? This cannot be changed later! Answer person_add Register Already a customer? | User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question Your favorite book? This cannot be changed later! Answer person_add Register Already a customer? | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question Your favorite book? This cannot be changed later! Answer person_add Register Already a customer?",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-IDT-25_step_06.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-IDT-25_step_06.png",
       "error": null,
-      "timestamp": "2026-11-28T10:14:36.678237+00:00",
+      "timestamp": "2026-11-28T13:46:13.132209+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question Your favorite book? This cannot be changed later! Answer person_add Register Already a customer?",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question Your favorite book? This cannot be changed later! Answer person_add Register Already a customer?",
       "messages": [
@@ -207,7 +209,7 @@
       ],
       "action_id": "CEN-IDT-25-A-06",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -220,9 +222,9 @@
       "observed_result": "URL: http://127.0.0.1:3000/#/register → http://127.0.0.1:3000/#/login Texto visível: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Email Password visibility Forgot your password? | exit_to_app Log in Remember me or Log in with Google Not yet a customer? | Registration completed successfully. | You can now log in. | X Texto transitório capturado: Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? Registration completed successfully. You can now log in. X | or | Log in with Google Mensagem transitória: person_add Register | Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question Your favorite book? This cannot be changed later! Answer person_add Register Already a customer? | User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question Your favorite book? This cannot be changed later! Answer person_add Register Already a customer? | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question Your favorite book? This cannot be changed later! Answer person_add Register Already a customer? | Answer",
       "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-IDT-25_step_07.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-IDT-25_step_07.png",
       "error": null,
-      "timestamp": "2026-11-28T10:14:39.347333+00:00",
+      "timestamp": "2026-11-28T13:46:16.608644+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN User Registration Email Password Password must be 5-40 characters long. 11/20 Repeat Password 11/40 Show password advice Security Question Your favorite book? This cannot be changed later! Answer person_add Register Already a customer?",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? Registration completed successfully. You can now log in. X",
       "messages": [
@@ -248,8 +250,12 @@
         "Not yet a customer?"
       ],
       "action_id": "CEN-IDT-25-A-07",
-      "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network": [
+        "POST /api/Users/ -> 201",
+        "POST /api/SecurityAnswers/ -> 201",
+        "GET /rest/admin/application-configuration -> 200"
+      ],
+      "network_summary": "3 requisição(ões) de API",
       "controls": []
     },
     {
@@ -262,15 +268,15 @@
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? Registration completed successfully. You can now log in. X",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-IDT-25_step_08.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-IDT-25_step_08.png",
       "error": null,
-      "timestamp": "2026-11-28T10:14:40.700484+00:00",
+      "timestamp": "2026-11-28T13:46:18.111527+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? Registration completed successfully. You can now log in. X",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? Registration completed successfully. You can now log in. X",
       "messages": [],
       "action_id": "CEN-IDT-25-A-08",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -280,14 +286,14 @@
       "data": "/#/forgot-password",
       "url_before": "http://127.0.0.1:3000/#/login",
       "url_after": "http://127.0.0.1:3000/#/forgot-password",
-      "observed_result": "URL: http://127.0.0.1:3000/#/login → http://127.0.0.1:3000/#/forgot-password Texto visível: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. | 0/20 Repeat New Password 0/20 Show password advice Change Registration completed successfully. Texto transitório capturado: help_outline | Security Question | Password must be 5-40 characters long. 0/20 | 0/20 | Password must be 5-40 characters long. Mensagem transitória: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change Registration completed successfully. You can now log in. X | Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change | Forgot Password | Show password advice",
+      "observed_result": "URL: http://127.0.0.1:3000/#/login → http://127.0.0.1:3000/#/forgot-password Texto visível: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. | 0/20 Repeat New Password 0/20 Show password advice Change Texto transitório capturado: help_outline | Security Question | Password must be 5-40 characters long. 0/20 | 0/20 | Password must be 5-40 characters long. Mensagem transitória: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change Registration completed successfully. You can now log in. X | Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change | Forgot Password | Show password advice",
       "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-IDT-25_step_09.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-IDT-25_step_09.png",
       "error": null,
-      "timestamp": "2026-11-28T10:14:42.764865+00:00",
+      "timestamp": "2026-11-28T13:46:20.421181+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Login Email Password visibility Forgot your password? exit_to_app Log in Remember me or Log in with Google Not yet a customer? Registration completed successfully. You can now log in. X",
-      "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change Registration completed successfully. You can now log in. X",
+      "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change",
       "messages": [
         "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change",
         "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change Registration completed successfully. You can now log in. X",
@@ -312,29 +318,29 @@
       ],
       "action_id": "CEN-IDT-25-A-09",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
       "step": 10,
       "action": "FILL",
       "user_action": "Preencher \"Email\"",
-      "data": "cen-cen-idt-25-fcf9e57df5@example.com",
+      "data": "cen-cen-idt-25-4881ced32b@example.com",
       "url_before": "http://127.0.0.1:3000/#/forgot-password",
       "url_after": "http://127.0.0.1:3000/#/forgot-password",
-      "observed_result": "Conteúdo/estrutura visível da página foi alterado. Texto transitório capturado: Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice | New Password Password must be 5-40 characters long. 0/20 | Repeat New Password 0/20 | New Password | Repeat New Password Mensagem transitória: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change | Email help_outline | Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change | Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change | Email",
-      "changed": true,
+      "observed_result": "Nenhuma mudança visual relevante detectada. Texto transitório capturado: Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice | New Password Password must be 5-40 characters long. 0/20 | Repeat New Password 0/20 | New Password | Repeat New Password Mensagem transitória: Email help_outline | Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change | Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change | Email",
+      "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-IDT-25_step_10.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-IDT-25_step_10.png",
       "error": null,
-      "timestamp": "2026-11-28T10:14:45.415968+00:00",
-      "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change Registration completed successfully. You can now log in. X",
+      "timestamp": "2026-11-28T13:46:23.637255+00:00",
+      "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change",
       "messages": [
-        "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change",
         "Email help_outline",
         "Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change",
         "Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change",
+        "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change",
         "Email",
         "Security Question help_outline",
         "Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice",
@@ -344,8 +350,10 @@
         "Repeat New Password"
       ],
       "action_id": "CEN-IDT-25-A-10",
-      "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network": [
+        "GET /rest/user/security-question -> 200"
+      ],
+      "network_summary": "1 requisição(ões) de API",
       "controls": []
     },
     {
@@ -358,15 +366,15 @@
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-IDT-25_step_11.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-IDT-25_step_11.png",
       "error": null,
-      "timestamp": "2026-11-28T10:14:47.183475+00:00",
+      "timestamp": "2026-11-28T13:46:25.068886+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change",
       "messages": [],
       "action_id": "CEN-IDT-25-A-11",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -379,9 +387,9 @@
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto transitório capturado: Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change | Security Question help_outline | Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice | Security Question Mensagem transitória: Email help_outline | Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change | Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change | Security Question help_outline",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-IDT-25_step_12.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-IDT-25_step_12.png",
       "error": null,
-      "timestamp": "2026-11-28T10:14:50.694901+00:00",
+      "timestamp": "2026-11-28T13:46:28.252065+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change",
       "messages": [
@@ -395,7 +403,7 @@
       ],
       "action_id": "CEN-IDT-25-A-12",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -408,9 +416,9 @@
       "observed_result": "Conteúdo/estrutura visível da página foi alterado. Texto transitório capturado: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 10/20 Repeat New Password 0/20 Show password advice Change | New Password Password must be 5-40 characters long. 10/20 | Security Question help_outline New Password Password must be 5-40 characters long. 10/20 Repeat New Password 0/20 Show password advice | Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 10/20 Repeat New Password 0/20 Show password advice Change | Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 10/20 Repeat New Password 0/20 Show password advice Change Mensagem transitória: Security Question help_outline | Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice | Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change | Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change",
       "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-IDT-25_step_13.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-IDT-25_step_13.png",
       "error": null,
-      "timestamp": "2026-11-28T10:14:53.649796+00:00",
+      "timestamp": "2026-11-28T13:46:31.474880+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 10/20 Repeat New Password 0/20 Show password advice Change",
       "messages": [
@@ -431,7 +439,7 @@
       ],
       "action_id": "CEN-IDT-25-A-13",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -444,9 +452,9 @@
       "observed_result": "Conteúdo/estrutura visível da página foi alterado. Texto transitório capturado: Repeat New Password 10/20 | Security Question help_outline New Password Password must be 5-40 characters long. 10/20 Repeat New Password 10/20 Show password advice | Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 10/20 Repeat New Password 10/20 Show password advice Change | Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 10/20 Repeat New Password 10/20 Show password advice Change | Change Mensagem transitória: New Password Password must be 5-40 characters long. 10/20 | Security Question help_outline New Password Password must be 5-40 characters long. 10/20 Repeat New Password 0/20 Show password advice | Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 10/20 Repeat New Password 0/20 Show password advice Change | Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 10/20 Repeat New Password 0/20 Show password advice Change | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 10/20 Repeat New Password 0/20 Show password advice Change",
       "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-IDT-25_step_14.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-IDT-25_step_14.png",
       "error": null,
-      "timestamp": "2026-11-28T10:14:57.024551+00:00",
+      "timestamp": "2026-11-28T13:46:35.194546+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 10/20 Repeat New Password 0/20 Show password advice Change",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 10/20 Repeat New Password 10/20 Show password advice Change",
       "messages": [
@@ -468,7 +476,7 @@
       ],
       "action_id": "CEN-IDT-25-A-14",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -481,9 +489,9 @@
       "observed_result": "Texto visível: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Forgot Password Wrong answer to security question. Texto transitório capturado: Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice | New Password Password must be 5-40 characters long. 0/20 | Repeat New Password 0/20 | Security Question | New Password Mensagem transitória: Change | Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 10/20 Repeat New Password 10/20 Show password advice Change | Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 10/20 Repeat New Password 10/20 Show password advice Change | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 10/20 Repeat New Password 10/20 Show password advice Change | Repeat New Password 10/20",
       "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-IDT-25_step_15.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-IDT-25_step_15.png",
       "error": null,
-      "timestamp": "2026-11-28T10:15:00.256653+00:00",
+      "timestamp": "2026-11-28T13:46:38.258349+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Forgot Password Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 10/20 Repeat New Password 10/20 Show password advice Change",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Forgot Password Wrong answer to security question. Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change",
       "messages": [
@@ -509,8 +517,10 @@
         "New Password"
       ],
       "action_id": "CEN-IDT-25-A-15",
-      "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network": [
+        "POST /rest/user/reset-password -> 401"
+      ],
+      "network_summary": "1 requisição(ões) de API",
       "controls": []
     },
     {
@@ -523,15 +533,15 @@
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Forgot Password Wrong answer to security question. Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-IDT-25_step_16.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-IDT-25_step_16.png",
       "error": null,
-      "timestamp": "2026-11-28T10:15:01.444129+00:00",
+      "timestamp": "2026-11-28T13:46:39.574838+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Forgot Password Wrong answer to security question. Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Forgot Password Wrong answer to security question. Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change",
       "messages": [],
       "action_id": "CEN-IDT-25-A-16",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     }
   ],
@@ -634,10 +644,36 @@
     "Wrong answer to security question."
   ],
   "final_url": "http://127.0.0.1:3000/#/forgot-password",
-  "network_summary": "Coleta de rede não habilitada.",
+  "network_summary": "30 requisição(ões) de API registradas em CEN-IDT-25.har.",
   "final_visible_text": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Forgot Password Wrong answer to security question. Email help_outline Security Question help_outline New Password Password must be 5-40 characters long. 0/20 Repeat New Password 0/20 Show password advice Change",
   "validation": {
     "passed": true,
     "message": "Todos os critérios observáveis foram atendidos."
-  }
+  },
+  "network_precondition": [
+    "GET /rest/admin/application-version -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Challenges/ -> 200",
+    "GET /rest/languages -> 200",
+    "GET /rest/admin/application-version -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Challenges/ -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Quantitys/ -> 200",
+    "GET /rest/products/search -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /rest/admin/application-version -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Challenges/ -> 200",
+    "GET /rest/languages -> 200",
+    "GET /rest/admin/application-version -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Challenges/ -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Quantitys/ -> 200",
+    "GET /rest/products/search -> 200"
+  ]
 }

@@ -12,9 +12,9 @@
       "observed_result": "URL: http://127.0.0.1:3000/#/search → http://127.0.0.1:3000/#/saved-payment-methods Texto visível: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card Texto transitório capturado: My Payment Options | Add new card | Add new card Add a credit or debit card | Add a credit or debit card | Registration completed successfully. You can now log in. X Mensagem transitória: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card Registration completed successfully. You can now log in. X | My Payment Options Add new card Add a credit or debit card | My Payment Options | Add new card",
       "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-PER-11_step_01.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-PER-11_step_01.png",
       "error": null,
-      "timestamp": "2026-11-28T10:41:20.834163+00:00",
+      "timestamp": "2026-11-28T14:19:12.421585+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket Fruit Press 89.99¤ add_shopping_cart Add to Basket Grape Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Green Smoothie 1.99¤ add_shopping_cart Add to Basket Only 1 left Juice Shop \"Permafrost\" 2020 Edition 9999.99¤ add_shopping_cart Add to Basket Lemon Juice (500ml) 2.99¤ add_shopping_cart Add to Basket Items per page: 16 1 – 16 of 46 Registration completed successfully. You can now log in. X",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card",
       "messages": [
@@ -28,8 +28,10 @@
         "Registration completed successfully. You can now log in. X"
       ],
       "action_id": "CEN-PER-11-A-01",
-      "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network": [
+        "GET /api/Cards -> 200"
+      ],
+      "network_summary": "1 requisição(ões) de API",
       "controls": []
     },
     {
@@ -42,15 +44,15 @@
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-PER-11_step_02.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-PER-11_step_02.png",
       "error": null,
-      "timestamp": "2026-11-28T10:41:22.069213+00:00",
+      "timestamp": "2026-11-28T14:19:13.712392+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card",
       "messages": [],
       "action_id": "CEN-PER-11-A-02",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -63,9 +65,9 @@
       "observed_result": "Texto visível: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card Name Card Number 0/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit Texto transitório capturado: Add new card Add a credit or debit card | My Payment Options Add new card Add a credit or debit card | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card Mensagem transitória: Add new card Add a credit or debit card | My Payment Options Add new card Add a credit or debit card | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card",
       "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-PER-11_step_03.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-PER-11_step_03.png",
       "error": null,
-      "timestamp": "2026-11-28T10:41:24.487607+00:00",
+      "timestamp": "2026-11-28T14:19:17.060131+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card Name Card Number 0/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit",
       "messages": [
@@ -75,7 +77,7 @@
       ],
       "action_id": "CEN-PER-11-A-03",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -88,15 +90,15 @@
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card Name Card Number 0/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-PER-11_step_04.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-PER-11_step_04.png",
       "error": null,
-      "timestamp": "2026-11-28T10:41:25.198254+00:00",
+      "timestamp": "2026-11-28T14:19:17.807106+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card Name Card Number 0/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card Name Card Number 0/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit",
       "messages": [],
       "action_id": "CEN-PER-11-A-04",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -109,9 +111,9 @@
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto transitório capturado: My Payment Options Add new card Add a credit or debit card Name Card Number 0/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card Name Card Number 0/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit | Name | Name Card Number 0/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 | Name Card Number 0/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit Mensagem transitória: Add new card Add a credit or debit card | Add new card Add a credit or debit card Name Card Number 0/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit | My Payment Options Add new card Add a credit or debit card Name Card Number 0/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card Name Card Number 0/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit | Name",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-PER-11_step_05.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-PER-11_step_05.png",
       "error": null,
-      "timestamp": "2026-11-28T10:41:27.989372+00:00",
+      "timestamp": "2026-11-28T14:19:21.636057+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card Name Card Number 0/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card Name Card Number 0/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit",
       "messages": [
@@ -125,7 +127,7 @@
       ],
       "action_id": "CEN-PER-11-A-05",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -138,9 +140,9 @@
       "observed_result": "Conteúdo/estrutura visível da página foi alterado. Texto transitório capturado: 16/16 | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card Name Card Number 16/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit | Card Number 16/16 | Name Card Number 16/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 | Name Card Number 16/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit Mensagem transitória: Name | Name Card Number 0/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 | Name Card Number 0/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card Name Card Number 0/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit | Card Number 0/16",
       "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-PER-11_step_06.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-PER-11_step_06.png",
       "error": null,
-      "timestamp": "2026-11-28T10:41:30.767684+00:00",
+      "timestamp": "2026-11-28T14:19:25.733613+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card Name Card Number 0/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card Name Card Number 16/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit",
       "messages": [
@@ -158,7 +160,7 @@
       ],
       "action_id": "CEN-PER-11-A-06",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -171,9 +173,9 @@
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto transitório capturado: Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 | Name Card Number 16/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 | Name Card Number 16/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card Name Card Number 16/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit | 1 2 3 4 5 6 7 8 9 10 11 12 Mensagem transitória: Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 | Name Card Number 16/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 | Name Card Number 16/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card Name Card Number 16/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit | 1 2 3 4 5 6 7 8 9 10 11 12",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-PER-11_step_07.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-PER-11_step_07.png",
       "error": null,
-      "timestamp": "2026-11-28T10:41:33.517097+00:00",
+      "timestamp": "2026-11-28T14:19:29.860064+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card Name Card Number 16/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card Name Card Number 16/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit",
       "messages": [
@@ -185,7 +187,7 @@
       ],
       "action_id": "CEN-PER-11-A-07",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -198,9 +200,9 @@
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto transitório capturado: Name Card Number 16/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card Name Card Number 16/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit | 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 | send Submit | Add new card Add a credit or debit card Name Card Number 16/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit Mensagem transitória: Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 | Name Card Number 16/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 | Name Card Number 16/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card Name Card Number 16/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit | 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-PER-11_step_08.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-PER-11_step_08.png",
       "error": null,
-      "timestamp": "2026-11-28T10:41:37.864815+00:00",
+      "timestamp": "2026-11-28T14:19:33.278864+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card Name Card Number 16/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card Name Card Number 16/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit",
       "messages": [
@@ -214,7 +216,7 @@
       ],
       "action_id": "CEN-PER-11-A-08",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -227,9 +229,9 @@
       "observed_result": "Texto visível: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options ************0002 Cliente Teste 12/2090 Add new card Add a credit or debit card Name Card Number 0/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit Your card ending with 0002 has been saved for your convenience. | X Texto transitório capturado: My Payment Options ************0002 Cliente Teste 12/2090 Add new card Add a credit or debit card Name Card Number 0/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit | ************0002 Cliente Teste 12/2090 | ************0002 | Cliente Teste | 12/2090 Mensagem transitória: send Submit | Name Card Number 16/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit | Add new card Add a credit or debit card Name Card Number 16/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card Name Card Number 16/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit | Card Number 16/16",
       "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-PER-11_step_09.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-PER-11_step_09.png",
       "error": null,
-      "timestamp": "2026-11-28T10:41:42.488065+00:00",
+      "timestamp": "2026-11-28T14:19:37.372376+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card Name Card Number 16/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options ************0002 Cliente Teste 12/2090 Add new card Add a credit or debit card Name Card Number 0/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit Your card ending with 0002 has been saved for your convenience. X",
       "messages": [
@@ -255,8 +257,11 @@
         "2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099"
       ],
       "action_id": "CEN-PER-11-A-09",
-      "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network": [
+        "POST /api/Cards/ -> 201",
+        "GET /api/Cards -> 200"
+      ],
+      "network_summary": "2 requisição(ões) de API",
       "controls": []
     },
     {
@@ -269,15 +274,15 @@
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options ************0002 Cliente Teste 12/2090 Add new card Add a credit or debit card Name Card Number 0/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit Your card ending with 0002 has been saved for your convenience. X",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-PER-11_step_10.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-PER-11_step_10.png",
       "error": null,
-      "timestamp": "2026-11-28T10:41:43.996535+00:00",
+      "timestamp": "2026-11-28T14:19:38.909401+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options ************0002 Cliente Teste 12/2090 Add new card Add a credit or debit card Name Card Number 0/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit Your card ending with 0002 has been saved for your convenience. X",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options ************0002 Cliente Teste 12/2090 Add new card Add a credit or debit card Name Card Number 0/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit Your card ending with 0002 has been saved for your convenience. X",
       "messages": [],
       "action_id": "CEN-PER-11-A-10",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -290,9 +295,9 @@
       "observed_result": "Conteúdo/estrutura visível da página foi alterado. Texto transitório capturado: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options ************0002 Cliente Teste 12/2090 Add new card Add a credit or debit card Name Card Number 0/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit Your card ending with 0002 has been saved for your convenience. X | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card Name Card Number 0/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit Your card ending with 0002 has been saved for your convenience. X | My Payment Options Add new card Add a credit or debit card Name Card Number 0/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit | Your card ending with 0002 has been saved for your convenience. X | menu OWASP Mensagem transitória: ************0002 Cliente Teste 12/2090 | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options ************0002 Cliente Teste 12/2090 Add new card Add a credit or debit card Name Card Number 0/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit Your card ending with 0002 has been saved for your convenience. X | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card Name Card Number 0/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit Your card ending with 0002 has been saved for your convenience. X | My Payment Options Add new card Add a credit or debit card Name Card Number 0/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit | Your card ending with 0002 has been saved for your convenience. X",
       "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-PER-11_step_11.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-PER-11_step_11.png",
       "error": null,
-      "timestamp": "2026-11-28T10:41:46.296304+00:00",
+      "timestamp": "2026-11-28T14:19:41.087893+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options ************0002 Cliente Teste 12/2090 Add new card Add a credit or debit card Name Card Number 0/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit Your card ending with 0002 has been saved for your convenience. X",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card Name Card Number 0/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit",
       "messages": [
@@ -304,8 +309,11 @@
         "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card Name Card Number 0/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit"
       ],
       "action_id": "CEN-PER-11-A-11",
-      "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network": [
+        "DELETE /api/Cards/32 -> 200",
+        "GET /api/Cards -> 200"
+      ],
+      "network_summary": "2 requisição(ões) de API",
       "controls": []
     },
     {
@@ -318,15 +326,15 @@
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card Name Card Number 0/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-PER-11_step_12.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-PER-11_step_12.png",
       "error": null,
-      "timestamp": "2026-11-28T10:41:47.714781+00:00",
+      "timestamp": "2026-11-28T14:19:42.564085+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card Name Card Number 0/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card Name Card Number 0/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit",
       "messages": [],
       "action_id": "CEN-PER-11-A-12",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     }
   ],
@@ -368,10 +376,52 @@
     "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options ************0002 Cliente Teste 12/2090 Add new card Add a credit or debit card Name Card Number 0/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit Your card ending with 0002 has been saved for your convenience. X"
   ],
   "final_url": "http://127.0.0.1:3000/#/saved-payment-methods",
-  "network_summary": "Coleta de rede não habilitada.",
+  "network_summary": "45 requisição(ões) de API registradas em CEN-PER-11.har.",
   "final_visible_text": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My Payment Options Add new card Add a credit or debit card Name Card Number 0/16 Expiry Month 1 2 3 4 5 6 7 8 9 10 11 12 Expiry Year 2080 2081 2082 2083 2084 2085 2086 2087 2088 2089 2090 2091 2092 2093 2094 2095 2096 2097 2098 2099 send Submit",
   "validation": {
     "passed": true,
     "message": "Todos os critérios observáveis foram atendidos."
-  }
+  },
+  "network_precondition": [
+    "GET /rest/admin/application-version -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Challenges/ -> 200",
+    "GET /rest/languages -> 200",
+    "GET /rest/admin/application-version -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Challenges/ -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Quantitys/ -> 200",
+    "GET /rest/products/search -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /rest/admin/application-version -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Challenges/ -> 200",
+    "GET /rest/languages -> 200",
+    "GET /rest/admin/application-version -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Challenges/ -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Quantitys/ -> 200",
+    "GET /rest/products/search -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /rest/user/whoami -> 200",
+    "GET /rest/user/whoami -> 200",
+    "POST /rest/user/login -> 401",
+    "GET /api/SecurityQuestions/ -> 200",
+    "POST /api/Users/ -> 201",
+    "POST /api/SecurityAnswers/ -> 201",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /rest/user/whoami -> 200",
+    "GET /rest/user/whoami -> 200",
+    "POST /rest/user/login -> 200",
+    "GET /rest/basket/203 -> 200",
+    "GET /rest/user/whoami -> 200",
+    "GET /rest/user/whoami -> 200",
+    "GET /api/Quantitys/ -> 200",
+    "GET /rest/products/search -> 200"
+  ]
 }

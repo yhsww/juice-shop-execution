@@ -9,17 +9,16 @@
       "data": "/#/address/create",
       "url_before": "http://127.0.0.1:3000/#/search",
       "url_after": "http://127.0.0.1:3000/#/address/create",
-      "observed_result": "URL: http://127.0.0.1:3000/#/search → http://127.0.0.1:3000/#/address/create Texto visível: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. | 160 characters 0/160 City State navigate_before Back send Submit Texto transitório capturado: Address | 0/8 | Max. 160 characters 0/160 | Max. 160 characters | Registration completed successfully. You can now log in. X Mensagem transitória: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit Registration completed successfully. You can now log in. X | Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | Add New Address | navigate_before",
+      "observed_result": "URL: http://127.0.0.1:3000/#/search → http://127.0.0.1:3000/#/address/create Texto visível: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. | 160 characters 0/160 City State navigate_before Back send Submit Texto transitório capturado: ZIP Code | Address | 0/8 | Max. 160 characters 0/160 | Max. 160 characters Mensagem transitória: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | Add New Address | navigate_before | navigate_before Back",
       "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-PER-10_step_01.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-PER-10_step_01.png",
       "error": null,
-      "timestamp": "2026-11-28T10:40:13.587469+00:00",
-      "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket Fruit Press 89.99¤ add_shopping_cart Add to Basket Grape Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Green Smoothie 1.99¤ add_shopping_cart Add to Basket Only 1 left Juice Shop \"Permafrost\" 2020 Edition 9999.99¤ add_shopping_cart Add to Basket Lemon Juice (500ml) 2.99¤ add_shopping_cart Add to Basket Items per page: 16 1 – 16 of 46 Registration completed successfully. You can now log in. X",
+      "timestamp": "2026-11-28T14:17:48.876542+00:00",
+      "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket Fruit Press 89.99¤ add_shopping_cart Add to Basket Grape Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Green Smoothie 1.99¤ add_shopping_cart Add to Basket Only 1 left Juice Shop \"Permafrost\" 2020 Edition 9999.99¤ add_shopping_cart Add to Basket Lemon Juice (500ml) 2.99¤ add_shopping_cart Add to Basket Items per page: 16 1 – 16 of 46",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit",
       "messages": [
         "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit",
-        "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit Registration completed successfully. You can now log in. X",
         "Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit",
         "Add New Address",
         "navigate_before",
@@ -37,11 +36,12 @@
         "Address Max. 160 characters 0/160",
         "City",
         "State",
-        "ZIP Code"
+        "ZIP Code",
+        "Address"
       ],
       "action_id": "CEN-PER-10-A-01",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -54,15 +54,15 @@
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-PER-10_step_02.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-PER-10_step_02.png",
       "error": null,
-      "timestamp": "2026-11-28T10:40:14.486055+00:00",
+      "timestamp": "2026-11-28T14:17:49.929754+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit",
       "messages": [],
       "action_id": "CEN-PER-10-A-02",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -75,9 +75,9 @@
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto transitório capturado: Country | Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit Mensagem transitória: Country | Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-PER-10_step_03.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-PER-10_step_03.png",
       "error": null,
-      "timestamp": "2026-11-28T10:40:17.505065+00:00",
+      "timestamp": "2026-11-28T14:17:54.551709+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit",
       "messages": [
@@ -88,7 +88,7 @@
       ],
       "action_id": "CEN-PER-10-A-03",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -101,9 +101,9 @@
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto transitório capturado: Country | Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | Name Mensagem transitória: Country | Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | Name",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-PER-10_step_04.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-PER-10_step_04.png",
       "error": null,
-      "timestamp": "2026-11-28T10:40:22.055484+00:00",
+      "timestamp": "2026-11-28T14:17:59.581462+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit",
       "messages": [
@@ -115,7 +115,7 @@
       ],
       "action_id": "CEN-PER-10-A-04",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -128,9 +128,9 @@
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto transitório capturado: Name | Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | Mobile Number Mensagem transitória: Name | Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | Mobile Number",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-PER-10_step_05.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-PER-10_step_05.png",
       "error": null,
-      "timestamp": "2026-11-28T10:40:25.781171+00:00",
+      "timestamp": "2026-11-28T14:18:04.728388+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit",
       "messages": [
@@ -142,7 +142,7 @@
       ],
       "action_id": "CEN-PER-10-A-05",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -155,9 +155,9 @@
       "observed_result": "Conteúdo/estrutura visível da página foi alterado. Texto transitório capturado: 8/8 | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | ZIP Code 8/8 | Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit Mensagem transitória: Mobile Number | Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | ZIP Code 0/8",
       "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-PER-10_step_06.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-PER-10_step_06.png",
       "error": null,
-      "timestamp": "2026-11-28T10:40:29.745011+00:00",
+      "timestamp": "2026-11-28T14:18:10.129790+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit",
       "messages": [
@@ -175,7 +175,7 @@
       ],
       "action_id": "CEN-PER-10-A-06",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -188,9 +188,9 @@
       "observed_result": "Conteúdo/estrutura visível da página foi alterado. Texto transitório capturado: Max. 160 characters 20/160 | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit | Address Max. 160 characters 20/160 | Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit | Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit Mensagem transitória: ZIP Code 8/8 | Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit | ZIP Code",
       "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-PER-10_step_07.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-PER-10_step_07.png",
       "error": null,
-      "timestamp": "2026-11-28T10:40:34.699432+00:00",
+      "timestamp": "2026-11-28T14:18:15.666547+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit",
       "messages": [
@@ -210,7 +210,7 @@
       ],
       "action_id": "CEN-PER-10-A-07",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -223,9 +223,9 @@
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto transitório capturado: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit | Address | City | send Submit | navigate_before Back send Submit Mensagem transitória: Address Max. 160 characters 20/160 | Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit | Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit | Address",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-PER-10_step_08.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-PER-10_step_08.png",
       "error": null,
-      "timestamp": "2026-11-28T10:40:38.336771+00:00",
+      "timestamp": "2026-11-28T14:18:20.306296+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit",
       "messages": [
@@ -240,7 +240,7 @@
       ],
       "action_id": "CEN-PER-10-A-08",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -253,9 +253,9 @@
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto transitório capturado: City | Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit | Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit | State Mensagem transitória: City | Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit | Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit | State",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-PER-10_step_09.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-PER-10_step_09.png",
       "error": null,
-      "timestamp": "2026-11-28T10:40:41.484236+00:00",
+      "timestamp": "2026-11-28T14:18:26.933269+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit",
       "messages": [
@@ -267,7 +267,7 @@
       ],
       "action_id": "CEN-PER-10-A-09",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -280,9 +280,9 @@
       "observed_result": "URL: http://127.0.0.1:3000/#/address/create → http://127.0.0.1:3000/#/search Texto visível: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping Texto transitório capturado: 1 – 16 of 46 | 16 | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket Fruit Press 89.99¤ add_shopping_cart Add to Basket Grape Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Green Smoothie 1.99¤ add_shopping_cart Add to Basket Only 1 left Juice Shop \"Permafrost\" 2020 Edition 9999.99¤ add_shopping_cart Add to Basket Lemon Juice (500ml) 2.99¤ add_shopping_cart Add to Basket Items per page: 16 1 – 16 of 46 The address at Fortaleza has been successfully adde Mensagem transitória: send Submit | navigate_before Back send Submit | Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit | Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit",
       "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-PER-10_step_10.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-PER-10_step_10.png",
       "error": null,
-      "timestamp": "2026-11-28T10:40:44.939471+00:00",
+      "timestamp": "2026-11-28T14:18:33.983177+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket Fruit Press 89.99¤ add_shopping_cart Add to Basket Grape Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Green Smoothie 1.99¤ add_shopping_cart Add to Basket Only 1 left Juice Shop \"Permafrost\" 2020 Edition 9999.99¤ add_shopping_cart Add to Basket Lemon Juice (500ml) 2.99¤ add_shopping_cart Add to Basket Items per page: 16 1 – 16 of 46 The address at Fortaleza has been successfully added to your addresses. X Click for more information",
       "messages": [
@@ -308,8 +308,12 @@
         "ZIP Code"
       ],
       "action_id": "CEN-PER-10-A-10",
-      "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network": [
+        "POST /api/Addresss/ -> 201",
+        "GET /api/Quantitys/ -> 200",
+        "GET /rest/products/search -> 200"
+      ],
+      "network_summary": "3 requisição(ões) de API",
       "controls": []
     },
     {
@@ -322,15 +326,15 @@
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket Fruit Press 89.99¤ add_shopping_cart Add to Basket Grape Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Gree",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-PER-10_step_11.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-PER-10_step_11.png",
       "error": null,
-      "timestamp": "2026-11-28T10:40:46.545473+00:00",
+      "timestamp": "2026-11-28T14:18:35.737927+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket Fruit Press 89.99¤ add_shopping_cart Add to Basket Grape Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Green Smoothie 1.99¤ add_shopping_cart Add to Basket Only 1 left Juice Shop \"Permafrost\" 2020 Edition 9999.99¤ add_shopping_cart Add to Basket Lemon Juice (500ml) 2.99¤ add_shopping_cart Add to Basket Items per page: 16 1 – 16 of 46 The address at Fortaleza has been successfully added to your addresses. X Click for more information",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket Fruit Press 89.99¤ add_shopping_cart Add to Basket Grape Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Green Smoothie 1.99¤ add_shopping_cart Add to Basket Only 1 left Juice Shop \"Permafrost\" 2020 Edition 9999.99¤ add_shopping_cart Add to Basket Lemon Juice (500ml) 2.99¤ add_shopping_cart Add to Basket Items per page: 16 1 – 16 of 46 The address at Fortaleza has been successfully added to your addresses. X Click for more information",
       "messages": [],
       "action_id": "CEN-PER-10-A-11",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -343,9 +347,9 @@
       "observed_result": "URL: http://127.0.0.1:3000/#/search → http://127.0.0.1:3000/#/address/saved Texto visível: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My saved addresses Cliente Alternativo Rua Alternativa, 200, Fortaleza, CE, 60000000 Brazil addAdd New Address Texto transitório capturado: Cliente Alternativo Rua Alternativa, 200, Fortaleza, CE, 60000000 Brazil | Cliente Alternativo | Rua Alternativa, 200, Fortaleza, CE, 60000000 | Brazil | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My saved addresses Cliente Alternativo Rua Alternativa, 200, Fortaleza, CE, 60000000 Brazil addAdd New Address Mensagem transitória: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My saved addresses addAdd New Address | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My saved addresses addAdd New Address The address at Fortaleza has been successfully added to your addresses. X | The address at Fortaleza has been successfully added to your addresses. X | My saved addresses addAdd New Address | My saved addresses",
       "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-PER-10_step_12.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-PER-10_step_12.png",
       "error": null,
-      "timestamp": "2026-11-28T10:40:48.636259+00:00",
+      "timestamp": "2026-11-28T14:18:37.979153+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket Fruit Press 89.99¤ add_shopping_cart Add to Basket Grape Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Green Smoothie 1.99¤ add_shopping_cart Add to Basket Only 1 left Juice Shop \"Permafrost\" 2020 Edition 9999.99¤ add_shopping_cart Add to Basket Lemon Juice (500ml) 2.99¤ add_shopping_cart Add to Basket Items per page: 16 1 – 16 of 46 The address at Fortaleza has been successfully added to your addresses. X Click for more information",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My saved addresses Cliente Alternativo Rua Alternativa, 200, Fortaleza, CE, 60000000 Brazil addAdd New Address",
       "messages": [
@@ -366,8 +370,10 @@
         "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My saved addresses Cliente Alternativo Rua Alternativa, 200, Fortaleza, CE, 60000000 Brazil addAdd New Address"
       ],
       "action_id": "CEN-PER-10-A-12",
-      "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network": [
+        "GET /api/Addresss -> 200"
+      ],
+      "network_summary": "1 requisição(ões) de API",
       "controls": []
     },
     {
@@ -380,15 +386,15 @@
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My saved addresses Cliente Alternativo Rua Alternativa, 200, Fortaleza, CE, 60000000 Brazil addAdd New Address",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-PER-10_step_13.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-PER-10_step_13.png",
       "error": null,
-      "timestamp": "2026-11-28T10:40:49.974991+00:00",
+      "timestamp": "2026-11-28T14:18:39.242065+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My saved addresses Cliente Alternativo Rua Alternativa, 200, Fortaleza, CE, 60000000 Brazil addAdd New Address",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My saved addresses Cliente Alternativo Rua Alternativa, 200, Fortaleza, CE, 60000000 Brazil addAdd New Address",
       "messages": [],
       "action_id": "CEN-PER-10-A-13",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     },
     {
@@ -401,9 +407,9 @@
       "observed_result": "Texto visível: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My saved addresses addAdd New Address Your address has been removed. | X Texto transitório capturado: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My saved addresses Cliente Alternativo Rua Alternativa, 200, Fortaleza, CE, 60000000 Brazil addAdd New Address Your address has been removed. X | Your address has been removed. | X | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My saved addresses addAdd New Address Your address has been removed. X | My saved addresses addAdd New Address Mensagem transitória: Cliente Alternativo Rua Alternativa, 200, Fortaleza, CE, 60000000 Brazil | My saved addresses Cliente Alternativo Rua Alternativa, 200, Fortaleza, CE, 60000000 Brazil addAdd New Address | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My saved addresses Cliente Alternativo Rua Alternativa, 200, Fortaleza, CE, 60000000 Brazil addAdd New Address | Your address has been removed. X | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My saved addresses Cliente Alternativo Rua Alternativa, 200, Fortaleza, CE, 60000000 Brazil addAdd New Address Your address has been removed. X",
       "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-PER-10_step_14.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-PER-10_step_14.png",
       "error": null,
-      "timestamp": "2026-11-28T10:40:52.201411+00:00",
+      "timestamp": "2026-11-28T14:18:41.541759+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My saved addresses Cliente Alternativo Rua Alternativa, 200, Fortaleza, CE, 60000000 Brazil addAdd New Address",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My saved addresses addAdd New Address Your address has been removed. X",
       "messages": [
@@ -418,8 +424,11 @@
         "My saved addresses addAdd New Address"
       ],
       "action_id": "CEN-PER-10-A-14",
-      "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network": [
+        "DELETE /api/Addresss/85 -> 200",
+        "GET /api/Addresss -> 200"
+      ],
+      "network_summary": "2 requisição(ões) de API",
       "controls": []
     },
     {
@@ -432,22 +441,21 @@
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My saved addresses addAdd New Address Your address has been removed. X",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-PER-10_step_15.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-PER-10_step_15.png",
       "error": null,
-      "timestamp": "2026-11-28T10:40:53.693229+00:00",
+      "timestamp": "2026-11-28T14:18:43.020832+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My saved addresses addAdd New Address Your address has been removed. X",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My saved addresses addAdd New Address Your address has been removed. X",
       "messages": [],
       "action_id": "CEN-PER-10-A-15",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     }
   ],
   "final_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My saved addresses addAdd New Address Your address has been removed. X",
   "messages": [
     "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit",
-    "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit Registration completed successfully. You can now log in. X",
     "Add New Address Country Name Mobile Number ZIP Code 0/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit",
     "Add New Address",
     "navigate_before",
@@ -466,12 +474,12 @@
     "City",
     "State",
     "ZIP Code",
+    "Address",
     "8/8",
     "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit",
     "ZIP Code 8/8",
     "Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit",
     "Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 0/160 City State navigate_before Back send Submit",
-    "Address",
     "20/160",
     "Max. 160 characters 20/160",
     "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Add New Address Country Name Mobile Number ZIP Code 8/8 Address Max. 160 characters 20/160 City State navigate_before Back send Submit",
@@ -507,10 +515,52 @@
     "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My saved addresses addAdd New Address Your address has been removed. X"
   ],
   "final_url": "http://127.0.0.1:3000/#/address/saved",
-  "network_summary": "Coleta de rede não habilitada.",
+  "network_summary": "46 requisição(ões) de API registradas em CEN-PER-10.har.",
   "final_visible_text": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN My saved addresses addAdd New Address Your address has been removed. X",
   "validation": {
     "passed": true,
     "message": "Todos os critérios observáveis foram atendidos."
-  }
+  },
+  "network_precondition": [
+    "GET /rest/admin/application-version -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Challenges/ -> 200",
+    "GET /rest/languages -> 200",
+    "GET /rest/admin/application-version -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Challenges/ -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Quantitys/ -> 200",
+    "GET /rest/products/search -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /rest/admin/application-version -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Challenges/ -> 200",
+    "GET /rest/languages -> 200",
+    "GET /rest/admin/application-version -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Challenges/ -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Quantitys/ -> 200",
+    "GET /rest/products/search -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /rest/user/whoami -> 200",
+    "GET /rest/user/whoami -> 200",
+    "POST /rest/user/login -> 401",
+    "GET /api/SecurityQuestions/ -> 200",
+    "POST /api/Users/ -> 201",
+    "POST /api/SecurityAnswers/ -> 201",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /rest/user/whoami -> 200",
+    "GET /rest/user/whoami -> 200",
+    "POST /rest/user/login -> 200",
+    "GET /rest/basket/202 -> 200",
+    "GET /rest/user/whoami -> 200",
+    "GET /rest/user/whoami -> 200",
+    "GET /api/Quantitys/ -> 200",
+    "GET /rest/products/search -> 200"
+  ]
 }

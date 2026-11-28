@@ -12,9 +12,9 @@
       "observed_result": "URL: http://127.0.0.1:3000/#/ → http://127.0.0.1:3000/#/photo-wall Texto visível: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Photo Wall 😼 #zatschi #whoneedsfourlegs Magn(et)ificent! | (© bkimminich) My rare collectors item! | [̲̅$̲̅(̲̅ ͡° ͜ʖ ͡°̲̅)̲̅$̲̅] (© bkimminich) Welcome to the Bee Haven (/#/bee-haven)🐝 (© evmrox) Sorted the pieces, starting assembly process... | Building something literally bottom up... | Putting in the hardware... | Everything up and running! | I love going hiking here... | (© j0hNny) My old workplace... | (© E=ma²) Texto transitório capturado: Building something literally bottom up... | Putting in the hardware... | Everything up and running! | I love going hiking here... (© j0hNny) | My old workplace... (© E=ma²) Mensagem transitória: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language placeholder Photo Wall No results found No memories have been shared yet. | Photo Wall No results found No memories have been shared yet. | Photo Wall | No results found No memories have been shared yet. | No results found",
       "changed": true,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-CAT-27_step_01.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-CAT-27_step_01.png",
       "error": null,
-      "timestamp": "2026-11-28T10:19:54.005979+00:00",
+      "timestamp": "2026-11-28T13:51:57.683848+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language placeholder All Products Items per page: 15 0 of 0",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Photo Wall 😼 #zatschi #whoneedsfourlegs Magn(et)ificent! (© bkimminich) My rare collectors item! [̲̅$̲̅(̲̅ ͡° ͜ʖ ͡°̲̅)̲̅$̲̅] (© bkimminich) Welcome to the Bee Haven (/#/bee-haven)🐝 (© evmrox) Sorted the pieces, starting assembly process... Building something literally bottom up... Putting in the hardware... Everything up and running! I love going hiking here... (© j0hNny) My old workplace... (© E=ma²)",
       "messages": [
@@ -40,8 +40,11 @@
         "Building something literally bottom up..."
       ],
       "action_id": "CEN-CAT-27-A-01",
-      "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network": [
+        "GET /rest/memories/ -> 200",
+        "GET /rest/admin/application-configuration -> 200"
+      ],
+      "network_summary": "2 requisição(ões) de API",
       "controls": []
     },
     {
@@ -54,15 +57,15 @@
       "observed_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Photo Wall 😼 #zatschi #whoneedsfourlegs Magn(et)ificent! (© bkimminich) My rare collectors item! [̲̅$̲̅(̲̅ ͡° ͜ʖ ͡°̲̅)̲̅$̲̅] (© bkimminich) Welcome to the Bee Haven (/#/bee-haven)🐝 (© evmrox) Sorted the pieces, starting assembly process... Building something literally bottom up... Putting in the hardware... Everything up and running! I love going hiking here... (© j0hNny) My old workplace... (© E=ma²)",
       "changed": false,
       "success": true,
-      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-CAT-27_step_02.png",
+      "screenshot": "C:/Users/Asus/Desktop/juice-shop/reports/executions/CEN-CAT-27_step_02.png",
       "error": null,
-      "timestamp": "2026-11-28T10:19:55.619304+00:00",
+      "timestamp": "2026-11-28T13:51:59.273752+00:00",
       "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Photo Wall 😼 #zatschi #whoneedsfourlegs Magn(et)ificent! (© bkimminich) My rare collectors item! [̲̅$̲̅(̲̅ ͡° ͜ʖ ͡°̲̅)̲̅$̲̅] (© bkimminich) Welcome to the Bee Haven (/#/bee-haven)🐝 (© evmrox) Sorted the pieces, starting assembly process... Building something literally bottom up... Putting in the hardware... Everything up and running! I love going hiking here... (© j0hNny) My old workplace... (© E=ma²)",
       "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Photo Wall 😼 #zatschi #whoneedsfourlegs Magn(et)ificent! (© bkimminich) My rare collectors item! [̲̅$̲̅(̲̅ ͡° ͜ʖ ͡°̲̅)̲̅$̲̅] (© bkimminich) Welcome to the Bee Haven (/#/bee-haven)🐝 (© evmrox) Sorted the pieces, starting assembly process... Building something literally bottom up... Putting in the hardware... Everything up and running! I love going hiking here... (© j0hNny) My old workplace... (© E=ma²)",
       "messages": [],
       "action_id": "CEN-CAT-27-A-02",
       "network": [],
-      "network_summary": "Coleta de rede não habilitada.",
+      "network_summary": "Nenhuma requisição de API.",
       "controls": []
     }
   ],
@@ -90,10 +93,36 @@
     "Building something literally bottom up..."
   ],
   "final_url": "http://127.0.0.1:3000/#/photo-wall",
-  "network_summary": "Coleta de rede não habilitada.",
+  "network_summary": "26 requisição(ões) de API registradas em CEN-CAT-27.har.",
   "final_visible_text": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Photo Wall 😼 #zatschi #whoneedsfourlegs Magn(et)ificent! (© bkimminich) My rare collectors item! [̲̅$̲̅(̲̅ ͡° ͜ʖ ͡°̲̅)̲̅$̲̅] (© bkimminich) Welcome to the Bee Haven (/#/bee-haven)🐝 (© evmrox) Sorted the pieces, starting assembly process... Building something literally bottom up... Putting in the hardware... Everything up and running! I love going hiking here... (© j0hNny) My old workplace... (© E=ma²)",
   "validation": {
     "passed": true,
     "message": "Todos os critérios observáveis foram atendidos."
-  }
+  },
+  "network_precondition": [
+    "GET /rest/admin/application-version -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Challenges/ -> 200",
+    "GET /rest/languages -> 200",
+    "GET /rest/admin/application-version -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Challenges/ -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Quantitys/ -> 200",
+    "GET /rest/products/search -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /rest/admin/application-version -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /rest/languages -> 200",
+    "GET /api/Challenges/ -> 200",
+    "GET /rest/admin/application-version -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Challenges/ -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /rest/admin/application-configuration -> 200",
+    "GET /api/Quantitys/ -> 200",
+    "GET /rest/products/search -> 200"
+  ]
 }
