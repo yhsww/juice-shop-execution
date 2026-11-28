@@ -116,8 +116,12 @@ def _humanize_openai_compatible(
     api_key: str,
     base_url: str,
     model: str,
-) -> str:
-    return _request_openai_compatible(
+) -> dict[str, Any]:
+    # A API devolve texto; aqui ele vira o objeto que o humanizer espera.
+    # Nem todo provedor respeita response_format, então aceita JSON cercado
+    # por ``` ou com texto ao redor, e tenta uma segunda vez com instrução
+    # explícita antes de desistir.
+    raw = _request_openai_compatible(
         payload=payload,
         provider=provider,
         api_key=api_key,
@@ -126,6 +130,31 @@ def _humanize_openai_compatible(
         use_schema=True,
         user_content=_build_input(payload),
     )
+    result = _parse_and_validate(raw)
+    if result is not None:
+        return result
+
+    raw = _request_openai_compatible(
+        payload=payload,
+        provider=provider,
+        api_key=api_key,
+        base_url=base_url,
+        model=model,
+        use_schema=False,
+        user_content=(
+            _build_input(payload)
+            + "\n\nRETORNE SOMENTE UM OBJETO JSON VÁLIDO, seguindo exatamente "
+            "este schema, sem Markdown e sem texto fora do JSON:\n"
+            + json.dumps(HUMANIZER_SCHEMA, ensure_ascii=False)
+        ),
+    )
+    result = _parse_and_validate(raw)
+    if result is None:
+        raise LLMHumanizerError(
+            f"{provider} ({model}) não retornou JSON válido no schema esperado. "
+            f"Início da resposta: {raw[:300]!r}"
+        )
+    return result
 
 
 def _request_openai_compatible(
