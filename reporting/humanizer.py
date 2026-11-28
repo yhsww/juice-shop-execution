@@ -141,6 +141,17 @@ def fingerprint(catalog: dict[str, Any], execution: dict[str, Any], model: str) 
     return hashlib.sha256(raw.encode("utf-8")).hexdigest()
 
 
+def load_cached(path: Path) -> dict[str, Any] | None:
+    """Arquivo humanizado já gravado, ou None se não existe ou está inválido."""
+    try:
+        cached = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    if not isinstance(cached, dict) or not isinstance(cached.get("content"), dict):
+        return None
+    return cached
+
+
 def configured_model() -> str:
     provider = os.environ.get("REPORTING_LLM_PROVIDER", "gemini").strip().lower()
     model_vars = {
@@ -162,7 +173,16 @@ def humanize_scenario(
     output_dir: Path,
     force: bool = False,
     executions_dir: Path | None = None,
+    reuse_existing: bool = True,
 ) -> dict[str, Any]:
+    """Gera (ou reaproveita) a documentação humanizada de um cenário.
+
+    reuse_existing=True (padrão): se já existe texto humanizado válido para o
+    cenário, ele é devolvido sem chamar a LLM, mesmo que o modelo configurado
+    ou a evidência tenham mudado. Isso evita pagar duas vezes pelo mesmo
+    texto. reuse_existing=False volta ao critério antigo (regera quando a
+    impressão digital muda); force=True sempre regera.
+    """
     model = configured_model() or "unknown-model"
     catalog = prepare_catalog(scenario)
     evidence = prepare_execution(execution)
@@ -173,13 +193,10 @@ def humanize_scenario(
     path = output_dir / f"{scenario['id']}.json"
     fp = fingerprint(catalog, evidence, model)
 
-    if path.exists() and not force:
-        try:
-            cached = json.loads(path.read_text(encoding="utf-8"))
-            if cached.get("fingerprint") == fp:
-                return cached["content"]
-        except (OSError, json.JSONDecodeError, KeyError):
-            pass
+    if not force:
+        cached = load_cached(path)
+        if cached is not None and (reuse_existing or cached.get("fingerprint") == fp):
+            return cached["content"]
 
     content = humanize({"catalog": catalog, "execution": evidence})
     sanitized = sanitize_output(content)
@@ -258,7 +275,10 @@ def main() -> int:
     )
     parser.add_argument("--scenario", action="append")
     parser.add_argument("--all", action="store_true")
-    parser.add_argument("--force", action="store_true")
+    parser.add_argument("--force", action="store_true",
+                        help="Regera todos, mesmo os já humanizados.")
+    parser.add_argument("--refresh-stale", action="store_true",
+                        help="Regera só os cuja evidência ou modelo mudou.")
     parser.add_argument("--scenarios", type=Path, default=DEFAULT_SCENARIOS)
     parser.add_argument("--executions", type=Path, default=DEFAULT_EXECUTIONS)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
@@ -276,6 +296,7 @@ def main() -> int:
     ]
 
     generated = 0
+    reused = 0
     skipped = 0
     failed = 0
     for scenario in selected:
@@ -286,6 +307,13 @@ def main() -> int:
             skipped += 1
             continue
 
+        if not args.force and not args.refresh_stale and load_cached(
+            args.output / f"{scenario_id}.json"
+        ) is not None:
+            reused += 1
+            print(f"[LLM] {scenario_id}: já humanizado; reaproveitado (sem custo).")
+            continue
+
         try:
             humanize_scenario(
                 scenario,
@@ -293,6 +321,7 @@ def main() -> int:
                 args.output,
                 force=args.force,
                 executions_dir=args.executions,
+                reuse_existing=not args.refresh_stale,
             )
             generated += 1
             print(f"[LLM] {scenario_id}: documentação humanizada pronta.")
@@ -302,7 +331,8 @@ def main() -> int:
             continue
 
     print(
-        f"[LLM] {generated} humanizados; {skipped} ignorados; {failed} com erro."
+        f"[LLM] {generated} humanizados agora; {reused} reaproveitados; "
+        f"{skipped} ignorados; {failed} com erro."
     )
     return 0 if failed == 0 else 2
 

@@ -339,10 +339,16 @@ python -m reporting.humanizer --scenario CEN-CAR-03 --force
 ### Humanizar todos os cenários
 
 ```powershell
-python -m reporting.humanizer --all --force
+python -m reporting.humanizer --all
 ```
 
-O humanizador utiliza fingerprint do conteúdo e do modelo para evitar reutilizar uma documentação incompatível quando a evidência ou o modelo muda.
+Cenários que já têm texto humanizado em `reports/humanized/` são **reaproveitados sem chamar a LLM** (o log mostra "reaproveitado (sem custo)"), mesmo que o provedor ou o modelo no `.env` tenha mudado. Só os que faltam ou falharam são enviados. Para regerar:
+
+| Opção | Regera |
+|---|---|
+| `--scenario CEN-XXX-NN --force` | só esse cenário (ex.: depois de reexecutá-lo no Playwright) |
+| `--refresh-stale` | só os cuja evidência ou modelo mudou desde a humanização |
+| `--force` | todos (paga de novo os 140) |
 
 A LLM deve **interpretar as evidências sem inventar fatos**. URLs, seletores, waits e outros detalhes técnicos são tratados como artefatos de execução e não devem ser transformados em narrativa funcional.
 
@@ -353,8 +359,10 @@ O gerador pode montar os documentos a partir das evidências e dos JSONs humaniz
 ### Gerar os DOCX usando humanização LLM
 
 ```powershell
-python -m reporting.docx_generator --humanize llm --force-humanize
+python -m reporting.docx_generator --humanize llm
 ```
+
+Reaproveita os textos já humanizados; só chama a LLM para os que faltarem. `--force-humanize` regera todos e cobra de novo.
 
 ### Gerar automaticamente
 
@@ -375,7 +383,7 @@ Esse modo usa as evidências disponíveis sem depender de uma API de IA.
 ### Gerar um único cenário
 
 ```powershell
-python -m reporting.docx_generator --scenario CEN-ADM-01 --humanize llm --force-humanize
+python -m reporting.docx_generator --scenario CEN-ADM-01 --humanize llm
 ```
 
 ### Gerar todos os relatórios a partir dos humanizados existentes
@@ -453,8 +461,8 @@ python run.py --start-app --all
 Valide o resumo final. Para a entrega com Claude:
 
 ```powershell
-python -m reporting.humanizer --all --force
-python -m reporting.docx_generator --humanize llm --force-humanize --output .\reports\docx
+python -m reporting.humanizer --all
+python -m reporting.docx_generator --humanize llm --output .\reports\docx
 ```
 
 Se a humanização dos 140 cenários já estiver pronta e apenas os DOCX precisarem ser recriados:
