@@ -1,0 +1,77 @@
+{
+  "scenario_id": "CEN-PER-13",
+  "status": "PASSED",
+  "steps": [
+    {
+      "step": 1,
+      "action": "NAVIGATE",
+      "user_action": "Abrir a rota /#/address/saved",
+      "data": "/#/address/saved",
+      "url_before": "http://127.0.0.1:3000/#/",
+      "url_after": "http://127.0.0.1:3000/#/address/saved",
+      "observed_result": "URL: http://127.0.0.1:3000/#/ → http://127.0.0.1:3000/#/address/saved Texto visível: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN 403 Please login to view this page. Texto transitório capturado: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN 403 Please login to view this page. | EN | language EN | account_circle Account shopping_cart Your Basket 0 language EN | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN Mensagem transitória: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language placeholder 403 Please login to view this page. | 403 Please login to view this page. | Please login to view this page. | 403 | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN 403 Please login to view this page.",
+      "changed": true,
+      "success": true,
+      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-PER-13_step_01.png",
+      "error": null,
+      "timestamp": "2026-11-28T10:41:58.051050+00:00",
+      "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language placeholder All Products Items per page: 15 0 of 0",
+      "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN 403 Please login to view this page.",
+      "messages": [
+        "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language placeholder 403 Please login to view this page.",
+        "403 Please login to view this page.",
+        "Please login to view this page.",
+        "403",
+        "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN 403 Please login to view this page.",
+        "EN",
+        "language EN",
+        "account_circle Account shopping_cart Your Basket 0 language EN",
+        "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN"
+      ],
+      "action_id": "CEN-PER-13-A-01",
+      "network": [],
+      "network_summary": "Coleta de rede não habilitada.",
+      "controls": []
+    },
+    {
+      "step": 2,
+      "action": "WAIT",
+      "user_action": "Aguardar a atualização da interface",
+      "data": "",
+      "url_before": "http://127.0.0.1:3000/#/address/saved",
+      "url_after": "http://127.0.0.1:3000/#/address/saved",
+      "observed_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN 403 Please login to view this page.",
+      "changed": false,
+      "success": true,
+      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-PER-13_step_02.png",
+      "error": null,
+      "timestamp": "2026-11-28T10:41:59.547017+00:00",
+      "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN 403 Please login to view this page.",
+      "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN 403 Please login to view this page.",
+      "messages": [],
+      "action_id": "CEN-PER-13-A-02",
+      "network": [],
+      "network_summary": "Coleta de rede não habilitada.",
+      "controls": []
+    }
+  ],
+  "final_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN 403 Please login to view this page.",
+  "messages": [
+    "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language placeholder 403 Please login to view this page.",
+    "403 Please login to view this page.",
+    "Please login to view this page.",
+    "403",
+    "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN 403 Please login to view this page.",
+    "EN",
+    "language EN",
+    "account_circle Account shopping_cart Your Basket 0 language EN",
+    "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN"
+  ],
+  "final_url": "http://127.0.0.1:3000/#/address/saved",
+  "network_summary": "Coleta de rede não habilitada.",
+  "final_visible_text": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN 403 Please login to view this page.",
+  "validation": {
+    "passed": true,
+    "message": "Todos os critérios observáveis foram atendidos."
+  }
+}

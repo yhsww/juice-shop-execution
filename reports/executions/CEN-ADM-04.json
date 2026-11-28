@@ -1,0 +1,74 @@
+{
+  "scenario_id": "CEN-ADM-04",
+  "status": "PASSED",
+  "steps": [
+    {
+      "step": 1,
+      "action": "NAVIGATE",
+      "user_action": "Abrir a rota /#/administration",
+      "data": "/#/administration",
+      "url_before": "http://127.0.0.1:3000/#/search",
+      "url_after": "http://127.0.0.1:3000/#/administration",
+      "observed_result": "URL: http://127.0.0.1:3000/#/search → http://127.0.0.1:3000/#/administration Texto visível: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN 403 You are not allowed to access this page! Texto transitório capturado: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN 403 You are not allowed to access this page! | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN 403 You are not allowed to access this page! Registration completed successfully. You can now log in. X | 403 You are not allowed to access this page! | You are not allowed to access this page! | 403 Mensagem transitória: menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN 403 You are not allowed to access this page! | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN 403 You are not allowed to access this page! Registration completed successfully. You can now log in. X | 403 You are not allowed to access this page! | You are not allowed to access this page! | 403",
+      "changed": true,
+      "success": true,
+      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-ADM-04_step_01.png",
+      "error": null,
+      "timestamp": "2026-11-28T10:43:47.444044+00:00",
+      "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN All Products Apple Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Apple Pomace 0.89¤ add_shopping_cart Add to Basket Banana Juice (1000ml) 1.99¤ add_shopping_cart Add to Basket Basil Smoothie 2.99¤ add_shopping_cart Add to Basket Berry Juice (1000ml) 3.49¤ add_shopping_cart Add to Basket Only 1 left Best Juice Shop Salesman Artwork 5000¤ add_shopping_cart Add to Basket Bragă (500ml) 2.49¤ add_shopping_cart Add to Basket Carrot Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Dragonfruit Juice (500ml) 3.99¤ add_shopping_cart Add to Basket Eggfruit Juice (500ml) 8.99¤ add_shopping_cart Add to Basket Elderflower Cordial (500ml) 3.29¤ add_shopping_cart Add to Basket Fruit Press 89.99¤ add_shopping_cart Add to Basket Grape Juice (1000ml) 2.99¤ add_shopping_cart Add to Basket Green Smoothie 1.99¤ add_shopping_cart Add to Basket Only 1 left Juice Shop \"Permafrost\" 2020 Edition 9999.99¤ add_shopping_cart Add to Basket Lemon Juice (500ml) 2.99¤ add_shopping_cart Add to Basket Items per page: 16 1 – 16 of 46 Registration completed successfully. You can now log in. X",
+      "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN 403 You are not allowed to access this page! Registration completed successfully. You can now log in. X",
+      "messages": [
+        "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN 403 You are not allowed to access this page!",
+        "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN 403 You are not allowed to access this page! Registration completed successfully. You can now log in. X",
+        "403 You are not allowed to access this page!",
+        "You are not allowed to access this page!",
+        "403"
+      ],
+      "action_id": "CEN-ADM-04-A-01",
+      "network": [],
+      "network_summary": "Coleta de rede não habilitada.",
+      "controls": []
+    },
+    {
+      "step": 2,
+      "action": "WAIT",
+      "user_action": "Aguardar a atualização da interface",
+      "data": "",
+      "url_before": "http://127.0.0.1:3000/#/administration",
+      "url_after": "http://127.0.0.1:3000/#/administration",
+      "observed_result": "Conteúdo/estrutura visível da página foi alterado. Texto transitório capturado: Registration completed successfully. You can now log in. X | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN 403 You are not allowed to access this page! Registration completed successfully. You can now log in. X | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN 403 You are not allowed to access this page! Mensagem transitória: Registration completed successfully. You can now log in. X | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN 403 You are not allowed to access this page! Registration completed successfully. You can now log in. X | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN 403 You are not allowed to access this page!",
+      "changed": true,
+      "success": true,
+      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-ADM-04_step_02.png",
+      "error": null,
+      "timestamp": "2026-11-28T10:43:48.920717+00:00",
+      "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN 403 You are not allowed to access this page! Registration completed successfully. You can now log in. X",
+      "visible_text_after": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN 403 You are not allowed to access this page!",
+      "messages": [
+        "Registration completed successfully. You can now log in. X",
+        "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN 403 You are not allowed to access this page! Registration completed successfully. You can now log in. X",
+        "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN 403 You are not allowed to access this page!"
+      ],
+      "action_id": "CEN-ADM-04-A-02",
+      "network": [],
+      "network_summary": "Coleta de rede não habilitada.",
+      "controls": []
+    }
+  ],
+  "final_result": "Conteúdo/estrutura visível da página foi alterado. Texto transitório capturado: Registration completed successfully. You can now log in. X | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN 403 You are not allowed to access this page! Registration completed successfully. You can now log in. X | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN 403 You are not allowed to access this page! Mensagem transitória: Registration completed successfully. You can now log in. X | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN 403 You are not allowed to access this page! Registration completed successfully. You can now log in. X | menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN 403 You are not allowed to access this page!",
+  "messages": [
+    "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN 403 You are not allowed to access this page!",
+    "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN 403 You are not allowed to access this page! Registration completed successfully. You can now log in. X",
+    "403 You are not allowed to access this page!",
+    "You are not allowed to access this page!",
+    "403",
+    "Registration completed successfully. You can now log in. X"
+  ],
+  "final_url": "http://127.0.0.1:3000/#/administration",
+  "network_summary": "Coleta de rede não habilitada.",
+  "final_visible_text": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language EN 403 You are not allowed to access this page!",
+  "validation": {
+    "passed": true,
+    "message": "Todos os critérios observáveis foram atendidos."
+  }
+}

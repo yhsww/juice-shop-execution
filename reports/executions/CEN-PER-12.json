@@ -1,0 +1,57 @@
+{
+  "scenario_id": "CEN-PER-12",
+  "status": "PASSED",
+  "steps": [
+    {
+      "step": 1,
+      "action": "NAVIGATE",
+      "user_action": "Abrir a rota /profile",
+      "data": "/profile",
+      "url_before": "http://127.0.0.1:3000/#/",
+      "url_after": "http://127.0.0.1:3000/profile",
+      "observed_result": "URL: http://127.0.0.1:3000/#/ → http://127.0.0.1:3000/profile Texto visível: OWASP Juice Shop (Express ^4.22.1) 500 Error: Blocked illegal activity by ::ffff:172.18.0.1 at /juice-shop/build/routes/userProfile.js:69:18 Texto observado durante a ação: OWASP Juice Shop (Express ^4.22.1) 500 Error: Blocked illegal activity by ::ffff:172.18.0.1 at /juice-shop/build/routes/userProfile.js:69:18",
+      "changed": true,
+      "success": true,
+      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-PER-12_step_01.png",
+      "error": null,
+      "timestamp": "2026-11-28T10:41:52.139124+00:00",
+      "visible_text_before": "menu OWASP Juice Shop search search close account_circle Account shopping_cart Your Basket 0 language placeholder All Products Items per page: 15 0 of 0",
+      "visible_text_after": "OWASP Juice Shop (Express ^4.22.1) 500 Error: Blocked illegal activity by ::ffff:172.18.0.1 at /juice-shop/build/routes/userProfile.js:69:18",
+      "messages": [],
+      "action_id": "CEN-PER-12-A-01",
+      "network": [],
+      "network_summary": "Coleta de rede não habilitada.",
+      "controls": []
+    },
+    {
+      "step": 2,
+      "action": "WAIT",
+      "user_action": "Aguardar a atualização da interface",
+      "data": "",
+      "url_before": "http://127.0.0.1:3000/profile",
+      "url_after": "http://127.0.0.1:3000/profile",
+      "observed_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: OWASP Juice Shop (Express ^4.22.1) 500 Error: Blocked illegal activity by ::ffff:172.18.0.1 at /juice-shop/build/routes/userProfile.js:69:18",
+      "changed": false,
+      "success": true,
+      "screenshot": "C:/Users/Asus/AppData/Local/Claude-Data/claude_pzs8sxrjxfjjc/scratch-workspaces/d317d688-f9a5-4a4d-96c9-19c46e843c26/118b22b7-9c77-4b24-a36e-18b63a845227/scratch-2026-11-27-7de382/juice-shop-execution/reports/executions/CEN-PER-12_step_02.png",
+      "error": null,
+      "timestamp": "2026-11-28T10:41:53.571704+00:00",
+      "visible_text_before": "OWASP Juice Shop (Express ^4.22.1) 500 Error: Blocked illegal activity by ::ffff:172.18.0.1 at /juice-shop/build/routes/userProfile.js:69:18",
+      "visible_text_after": "OWASP Juice Shop (Express ^4.22.1) 500 Error: Blocked illegal activity by ::ffff:172.18.0.1 at /juice-shop/build/routes/userProfile.js:69:18",
+      "messages": [],
+      "action_id": "CEN-PER-12-A-02",
+      "network": [],
+      "network_summary": "Coleta de rede não habilitada.",
+      "controls": []
+    }
+  ],
+  "final_result": "Nenhuma mudança visual relevante detectada. Texto observado durante a ação: OWASP Juice Shop (Express ^4.22.1) 500 Error: Blocked illegal activity by ::ffff:172.18.0.1 at /juice-shop/build/routes/userProfile.js:69:18",
+  "messages": [],
+  "final_url": "http://127.0.0.1:3000/profile",
+  "network_summary": "Coleta de rede não habilitada.",
+  "final_visible_text": "OWASP Juice Shop (Express ^4.22.1) 500 Error: Blocked illegal activity by ::ffff:172.18.0.1 at /juice-shop/build/routes/userProfile.js:69:18",
+  "validation": {
+    "passed": true,
+    "message": "Todos os critérios observáveis foram atendidos."
+  }
+}
