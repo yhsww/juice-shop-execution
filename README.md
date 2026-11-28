@@ -117,8 +117,10 @@ juice-shop-execution/
 ├── tests/                   # Testes automatizados do projeto
 ├── juice-shop/              # Docker Compose da aplicação alvo
 ├── reports/
-│   ├── executions/          # Evidências das execuções
-│   └── docx/                # DOCX finais da entrega
+│   ├── executions/          # Evidências das execuções (JSON, MD, PNG, HAR)
+│   ├── humanized/           # Textos gerados pela LLM, um JSON por cenário
+│   ├── docx/                # DOCX finais da entrega
+│   └── csv/                 # cenarios.csv e passos.csv
 ├── .env.example             # Modelo de variáveis de ambiente
 ├── requirements.txt         # Dependências Python
 ├── run.py                   # Entrada principal da execução
@@ -338,6 +340,21 @@ Monta os DOCX a partir das evidências e dos textos de `reports/humanized/`. Se 
 
 O gerador sempre grava os 7 arquivos; por isso não use `--scenario` para atualizar os relatórios oficiais (os documentos ficariam só com aquele cenário). Feche os DOCX no Word antes de gerar.
 
+### Exportar para CSV
+
+```powershell
+python -m reporting.csv_export
+```
+
+Gera em `reports/csv/`, sem executar cenários nem chamar a LLM:
+
+| Arquivo | Uma linha por | Colunas principais |
+|---|---|---|
+| `cenarios.csv` | cenário (140) | id, domínio, nome, ator, tipo de fluxo, cenário de base, acesso, status, data, nº de passos e de requisições de API, pré-condição, fluxo, dados, resultado observado, mensagens, arquivos de evidência |
+| `passos.csv` | passo executado | id do cenário, passo, tipo de ação, ação, dados, resposta, sucesso, requisições de API, captura |
+
+Separador `;` e UTF-8 com BOM, para abrir direto no Excel.
+
 ## 13. Relatórios finais
 
 ```text
@@ -388,6 +405,12 @@ python -m reporting.humanizer --all
 
 ```powershell
 python -m reporting.docx_generator --humanize llm
+```
+
+4. Exportar os CSV:
+
+```powershell
+python -m reporting.csv_export
 ```
 
 ## 15. Testes do projeto
