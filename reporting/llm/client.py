@@ -18,6 +18,11 @@ load_dotenv(ROOT / ".env")
 from reporting.llm.prompt import HUMANIZER_SCHEMA, HUMANIZER_SYSTEM_PROMPT
 
 
+# Cenários longos (ex.: CHK-28, 15 passos) estouravam 2400 tokens e o JSON
+# vinha truncado. O valor é teto, não custo: paga-se só o que é gerado.
+MAX_OUTPUT_TOKENS = int(os.getenv("REPORTING_LLM_MAX_TOKENS", "8000"))
+
+
 class LLMHumanizerError(RuntimeError):
     """Erro controlado ao gerar documentação com LLM."""
 
@@ -151,7 +156,7 @@ def _request_openai_compatible(
                 ),
             },
         ],
-        "max_tokens": 2400,
+        "max_tokens": MAX_OUTPUT_TOKENS,
     }
 
     if use_schema:
@@ -252,9 +257,13 @@ def _humanize_claude(
             "Execute: pip install -r requirements.txt"
         ) from exc
 
+    # max_retries: o SDK repete sozinho em erro de conexão, 429 e 5xx,
+    # com espera exponencial (antes ficava no padrão de 2 tentativas).
     client = Anthropic(
         api_key=api_key,
         base_url=base_url,
+        max_retries=6,
+        timeout=180,
     )
 
     user_content = retry_prompt or (
@@ -265,7 +274,7 @@ def _humanize_claude(
 
     response = client.messages.create(
         model=model,
-        max_tokens=2400,
+        max_tokens=MAX_OUTPUT_TOKENS,
         system=HUMANIZER_SYSTEM_PROMPT,
         messages=[
             {
