@@ -19,7 +19,7 @@ from reporting.humanizer import humanize_scenario
 from reporting.report import _observed_behavior, _observed_data, _observed_messages
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_SCENARIOS = ROOT / "scenarios" / "scenarios.json"
+DEFAULT_SCENARIOS = ROOT / "scenarios"
 DEFAULT_EXECUTIONS = ROOT / "reports" / "executions"
 DEFAULT_OUT = ROOT / "reports" / "docx"
 DEFAULT_ENV = ROOT / ".report-environment.json"
@@ -182,8 +182,25 @@ def configure_document(doc: Document) -> None:
 
 
 def load_scenarios(path: Path) -> list[dict[str, Any]]:
-    payload = json.loads(path.read_text(encoding="utf-8"))
-    return payload.get("scenarios", payload if isinstance(payload, list) else [])
+    """Load one catalog file or every ``*.json`` catalog in a directory.
+
+    A directory is read in name order and files starting with ``_`` are
+    skipped, matching ``automation.runner.load_scenarios``; this keeps the
+    reports aligned with the scenarios the runner actually executes.
+    """
+    files = (
+        [item for item in sorted(path.glob("*.json")) if not item.name.startswith("_")]
+        if path.is_dir()
+        else [path]
+    )
+    scenarios: list[dict[str, Any]] = []
+    for file in files:
+        payload = json.loads(file.read_text(encoding="utf-8"))
+        scenarios.extend(
+            payload.get("scenarios", []) if isinstance(payload, dict)
+            else payload if isinstance(payload, list) else []
+        )
+    return scenarios
 
 
 def load_executions(
@@ -355,12 +372,17 @@ def add_scenario(
     doc.add_heading("Ficha de Cenário", level=2)
 
     domain = str(scenario.get("domain") or "")
+    flow_text = humanized.get("flow") if humanized else detailed_flow(scenario, execution)
+    # Catálogos com "flow_type" (Principal/Alternativo/Incoerente) mostram o tipo
+    # de fluxo exigido pelo template AMBOLS antes da descrição.
+    if scenario.get("flow_type"):
+        flow_text = f'{scenario["flow_type"]}. {flow_text}'
     rows = [
         ["ID do cenário", scenario.get("id", "")],
         ["Domínio", f"{domain} — {DOMAINS.get(domain, '')}".strip(" —")],
         ["Nome do cenário", scenario.get("name", "")],
         ["Ator", scenario.get("actor", "")],
-        ["Fluxo", humanized.get("flow") if humanized else detailed_flow(scenario, execution)],
+        ["Fluxo", flow_text],
         ["Pré-condição (estado inicial)", humanized.get("precondition") if humanized else scenario.get("precondition", "")],
         ["Resultado observado (mudança de estado)", humanized.get("observed_result") if humanized else observed_result(execution)],
         ["Mensagens exibidas ao usuário", "\n".join(humanized.get("messages", [])) if humanized else observed_messages(execution)],

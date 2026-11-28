@@ -33,7 +33,17 @@ def scenario_password(scenario: dict) -> str:
     return "Teste@12345"
 
 
+def _auth_mode(scenario: dict) -> str:
+    """Explicit access state: 'none', 'customer', 'admin' or '' (legacy heuristic)."""
+    return str(scenario.get("auth", "")).strip().casefold()
+
+
 def needs_authentication(scenario: dict) -> bool:
+    mode = _auth_mode(scenario)
+    if mode == "none":
+        return False
+    if mode in {"customer", "admin"}:
+        return True
     domain = str(scenario.get("domain", "")).upper()
     precondition = str(scenario.get("precondition", "")).casefold()
     actions = scenario.get("actions", []) or []
@@ -258,11 +268,39 @@ async def ensure_user(page, email: str, password: str) -> bool:
     return await _login(page, email, password)
 
 
+async def _clear_session(page) -> None:
+    """Drop any session left by a previous scenario (single shared browser context)."""
+    await page.context.clear_cookies()
+    # Clearing cookies also brings back the welcome banner and the cookie
+    # notice, which cover the login/register forms. Keep the UI in the same
+    # dismissed, English state the rest of the suite runs with.
+    await page.context.add_cookies([
+        {"name": name, "value": value, "url": settings.base_url}
+        for name, value in (
+            ("welcomebanner_status", "dismiss"),
+            ("cookieconsent_status", "dismiss"),
+            ("language", "en"),
+        )
+    ])
+    await page.goto(f"{settings.base_url}/#/", wait_until="domcontentloaded")
+    await page.evaluate("() => { localStorage.clear(); sessionStorage.clear(); }")
+    await page.reload(wait_until="domcontentloaded")
+
+
 async def ensure_authentication(page, scenario: dict) -> bool:
+    mode = _auth_mode(scenario)
+    if mode == "none":
+        await _clear_session(page)
+        return True
     if not needs_authentication(scenario):
         return True
+    if mode == "customer":
+        # Guarantees a non-admin session even inside the ADM domain.
+        await _clear_session(page)
 
-    if str(scenario.get("domain", "")).upper() == "ADM":
+    if mode == "admin" or (
+        mode != "customer" and str(scenario.get("domain", "")).upper() == "ADM"
+    ):
         return await _login(
             page,
             settings.admin_email,
@@ -683,15 +721,23 @@ async def ensure_basket(page) -> bool:
             f"{settings.base_url}/#/basket",
             wait_until="domcontentloaded",
         )
-        existing_item = page.locator(
-            "mat-table mat-row, table tbody tr, [role='row']"
-        )
+        # The basket is fetched asynchronously; wait for its total before
+        # deciding it is empty, otherwise a still-loading basket looks empty.
+        try:
+            await page.get_by_text("Total Price").first.wait_for(timeout=5000)
+            await page.wait_for_timeout(500)
+        except Exception:
+            pass
+        # Only data rows count. "[role='row']" also matches the table header
+        # ("Product / Quantity / Price"), which made an empty basket look
+        # filled; a real item row always shows a price in "¤".
+        existing_item = page.locator("mat-row, .mat-mdc-row")
         if await existing_item.count():
             for index in range(await existing_item.count()):
                 row = existing_item.nth(index)
                 if await row.is_visible():
                     text = _normalize_text(await row.inner_text())
-                    if text and "Your Basket" not in text:
+                    if text and "¤" in text and "Your Basket" not in text:
                         return True
     except Exception:
         pass

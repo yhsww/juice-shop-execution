@@ -11,7 +11,7 @@ from typing import Any
 from reporting.llm.client import LLMHumanizerError, humanize
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_SCENARIOS = ROOT / "scenarios" / "scenarios.json"
+DEFAULT_SCENARIOS = ROOT / "scenarios"
 DEFAULT_EXECUTIONS = ROOT / "reports" / "executions"
 DEFAULT_OUTPUT = ROOT / "reports" / "humanized"
 PROMPT_VERSION = "4"
@@ -227,8 +227,25 @@ def sanitize_output(content: dict[str, Any]) -> dict[str, Any]:
 
 
 def load_catalog(path: Path) -> list[dict[str, Any]]:
-    payload = json.loads(path.read_text(encoding="utf-8"))
-    return payload.get("scenarios", payload if isinstance(payload, list) else [])
+    """Load one catalog file or every ``*.json`` catalog in a directory.
+
+    A directory is read in name order and files starting with ``_`` are
+    skipped, matching ``automation.runner.load_scenarios``; this keeps the
+    reports aligned with the scenarios the runner actually executes.
+    """
+    files = (
+        [item for item in sorted(path.glob("*.json")) if not item.name.startswith("_")]
+        if path.is_dir()
+        else [path]
+    )
+    scenarios: list[dict[str, Any]] = []
+    for file in files:
+        payload = json.loads(file.read_text(encoding="utf-8"))
+        scenarios.extend(
+            payload.get("scenarios", []) if isinstance(payload, dict)
+            else payload if isinstance(payload, list) else []
+        )
+    return scenarios
 
 
 def load_execution(path: Path) -> dict[str, Any]:

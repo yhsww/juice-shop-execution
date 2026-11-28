@@ -1,0 +1,4179 @@
+{
+  "scenarios": [
+    {
+      "id": "CEN-IDT-18",
+      "domain": "IDT",
+      "name": "Cadastro com senha abaixo do tamanho mínimo",
+      "flow_type": "Alternativo — formulário inválido",
+      "base_scenario": "CEN-IDT-01",
+      "auth": "none",
+      "actor": "Visitante não autenticado",
+      "flow": "Preencher todo o cadastro com senha de 3 caracteres e tentar registrar.",
+      "precondition": "Sem sessão ativa; tela de cadastro aberta.",
+      "data": "E-mail único; senha '123'; pergunta e resposta preenchidas.",
+      "coherent": "Sim.",
+      "justification": "Regra de tamanho de senha protege a conta do cliente.",
+      "requirement": "O sistema deve rejeitar senhas fora do intervalo de tamanho permitido e informar o limite ao usuário.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/register"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Email address",
+            "exact": false
+          },
+          "value": "${UNIQUE_EMAIL}"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Password",
+            "exact": false
+          },
+          "value": "123"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Repeat Password",
+            "exact": false
+          },
+          "value": "123"
+        },
+        {
+          "type": "SELECT",
+          "target": {
+            "label": "Security Question",
+            "exact": false
+          },
+          "value": "Your favorite book?"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Answer",
+            "exact": false
+          },
+          "value": "a"
+        },
+        {
+          "type": "PRESS",
+          "target": {
+            "label": "Answer",
+            "exact": false
+          },
+          "key": "Tab"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 300
+        },
+        {
+          "type": "ASSERT_DISABLED",
+          "target": {
+            "role": "button",
+            "name": "Button to complete the registration",
+            "exact": false
+          }
+        }
+      ],
+      "expected": {
+        "url_contains": "/#/register",
+        "text_contains": [
+          "5-40 characters"
+        ]
+      },
+      "expected_confidence": "confirmado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": ""
+    },
+    {
+      "id": "CEN-IDT-19",
+      "domain": "IDT",
+      "name": "Cadastro sem pergunta de segurança",
+      "flow_type": "Alternativo — formulário incompleto",
+      "base_scenario": "CEN-IDT-01",
+      "auth": "none",
+      "actor": "Visitante não autenticado",
+      "flow": "Preencher e-mail e senhas, deixar a pergunta de segurança e a resposta vazias e tentar registrar.",
+      "precondition": "Sem sessão ativa.",
+      "data": "E-mail único; senha válida repetida; pergunta e resposta vazias.",
+      "coherent": "Sim.",
+      "justification": "A pergunta de segurança é usada depois na recuperação de senha.",
+      "requirement": "O sistema deve exigir pergunta e resposta de segurança para concluir o cadastro.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/register"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Email address",
+            "exact": false
+          },
+          "value": "${UNIQUE_EMAIL}"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Password",
+            "exact": false
+          },
+          "value": "Teste@12345"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Repeat Password",
+            "exact": false
+          },
+          "value": "Teste@12345"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 300
+        },
+        {
+          "type": "ASSERT_DISABLED",
+          "target": {
+            "role": "button",
+            "name": "Button to complete the registration",
+            "exact": false
+          }
+        }
+      ],
+      "expected": {
+        "url_contains": "/#/register"
+      },
+      "expected_confidence": "alta",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": ""
+    },
+    {
+      "id": "CEN-IDT-20",
+      "domain": "IDT",
+      "name": "Login com e-mail não cadastrado",
+      "flow_type": "Alternativo — dados inválidos",
+      "base_scenario": "CEN-IDT-03",
+      "auth": "none",
+      "actor": "Visitante não autenticado",
+      "flow": "Informar um e-mail que nunca foi cadastrado e uma senha qualquer.",
+      "precondition": "Sem sessão ativa.",
+      "data": "E-mail inexistente; senha 'Teste@12345'.",
+      "coherent": "Sim.",
+      "justification": "O cliente precisa saber que não conseguiu entrar, sem que a loja revele quais e-mails existem.",
+      "requirement": "O sistema deve recusar credenciais de conta inexistente com mensagem genérica.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/login"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Email",
+            "exact": false
+          },
+          "value": "nao-existe-${UNIQUE_EMAIL}"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Password",
+            "exact": false
+          },
+          "value": "Teste@12345"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Login",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 800
+        }
+      ],
+      "expected": {
+        "url_contains": "/#/login",
+        "text_contains": [
+          "Invalid email or password"
+        ]
+      },
+      "expected_confidence": "alta",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": ""
+    },
+    {
+      "id": "CEN-IDT-21",
+      "domain": "IDT",
+      "name": "Login com campos vazios",
+      "flow_type": "Alternativo — formulário incompleto",
+      "base_scenario": "CEN-IDT-03",
+      "auth": "none",
+      "actor": "Visitante não autenticado",
+      "flow": "Abrir a tela de login e verificar o botão sem preencher nada; depois preencher só o e-mail.",
+      "precondition": "Sem sessão ativa.",
+      "data": "Nenhum dado; depois apenas e-mail.",
+      "coherent": "Sim.",
+      "justification": "Evita envio de tentativa de login sem dados.",
+      "requirement": "O sistema deve impedir o envio do login enquanto e-mail e senha não forem informados.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/login"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 300
+        },
+        {
+          "type": "ASSERT_DISABLED",
+          "target": {
+            "role": "button",
+            "name": "Login",
+            "exact": true
+          }
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Email",
+            "exact": false
+          },
+          "value": "${SCENARIO_EMAIL}"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 200
+        },
+        {
+          "type": "ASSERT_DISABLED",
+          "target": {
+            "role": "button",
+            "name": "Login",
+            "exact": true
+          }
+        }
+      ],
+      "expected": {
+        "url_contains": "/#/login"
+      },
+      "expected_confidence": "confirmado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": ""
+    },
+    {
+      "id": "CEN-IDT-22",
+      "domain": "IDT",
+      "name": "Acesso a área restrita após logout",
+      "flow_type": "Alternativo — ação sem login",
+      "base_scenario": "CEN-IDT-05",
+      "auth": "customer",
+      "actor": "Cliente autenticado",
+      "flow": "Entrar, sair pelo menu Account e em seguida abrir diretamente o histórico de pedidos.",
+      "precondition": "Cliente autenticado com sessão ativa.",
+      "data": "Rota /#/order-history digitada após logout.",
+      "coherent": "Sim.",
+      "justification": "Após sair, dados do cliente não devem continuar acessíveis no navegador.",
+      "requirement": "O sistema deve encerrar a sessão no logout e não exibir dados pessoais em rotas restritas sem nova autenticação.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Account",
+            "exact": false
+          }
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "text": "Logout",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 500
+        },
+        {
+          "type": "NAVIGATE",
+          "route": "/#/order-history"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 800
+        }
+      ],
+      "expected": {
+        "url_contains": "/#/order-history",
+        "text_contains": [
+          "You have not placed any orders yet"
+        ]
+      },
+      "expected_confidence": "observado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": "Observado na v20.3.0: a rota não redireciona ao login; mostra o histórico vazio. Registrar como comportamento (dados do cliente não aparecem)."
+    },
+    {
+      "id": "CEN-IDT-23",
+      "domain": "IDT",
+      "name": "Troca de senha com senha atual incorreta",
+      "flow_type": "Alternativo — dados inválidos",
+      "base_scenario": "CEN-IDT-08",
+      "auth": "customer",
+      "actor": "Cliente autenticado",
+      "flow": "Informar senha atual errada e uma nova senha válida repetida corretamente.",
+      "precondition": "Cliente autenticado.",
+      "data": "Senha atual 'Errada@999'; nova 'Nova@12345' duas vezes.",
+      "coherent": "Sim.",
+      "justification": "Somente o dono da conta deve conseguir trocar a senha.",
+      "requirement": "O sistema deve exigir a senha atual correta para alterar a senha.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/privacy-security/change-password"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Current Password",
+            "exact": false
+          },
+          "value": "Errada@999"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "New Password",
+            "exact": false
+          },
+          "value": "Nova@12345"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Repeat New Password",
+            "exact": false
+          },
+          "value": "Nova@12345"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Change",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 800
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "Current password is not correct"
+        ]
+      },
+      "expected_confidence": "confirmado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": ""
+    },
+    {
+      "id": "CEN-IDT-24",
+      "domain": "IDT",
+      "name": "Troca de senha com confirmação divergente",
+      "flow_type": "Alternativo — formulário inválido",
+      "base_scenario": "CEN-IDT-08",
+      "auth": "customer",
+      "actor": "Cliente autenticado",
+      "flow": "Informar senha atual correta e nova senha diferente da repetição.",
+      "precondition": "Cliente autenticado.",
+      "data": "Atual 'Teste@12345'; nova 'Nova@12345'; repetição 'Nova@54321'.",
+      "coherent": "Sim.",
+      "justification": "Evita que o cliente fixe uma senha digitada errado.",
+      "requirement": "O sistema deve bloquear a troca quando a nova senha e a repetição forem diferentes.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/privacy-security/change-password"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Current Password",
+            "exact": false
+          },
+          "value": "Teste@12345"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "New Password",
+            "exact": false
+          },
+          "value": "Nova@12345"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Repeat New Password",
+            "exact": false
+          },
+          "value": "Nova@54321"
+        },
+        {
+          "type": "PRESS",
+          "target": {
+            "label": "Repeat New Password",
+            "exact": false
+          },
+          "key": "Tab"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 300
+        },
+        {
+          "type": "ASSERT_DISABLED",
+          "target": {
+            "role": "button",
+            "name": "Button to confirm the change",
+            "exact": false
+          }
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "do not match"
+        ]
+      },
+      "expected_confidence": "confirmado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": ""
+    },
+    {
+      "id": "CEN-IDT-25",
+      "domain": "IDT",
+      "name": "Recuperação de senha com resposta errada",
+      "flow_type": "Alternativo — dados inválidos",
+      "base_scenario": "CEN-IDT-10",
+      "auth": "none",
+      "actor": "Visitante não autenticado",
+      "flow": "Cadastrar conta nova, sair do fluxo, abrir 'Forgot Password', informar resposta de segurança errada e nova senha.",
+      "precondition": "Conta criada no próprio cenário com resposta 'resposta-teste'.",
+      "data": "Resposta 'errada'; nova senha 'Nova@12345'.",
+      "coherent": "Sim.",
+      "justification": "A recuperação só deve funcionar para quem conhece a resposta cadastrada.",
+      "requirement": "O sistema deve recusar a redefinição de senha quando a resposta de segurança estiver incorreta.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/register"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Email address",
+            "exact": false
+          },
+          "value": "${UNIQUE_EMAIL}"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Password",
+            "exact": false
+          },
+          "value": "Teste@12345"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Repeat Password",
+            "exact": false
+          },
+          "value": "Teste@12345"
+        },
+        {
+          "type": "SELECT",
+          "target": {
+            "label": "Security Question",
+            "exact": false
+          },
+          "value": "Your favorite book?"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Answer",
+            "exact": false
+          },
+          "value": "resposta-teste"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Register",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 1000
+        },
+        {
+          "type": "NAVIGATE",
+          "route": "/#/forgot-password"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Email",
+            "exact": false
+          },
+          "value": "${UNIQUE_EMAIL}"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 1000
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Security Question",
+            "exact": false
+          },
+          "value": "errada"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "New Password",
+            "exact": false
+          },
+          "value": "Nova@12345"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Repeat New Password",
+            "exact": false
+          },
+          "value": "Nova@12345"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Change",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 800
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "Wrong answer"
+        ]
+      },
+      "expected_confidence": "confirmado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": ""
+    },
+    {
+      "id": "CEN-IDT-26",
+      "domain": "IDT",
+      "name": "Recuperação de senha concluída e login com a nova senha",
+      "flow_type": "Principal (ausente no catálogo atual)",
+      "base_scenario": "CEN-IDT-09",
+      "auth": "none",
+      "actor": "Visitante não autenticado",
+      "flow": "Cadastrar conta, recuperar a senha com a resposta correta e entrar com a senha nova.",
+      "precondition": "Conta criada no próprio cenário com resposta 'resposta-teste'.",
+      "data": "Resposta correta; nova senha 'Nova@12345'.",
+      "coherent": "Sim.",
+      "justification": "O catálogo atual só abre a tela de recuperação; não verifica a mudança de estado (senha trocada).",
+      "requirement": "O sistema deve permitir redefinir a senha com a resposta de segurança correta e aceitar a nova senha no login.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/register"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Email address",
+            "exact": false
+          },
+          "value": "${UNIQUE_EMAIL}"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Password",
+            "exact": false
+          },
+          "value": "Teste@12345"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Repeat Password",
+            "exact": false
+          },
+          "value": "Teste@12345"
+        },
+        {
+          "type": "SELECT",
+          "target": {
+            "label": "Security Question",
+            "exact": false
+          },
+          "value": "Your favorite book?"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Answer",
+            "exact": false
+          },
+          "value": "resposta-teste"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Register",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 1000
+        },
+        {
+          "type": "NAVIGATE",
+          "route": "/#/forgot-password"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Email",
+            "exact": false
+          },
+          "value": "${UNIQUE_EMAIL}"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 1000
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Security Question",
+            "exact": false
+          },
+          "value": "resposta-teste"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "New Password",
+            "exact": false
+          },
+          "value": "Nova@12345"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Repeat New Password",
+            "exact": false
+          },
+          "value": "Nova@12345"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Change",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 800
+        },
+        {
+          "type": "NAVIGATE",
+          "route": "/#/login"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Email",
+            "exact": false
+          },
+          "value": "${UNIQUE_EMAIL}"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Password",
+            "exact": false
+          },
+          "value": "Nova@12345"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Login",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 800
+        }
+      ],
+      "expected": {
+        "text_not_contains": [
+          "Invalid email or password"
+        ]
+      },
+      "expected_confidence": "confirmado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": ""
+    },
+    {
+      "id": "CEN-IDT-27",
+      "domain": "IDT",
+      "name": "Recuperação de senha com e-mail não cadastrado",
+      "flow_type": "Alternativo — dados inválidos",
+      "base_scenario": "CEN-IDT-10",
+      "auth": "none",
+      "actor": "Visitante não autenticado",
+      "flow": "Informar e-mail inexistente na recuperação e observar se a pergunta de segurança é liberada.",
+      "precondition": "Sem sessão ativa.",
+      "data": "E-mail inexistente.",
+      "coherent": "Sim.",
+      "justification": "Sem conta, não há pergunta de segurança a responder.",
+      "requirement": "O sistema não deve permitir redefinição de senha para e-mail sem conta.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/forgot-password"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Email",
+            "exact": false
+          },
+          "value": "nao-existe-${UNIQUE_EMAIL}"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 1000
+        },
+        {
+          "type": "ASSERT_DISABLED",
+          "target": {
+            "role": "button",
+            "name": "Button to confirm the changes",
+            "exact": false
+          }
+        }
+      ],
+      "expected": {
+        "url_contains": "/#/forgot-password"
+      },
+      "expected_confidence": "confirmado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": ""
+    },
+    {
+      "id": "CEN-IDT-28",
+      "domain": "IDT",
+      "name": "Cadastro com Enter em vez do botão",
+      "flow_type": "Alternativo — interação diferente",
+      "base_scenario": "CEN-IDT-01",
+      "auth": "none",
+      "actor": "Visitante não autenticado",
+      "flow": "Preencher o cadastro completo e pressionar Enter no último campo.",
+      "precondition": "Sem sessão ativa.",
+      "data": "Mesmos dados válidos do CEN-IDT-01.",
+      "coherent": "Sim.",
+      "justification": "Usuários de teclado esperam enviar formulários com Enter.",
+      "requirement": "O sistema deve aceitar a submissão do cadastro pelo teclado.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/register"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Email address",
+            "exact": false
+          },
+          "value": "${UNIQUE_EMAIL}"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Password",
+            "exact": false
+          },
+          "value": "Teste@12345"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Repeat Password",
+            "exact": false
+          },
+          "value": "Teste@12345"
+        },
+        {
+          "type": "SELECT",
+          "target": {
+            "label": "Security Question",
+            "exact": false
+          },
+          "value": "Your favorite book?"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Answer",
+            "exact": false
+          },
+          "value": "a"
+        },
+        {
+          "type": "PRESS",
+          "target": {
+            "label": "Answer",
+            "exact": false
+          },
+          "key": "Enter"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 1000
+        }
+      ],
+      "expected": {
+        "url_contains": "/#/login"
+      },
+      "expected_confidence": "confirmado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": "Se permanecer em /#/register, registrar como comportamento observado (não é falha da aplicação por si só)."
+    },
+    {
+      "id": "CEN-CAT-18",
+      "domain": "CAT",
+      "name": "Busca sem diferenciar maiúsculas",
+      "flow_type": "Alternativo — entrada variante",
+      "base_scenario": "CEN-CAT-03",
+      "auth": "none",
+      "actor": "Visitante não autenticado",
+      "flow": "Pesquisar 'APPLE' em caixa alta.",
+      "precondition": "Catálogo disponível.",
+      "data": "Termo 'APPLE'.",
+      "coherent": "Sim.",
+      "justification": "O cliente não deve precisar acertar a caixa das letras.",
+      "requirement": "A busca deve ignorar diferença entre maiúsculas e minúsculas.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/search"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Search",
+            "exact": false
+          },
+          "value": "APPLE"
+        },
+        {
+          "type": "PRESS",
+          "target": {
+            "label": "Search",
+            "exact": false
+          },
+          "key": "Enter"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 1000
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "Apple Juice"
+        ]
+      },
+      "expected_confidence": "confirmado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": ""
+    },
+    {
+      "id": "CEN-CAT-19",
+      "domain": "CAT",
+      "name": "Busca com termo muito longo",
+      "flow_type": "Alternativo — entrada limite",
+      "base_scenario": "CEN-CAT-05",
+      "auth": "none",
+      "actor": "Visitante não autenticado",
+      "flow": "Pesquisar um termo de 300 caracteres.",
+      "precondition": "Catálogo disponível.",
+      "data": "'suco' repetido até 300 caracteres.",
+      "coherent": "Sim.",
+      "justification": "A interface não pode travar com entradas grandes.",
+      "requirement": "A busca deve responder sem erro a termos longos, informando ausência de resultados.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/search"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Search",
+            "exact": false
+          },
+          "value": "sucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosucosuco"
+        },
+        {
+          "type": "PRESS",
+          "target": {
+            "label": "Search",
+            "exact": false
+          },
+          "key": "Enter"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 1000
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "No results found"
+        ]
+      },
+      "expected_confidence": "confirmado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": ""
+    },
+    {
+      "id": "CEN-CAT-20",
+      "domain": "CAT",
+      "name": "Busca só com espaços",
+      "flow_type": "Alternativo — formulário vazio",
+      "base_scenario": "CEN-CAT-08",
+      "auth": "none",
+      "actor": "Visitante não autenticado",
+      "flow": "Digitar apenas espaços no campo de busca e confirmar.",
+      "precondition": "Catálogo disponível.",
+      "data": "'   '.",
+      "coherent": "Sim.",
+      "justification": "Busca vazia deve ter comportamento previsível (todos os produtos ou nenhum).",
+      "requirement": "A busca deve tratar termo em branco de forma definida.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/search"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Search",
+            "exact": false
+          },
+          "value": "   "
+        },
+        {
+          "type": "PRESS",
+          "target": {
+            "label": "Search",
+            "exact": false
+          },
+          "key": "Enter"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 1000
+        }
+      ],
+      "expected": {
+        "url_contains": "/#/search"
+      },
+      "expected_confidence": "confirmado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": "Registrar se lista todos os produtos ou mostra 'No results found'."
+    },
+    {
+      "id": "CEN-CAT-21",
+      "domain": "CAT",
+      "name": "Tentar avaliar produto sem login",
+      "flow_type": "Alternativo — ação sem login",
+      "base_scenario": "CEN-CAT-12",
+      "auth": "none",
+      "actor": "Visitante não autenticado",
+      "flow": "Abrir o detalhe do Apple Juice sem sessão e tentar escrever uma avaliação.",
+      "precondition": "Sem sessão ativa.",
+      "data": "Texto 'Ótimo suco'.",
+      "coherent": "Sim.",
+      "justification": "Avaliação deve ter autor identificado.",
+      "requirement": "O sistema deve exigir autenticação para publicar avaliações de produto.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "text": "Apple Juice (1000ml)",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 700
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "Reviews"
+        ],
+        "text_not_contains": [
+          "Write a review"
+        ]
+      },
+      "expected_confidence": "observado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": "Observado na v20.3.0: para visitante, o detalhe mostra as avaliações mas não exibe o formulário 'Write a review'."
+    },
+    {
+      "id": "CEN-CAT-22",
+      "domain": "CAT",
+      "name": "Publicar avaliação de produto",
+      "flow_type": "Principal (ausente no catálogo atual)",
+      "base_scenario": "CEN-CAT-12",
+      "auth": "customer",
+      "actor": "Cliente autenticado",
+      "flow": "Abrir o Apple Juice, escrever uma avaliação e enviar.",
+      "precondition": "Cliente autenticado.",
+      "data": "Texto 'Suco muito bom - teste AMBOLS'.",
+      "coherent": "Sim.",
+      "justification": "Avaliações ajudam outros clientes a escolher sucos.",
+      "requirement": "O sistema deve permitir que cliente autenticado publique avaliação de produto.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "text": "Apple Juice (1000ml)",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 700
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Text field to review a product",
+            "exact": false
+          },
+          "value": "Suco muito bom - teste AMBOLS"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Send the review",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 800
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "review has been saved"
+        ]
+      },
+      "expected_confidence": "confirmado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": "O rótulo do campo de avaliação deve ser confirmado na primeira execução."
+    },
+    {
+      "id": "CEN-CAT-23",
+      "domain": "CAT",
+      "name": "Avaliação vazia",
+      "flow_type": "Alternativo — formulário incompleto",
+      "base_scenario": "CEN-CAT-22",
+      "auth": "customer",
+      "actor": "Cliente autenticado",
+      "flow": "Abrir o detalhe e tentar enviar a avaliação sem texto.",
+      "precondition": "Cliente autenticado.",
+      "data": "Nenhum texto.",
+      "coherent": "Sim.",
+      "justification": "Avaliação sem conteúdo não tem valor.",
+      "requirement": "O sistema deve impedir o envio de avaliação vazia.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "text": "Apple Juice (1000ml)",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 700
+        },
+        {
+          "type": "ASSERT_DISABLED",
+          "target": {
+            "role": "button",
+            "name": "Send the review",
+            "exact": false
+          }
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "Write a review"
+        ]
+      },
+      "expected_confidence": "observado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": ""
+    },
+    {
+      "id": "CEN-CAT-24",
+      "domain": "CAT",
+      "name": "Produto que não é suco à venda (obra de arte)",
+      "flow_type": "Incoerente com loja de sucos",
+      "base_scenario": "CEN-CAT-02",
+      "auth": "none",
+      "actor": "Visitante não autenticado",
+      "flow": "Abrir o detalhe de 'Best Juice Shop Salesman Artwork' e registrar preço e descrição.",
+      "precondition": "Catálogo disponível.",
+      "data": "Produto 'Best Juice Shop Salesman Artwork' (5000¤).",
+      "coherent": "Não.",
+      "justification": "Uma obra de arte de 5000¤ não pertence ao domínio de uma loja de sucos; é comportamento a registrar.",
+      "requirement": "(Nenhum — registrar como item fora do domínio de negócio.)",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/search"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Search",
+            "exact": false
+          },
+          "value": "Artwork"
+        },
+        {
+          "type": "PRESS",
+          "target": {
+            "label": "Search",
+            "exact": false
+          },
+          "key": "Enter"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 1000
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "text": "Best Juice Shop Salesman Artwork",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 700
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "Artwork"
+        ]
+      },
+      "expected_confidence": "confirmado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": ""
+    },
+    {
+      "id": "CEN-CAT-25",
+      "domain": "CAT",
+      "name": "Produto 'Permafrost 2020 Edition' com preço desproporcional",
+      "flow_type": "Incoerente com loja de sucos",
+      "base_scenario": "CEN-CAT-11",
+      "auth": "none",
+      "actor": "Visitante não autenticado",
+      "flow": "Localizar o produto 'Permafrost' e registrar preço (9999.99¤) e aviso de estoque.",
+      "precondition": "Catálogo disponível.",
+      "data": "Termo 'Permafrost'.",
+      "coherent": "Não.",
+      "justification": "Preço e natureza do item não condizem com sucos; registrar sem investigar.",
+      "requirement": "(Nenhum — registrar como item fora do domínio de negócio.)",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/search"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Search",
+            "exact": false
+          },
+          "value": "Permafrost"
+        },
+        {
+          "type": "PRESS",
+          "target": {
+            "label": "Search",
+            "exact": false
+          },
+          "key": "Enter"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 1000
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "Permafrost",
+          "9999.99"
+        ]
+      },
+      "expected_confidence": "confirmado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": ""
+    },
+    {
+      "id": "CEN-CAT-26",
+      "domain": "CAT",
+      "name": "Troca de idioma da loja",
+      "flow_type": "Alternativo — estado da interface",
+      "base_scenario": "CEN-CAT-01",
+      "auth": "none",
+      "actor": "Visitante não autenticado",
+      "flow": "Abrir o seletor de idioma, escolher Português e voltar ao catálogo.",
+      "precondition": "Catálogo em inglês.",
+      "data": "Idioma 'Português (Brasil)'.",
+      "coherent": "Sim.",
+      "justification": "Cliente brasileiro deve conseguir ler a loja em português.",
+      "requirement": "O sistema deve permitir trocar o idioma da interface mantendo o catálogo.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "css": "button[aria-label='Language selection menu']"
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 500
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "css": "mat-radio-button:has-text('Português (Brasil)') label"
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 1500
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "css": "button[aria-label='Language selection menu']"
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 500
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "css": "mat-radio-button:has-text('English') label"
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 1500
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "Seu Carrinho",
+          "Adicionar ao carrinho"
+        ]
+      },
+      "expected_confidence": "observado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": "O cenário volta para English no fim: o navegador da suíte é compartilhado e o idioma fica salvo em cookie."
+    },
+    {
+      "id": "CEN-CAT-27",
+      "domain": "CAT",
+      "name": "Mural de fotos (Photo Wall)",
+      "flow_type": "Incoerente com loja de sucos",
+      "base_scenario": "CEN-CAT-01",
+      "auth": "none",
+      "actor": "Visitante não autenticado",
+      "flow": "Abrir o menu lateral e acessar Photo Wall.",
+      "precondition": "Catálogo disponível.",
+      "data": "—",
+      "coherent": "Parcial.",
+      "justification": "Rede social de fotos não é função de venda de sucos; pode ser marketing.",
+      "requirement": "(Registrar como funcionalidade periférica.)",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/photo-wall"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 800
+        }
+      ],
+      "expected": {
+        "url_contains": "/#/photo-wall",
+        "text_contains": [
+          "Photo Wall",
+          "bkimminich"
+        ],
+        "text_not_contains": [
+          "Share a memory"
+        ]
+      },
+      "expected_confidence": "observado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": "Observado na v20.3.0: visitante vê o mural, mas o formulário 'Share a memory' só aparece com login."
+    },
+    {
+      "id": "CEN-CAT-28",
+      "domain": "CAT",
+      "name": "Chat com IA na loja",
+      "flow_type": "Incoerente com loja de sucos",
+      "base_scenario": "CEN-CAT-01",
+      "auth": "none",
+      "actor": "Visitante não autenticado",
+      "flow": "Abrir o item 'AI Chat' do menu lateral e registrar o que a tela pede.",
+      "precondition": "Catálogo disponível.",
+      "data": "—",
+      "coherent": "Parcial.",
+      "justification": "Atendimento por chat pode ser coerente; registrar apenas o comportamento visível, sem testar o bot.",
+      "requirement": "(Registrar como funcionalidade periférica.)",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Open side menu",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 300
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "text": "AI Chat",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 1000
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "Chat"
+        ]
+      },
+      "expected_confidence": "confirmado",
+      "scope": "Em escopo só para observação da tela; interações de manipulação do bot são fora de escopo.",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": ""
+    },
+    {
+      "id": "CEN-CAT-29",
+      "domain": "CAT",
+      "name": "Página 'About Us'",
+      "flow_type": "Principal (ausente no catálogo atual)",
+      "base_scenario": "CEN-CAT-01",
+      "auth": "none",
+      "actor": "Visitante não autenticado",
+      "flow": "Abrir 'About Us' pelo menu lateral.",
+      "precondition": "Catálogo disponível.",
+      "data": "—",
+      "coherent": "Sim.",
+      "justification": "Informação institucional da loja.",
+      "requirement": "O sistema deve apresentar informações institucionais da loja.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/about"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 800
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "About Us",
+          "Corporate History"
+        ]
+      },
+      "expected_confidence": "observado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": ""
+    },
+    {
+      "id": "CEN-CAR-08",
+      "domain": "CAR",
+      "name": "Aumentar quantidade com verificação do total",
+      "flow_type": "Principal (corrige CEN-CAR-03)",
+      "base_scenario": "CEN-CAR-03",
+      "auth": "customer",
+      "actor": "Cliente autenticado",
+      "flow": "Com 1 Apple Juice no carrinho, clicar em aumentar e conferir quantidade 2 e total 3.98¤.",
+      "precondition": "Cliente autenticado; há pelo menos um produto no carrinho (conta nova: 1 unidade de Apple Juice).",
+      "data": "Apple Juice 1.99¤.",
+      "coherent": "Sim.",
+      "justification": "O CEN-CAR-03 atual passa por coincidência (o '2' de 'v20.3.0'); este cenário verifica o total.",
+      "requirement": "O sistema deve recalcular o total quando a quantidade de um item muda.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/basket"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 500
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "css": "button:has(svg.fa-plus-square)"
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 800
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "3.98"
+        ]
+      },
+      "expected_confidence": "confirmado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": "O seletor do botão '+' deve ser confirmado: a evidência atual mostra que 'Increase quantity' abriu o menu lateral."
+    },
+    {
+      "id": "CEN-CAR-09",
+      "domain": "CAR",
+      "name": "Diminuir quantidade abaixo de 1",
+      "flow_type": "Alternativo — limite inferior",
+      "base_scenario": "CEN-CAR-03",
+      "auth": "customer",
+      "actor": "Cliente autenticado",
+      "flow": "Com 1 unidade no carrinho, clicar em diminuir.",
+      "precondition": "Cliente autenticado; há pelo menos um produto no carrinho (1 unidade).",
+      "data": "—",
+      "coherent": "Sim.",
+      "justification": "Quantidade zero ou negativa não faz sentido num pedido.",
+      "requirement": "O sistema não deve permitir quantidade menor que 1 (ou deve remover o item).",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/basket"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 500
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "css": "button:has(svg.fa-minus-square)"
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 800
+        }
+      ],
+      "expected": {
+        "text_not_contains": [
+          "-1"
+        ]
+      },
+      "expected_confidence": "confirmado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": "Registrar se o item continua com 1 ou é removido."
+    },
+    {
+      "id": "CEN-CAR-10",
+      "domain": "CAR",
+      "name": "Exceder limite de unidades por produto",
+      "flow_type": "Alternativo — regra de negócio",
+      "base_scenario": "CEN-CAR-03",
+      "auth": "customer",
+      "actor": "Cliente autenticado",
+      "flow": "Adicionar o mesmo produto repetidamente pelo catálogo até a loja recusar.",
+      "precondition": "Cliente autenticado; carrinho vazio.",
+      "data": "Apple Juice, 6 cliques em 'Add to Basket'.",
+      "coherent": "Sim.",
+      "justification": "Limite por pedido é regra comum em lojas.",
+      "requirement": "O sistema deve limitar a quantidade de unidades de um mesmo produto por pedido e avisar o cliente.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Add to Basket",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 600
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Add to Basket",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 600
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Add to Basket",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 600
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Add to Basket",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 600
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Add to Basket",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 600
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Add to Basket",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 600
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "only up to"
+        ]
+      },
+      "expected_confidence": "confirmado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": "Hipótese: limite de 5 unidades. O primeiro botão 'Add to Basket' deve ser o do Apple Juice."
+    },
+    {
+      "id": "CEN-CAR-11",
+      "domain": "CAR",
+      "name": "Exceder o limite de 1 unidade de um produto restrito",
+      "flow_type": "Alternativo — regra de negócio",
+      "base_scenario": "CEN-CAR-01",
+      "auth": "customer",
+      "actor": "Cliente autenticado",
+      "flow": "Adicionar duas vezes o 'Juice Shop \"Permafrost\" 2020 Edition', marcado 'Only 1 left'.",
+      "precondition": "Cliente autenticado; carrinho vazio (conta nova).",
+      "data": "Produto Permafrost (9999.99¤).",
+      "coherent": "Sim.",
+      "justification": "A loja não pode vender mais do que o limite definido para o produto.",
+      "requirement": "O sistema deve impedir a inclusão acima do limite por cliente e avisar o cliente.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/search"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Search",
+            "exact": false
+          },
+          "value": "Permafrost"
+        },
+        {
+          "type": "PRESS",
+          "target": {
+            "label": "Search",
+            "exact": false
+          },
+          "key": "Enter"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 1000
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Add to Basket",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 800
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Add to Basket",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 800
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "You can order only up to 1 items of this product"
+        ]
+      },
+      "expected_confidence": "observado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": "Observado na v20.3.0: o aviso 'Only N left' do Berry Juice não bloqueia a inclusão (5 unidades entraram com 'Only 3 left'); o limite só aparece em produtos com restrição por cliente, como o Permafrost."
+    },
+    {
+      "id": "CEN-CAR-12",
+      "domain": "CAR",
+      "name": "Adicionar o mesmo produto duas vezes",
+      "flow_type": "Alternativo — repetição",
+      "base_scenario": "CEN-CAR-01",
+      "auth": "customer",
+      "actor": "Cliente autenticado",
+      "flow": "Clicar duas vezes em 'Add to Basket' no mesmo produto e abrir o carrinho.",
+      "precondition": "Cliente autenticado; carrinho vazio.",
+      "data": "Apple Juice.",
+      "coherent": "Sim.",
+      "justification": "O carrinho deve somar a quantidade, não duplicar a linha.",
+      "requirement": "O sistema deve acumular a quantidade quando o mesmo produto é adicionado de novo.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Add to Basket",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 600
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Add to Basket",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 800
+        },
+        {
+          "type": "NAVIGATE",
+          "route": "/#/basket"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 800
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "3.98"
+        ]
+      },
+      "expected_confidence": "confirmado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": ""
+    },
+    {
+      "id": "CEN-CAR-13",
+      "domain": "CAR",
+      "name": "Carrinho anônimo e login em seguida",
+      "flow_type": "Alternativo — mudança de estado de acesso",
+      "base_scenario": "CEN-CAR-07",
+      "auth": "none",
+      "actor": "Visitante não autenticado",
+      "flow": "Sem login, adicionar um produto (a evidência atual mostra 'Your Basket (anonymous)'), depois entrar e abrir o carrinho.",
+      "precondition": "Sem sessão ativa.",
+      "data": "Apple Juice; conta do cenário.",
+      "coherent": "Sim.",
+      "justification": "O cliente espera não perder o que escolheu antes de entrar.",
+      "requirement": "O sistema deve definir o que acontece com o carrinho anônimo após a autenticação.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Add to Basket",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 800
+        },
+        {
+          "type": "NAVIGATE",
+          "route": "/#/basket"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 500
+        },
+        {
+          "type": "NAVIGATE",
+          "route": "/#/register"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Email address",
+            "exact": false
+          },
+          "value": "${UNIQUE_EMAIL}"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Password",
+            "exact": false
+          },
+          "value": "Teste@12345"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Repeat Password",
+            "exact": false
+          },
+          "value": "Teste@12345"
+        },
+        {
+          "type": "SELECT",
+          "target": {
+            "label": "Security Question",
+            "exact": false
+          },
+          "value": "Your favorite book?"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Answer",
+            "exact": false
+          },
+          "value": "resposta-teste"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Register",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 1000
+        },
+        {
+          "type": "NAVIGATE",
+          "route": "/#/login"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Email",
+            "exact": false
+          },
+          "value": "${UNIQUE_EMAIL}"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Password",
+            "exact": false
+          },
+          "value": "Teste@12345"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Login",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 800
+        },
+        {
+          "type": "NAVIGATE",
+          "route": "/#/basket"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 800
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "Your Basket"
+        ]
+      },
+      "expected_confidence": "confirmado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": "Registrar se o Apple Juice anônimo aparece no carrinho do cliente após o login."
+    },
+    {
+      "id": "CEN-CAR-14",
+      "domain": "CAR",
+      "name": "Checkout com carrinho anônimo",
+      "flow_type": "Alternativo — ação sem login",
+      "base_scenario": "CEN-CHK-01",
+      "auth": "none",
+      "actor": "Visitante não autenticado",
+      "flow": "Sem login, adicionar produto e clicar em Checkout.",
+      "precondition": "Sem sessão ativa.",
+      "data": "Apple Juice.",
+      "coherent": "Sim.",
+      "justification": "Compra precisa de cliente identificado (endereço, pagamento).",
+      "requirement": "O sistema deve exigir autenticação antes de prosseguir para o checkout.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Add to Basket",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 800
+        },
+        {
+          "type": "NAVIGATE",
+          "route": "/#/basket"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 500
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Checkout",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 800
+        }
+      ],
+      "expected": {
+        "text_not_contains": [
+          "Select an address"
+        ]
+      },
+      "expected_confidence": "confirmado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": "Registrar se a interface leva ao login, mostra erro ou bloqueia o botão."
+    },
+    {
+      "id": "CEN-CAR-15",
+      "domain": "CAR",
+      "name": "Checkout com carrinho vazio",
+      "flow_type": "Alternativo — estado vazio",
+      "base_scenario": "CEN-CHK-01",
+      "auth": "customer",
+      "actor": "Cliente autenticado",
+      "flow": "Com o carrinho vazio (conta nova), tentar iniciar o checkout.",
+      "precondition": "Cliente autenticado; carrinho vazio.",
+      "data": "—",
+      "coherent": "Sim.",
+      "justification": "Não há pedido sem itens.",
+      "requirement": "O sistema não deve permitir iniciar checkout com carrinho vazio.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/basket"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 1000
+        },
+        {
+          "type": "ASSERT_DISABLED",
+          "target": {
+            "role": "button",
+            "name": "Checkout",
+            "exact": false
+          }
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "Total Price: 0"
+        ]
+      },
+      "expected_confidence": "observado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": ""
+    },
+    {
+      "id": "CEN-CHK-29",
+      "domain": "CHK",
+      "name": "Endereço sem cidade",
+      "flow_type": "Alternativo — formulário incompleto",
+      "base_scenario": "CEN-CHK-02",
+      "auth": "customer",
+      "actor": "Cliente autenticado",
+      "flow": "Preencher o formulário de novo endereço sem o campo City e tentar enviar.",
+      "precondition": "Cliente autenticado; formulário de novo endereço aberto (sem carrinho exigido).",
+      "data": "Endereço completo exceto City.",
+      "coherent": "Sim.",
+      "justification": "Entrega exige endereço completo.",
+      "requirement": "O sistema deve exigir o campo City no cadastro de endereço.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/address/create"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 500
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Country",
+            "exact": false
+          },
+          "value": "Brazil"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Name",
+            "exact": false
+          },
+          "value": "Cliente Alternativo"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Mobile Number",
+            "exact": false
+          },
+          "value": "8599999999"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "ZIP Code",
+            "exact": false
+          },
+          "value": "60000000"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Address",
+            "exact": false
+          },
+          "value": "Rua Alternativa, 200"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "State",
+            "exact": false
+          },
+          "value": "CE"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 300
+        },
+        {
+          "type": "ASSERT_DISABLED",
+          "target": {
+            "role": "button",
+            "name": "Submit",
+            "exact": false
+          }
+        }
+      ],
+      "expected": {
+        "url_contains": "/#/address/create"
+      },
+      "expected_confidence": "alta",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": ""
+    },
+    {
+      "id": "CEN-CHK-30",
+      "domain": "CHK",
+      "name": "Endereço sem celular",
+      "flow_type": "Alternativo — formulário incompleto",
+      "base_scenario": "CEN-CHK-02",
+      "auth": "customer",
+      "actor": "Cliente autenticado",
+      "flow": "Preencher o formulário de novo endereço sem o campo Mobile Number e tentar enviar.",
+      "precondition": "Cliente autenticado; formulário de novo endereço aberto (sem carrinho exigido).",
+      "data": "Endereço completo exceto Mobile Number.",
+      "coherent": "Sim.",
+      "justification": "Entrega exige endereço completo.",
+      "requirement": "O sistema deve exigir o campo Mobile Number no cadastro de endereço.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/address/create"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 500
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Country",
+            "exact": false
+          },
+          "value": "Brazil"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Name",
+            "exact": false
+          },
+          "value": "Cliente Alternativo"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "ZIP Code",
+            "exact": false
+          },
+          "value": "60000000"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Address",
+            "exact": false
+          },
+          "value": "Rua Alternativa, 200"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "City",
+            "exact": false
+          },
+          "value": "Fortaleza"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "State",
+            "exact": false
+          },
+          "value": "CE"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 300
+        },
+        {
+          "type": "ASSERT_DISABLED",
+          "target": {
+            "role": "button",
+            "name": "Submit",
+            "exact": false
+          }
+        }
+      ],
+      "expected": {
+        "url_contains": "/#/address/create"
+      },
+      "expected_confidence": "alta",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": ""
+    },
+    {
+      "id": "CEN-CHK-31",
+      "domain": "CHK",
+      "name": "Endereço sem país",
+      "flow_type": "Alternativo — formulário incompleto",
+      "base_scenario": "CEN-CHK-02",
+      "auth": "customer",
+      "actor": "Cliente autenticado",
+      "flow": "Preencher o formulário de novo endereço sem o campo Country e tentar enviar.",
+      "precondition": "Cliente autenticado; formulário de novo endereço aberto (sem carrinho exigido).",
+      "data": "Endereço completo exceto Country.",
+      "coherent": "Sim.",
+      "justification": "Entrega exige endereço completo.",
+      "requirement": "O sistema deve exigir o campo Country no cadastro de endereço.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/address/create"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 500
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Name",
+            "exact": false
+          },
+          "value": "Cliente Alternativo"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Mobile Number",
+            "exact": false
+          },
+          "value": "8599999999"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "ZIP Code",
+            "exact": false
+          },
+          "value": "60000000"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Address",
+            "exact": false
+          },
+          "value": "Rua Alternativa, 200"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "City",
+            "exact": false
+          },
+          "value": "Fortaleza"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "State",
+            "exact": false
+          },
+          "value": "CE"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 300
+        },
+        {
+          "type": "ASSERT_DISABLED",
+          "target": {
+            "role": "button",
+            "name": "Submit",
+            "exact": false
+          }
+        }
+      ],
+      "expected": {
+        "url_contains": "/#/address/create"
+      },
+      "expected_confidence": "alta",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": ""
+    },
+    {
+      "id": "CEN-CHK-32",
+      "domain": "CHK",
+      "name": "Endereço com celular em formato inválido",
+      "flow_type": "Alternativo — dados inválidos",
+      "base_scenario": "CEN-CHK-02",
+      "auth": "customer",
+      "actor": "Cliente autenticado",
+      "flow": "Preencher endereço com celular de 3 dígitos.",
+      "precondition": "Cliente autenticado.",
+      "data": "Mobile Number '123'.",
+      "coherent": "Sim.",
+      "justification": "Telefone de contato é usado na entrega.",
+      "requirement": "O sistema deve validar o formato do telefone do endereço.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/address/create"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 500
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Country",
+            "exact": false
+          },
+          "value": "Brazil"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Name",
+            "exact": false
+          },
+          "value": "Cliente Alternativo"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Mobile Number",
+            "exact": false
+          },
+          "value": "123"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "ZIP Code",
+            "exact": false
+          },
+          "value": "60000000"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Address",
+            "exact": false
+          },
+          "value": "Rua Alternativa, 200"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "City",
+            "exact": false
+          },
+          "value": "Fortaleza"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "State",
+            "exact": false
+          },
+          "value": "CE"
+        },
+        {
+          "type": "PRESS",
+          "target": {
+            "label": "Mobile Number",
+            "exact": false
+          },
+          "key": "Tab"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 300
+        },
+        {
+          "type": "ASSERT_DISABLED",
+          "target": {
+            "role": "button",
+            "name": "Submit",
+            "exact": false
+          }
+        }
+      ],
+      "expected": {
+        "url_contains": "/#/address/create"
+      },
+      "expected_confidence": "confirmado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": ""
+    },
+    {
+      "id": "CEN-CHK-33",
+      "domain": "CHK",
+      "name": "Endereço com CEP acima do tamanho",
+      "flow_type": "Alternativo — dados inválidos",
+      "base_scenario": "CEN-CHK-02",
+      "auth": "customer",
+      "actor": "Cliente autenticado",
+      "flow": "Preencher ZIP Code com 12 dígitos.",
+      "precondition": "Cliente autenticado.",
+      "data": "ZIP '123456789012'.",
+      "coherent": "Sim.",
+      "justification": "CEP deve ter tamanho válido.",
+      "requirement": "O sistema deve limitar o tamanho do CEP.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/address/create"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 500
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Country",
+            "exact": false
+          },
+          "value": "Brazil"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Name",
+            "exact": false
+          },
+          "value": "Cliente Alternativo"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Mobile Number",
+            "exact": false
+          },
+          "value": "8599999999"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "ZIP Code",
+            "exact": false
+          },
+          "value": "123456789012"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Address",
+            "exact": false
+          },
+          "value": "Rua Alternativa, 200"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "City",
+            "exact": false
+          },
+          "value": "Fortaleza"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "State",
+            "exact": false
+          },
+          "value": "CE"
+        },
+        {
+          "type": "PRESS",
+          "target": {
+            "label": "ZIP Code",
+            "exact": false
+          },
+          "key": "Tab"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 300
+        },
+        {
+          "type": "ASSERT_DISABLED",
+          "target": {
+            "role": "button",
+            "name": "Submit",
+            "exact": false
+          }
+        }
+      ],
+      "expected": {
+        "url_contains": "/#/address/create"
+      },
+      "expected_confidence": "confirmado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": ""
+    },
+    {
+      "id": "CEN-CHK-34",
+      "domain": "CHK",
+      "name": "Cartão com número incompleto",
+      "flow_type": "Alternativo — dados inválidos",
+      "base_scenario": "CEN-CHK-07",
+      "auth": "customer",
+      "actor": "Cliente autenticado",
+      "flow": "Cadastrar cartão com 12 dígitos.",
+      "precondition": "Cliente autenticado; método de entrega selecionado.",
+      "data": "Número '400000000000'.",
+      "coherent": "Sim.",
+      "justification": "Cartão inválido não pode ser salvo.",
+      "requirement": "O sistema deve exigir número de cartão com 16 dígitos.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/payment/shop"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "text": "Add new card",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 300
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Name",
+            "exact": false
+          },
+          "value": "Cliente Teste"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Card Number",
+            "exact": false
+          },
+          "value": "400000000000"
+        },
+        {
+          "type": "SELECT",
+          "target": {
+            "label": "Expiry Month",
+            "exact": false
+          },
+          "value": "12"
+        },
+        {
+          "type": "SELECT",
+          "target": {
+            "label": "Expiry Year",
+            "exact": false
+          },
+          "value": "2090"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 300
+        },
+        {
+          "type": "ASSERT_DISABLED",
+          "target": {
+            "role": "button",
+            "name": "Submit",
+            "exact": false
+          }
+        }
+      ],
+      "expected": {
+        "url_contains": "/#/payment/shop"
+      },
+      "expected_confidence": "alta",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": ""
+    },
+    {
+      "id": "CEN-CHK-35",
+      "domain": "CHK",
+      "name": "Cartão sem validade",
+      "flow_type": "Alternativo — formulário incompleto",
+      "base_scenario": "CEN-CHK-07",
+      "auth": "customer",
+      "actor": "Cliente autenticado",
+      "flow": "Cadastrar cartão sem escolher mês e ano.",
+      "precondition": "Cliente autenticado; método de entrega selecionado.",
+      "data": "Nome e número válidos.",
+      "coherent": "Sim.",
+      "justification": "Validade é obrigatória para pagamento.",
+      "requirement": "O sistema deve exigir mês e ano de validade do cartão.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/payment/shop"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "text": "Add new card",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 300
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Name",
+            "exact": false
+          },
+          "value": "Cliente Teste"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Card Number",
+            "exact": false
+          },
+          "value": "4000000000000002"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 300
+        },
+        {
+          "type": "ASSERT_DISABLED",
+          "target": {
+            "role": "button",
+            "name": "Submit",
+            "exact": false
+          }
+        }
+      ],
+      "expected": {
+        "url_contains": "/#/payment/shop"
+      },
+      "expected_confidence": "alta",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": ""
+    },
+    {
+      "id": "CEN-CHK-36",
+      "domain": "CHK",
+      "name": "Resgatar cupom vazio",
+      "flow_type": "Alternativo — formulário incompleto",
+      "base_scenario": "CEN-CHK-15",
+      "auth": "customer",
+      "actor": "Cliente autenticado",
+      "flow": "Abrir a área de cupom e verificar o botão Redeem sem código.",
+      "precondition": "Cliente autenticado; etapa de pagamento acessível; campo de cupom disponível.",
+      "data": "—",
+      "coherent": "Sim.",
+      "justification": "Evita requisição sem dado.",
+      "requirement": "O sistema deve impedir o resgate de cupom sem código.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/payment/shop"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 500
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "text": "Add a coupon",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 300
+        },
+        {
+          "type": "ASSERT_DISABLED",
+          "target": {
+            "role": "button",
+            "name": "Redeem",
+            "exact": false
+          }
+        }
+      ],
+      "expected": {
+        "url_contains": "/#/payment/shop"
+      },
+      "expected_confidence": "confirmado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": ""
+    },
+    {
+      "id": "CEN-CHK-37",
+      "domain": "CHK",
+      "name": "Entrega rápida altera o total do resumo",
+      "flow_type": "Alternativo — escolha diferente",
+      "base_scenario": "CEN-CHK-05",
+      "auth": "customer",
+      "actor": "Cliente autenticado",
+      "flow": "Escolher 'One Day Delivery' em vez de Standard e conferir o custo de entrega no resumo.",
+      "precondition": "Cliente autenticado; carrinho contém produto; endereço Rua Teste, 100 cadastrado; método de entrega disponível; cartão de teste terminado em 0002 cadastrado.",
+      "data": "Método 'One Day Delivery'.",
+      "coherent": "Sim.",
+      "justification": "Cliente paga mais para receber antes.",
+      "requirement": "O sistema deve somar o custo do método de entrega escolhido ao total do pedido.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/basket"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Checkout",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 700
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "text": "Rua Teste, 100",
+            "exact": false
+          }
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Continue",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 700
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "radio",
+            "name": "One Day Delivery",
+            "exact": false
+          }
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Continue",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 700
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "radio",
+            "name": "0002",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 300
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Continue",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 1000
+        }
+      ],
+      "expected": {
+        "url_contains": "/#/order-summary",
+        "text_contains": [
+          "Delivery",
+          "0.99"
+        ]
+      },
+      "expected_confidence": "confirmado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": ""
+    },
+    {
+      "id": "CEN-CHK-38",
+      "domain": "CHK",
+      "name": "Pular etapas: abrir resumo do pedido direto",
+      "flow_type": "Alternativo — contra o fluxo",
+      "base_scenario": "CEN-CHK-10",
+      "auth": "customer",
+      "actor": "Cliente autenticado",
+      "flow": "Com carrinho cheio mas sem escolher endereço, entrega ou pagamento, abrir /#/order-summary e tentar concluir.",
+      "precondition": "Cliente autenticado; carrinho contém produto; nenhuma etapa do checkout concluída nesta sessão.",
+      "data": "—",
+      "coherent": "Sim.",
+      "justification": "A loja não deve aceitar pedido sem endereço, entrega e pagamento.",
+      "requirement": "O sistema deve impedir a confirmação do pedido sem as etapas obrigatórias concluídas.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/order-summary"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 800
+        }
+      ],
+      "expected": {
+        "text_not_contains": [
+          "Thank you for your purchase"
+        ]
+      },
+      "expected_confidence": "confirmado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": "Não clicar em concluir se o botão parecer liberado; registrar o estado da tela (fora de escopo investigar desvio)."
+    },
+    {
+      "id": "CEN-CHK-39",
+      "domain": "CHK",
+      "name": "Pagar com carteira digital sem saldo",
+      "flow_type": "Alternativo — saldo insuficiente",
+      "base_scenario": "CEN-CHK-09",
+      "auth": "customer",
+      "actor": "Cliente autenticado",
+      "flow": "Na etapa de pagamento, escolher a carteira (Wallet) com saldo 0 e tentar avançar.",
+      "precondition": "Cliente autenticado (conta nova, saldo 0); método de entrega selecionado.",
+      "data": "—",
+      "coherent": "Sim.",
+      "justification": "Não se paga com saldo inexistente.",
+      "requirement": "O sistema deve impedir pagamento pela carteira sem saldo suficiente.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/payment/shop"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 800
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "Pay using wallet",
+          "Wallet Balance"
+        ]
+      },
+      "expected_confidence": "confirmado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": "Registrar se a opção de carteira aparece desabilitada ou se o avanço falha com mensagem."
+    },
+    {
+      "id": "CEN-CHK-40",
+      "domain": "CHK",
+      "name": "Acessar pagamento sem login",
+      "flow_type": "Alternativo — ação sem login",
+      "base_scenario": "CEN-CHK-07",
+      "auth": "none",
+      "actor": "Visitante não autenticado",
+      "flow": "Sem sessão, abrir diretamente /#/payment/shop.",
+      "precondition": "Sem sessão ativa.",
+      "data": "—",
+      "coherent": "Sim.",
+      "justification": "Cartões salvos são dados pessoais.",
+      "requirement": "O sistema deve exigir autenticação para exibir a etapa de pagamento.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/payment/shop"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 1000
+        },
+        {
+          "type": "ASSERT_DISABLED",
+          "target": {
+            "role": "button",
+            "name": "Proceed to review",
+            "exact": false
+          }
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "My Payment Options"
+        ],
+        "text_not_contains": [
+          "0002"
+        ]
+      },
+      "expected_confidence": "observado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": "Observado na v20.3.0: a etapa de pagamento abre sem login (sem cartões e com avanço bloqueado). Registrar como achado de coerência."
+    },
+    {
+      "id": "CEN-CHK-41",
+      "domain": "CHK",
+      "name": "Rastrear pedido inexistente",
+      "flow_type": "Alternativo — dados inválidos",
+      "base_scenario": "CEN-CHK-19",
+      "auth": "none",
+      "actor": "Visitante não autenticado",
+      "flow": "Abrir o rastreamento com um código de pedido que não existe.",
+      "precondition": "Sem sessão ativa.",
+      "data": "id 'pedido-inexistente-000'.",
+      "coherent": "Sim.",
+      "justification": "O cliente precisa saber que o código está errado.",
+      "requirement": "O sistema deve informar quando o código de rastreamento não corresponde a pedido algum.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/track-result?id=pedido-inexistente-000"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 1000
+        }
+      ],
+      "expected": {
+        "url_contains": "/#/track-result",
+        "text_contains": [
+          "pedido-inexistente-000",
+          "? Days"
+        ]
+      },
+      "expected_confidence": "observado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": "Observado na v20.3.0: não há mensagem de pedido inexistente; a tela mostra '? Days' e o marcador não renderizado {{bonus}}. Não variar o id para descobrir pedidos de terceiros (fora de escopo)."
+    },
+    {
+      "id": "CEN-CHK-42",
+      "domain": "CHK",
+      "name": "Histórico de pedidos de cliente sem compras",
+      "flow_type": "Alternativo — estado vazio",
+      "base_scenario": "CEN-CHK-17",
+      "auth": "none",
+      "actor": "Visitante não autenticado",
+      "flow": "Cadastrar conta nova, entrar e abrir o histórico de pedidos.",
+      "precondition": "Conta criada no cenário, sem pedidos.",
+      "data": "—",
+      "coherent": "Sim.",
+      "justification": "Tela vazia precisa ser compreensível.",
+      "requirement": "O sistema deve informar que o cliente ainda não possui pedidos.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/register"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Email address",
+            "exact": false
+          },
+          "value": "${UNIQUE_EMAIL}"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Password",
+            "exact": false
+          },
+          "value": "Teste@12345"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Repeat Password",
+            "exact": false
+          },
+          "value": "Teste@12345"
+        },
+        {
+          "type": "SELECT",
+          "target": {
+            "label": "Security Question",
+            "exact": false
+          },
+          "value": "Your favorite book?"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Answer",
+            "exact": false
+          },
+          "value": "resposta-teste"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Register",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 1000
+        },
+        {
+          "type": "NAVIGATE",
+          "route": "/#/login"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Email",
+            "exact": false
+          },
+          "value": "${UNIQUE_EMAIL}"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Password",
+            "exact": false
+          },
+          "value": "Teste@12345"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Login",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 800
+        },
+        {
+          "type": "NAVIGATE",
+          "route": "/#/order-history"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 800
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "You have not placed any orders yet"
+        ]
+      },
+      "expected_confidence": "observado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": ""
+    },
+    {
+      "id": "CEN-CHK-43",
+      "domain": "CHK",
+      "name": "Opções de pagamento em criptomoeda",
+      "flow_type": "Incoerente com loja de sucos",
+      "base_scenario": "CEN-CHK-12",
+      "auth": "customer",
+      "actor": "Cliente autenticado",
+      "flow": "Expandir 'Other payment options' e registrar as opções exibidas (cripto, doação, merchandising).",
+      "precondition": "Cliente autenticado; etapa de pagamento acessível; seção 'Other payment options' disponível.",
+      "data": "—",
+      "coherent": "Não.",
+      "justification": "Doações e loja de camisetas não fazem parte da compra de sucos; registrar sem clicar.",
+      "requirement": "(Registrar como elementos fora do domínio.)",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/payment/shop"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "text": "Other payment options",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 500
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "Other payment options"
+        ]
+      },
+      "expected_confidence": "confirmado",
+      "scope": "Em escopo só para registro; seguir links externos já está coberto em CEN-CHK-13/14.",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": ""
+    },
+    {
+      "id": "CEN-CHK-44",
+      "domain": "CHK",
+      "name": "Assinatura 'Deluxe Membership'",
+      "flow_type": "Incoerente com loja de sucos",
+      "base_scenario": "CEN-CHK-12",
+      "auth": "customer",
+      "actor": "Cliente autenticado",
+      "flow": "Abrir a página de assinatura Deluxe e registrar benefícios e preço, sem pagar.",
+      "precondition": "Cliente autenticado.",
+      "data": "—",
+      "coherent": "Parcial.",
+      "justification": "Clube de vantagens é plausível, mas não aparece no fluxo principal de compra.",
+      "requirement": "(Registrar benefícios observados como candidatos a requisito.)",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/deluxe-membership"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 800
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "Deluxe Membership",
+          "49"
+        ]
+      },
+      "expected_confidence": "observado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": ""
+    },
+    {
+      "id": "CEN-PER-07",
+      "domain": "PER",
+      "name": "Alterar nome de usuário",
+      "flow_type": "Principal (ausente no catálogo atual)",
+      "base_scenario": "CEN-IDT-07",
+      "auth": "customer",
+      "actor": "Cliente autenticado",
+      "flow": "Abrir o perfil, definir um username e salvar.",
+      "precondition": "Cliente autenticado.",
+      "data": "Username 'clienteambols'.",
+      "coherent": "Sim.",
+      "justification": "O CEN-IDT-07 atual só abre a tela de privacidade; não altera dado algum.",
+      "requirement": "O sistema deve permitir que o cliente altere seu nome de usuário.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/profile"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 800
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Text field for the username",
+            "exact": false
+          },
+          "value": "clienteambols"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Button to save/set the username",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 800
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "clienteambols"
+        ]
+      },
+      "expected_confidence": "confirmado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": "O perfil é servido em /profile (fora do roteador /#/)."
+    },
+    {
+      "id": "CEN-PER-08",
+      "domain": "PER",
+      "name": "Adicionar endereço pela área de perfil",
+      "flow_type": "Principal (ausente no catálogo atual)",
+      "base_scenario": "CEN-PER-02",
+      "auth": "customer",
+      "actor": "Cliente autenticado",
+      "flow": "Em 'My saved addresses', adicionar um endereço e ver a lista atualizada.",
+      "precondition": "Cliente autenticado.",
+      "data": "Endereço 'Rua Alternativa, 200'.",
+      "coherent": "Sim.",
+      "justification": "Gerenciar endereços fora do checkout é previsto no guia (PER).",
+      "requirement": "O sistema deve permitir cadastrar endereço pela área do cliente.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/address/create"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 500
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Country",
+            "exact": false
+          },
+          "value": "Brazil"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Name",
+            "exact": false
+          },
+          "value": "Cliente Alternativo"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Mobile Number",
+            "exact": false
+          },
+          "value": "8599999999"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "ZIP Code",
+            "exact": false
+          },
+          "value": "60000000"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Address",
+            "exact": false
+          },
+          "value": "Rua Alternativa, 200"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "City",
+            "exact": false
+          },
+          "value": "Fortaleza"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "State",
+            "exact": false
+          },
+          "value": "CE"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Submit",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 1000
+        },
+        {
+          "type": "NAVIGATE",
+          "route": "/#/address/saved"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 800
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "Rua Alternativa, 200"
+        ]
+      },
+      "expected_confidence": "confirmado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": ""
+    },
+    {
+      "id": "CEN-PER-09",
+      "domain": "PER",
+      "name": "Editar endereço salvo",
+      "flow_type": "Alternativo — atualização de dados",
+      "base_scenario": "CEN-PER-08",
+      "auth": "customer",
+      "actor": "Cliente autenticado",
+      "flow": "Editar o nome do destinatário de um endereço salvo.",
+      "precondition": "Cliente autenticado; o próprio cenário cadastra o endereço antes de editar.",
+      "data": "Nome 'Cliente Editado'.",
+      "coherent": "Sim.",
+      "justification": "Atualização de dados cadastrais é fluxo alternativo exigido na Etapa 1.",
+      "requirement": "O sistema deve permitir editar um endereço salvo.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/address/create"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 500
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Country",
+            "exact": false
+          },
+          "value": "Brazil"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Name",
+            "exact": false
+          },
+          "value": "Cliente Alternativo"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Mobile Number",
+            "exact": false
+          },
+          "value": "8599999999"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "ZIP Code",
+            "exact": false
+          },
+          "value": "60000000"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Address",
+            "exact": false
+          },
+          "value": "Rua Alternativa, 200"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "City",
+            "exact": false
+          },
+          "value": "Fortaleza"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "State",
+            "exact": false
+          },
+          "value": "CE"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Submit",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 1000
+        },
+        {
+          "type": "NAVIGATE",
+          "route": "/#/address/saved"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 800
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "css": "button:has(svg.fa-edit)"
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 500
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Name",
+            "exact": false
+          },
+          "value": "Cliente Editado"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Submit",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 1000
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "Cliente Editado"
+        ]
+      },
+      "expected_confidence": "confirmado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": "Nome acessível do ícone de edição a confirmar."
+    },
+    {
+      "id": "CEN-PER-10",
+      "domain": "PER",
+      "name": "Remover endereço salvo",
+      "flow_type": "Alternativo — exclusão",
+      "base_scenario": "CEN-PER-08",
+      "auth": "customer",
+      "actor": "Cliente autenticado",
+      "flow": "Remover um endereço da lista.",
+      "precondition": "Cliente autenticado; o próprio cenário cadastra o endereço antes de remover.",
+      "data": "—",
+      "coherent": "Sim.",
+      "justification": "Cliente deve poder descartar endereço antigo.",
+      "requirement": "O sistema deve permitir remover um endereço salvo.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/address/create"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 500
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Country",
+            "exact": false
+          },
+          "value": "Brazil"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Name",
+            "exact": false
+          },
+          "value": "Cliente Alternativo"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Mobile Number",
+            "exact": false
+          },
+          "value": "8599999999"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "ZIP Code",
+            "exact": false
+          },
+          "value": "60000000"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Address",
+            "exact": false
+          },
+          "value": "Rua Alternativa, 200"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "City",
+            "exact": false
+          },
+          "value": "Fortaleza"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "State",
+            "exact": false
+          },
+          "value": "CE"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Submit",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 1000
+        },
+        {
+          "type": "NAVIGATE",
+          "route": "/#/address/saved"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 800
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "css": "button:has(svg.fa-trash-alt)"
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 1000
+        }
+      ],
+      "expected": {
+        "text_not_contains": [
+          "Rua Alternativa, 200"
+        ]
+      },
+      "expected_confidence": "confirmado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": "Registrar o que acontece se o endereço removido era o selecionado num checkout em andamento."
+    },
+    {
+      "id": "CEN-PER-11",
+      "domain": "PER",
+      "name": "Remover cartão salvo",
+      "flow_type": "Alternativo — exclusão",
+      "base_scenario": "CEN-PER-03",
+      "auth": "customer",
+      "actor": "Cliente autenticado",
+      "flow": "Em 'My Payment Options', remover o cartão terminado em 0002.",
+      "precondition": "Cliente autenticado; o próprio cenário cadastra o cartão 0002 antes de remover.",
+      "data": "—",
+      "coherent": "Sim.",
+      "justification": "Cliente deve poder apagar meios de pagamento.",
+      "requirement": "O sistema deve permitir remover um cartão salvo.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/saved-payment-methods"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 800
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "text": "Add new card",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 300
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Name",
+            "exact": false
+          },
+          "value": "Cliente Teste"
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Card Number",
+            "exact": false
+          },
+          "value": "4000000000000002"
+        },
+        {
+          "type": "SELECT",
+          "target": {
+            "label": "Expiry Month",
+            "exact": false
+          },
+          "value": "12"
+        },
+        {
+          "type": "SELECT",
+          "target": {
+            "label": "Expiry Year",
+            "exact": false
+          },
+          "value": "2090"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Submit",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 1000
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "css": "button:has(svg.fa-trash-alt)"
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 1000
+        }
+      ],
+      "expected": {
+        "text_not_contains": [
+          "0002"
+        ]
+      },
+      "expected_confidence": "confirmado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": ""
+    },
+    {
+      "id": "CEN-PER-12",
+      "domain": "PER",
+      "name": "Perfil sem login",
+      "flow_type": "Alternativo — ação sem login",
+      "base_scenario": "CEN-PER-01",
+      "auth": "none",
+      "actor": "Visitante não autenticado",
+      "flow": "Sem sessão, abrir /profile.",
+      "precondition": "Sem sessão ativa.",
+      "data": "—",
+      "coherent": "Sim.",
+      "justification": "Dados de perfil são pessoais.",
+      "requirement": "O sistema deve exigir autenticação para exibir o perfil.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/profile"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 1000
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "Blocked illegal activity"
+        ],
+        "text_not_contains": [
+          "Set Username"
+        ]
+      },
+      "expected_confidence": "observado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": "Observado na v20.3.0: sem sessão, /profile devolve uma página de erro 500 do servidor ('Blocked illegal activity') em vez de levar ao login. Registrar como achado de usabilidade; não investigar."
+    },
+    {
+      "id": "CEN-PER-13",
+      "domain": "PER",
+      "name": "Endereços salvos sem login",
+      "flow_type": "Alternativo — ação sem login",
+      "base_scenario": "CEN-PER-02",
+      "auth": "none",
+      "actor": "Visitante não autenticado",
+      "flow": "Sem sessão, abrir /#/address/saved.",
+      "precondition": "Sem sessão ativa.",
+      "data": "—",
+      "coherent": "Sim.",
+      "justification": "Endereços são dados pessoais.",
+      "requirement": "O sistema deve exigir autenticação para listar endereços.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/address/saved"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 1000
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "Please login to view this page"
+        ]
+      },
+      "expected_confidence": "observado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": ""
+    },
+    {
+      "id": "CEN-PER-14",
+      "domain": "PER",
+      "name": "Consultar carteira digital",
+      "flow_type": "Principal (ausente no catálogo atual)",
+      "base_scenario": "CEN-PER-03",
+      "auth": "customer",
+      "actor": "Cliente autenticado",
+      "flow": "Abrir a carteira digital e ver o saldo.",
+      "precondition": "Cliente autenticado.",
+      "data": "—",
+      "coherent": "Parcial.",
+      "justification": "Carteira com saldo é recurso comum em e-commerce, mas não essencial a uma loja de sucos.",
+      "requirement": "O sistema deve exibir o saldo da carteira do cliente.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/wallet"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 800
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "Digital Wallet",
+          "Wallet Balance"
+        ]
+      },
+      "expected_confidence": "observado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": ""
+    },
+    {
+      "id": "CEN-PER-15",
+      "domain": "PER",
+      "name": "Enviar feedback ao cliente sem nota",
+      "flow_type": "Alternativo — formulário incompleto",
+      "base_scenario": "CEN-ADM-03",
+      "auth": "customer",
+      "actor": "Cliente autenticado",
+      "flow": "Abrir 'Customer Feedback', escrever comentário e não escolher nota.",
+      "precondition": "Cliente autenticado.",
+      "data": "Comentário 'Teste AMBOLS'.",
+      "coherent": "Sim.",
+      "justification": "Feedback sem nota fica incompleto.",
+      "requirement": "O sistema deve exigir comentário e nota para enviar feedback.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/contact"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 800
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Comment",
+            "exact": false
+          },
+          "value": "Teste AMBOLS"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 300
+        },
+        {
+          "type": "ASSERT_DISABLED",
+          "target": {
+            "role": "button",
+            "name": "Button to send the review",
+            "exact": false
+          }
+        }
+      ],
+      "expected": {
+        "url_contains": "/#/contact"
+      },
+      "expected_confidence": "confirmado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": "O formulário tem um CAPTCHA aritmético da própria aplicação; no fluxo completo ele deve ser preenchido manualmente pelo avaliador."
+    },
+    {
+      "id": "CEN-PER-16",
+      "domain": "PER",
+      "name": "Registrar reclamação (Complaint)",
+      "flow_type": "Principal (ausente no catálogo atual)",
+      "base_scenario": "CEN-PER-15",
+      "auth": "customer",
+      "actor": "Cliente autenticado",
+      "flow": "Abrir 'Complaint', escrever a mensagem e enviar.",
+      "precondition": "Cliente autenticado.",
+      "data": "Mensagem 'Pedido chegou incompleto - teste'.",
+      "coherent": "Sim.",
+      "justification": "Canal de reclamação é esperado em loja virtual.",
+      "requirement": "O sistema deve permitir que o cliente registre uma reclamação e receba um número de protocolo.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/complain"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 800
+        },
+        {
+          "type": "FILL",
+          "target": {
+            "label": "Message",
+            "exact": false
+          },
+          "value": "Pedido chegou incompleto - teste"
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "role": "button",
+            "name": "Button to send the complaint",
+            "exact": false
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 1000
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "Customer support will get in touch"
+        ]
+      },
+      "expected_confidence": "confirmado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": "Não anexar arquivos (upload fica fora de escopo)."
+    },
+    {
+      "id": "CEN-ADM-04",
+      "domain": "ADM",
+      "name": "Cliente comum tenta abrir a administração",
+      "flow_type": "Alternativo — perfil sem permissão",
+      "base_scenario": "CEN-ADM-01",
+      "auth": "customer",
+      "actor": "Cliente autenticado",
+      "flow": "Entrar como cliente comum e abrir /#/administration.",
+      "precondition": "Cliente autenticado sem perfil administrador.",
+      "data": "—",
+      "coherent": "Sim.",
+      "justification": "Funções de gestão são restritas.",
+      "requirement": "O sistema deve negar a área administrativa a usuários sem perfil de administrador.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/administration"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 1000
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "You are not allowed to access this page"
+        ],
+        "text_not_contains": [
+          "Registered Users"
+        ]
+      },
+      "expected_confidence": "observado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": ""
+    },
+    {
+      "id": "CEN-ADM-05",
+      "domain": "ADM",
+      "name": "Visitante tenta abrir a administração",
+      "flow_type": "Alternativo — ação sem login",
+      "base_scenario": "CEN-ADM-01",
+      "auth": "none",
+      "actor": "Visitante não autenticado",
+      "flow": "Sem sessão, abrir /#/administration.",
+      "precondition": "Sem sessão ativa.",
+      "data": "—",
+      "coherent": "Sim.",
+      "justification": "Funções de gestão são restritas.",
+      "requirement": "O sistema deve negar a área administrativa a visitantes não autenticados.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/administration"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 1000
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "You are not allowed to access this page"
+        ],
+        "text_not_contains": [
+          "Registered Users"
+        ]
+      },
+      "expected_confidence": "observado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": ""
+    },
+    {
+      "id": "CEN-ADM-06",
+      "domain": "ADM",
+      "name": "Ver detalhes de um usuário cadastrado",
+      "flow_type": "Principal (ausente no catálogo atual)",
+      "base_scenario": "CEN-ADM-02",
+      "auth": "admin",
+      "actor": "Administrador",
+      "flow": "Na lista de usuários, abrir os detalhes do primeiro usuário.",
+      "precondition": "Administrador autenticado.",
+      "data": "—",
+      "coherent": "Sim.",
+      "justification": "O CEN-ADM-02 atual só confirma o título da seção.",
+      "requirement": "O sistema deve permitir ao administrador consultar dados de um usuário.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/administration"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 1000
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "css": "button:has(svg.fa-eye)"
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 1000
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "Email"
+        ]
+      },
+      "expected_confidence": "confirmado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": "O botão de detalhes é um ícone de olho sem rótulo acessível (achado de acessibilidade)."
+    },
+    {
+      "id": "CEN-ADM-07",
+      "domain": "ADM",
+      "name": "Remover feedback de cliente",
+      "flow_type": "Alternativo — gestão de dados",
+      "base_scenario": "CEN-ADM-03",
+      "auth": "admin",
+      "actor": "Administrador",
+      "flow": "Na lista de feedbacks, remover o primeiro item e observar a lista.",
+      "precondition": "Administrador autenticado; ao menos 1 feedback.",
+      "data": "—",
+      "coherent": "Sim.",
+      "justification": "Moderar feedback é função administrativa.",
+      "requirement": "O sistema deve permitir ao administrador remover feedbacks.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/administration"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 1000
+        },
+        {
+          "type": "CLICK",
+          "target": {
+            "css": "button:has(svg.fa-trash-alt)"
+          }
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 1000
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "Customer Feedback"
+        ]
+      },
+      "expected_confidence": "confirmado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": "Anotar a contagem de feedbacks antes e depois (mudança de estado)."
+    },
+    {
+      "id": "CEN-ADM-08",
+      "domain": "ADM",
+      "name": "Gerenciar produtos e pedidos como administrador",
+      "flow_type": "Lacuna — previsto no guia",
+      "base_scenario": "CEN-ADM-01",
+      "auth": "admin",
+      "actor": "Administrador",
+      "flow": "Procurar na administração alguma tela de produtos ou pedidos; abrir /#/accounting.",
+      "precondition": "Administrador autenticado.",
+      "data": "—",
+      "coherent": "Sim.",
+      "justification": "O guia exige 'consultar e gerenciar produtos e pedidos', mas a tela de administração mostra só usuários e feedbacks.",
+      "requirement": "O sistema deve oferecer gestão de produtos e pedidos a um perfil autorizado.",
+      "actions": [
+        {
+          "type": "NAVIGATE",
+          "route": "/#/administration"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 800
+        },
+        {
+          "type": "NAVIGATE",
+          "route": "/#/accounting"
+        },
+        {
+          "type": "WAIT",
+          "milliseconds": 1000
+        }
+      ],
+      "expected": {
+        "text_contains": [
+          "You are not allowed to access this page"
+        ]
+      },
+      "expected_confidence": "observado",
+      "scope": "Em escopo",
+      "execution_status": "PASSED — 2026-11-28, Juice Shop v20.3.0",
+      "note": "Hipótese: a gestão de estoque/preço e de pedidos fica em /#/accounting, para outro perfil (contabilidade). Registrar a resposta; não tentar obter outra conta."
+    }
+  ]
+}

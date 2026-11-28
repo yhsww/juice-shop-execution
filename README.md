@@ -28,23 +28,50 @@ DOCX por domínio + relatório geral
 
 ## 2. Escopo atual
 
-A suíte principal possui **78 cenários funcionais**:
+A suíte possui **140 cenários funcionais**: 78 cenários-base e 62 complementares, que cobrem fluxos alternativos e comportamentos incoerentes com uma loja de sucos.
 
-| Domínio | Quantidade |
-|---|---:|
-| ADM — Administração | 3 |
-| CAR — Carrinho de Compras | 7 |
-| CAT — Catálogo | 17 |
-| CHK — Checkout e Pedidos | 28 |
-| IDT — Gestão de Identidade e Usuários | 17 |
-| PER — Perfil | 6 |
-| **Total** | **78** |
+| Domínio | Base | Complementares | Total |
+|---|---:|---:|---:|
+| ADM — Administração | 3 | 5 | 8 |
+| CAR — Carrinho de Compras | 7 | 8 | 15 |
+| CAT — Catálogo | 17 | 12 | 29 |
+| CHK — Checkout e Pedidos | 28 | 16 | 44 |
+| IDT — Gestão de Identidade e Usuários | 17 | 11 | 28 |
+| PER — Perfil | 6 | 10 | 16 |
+| **Total** | **78** | **62** | **140** |
 
-O catálogo está em:
+Os catálogos estão em:
 
 ```text
-scenarios/scenarios.json
+scenarios/scenarios.json              # 78 cenários-base
+scenarios/scenarios_alternativos.json # 62 cenários complementares (gerado)
 ```
+
+O runner, o humanizador e o gerador de DOCX leem **todos** os `*.json` da pasta `scenarios/` (exceto os iniciados por `_`). Os cenários complementares são detalhados na seção 2.1.
+
+### 2.1 Cenários complementares (fluxos alternativos)
+
+O arquivo `scenarios/scenarios_alternativos.json` é gerado por `tools/gerar_cenarios_alternativos.py`. Edite o gerador e rode o comando abaixo; não edite o JSON à mão:
+
+```powershell
+python tools/gerar_cenarios_alternativos.py
+```
+
+O gerador também grava as fichas no template da Etapa 1 em `docs/fichas_cenarios_alternativos.md`.
+
+Cada cenário complementar traz campos extras:
+
+| Campo | Significado |
+|---|---|
+| `flow_type` | Principal, Alternativo (formulário incompleto, ação sem login, dados inválidos, atualização…), Incoerente com loja de sucos ou Lacuna |
+| `base_scenario` | Cenário-base do qual o fluxo deriva |
+| `auth` | Estado de acesso antes do cenário: `none` (limpa cookies e storage e não autentica), `customer` (cliente comum, mesmo no domínio ADM) ou `admin` |
+| `expected_confidence` | `observado` (critério escrito a partir da interface v20.3.0), `alta` ou `confirmado` (hipótese inicial confirmada na execução) |
+| `scope` / `note` | Limites de escopo (regra 5 do guia) e o que observar na execução |
+
+Última execução completa (`python run.py --all`, banco do Juice Shop v20.3.0 recém-reiniciado, 2026-11-28): **140/140 aprovados**.
+
+Sem o campo `auth`, a heurística antiga de autenticação continua valendo, então os 78 cenários-base não mudam de comportamento.
 
 ## 3. Tecnologias utilizadas
 
@@ -84,7 +111,9 @@ juice-shop-execution/
 ├── automation/              # Executor e ações funcionais
 ├── reporting/               # Evidências, humanização e relatórios
 │   └── llm/                 # Cliente e prompts da LLM
-├── scenarios/               # Catálogo dos 78 cenários
+├── scenarios/               # Catálogos (78 base + 62 complementares)
+├── tools/                   # Gerador dos cenários complementares
+├── docs/                    # Fichas geradas dos cenários complementares
 ├── tests/                   # Testes automatizados do projeto
 ├── juice-shop/              # Docker Compose da aplicação alvo
 ├── reports/
@@ -238,7 +267,7 @@ Também é possível selecionar mais de um domínio:
 python run.py --start-app --domain CHK --domain IDT
 ```
 
-### 9.3 Todos os 78 cenários
+### 9.3 Todos os 140 cenários
 
 Execução completa:
 
@@ -249,7 +278,7 @@ python run.py --start-app --all
 O terminal apresenta cada resultado e um resumo semelhante a:
 
 ```text
-[summary] 78/78 cenários aprovados; 0 com falha.
+[summary] 140/140 cenários aprovados; 0 com falha.
 ```
 
 Para iniciar e encerrar automaticamente o ambiente:
@@ -351,7 +380,7 @@ python -m reporting.docx_generator --scenario CEN-ADM-01 --humanize llm --force-
 
 ### Gerar todos os relatórios a partir dos humanizados existentes
 
-Se os 78 JSONs humanizados já estiverem disponíveis localmente, os DOCX podem ser recriados em uma pasta de trabalho e, após validação, consolidados em `reports/docx/`.
+Se os 140 JSONs humanizados já estiverem disponíveis localmente, os DOCX podem ser recriados em uma pasta de trabalho e, após validação, consolidados em `reports/docx/`.
 
 A árvore versionada final não mantém os JSONs humanizados intermediários; mantém somente os relatórios DOCX finais e as evidências de execução.
 
@@ -375,7 +404,7 @@ Os relatórios foram gerados e validados com **Claude** e consolidados em seis r
 São gerados:
 
 - 1 relatório para cada um dos 6 domínios;
-- 1 relatório geral consolidando os 78 cenários.
+- 1 relatório geral consolidando todos os cenários do catálogo (140 com os complementares; os DOCX versionados hoje ainda refletem os 78 cenários-base até serem regenerados).
 
 O relatório geral reúne os mesmos cenários dos relatórios por domínio.
 
@@ -428,7 +457,7 @@ python -m reporting.humanizer --all --force
 python -m reporting.docx_generator --humanize llm --force-humanize --output .\reports\docx
 ```
 
-Se a humanização dos 78 cenários já estiver pronta e apenas os DOCX precisarem ser recriados:
+Se a humanização dos 140 cenários já estiver pronta e apenas os DOCX precisarem ser recriados:
 
 ```powershell
 python -m reporting.docx_generator --output .\reports\docx
@@ -521,7 +550,7 @@ python run.py --start-app --all
 O estado esperado da suíte completa é:
 
 ```text
-78/78 cenários aprovados; 0 com falha.
+140/140 cenários aprovados; 0 com falha.
 ```
 
 ## 19. Aplicação alvo
