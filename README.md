@@ -289,186 +289,105 @@ python run.py --start-app --all --stop-app
 
 ## 10. Evidências de execução
 
-Após executar os cenários, as evidências ficam em:
+Cada cenário executado deixa em `reports/executions/`:
 
-```text
-reports/executions/
-```
-
-Os artefatos podem incluir:
-
-- ID do cenário;
-- status;
-- ações executadas;
-- dados utilizados;
-- resultado observado;
-- mensagens apresentadas pela interface;
-- screenshots;
-- informações de validação.
-
-A execução é a fonte de verdade do resultado do cenário.
-
-As screenshots são evidências visuais complementares e não devem ser utilizadas para inventar fatos que não foram registrados pela execução.
-
-## 11. Humanização com Claude
-
-A humanização transforma as evidências estruturadas em documentação funcional mais natural.
-
-O fluxo é:
-
-```text
-JSON da execução
-      +
-screenshots
-      +
-catálogo do cenário
-        ↓
-      Claude
-        ↓
-JSON humanizado
-```
-
-Os JSONs humanizados são artefatos intermediários da geração dos relatórios e não fazem parte da entrega final versionada. A entrega final mantém os DOCX consolidados em `reports/docx/`.
-
-### Humanizar um cenário
-
-```powershell
-python -m reporting.humanizer --scenario CEN-CAR-03 --force
-```
-
-### Humanizar todos os cenários
-
-```powershell
-python -m reporting.humanizer --all
-```
-
-Cenários que já têm texto humanizado em `reports/humanized/` são **reaproveitados sem chamar a LLM** (o log mostra "reaproveitado (sem custo)"), mesmo que o provedor ou o modelo no `.env` tenha mudado. Só os que faltam ou falharam são enviados. Para regerar:
-
-| Opção | Regera |
+| Arquivo | Conteúdo |
 |---|---|
-| `--scenario CEN-XXX-NN --force` | só esse cenário (ex.: depois de reexecutá-lo no Playwright) |
-| `--refresh-stale` | só os cuja evidência ou modelo mudou desde a humanização |
-| `--force` | todos (paga de novo os 140) |
+| `CEN-XXX-NN.json` | evidência estruturada: status, passos, dados, mensagens, resultado e resumo do tráfego de API por passo |
+| `CEN-XXX-NN.md` | a mesma evidência em texto legível |
+| `CEN-XXX-NN_step_NN.png` | captura de tela de cada passo |
+| `CEN-XXX-NN.har` | tráfego HTTP de API (HAR 1.2, campo `_step` liga cada requisição ao passo); senhas, tokens, cookies e respostas de segurança mascarados, cartões reduzidos aos 4 últimos dígitos |
 
-A LLM deve **interpretar as evidências sem inventar fatos**. URLs, seletores, waits e outros detalhes técnicos são tratados como artefatos de execução e não devem ser transformados em narrativa funcional.
+A execução é a fonte de verdade do resultado. As capturas e o HAR são evidência complementar. A coleta de rede pode ser desligada com `JUICE_SHOP_CAPTURE_NETWORK=false`.
+
+## 11. Humanização com LLM
+
+A humanização reescreve a evidência estruturada em prosa funcional. A LLM só redige: os fatos vêm da evidência e ela não pode acrescentar nada.
+
+```text
+catálogo do cenário + evidência da execução (CEN-XXX-NN.json/.md)
+        ↓
+      LLM  (Claude: só texto | Gemini: texto + capturas de tela)
+        ↓
+reports/humanized/CEN-XXX-NN.json
+```
+
+O provedor e o modelo são definidos no `.env` (`REPORTING_LLM_PROVIDER`, `CLAUDE_LLM_MODEL` etc.). Cada texto gravado leva uma impressão digital (catálogo + evidência + versão do prompt + modelo).
+
+| Comando | O que faz |
+|---|---|
+| `python -m reporting.humanizer --all` | humaniza só o que falta; textos existentes são reaproveitados sem custo |
+| `python -m reporting.humanizer --scenario CEN-XXX-NN --force` | regera um cenário (ex.: depois de reexecutá-lo) |
+| `python -m reporting.humanizer --all --refresh-stale` | regera só os cuja evidência ou modelo mudou |
+| `python -m reporting.humanizer --all --force` | regera todos (cobra de novo) |
 
 ## 12. Gerar os relatórios DOCX
-
-O gerador pode montar os documentos a partir das evidências e dos JSONs humanizados.
-
-### Gerar os DOCX usando humanização LLM
 
 ```powershell
 python -m reporting.docx_generator --humanize llm
 ```
 
-Reaproveita os textos já humanizados; só chama a LLM para os que faltarem. `--force-humanize` regera todos e cobra de novo.
+Monta os DOCX a partir das evidências e dos textos de `reports/humanized/`. Se todos os textos já existem, não chama a LLM. Dentro de cada documento os cenários ficam agrupados por domínio e em ordem numérica (CHK-01, CHK-02 … CHK-44).
 
-### Gerar automaticamente
+| Opção | Uso |
+|---|---|
+| `--humanize auto` | usa a LLM e recorre à descrição determinística se o provedor falhar |
+| `--humanize deterministic` | sem LLM |
+| `--output <pasta>` | grava em outra pasta (padrão: `reports/docx/`) |
+| `--force-humanize` | regera todos os textos antes (cobra de novo) |
 
-```powershell
-python -m reporting.docx_generator --humanize auto
-```
-
-No modo `auto`, o gerador tenta utilizar a LLM e pode recorrer à descrição determinística quando o provedor não estiver disponível.
-
-### Gerar sem LLM
-
-```powershell
-python -m reporting.docx_generator --humanize deterministic
-```
-
-Esse modo usa as evidências disponíveis sem depender de uma API de IA.
-
-### Gerar um único cenário
-
-```powershell
-python -m reporting.docx_generator --scenario CEN-ADM-01 --humanize llm
-```
-
-### Gerar todos os relatórios a partir dos humanizados existentes
-
-Se os 140 JSONs humanizados já estiverem disponíveis localmente, os DOCX podem ser recriados em uma pasta de trabalho e, após validação, consolidados em `reports/docx/`.
-
-A árvore versionada final não mantém os JSONs humanizados intermediários; mantém somente os relatórios DOCX finais e as evidências de execução.
+O gerador sempre grava os 7 arquivos; por isso não use `--scenario` para atualizar os relatórios oficiais (os documentos ficariam só com aquele cenário). Feche os DOCX no Word antes de gerar.
 
 ## 13. Relatórios finais
 
-A entrega final validada contém **7 DOCX**, versionados em:
-
 ```text
 reports/docx/
-├── ADM_relatorio.docx
-├── CAR_relatorio.docx
-├── CAT_relatorio.docx
-├── CHK_relatorio.docx
-├── IDT_relatorio.docx
-├── PER_relatorio.docx
-└── JUICE_SHOP_RELATORIO_GERAL.docx
+├── ADM_relatorio.docx   (8 cenários)
+├── CAR_relatorio.docx   (15)
+├── CAT_relatorio.docx   (29)
+├── CHK_relatorio.docx   (44)
+├── IDT_relatorio.docx   (28)
+├── PER_relatorio.docx   (16)
+└── JUICE_SHOP_RELATORIO_GERAL.docx   (140, por domínio)
 ```
 
-Os relatórios foram gerados e validados com **Claude** e consolidados em seis relatórios por domínio mais um relatório geral.
+Estrutura de cada cenário: Ficha de Ambiente, Guia de Domínio, Ficha de Cenário, Passos Executados e capturas de tela.
 
-São gerados:
+**Versão do catálogo `catalogo-v1`:** 140/140 cenários aprovados (Juice Shop v20.3.0, 2026-11-28); os 140 textos foram gerados pelo `claude-sonnet-5` com a mesma entrada (catálogo + evidência textual, sem imagens).
 
-- 1 relatório para cada um dos 6 domínios;
-- 1 relatório geral consolidando todos os cenários do catálogo (140 com os complementares; os DOCX versionados hoje ainda refletem os 78 cenários-base até serem regenerados).
-
-O relatório geral reúne os mesmos cenários dos relatórios por domínio.
-
-A estrutura dos DOCX contempla:
-
-1. **Ficha de Ambiente**
-2. **Guia de Domínio**
-3. **Ficha de Cenário**
-4. **Passos Executados**
-5. Screenshots vinculadas às evidências dos passos
-
-A documentação mantém a rastreabilidade:
+Rastreabilidade:
 
 ```text
-DOCX
- ↓
-JSON humanizado
- ↓
-JSON da execução
- ↓
-ações + resultados + screenshots
+DOCX → reports/humanized/CEN-XXX-NN.json → reports/executions/CEN-XXX-NN.{json,md,png,har}
 ```
 
 ## 14. Fluxo completo recomendado
 
-Para uma execução completa desde o ambiente local:
-
 ```powershell
-git pull --ff-only origin main
-
-.\.venv\Scripts\Activate.ps1
-
+git pull
 pip install -r requirements.txt
-
 python -m playwright install chromium
-
-Copy-Item .env.example .env
+Copy-Item .env.example .env   # só na primeira vez; preencha a chave da LLM
 ```
 
-Configure o `.env` e depois execute:
+1. Executar os 140 cenários (Docker precisa estar rodando):
 
 ```powershell
 python run.py --start-app --all
 ```
 
-Valide o resumo final. Para a entrega com Claude:
+Esperado: `[summary] 140/140 cenários aprovados; 0 com falha.`
+
+2. Humanizar (só o que falta):
 
 ```powershell
 python -m reporting.humanizer --all
-python -m reporting.docx_generator --humanize llm --output .\reports\docx
 ```
 
-Se a humanização dos 140 cenários já estiver pronta e apenas os DOCX precisarem ser recriados:
+3. Gerar os DOCX:
 
 ```powershell
-python -m reporting.docx_generator --output .\reports\docx
+python -m reporting.docx_generator --humanize llm
 ```
 
 ## 15. Testes do projeto

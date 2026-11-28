@@ -5,14 +5,10 @@ __pycache__/
 .env
 
 # Generated execution artifacts are intentionally versioned:
-# - reports/executions: JSON/MD execution evidence and screenshots
+# - reports/executions: JSON/MD/HAR execution evidence and screenshots
 # - reports/humanized: LLM/deterministic humanized JSON
 # - reports/docx: final DOCX reports
 # - screenshots: legacy location, if used
 
-# Arquivos temporarios do Microsoft Word
-~$*.docx
-# Arquivos temporários do Microsoft Word
-~$*.docx
 # Arquivos temporários do Microsoft Word
 ~$*.docx
