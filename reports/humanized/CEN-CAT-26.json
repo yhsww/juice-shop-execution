@@ -1,0 +1,70 @@
+{
+  "scenario_id": "CEN-CAT-26",
+  "fingerprint": "afa51b360882e36d0a5367a1b2c5fe4765f2df39d9d75a34799615f8c42bb9bd",
+  "content": {
+    "flow": "A partir da página inicial do catálogo exibida em inglês, o visitante abre o seletor de idiomas disponível no cabeçalho e, dentro da lista de opções apresentadas, seleciona a opção 'Português (Brasil)'. A interface reconstrói todos os textos da página — menu, botões, rótulos de produtos e indicadores de paginação — para o idioma escolhido, confirmando a troca por meio de uma notificação específica. Em seguida, o seletor é aberto novamente e o idioma inglês é escolhido, retornando o catálogo ao estado original.",
+    "precondition": "O catálogo está carregado e todos os textos da interface (menu, botões e produtos) estão exibidos em inglês, com o indicador de idioma mostrando 'EN'.",
+    "observed_result": "Após selecionar 'Português (Brasil)', todos os elementos textuais da página passaram a ser exibidos em português: o menu mudou de 'Account'/'Your Basket' para 'Conta'/'Seu Carrinho', o título da listagem passou de 'All Products' para 'Todos os Produtos', os botões de compra mudaram de 'Add to Basket' para 'Adicionar ao carrinho' e o indicador de estoque mudou de 'Only 1 left' para 'Apenas 1 restantes'. O indicador de idioma no cabeçalho passou de 'EN' para 'BR'. Uma notificação confirmou explicitamente a mudança para 'Português (Brasil)'. Ao repetir a seleção com o idioma inglês, a interface retornou integralmente aos textos originais em inglês e o indicador voltou a exibir 'EN'.",
+    "messages": [
+      "Language has been changed to Português (Brasil)",
+      "Language has been changed to English"
+    ],
+    "data": "Idioma selecionado: Português (Brasil); idioma de retorno: English (EN).",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Carregar a página inicial do catálogo",
+        "data": "Página inicial da loja",
+        "response": "A listagem de produtos é exibida em inglês, com o cabeçalho mostrando o indicador de idioma 'EN' e botões 'Add to Basket' em cada item."
+      },
+      {
+        "number": 2,
+        "action": "Abrir o seletor de idiomas no cabeçalho",
+        "data": "",
+        "response": "Uma lista com diversos idiomas disponíveis é exibida, incluindo as opções 'Português' e 'Português (Brasil)'."
+      },
+      {
+        "number": 3,
+        "action": "Aguardar a interface estabilizar após abrir o seletor",
+        "data": "",
+        "response": "A lista de idiomas permanece visível sem alterações adicionais na página de produtos."
+      },
+      {
+        "number": 4,
+        "action": "Selecionar a opção 'Português (Brasil)' na lista de idiomas",
+        "data": "Português (Brasil)",
+        "response": "Os textos da interface são traduzidos: o menu passa a exibir 'Conta' e 'Seu Carrinho', o título muda para 'Todos os Produtos' e os botões de compra passam a mostrar 'Adicionar ao carrinho'."
+      },
+      {
+        "number": 5,
+        "action": "Aguardar a conclusão da atualização de idioma",
+        "data": "",
+        "response": "A página permanece estável, já exibindo integralmente o conteúdo traduzido em português."
+      },
+      {
+        "number": 6,
+        "action": "Abrir novamente o seletor de idiomas",
+        "data": "",
+        "response": "A lista de idiomas é reaberta e uma notificação confirma que o idioma foi alterado para 'Português (Brasil)', com indicador 'BR' visível no cabeçalho."
+      },
+      {
+        "number": 7,
+        "action": "Aguardar a interface estabilizar após a confirmação",
+        "data": "",
+        "response": "A página permanece exibida em português, sem mudanças adicionais."
+      },
+      {
+        "number": 8,
+        "action": "Selecionar o idioma inglês para retornar ao estado original",
+        "data": "English",
+        "response": "A interface reverte os textos para inglês: o menu volta a exibir 'Account' e 'Your Basket', e os botões retornam a 'Add to Basket', com o indicador do cabeçalho mostrando novamente 'EN'."
+      },
+      {
+        "number": 9,
+        "action": "Aguardar a confirmação final da troca de idioma",
+        "data": "",
+        "response": "A página permanece estável em inglês, concluindo o ciclo de troca de idioma."
+      }
+    ]
+  }
+}

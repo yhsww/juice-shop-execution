@@ -1,0 +1,75 @@
+{
+  "scenario_id": "CEN-CHK-31",
+  "fingerprint": "a3ecbafb3acc09d30c5e40052f4f5dbcdd02a02d78e7037218e7538cba123abb",
+  "content": {
+    "flow": "No formulário de cadastro de novo endereço, o cliente autenticado preencheu todos os campos solicitados (Nome, Celular, CEP, Endereço, Cidade e Estado) deixando o campo Country sem seleção. O objetivo era verificar se o sistema permite o envio do formulário mesmo sem essa informação obrigatória.",
+    "precondition": "Cliente autenticado com o formulário de cadastro de novo endereço aberto, sem a necessidade de itens no carrinho para acessar a tela.",
+    "observed_result": "Mesmo após o preenchimento de todos os demais campos do endereço, o botão Submit permaneceu desabilitado, impedindo o envio do formulário enquanto o campo Country não for preenchido. A interface não exibiu mensagem de erro específica, apenas manteve a ação de confirmação bloqueada.",
+    "messages": [
+      "Placed Apple Juice (1000ml) into basket."
+    ],
+    "data": "Nome: Cliente Alternativo; Celular: 8599999999; CEP: 60000000; Endereço: Rua Alternativa, 200; Cidade: Fortaleza; Estado: CE (campo Country não preenchido)",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Acessar a tela de cadastro de novo endereço",
+        "data": "",
+        "response": "O formulário 'Add New Address' foi exibido com os campos Country, Name, Mobile Number, ZIP Code, Address, City e State vazios, e o botão Submit visível na parte inferior."
+      },
+      {
+        "number": 2,
+        "action": "Aguardar o carregamento completo do formulário",
+        "data": "",
+        "response": "A tela permaneceu estável, sem alterações visuais, confirmando que o formulário estava totalmente carregado."
+      },
+      {
+        "number": 3,
+        "action": "Preencher o campo Name com o nome do destinatário",
+        "data": "Cliente Alternativo",
+        "response": "O campo Name passou a exibir o valor informado, mantendo os demais campos do formulário inalterados."
+      },
+      {
+        "number": 4,
+        "action": "Preencher o campo Mobile Number com o telefone de contato",
+        "data": "8599999999",
+        "response": "O valor foi registrado no campo, sem alterações adicionais perceptíveis na estrutura da tela."
+      },
+      {
+        "number": 5,
+        "action": "Preencher o campo ZIP Code com o CEP",
+        "data": "60000000",
+        "response": "O contador de caracteres do campo foi atualizado para 8/8, indicando que o CEP foi aceito integralmente."
+      },
+      {
+        "number": 6,
+        "action": "Preencher o campo Address com o endereço completo",
+        "data": "Rua Alternativa, 200",
+        "response": "O contador de caracteres do campo Address foi atualizado para 20/160, refletindo o texto digitado."
+      },
+      {
+        "number": 7,
+        "action": "Preencher o campo City com a cidade",
+        "data": "Fortaleza",
+        "response": "O valor foi inserido no campo City sem impacto visual adicional no restante do formulário."
+      },
+      {
+        "number": 8,
+        "action": "Preencher o campo State com a sigla do estado",
+        "data": "CE",
+        "response": "O campo State recebeu o valor informado, mantendo o restante da tela sem mudanças."
+      },
+      {
+        "number": 9,
+        "action": "Aguardar a estabilização da interface após o preenchimento completo dos campos",
+        "data": "",
+        "response": "Todos os campos preenchidos permaneceram visíveis com seus respectivos valores, exceto o campo Country, que continuou vazio."
+      },
+      {
+        "number": 10,
+        "action": "Verificar o estado do botão Submit com o campo Country ainda vazio",
+        "data": "",
+        "response": "O botão Submit permaneceu desabilitado, confirmando que o sistema não permite o envio do endereço sem a seleção do país."
+      }
+    ]
+  }
+}

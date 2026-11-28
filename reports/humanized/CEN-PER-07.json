@@ -1,0 +1,43 @@
+{
+  "scenario_id": "CEN-PER-07",
+  "fingerprint": "05cdf7697bfeae6de3812e60b3b98752ddbf116c662dc87831d275a17fa1dc75",
+  "content": {
+    "flow": "A partir da tela de perfil do usuário, o cliente autenticado preencheu o campo destinado ao nome de usuário com um valor específico e confirmou a alteração por meio do botão de salvar. A interface respondeu exibindo o novo nome diretamente na página de perfil, logo abaixo do título, indicando que o dado foi persistido.",
+    "precondition": "Cliente autenticado e com acesso à página de perfil (/profile), onde o campo de nome de usuário ainda não possuía valor definido.",
+    "observed_result": "Após o envio do formulário, o nome de usuário 'clienteambols' passou a ser exibido no corpo da página de perfil, logo abaixo do cabeçalho 'User Profile', substituindo o estado anterior em que nenhum nome aparecia nessa região. A requisição de salvamento foi concluída com sucesso e seguida de uma nova carga da página já refletindo o dado atualizado.",
+    "messages": [],
+    "data": "Username: clienteambols",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Acessar a página de perfil do usuário",
+        "data": "/profile",
+        "response": "A página de perfil foi carregada exibindo os campos de upload de imagem, e-mail, opção de torná-lo membro deluxe e o campo para definir o nome de usuário, ainda vazio."
+      },
+      {
+        "number": 2,
+        "action": "Aguardar o carregamento completo da página de perfil",
+        "data": "",
+        "response": "A tela permaneceu estável, sem alterações visuais, confirmando que o perfil já estava totalmente carregado antes da próxima interação."
+      },
+      {
+        "number": 3,
+        "action": "Preencher o campo de nome de usuário",
+        "data": "clienteambols",
+        "response": "O valor foi inserido no campo de texto, sem alteração visível no restante da página nesse momento."
+      },
+      {
+        "number": 4,
+        "action": "Confirmar a alteração clicando no botão de salvar o nome de usuário",
+        "data": "",
+        "response": "A página de perfil foi atualizada e passou a exibir 'clienteambols' logo abaixo do título 'User Profile', indicando que o nome de usuário foi salvo."
+      },
+      {
+        "number": 5,
+        "action": "Aguardar a estabilização da interface após salvar",
+        "data": "",
+        "response": "O nome de usuário 'clienteambols' permaneceu visível na página, confirmando que a alteração se manteve após o recarregamento."
+      }
+    ]
+  }
+}

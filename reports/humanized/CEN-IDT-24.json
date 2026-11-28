@@ -1,0 +1,57 @@
+{
+  "scenario_id": "CEN-IDT-24",
+  "fingerprint": "badaa4af483b3f51d91283910d85ce53d0c008eba01bd3285bde9ad461f7ec29",
+  "content": {
+    "flow": "Na tela de alteração de senha, o cliente informou a senha atual e definiu uma nova senha, mas digitou uma confirmação diferente da nova senha escolhida. Ao sair do campo de confirmação, o formulário sinalizou a divergência entre os valores digitados e manteve a ação de troca bloqueada, impedindo que a senha fosse efetivamente alterada.",
+    "precondition": "Cliente autenticado e posicionado na tela de alteração de senha, com os campos de senha atual, nova senha e confirmação disponíveis e vazios.",
+    "observed_result": "O campo de confirmação passou a exibir o aviso 'Passwords do not match' assim que perdeu o foco, substituindo o contador de caracteres que era mostrado anteriormente. O botão de confirmação da troca permaneceu indisponível, confirmando que a senha não foi alterada diante da divergência entre a nova senha e sua repetição.",
+    "messages": [
+      "Passwords do not match"
+    ],
+    "data": "Senha atual: Teste@12345; nova senha: Nova@12345; confirmação: Nova@54321.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Acessar a tela de alteração de senha a partir da área autenticada da conta.",
+        "data": "",
+        "response": "A página carregou o formulário de troca de senha, exibindo os campos Current Password, New Password e Repeat New Password, todos vazios."
+      },
+      {
+        "number": 2,
+        "action": "Preencher o campo da senha atual.",
+        "data": "Teste@12345",
+        "response": "O valor foi registrado no campo sem alterar o restante da interface, que permaneceu com o formulário ainda incompleto."
+      },
+      {
+        "number": 3,
+        "action": "Preencher o campo de nova senha.",
+        "data": "Nova@12345",
+        "response": "O contador de caracteres do campo de nova senha passou a indicar 10 dos 40 permitidos, confirmando que o valor foi aceito."
+      },
+      {
+        "number": 4,
+        "action": "Preencher o campo de confirmação da nova senha.",
+        "data": "Nova@54321",
+        "response": "O contador de caracteres do campo de confirmação passou a indicar 10 dos 20 permitidos, sem ainda sinalizar divergência entre os valores."
+      },
+      {
+        "number": 5,
+        "action": "Sair do campo de confirmação pressionando Tab, acionando a validação do formulário.",
+        "data": "",
+        "response": "O campo de confirmação passou a exibir a mensagem 'Passwords do not match', substituindo o contador de caracteres anteriormente mostrado."
+      },
+      {
+        "number": 6,
+        "action": "Aguardar a estabilização da interface após a validação.",
+        "data": "",
+        "response": "A mensagem de divergência permaneceu visível, sem novas alterações no conteúdo da página."
+      },
+      {
+        "number": 7,
+        "action": "Verificar a disponibilidade do botão de confirmação da troca de senha.",
+        "data": "",
+        "response": "O botão permaneceu desabilitado, impedindo o envio da troca de senha enquanto os valores de nova senha e confirmação não coincidissem."
+      }
+    ]
+  }
+}

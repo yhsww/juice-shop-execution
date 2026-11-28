@@ -1,0 +1,29 @@
+{
+  "scenario_id": "CEN-CHK-22",
+  "fingerprint": "2d1c82757ade852642eddeb1442470de95edfdc21051f51879ef185ba70fa140",
+  "content": {
+    "flow": "O teste reabre a tela do carrinho logo após a finalização de um pedido para confirmar que o produto comprado (Apple Juice) não permanece listado como pendente de compra. A navegação até a área 'Your Basket' permite observar se ainda existem itens aguardando checkout após a conclusão da compra.",
+    "precondition": "Cliente autenticado na loja, identificado pelo e-mail de teste, com um pedido já concluído anteriormente contendo o produto Apple Juice (1000ml).",
+    "observed_result": "Ao acessar a tela do carrinho, o valor total exibido é 'Total Price: 0¤', sem nenhum produto listado como item pendente de compra. O carrinho permanece disponível para novas adições, mas não há evidência de item residual do pedido já finalizado. O rótulo de bônus indica 'You will gain 0 Bonus Points from this order!', reforçando que não há pedido pendente associado a essa visualização do carrinho.",
+    "messages": [
+      "Placed Apple Juice (1000ml) into basket.",
+      "Total Price: 0¤",
+      "You will gain 0 Bonus Points from this order!"
+    ],
+    "data": "Produto de referência: Apple Juice (1000ml); conta de teste: cen-cen-chk-22-2904e87f6f@example.com",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Cliente acessa diretamente a tela do carrinho após a finalização do pedido, navegando para a área 'Your Basket'.",
+        "data": "Carrinho do cliente autenticado",
+        "response": "A interface exibe a tela 'Your Basket' vinculada ao e-mail da conta, com 'Total Price: 0¤' e nenhum item pendente listado; surge brevemente uma notificação residual informando que Apple Juice (1000ml) havia sido colocado no carrinho em uma etapa anterior."
+      },
+      {
+        "number": 2,
+        "action": "Cliente aguarda a estabilização da tela do carrinho para confirmar o estado final exibido.",
+        "data": "",
+        "response": "A tela permanece estável, mantendo 'Total Price: 0¤' e a mensagem de bônus zerado, sem nenhum novo item sendo adicionado ou exibido como pendente."
+      }
+    ]
+  }
+}

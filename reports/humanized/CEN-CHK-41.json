@@ -1,0 +1,29 @@
+{
+  "scenario_id": "CEN-CHK-41",
+  "fingerprint": "174b44bab2e4ee43fdd96383fd5a200045f0489c3dd39c90515c85bcb55a40a4",
+  "content": {
+    "flow": "O visitante acessa diretamente a página de resultado de rastreamento informando um código de pedido que não corresponde a nenhuma compra registrada. O objetivo é verificar como a loja responde quando o identificador consultado não existe na base de pedidos.",
+    "precondition": "Visitante sem sessão ativa, navegando pela loja sem ter realizado login ou possuir um pedido associado ao código consultado.",
+    "observed_result": "A página de resultados de busca é carregada normalmente, exibindo o código informado no título ('Search Results - pedido-inexistente-000'), mas a tabela de produtos pedidos permanece vazia, sem itens, preços ou quantidades listadas. O campo de prazo de entrega aparece como indefinido ('Expected Delivery ? Days'), e o valor de pontos de bônus é exibido como um placeholder não resolvido ('{{bonus}}'), em vez de um número calculado. Não há exibição de uma mensagem explícita de erro informando que o pedido não foi encontrado.",
+    "messages": [
+      "Search Results - pedido-inexistente-000",
+      "Expected Delivery ? Days",
+      "Bonus Points Earned: {{bonus}} (The bonus points from this order will be added 1:1 to your wallet ¤-fund for future purchases!)"
+    ],
+    "data": "Código de pedido consultado: 'pedido-inexistente-000'",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário acessa a página de rastreamento de pedido informando diretamente um código inexistente no identificador da consulta.",
+        "data": "pedido-inexistente-000",
+        "response": "A interface carrega a tela de resultados com o título refletindo o código informado, porém a lista de produtos do pedido aparece vazia e o prazo de entrega é exibido como indefinido ('?'), indicando que nenhum pedido correspondente foi localizado."
+      },
+      {
+        "number": 2,
+        "action": "O usuário aguarda para verificar se a interface atualiza o conteúdo após o carregamento inicial.",
+        "data": "",
+        "response": "Nenhuma mudança adicional ocorre na tela: os campos de produto, preço e quantidade continuam vazios e o indicador de bônus permanece como placeholder não resolvido, confirmando que a página não localizou dados para o código informado."
+      }
+    ]
+  }
+}

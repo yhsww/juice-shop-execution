@@ -1,0 +1,33 @@
+{
+  "scenario_id": "CEN-IDT-10",
+  "fingerprint": "3dcd5f5ae3ec80d370ca53f9fe85c5776fa3b54712da2f816d36475d5e3d26fa",
+  "content": {
+    "flow": "O cliente inicia o processo de recuperação de senha informando o e-mail da conta cadastrada. Ao preencher esse campo, o sistema identifica a conta correspondente e aciona a consulta da pergunta de segurança vinculada a ela, mantendo disponíveis os campos de pergunta de segurança e de definição de nova senha para a continuidade do processo.",
+    "precondition": "Existe uma conta de teste previamente cadastrada com pergunta e resposta de segurança configuradas, necessária para que o fluxo de recuperação de senha reconheça o e-mail informado.",
+    "observed_result": "Após o preenchimento do e-mail, uma consulta à pergunta de segurança da conta foi realizada com sucesso pelo sistema, e a tela permaneceu exibindo os campos de Security Question, New Password e Repeat New Password habilitados, confirmando que o processo de recuperação reconheceu a conta associada ao e-mail informado. Nenhuma alteração adicional ocorreu durante o período de espera subsequente, indicando que a interface aguarda o preenchimento da resposta de segurança e da nova senha.",
+    "messages": [
+      "Language has been changed to English Force page reload"
+    ],
+    "data": "E-mail utilizado: cen-cen-idt-10-a1fbd5662c@example.com",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Acessar a tela de recuperação de senha (Forgot Password).",
+        "data": "Não há dado informado nesta etapa.",
+        "response": "A tela de recuperação de senha foi carregada, exibindo os campos de Email, Security Question, New Password e Repeat New Password."
+      },
+      {
+        "number": 2,
+        "action": "Preencher o campo de e-mail com o endereço da conta cadastrada.",
+        "data": "cen-cen-idt-10-a1fbd5662c@example.com",
+        "response": "O sistema processou o e-mail informado e consultou a pergunta de segurança associada à conta com sucesso, mantendo a estrutura da tela com os campos de Security Question e de nova senha disponíveis para continuidade do fluxo."
+      },
+      {
+        "number": 3,
+        "action": "Aguardar a atualização da interface após o preenchimento do e-mail.",
+        "data": "Não há dado informado nesta etapa.",
+        "response": "Nenhuma mudança visual adicional foi detectada, com a tela permanecendo estável aguardando o preenchimento da resposta de segurança e da nova senha."
+      }
+    ]
+  }
+}

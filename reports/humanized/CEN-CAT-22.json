@@ -1,0 +1,51 @@
+{
+  "scenario_id": "CEN-CAT-22",
+  "fingerprint": "c66d7c429cab0392ffb94b7ac52839f6e5d592c03c473ecb2a1a2f67c25031e6",
+  "content": {
+    "flow": "A partir da listagem de produtos, o cliente autenticado abriu o detalhe do item Apple Juice (1000ml) e utilizou o recurso de avaliação disponível na página: preencheu o campo de texto com um comentário sobre o produto e enviou a avaliação por meio do botão de envio. A interação teve como consequência o registro do comentário junto ao produto, evidenciado pelo aumento no contador de avaliações exibido na tela.",
+    "precondition": "Cliente autenticado e navegando na página inicial de listagem de produtos da loja, com o item Apple Juice (1000ml) disponível para seleção.",
+    "observed_result": "Após o envio, a interface exibiu a confirmação de que a avaliação foi salva e o contador de avaliações do produto Apple Juice (1000ml), antes em 4, passou a indicar 5, demonstrando que o comentário enviado foi incorporado à lista de avaliações do item.",
+    "messages": [
+      "You review has been saved."
+    ],
+    "data": "Produto: Apple Juice (1000ml); Texto da avaliação: 'Suco muito bom - teste AMBOLS'",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Acessou a página inicial com a listagem completa de produtos da loja",
+        "data": "/#/",
+        "response": "A tela carregou exibindo todos os produtos disponíveis, incluindo Apple Juice (1000ml) com preço de 1.99¤ e opção de adicionar ao carrinho"
+      },
+      {
+        "number": 2,
+        "action": "Selecionou o produto Apple Juice (1000ml) na listagem para abrir seus detalhes",
+        "data": "",
+        "response": "Abriu o painel de detalhes do produto, mostrando a descrição 'The all-time classic.', o preço 1.99¤, o contador de avaliações indicando 4 e o campo para escrever uma nova avaliação"
+      },
+      {
+        "number": 3,
+        "action": "Aguardou a estabilização da tela de detalhes do produto antes de prosseguir",
+        "data": "",
+        "response": "A tela permaneceu estável, sem alterações visuais, mantendo o painel de avaliações do Apple Juice aberto"
+      },
+      {
+        "number": 4,
+        "action": "Preencheu o campo de texto destinado à avaliação do produto",
+        "data": "Suco muito bom - teste AMBOLS",
+        "response": "O campo de avaliação passou a exibir o texto digitado, preparando o conteúdo para envio"
+      },
+      {
+        "number": 5,
+        "action": "Acionou o botão de envio da avaliação",
+        "data": "",
+        "response": "A interface confirmou o registro com a mensagem 'You review has been saved.' e o contador de avaliações do produto foi atualizado de 4 para 5"
+      },
+      {
+        "number": 6,
+        "action": "Aguardou a atualização final da interface após o envio",
+        "data": "",
+        "response": "A tela manteve o estado atualizado, com o contador de avaliações em 5 e nenhuma alteração visual adicional detectada"
+      }
+    ]
+  }
+}

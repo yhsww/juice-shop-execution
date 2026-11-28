@@ -1,0 +1,87 @@
+{
+  "scenario_id": "CEN-CHK-32",
+  "fingerprint": "7a49cd2f9d7287316056da032f7f1fed739d6ff8434f60a91a48ebd7fd2577d8",
+  "content": {
+    "flow": "O teste valida o comportamento do formulário de cadastro de endereço quando um número de celular inválido é informado. Na tela 'Add New Address', o cliente autenticado preencheu os campos de país, nome e, em seguida, informou '123' no campo Mobile Number — um valor muito curto para ser um número de telefone válido. Ao preencher os demais campos obrigatórios (CEP, endereço, cidade e estado) e mover o foco para fora do campo de celular, o formulário exibiu uma mensagem de validação indicando o formato esperado, e o botão de envio permaneceu bloqueado, impedindo o envio do endereço com o dado inválido.",
+    "precondition": "Cliente autenticado acessando a tela de cadastro de novo endereço, com o formulário em branco.",
+    "observed_result": "O campo Mobile Number passou a exibir a mensagem de erro 'Mobile number must match 1000000-9999999999 format.' assim que o valor '123' foi considerado inválido, mesmo após o preenchimento dos demais campos do formulário (CEP, endereço, cidade e estado). O botão Submit permaneceu desabilitado, confirmando que o formulário não pôde ser concluído com o número de celular fora do padrão aceito.",
+    "messages": [
+      "Mobile number must match 1000000-9999999999 format."
+    ],
+    "data": "Country: Brazil; Name: Cliente Alternativo; Mobile Number: 123; ZIP Code: 60000000; Address: Rua Alternativa, 200; City: Fortaleza; State: CE",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Acessar a tela de cadastro de novo endereço",
+        "data": "",
+        "response": "A página exibiu o formulário 'Add New Address' com os campos Country, Name, Mobile Number, ZIP Code, Address, City e State vazios."
+      },
+      {
+        "number": 2,
+        "action": "Aguardar o carregamento completo do formulário",
+        "data": "",
+        "response": "O formulário permaneceu estável, sem alterações visuais adicionais."
+      },
+      {
+        "number": 3,
+        "action": "Preencher o campo Country",
+        "data": "Brazil",
+        "response": "O valor foi registrado no campo sem exibir mensagens de validação."
+      },
+      {
+        "number": 4,
+        "action": "Preencher o campo Name",
+        "data": "Cliente Alternativo",
+        "response": "O valor foi registrado no campo sem exibir mensagens de validação."
+      },
+      {
+        "number": 5,
+        "action": "Preencher o campo Mobile Number com um número de 3 dígitos",
+        "data": "123",
+        "response": "O valor foi aceito inicialmente no campo, sem exibição imediata de erro."
+      },
+      {
+        "number": 6,
+        "action": "Preencher o campo ZIP Code",
+        "data": "60000000",
+        "response": "Ao atualizar o estado do formulário, o campo Mobile Number passou a exibir a mensagem 'Mobile number must match 1000000-9999999999 format.', indicando que o valor informado não atende ao padrão esperado."
+      },
+      {
+        "number": 7,
+        "action": "Preencher o campo Address",
+        "data": "Rua Alternativa, 200",
+        "response": "O contador de caracteres do campo foi atualizado para 20/160 e a mensagem de erro do campo Mobile Number permaneceu visível."
+      },
+      {
+        "number": 8,
+        "action": "Preencher o campo City",
+        "data": "Fortaleza",
+        "response": "O valor foi registrado no campo, mantendo a mensagem de erro do celular inalterada."
+      },
+      {
+        "number": 9,
+        "action": "Preencher o campo State",
+        "data": "CE",
+        "response": "O valor foi registrado no campo, mantendo a mensagem de erro do celular inalterada."
+      },
+      {
+        "number": 10,
+        "action": "Mover o foco para fora do campo State pressionando Tab",
+        "data": "",
+        "response": "A mensagem de erro referente ao Mobile Number continuou exibida, confirmando que a validação permanece ativa após a navegação entre campos."
+      },
+      {
+        "number": 11,
+        "action": "Aguardar nova atualização da interface",
+        "data": "",
+        "response": "Nenhuma mudança adicional foi observada; a mensagem de erro e os valores preenchidos permaneceram inalterados."
+      },
+      {
+        "number": 12,
+        "action": "Verificar o estado do botão de envio do formulário",
+        "data": "",
+        "response": "O botão Submit permaneceu desabilitado, impedindo o envio do endereço enquanto o número de celular estiver em formato inválido."
+      }
+    ]
+  }
+}

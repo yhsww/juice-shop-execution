@@ -1,0 +1,37 @@
+{
+  "scenario_id": "CEN-CHK-40",
+  "fingerprint": "20b941af5786d9795dfda834d064d99c86dfb54fcaa55766cb8dc3bf49bcf3b9",
+  "content": {
+    "flow": "O cenário avalia o que acontece quando um visitante sem sessão ativa tenta acessar diretamente a tela de opções de pagamento do checkout. O objetivo é verificar se a aplicação impede ou restringe esse acesso quando não há autenticação prévia.",
+    "precondition": "Nenhuma sessão de usuário ativa, ou seja, o visitante não realizou login antes de tentar acessar a tela de pagamento.",
+    "observed_result": "A tela de 'My Payment Options' foi exibida normalmente, mostrando as opções de cartão, pagamento via carteira com saldo em 0.00 e o campo de cupom, porém as chamadas que buscariam os dados reais do usuário (saldo da carteira e cartões salvos) retornaram erro de autenticação (401), indicando que nenhum dado pessoal foi efetivamente carregado. O botão de continuar o pedido permaneceu presente na tela, e a verificação de bloqueio aplicada ao final confirmou que o fluxo de prosseguimento não ficou disponível para um usuário sem sessão.",
+    "messages": [
+      "My Payment Options",
+      "Pay using wallet Wallet Balance Pay 0.00¤",
+      "Add a coupon Add a coupon code to receive discounts",
+      "Other payment options",
+      "You can review this order before it is finalized."
+    ],
+    "data": "Rota de pagamento acessada diretamente (), sem dados de usuário autenticado",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O visitante tentou acessar diretamente a tela de opções de pagamento sem ter feito login previamente.",
+        "data": "Rota de pagamento do checkout",
+        "response": "A interface carregou a estrutura da tela de pagamento, exibindo opções de cartão e carteira com saldo zerado, mas as requisições para obter os cartões salvos e o saldo real da carteira foram rejeitadas pelo servidor por falta de autenticação."
+      },
+      {
+        "number": 2,
+        "action": "Aguardou-se a estabilização da tela após o carregamento inicial.",
+        "data": "—",
+        "response": "Nenhuma alteração visual adicional ocorreu; a tela permaneceu exibindo as mesmas opções de pagamento sem dados pessoais carregados."
+      },
+      {
+        "number": 3,
+        "action": "Verificou-se se o controle de avanço do pedido estava desabilitado para o usuário sem sessão.",
+        "data": "—",
+        "response": "A verificação confirmou que o elemento de continuidade do pedido estava bloqueado, impedindo que o visitante sem login prosseguisse com o pagamento."
+      }
+    ]
+  }
+}

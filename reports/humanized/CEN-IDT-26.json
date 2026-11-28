@@ -1,0 +1,143 @@
+{
+  "scenario_id": "CEN-IDT-26",
+  "fingerprint": "32aa27960bfc76b8cf2bb9aa2092890c38c171c1f28aa9c3bce6548e9ea7812d",
+  "content": {
+    "flow": "O teste cobre o ciclo completo de recuperação de acesso: um visitante cria uma conta informando uma pergunta de segurança e sua resposta, depois utiliza o mecanismo de 'esqueci minha senha' para definir uma nova senha a partir da resposta correta e, por fim, confirma que a nova credencial é aceita ao entrar na loja. A jornada demonstra que a troca de senha realizada pelo fluxo de recuperação realmente substitui a credencial anterior, pois o acesso só é concedido após o uso da nova senha.",
+    "precondition": "Não havia conta previamente cadastrada para o e-mail utilizado; a conta e a pergunta de segurança com resposta 'resposta-teste' foram criadas durante a própria execução do cenário, antes de iniciar o processo de recuperação.",
+    "observed_result": "Após o cadastro, o sistema exibiu confirmação de registro e redirecionou para a tela de login. Ao acessar a recuperação de senha com e-mail e resposta corretos, a nova senha foi aceita e a interface informou que a senha havia sido alterada com sucesso. Em seguida, o login com a nova senha levou o usuário à listagem de produtos da loja, confirmando que o acesso está liberado com a credencial recém-definida, substituindo a senha original.",
+    "messages": [
+      "Registration completed successfully.",
+      "You can now log in.",
+      "Your password was successfully changed."
+    ],
+    "data": "E-mail de teste gerado para o cenário; senha original definida no cadastro; pergunta de segurança 'Your favorite book?' com resposta 'resposta-teste'; nova senha 'Nova@12345' definida na recuperação e usada no login final.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Usuário acessou a tela de cadastro de conta.",
+        "data": "",
+        "response": "A página exibiu o formulário de registro com campos de e-mail, senha, repetição de senha e pergunta de segurança."
+      },
+      {
+        "number": 2,
+        "action": "Usuário informou o e-mail que seria usado para a nova conta.",
+        "data": "E-mail de teste gerado para o cenário",
+        "response": "O campo de e-mail foi preenchido sem alterações adicionais visíveis na tela."
+      },
+      {
+        "number": 3,
+        "action": "Usuário definiu a senha da conta no campo de senha.",
+        "data": "Senha inicial de cadastro",
+        "response": "O contador de caracteres do campo de senha passou a refletir o texto digitado, indicando que o valor foi registrado."
+      },
+      {
+        "number": 4,
+        "action": "Usuário repetiu a senha no campo de confirmação.",
+        "data": "Senha inicial de cadastro",
+        "response": "O contador de caracteres do campo de repetição também foi atualizado, confirmando o preenchimento."
+      },
+      {
+        "number": 5,
+        "action": "Usuário escolheu a pergunta de segurança que seria usada futuramente para recuperação de senha.",
+        "data": "Your favorite book?",
+        "response": "A lista de perguntas foi substituída pela opção selecionada, fixando a pergunta escolhida no formulário."
+      },
+      {
+        "number": 6,
+        "action": "Usuário preencheu a resposta correspondente à pergunta de segurança selecionada.",
+        "data": "resposta-teste",
+        "response": "O campo de resposta foi preenchido, concluindo os dados necessários para o cadastro."
+      },
+      {
+        "number": 7,
+        "action": "Usuário confirmou o cadastro acionando o botão de registro.",
+        "data": "",
+        "response": "A aplicação redirecionou para a tela de login e exibiu uma mensagem confirmando que o cadastro foi concluído com sucesso e que o acesso já poderia ser realizado."
+      },
+      {
+        "number": 8,
+        "action": "Sistema processou a transição para a tela de login após o cadastro.",
+        "data": "",
+        "response": "A mensagem de confirmação de cadastro permaneceu visível na tela de login."
+      },
+      {
+        "number": 9,
+        "action": "Usuário acessou a tela de recuperação de senha.",
+        "data": "",
+        "response": "A página exibiu o formulário de recuperação, com campos para e-mail, pergunta de segurança e definição de nova senha."
+      },
+      {
+        "number": 10,
+        "action": "Usuário informou o e-mail da conta cadastrada para iniciar a recuperação.",
+        "data": "E-mail de teste gerado para o cenário",
+        "response": "O campo de e-mail foi preenchido sem alterações visuais adicionais relevantes."
+      },
+      {
+        "number": 11,
+        "action": "Sistema manteve o formulário de recuperação disponível para continuidade do preenchimento.",
+        "data": "",
+        "response": "Nenhuma mudança adicional foi observada na tela."
+      },
+      {
+        "number": 12,
+        "action": "Usuário informou a resposta da pergunta de segurança cadastrada anteriormente.",
+        "data": "resposta-teste",
+        "response": "O campo de resposta foi preenchido, habilitando a etapa de definição da nova senha."
+      },
+      {
+        "number": 13,
+        "action": "Usuário definiu a nova senha para a conta.",
+        "data": "Nova@12345",
+        "response": "O contador de caracteres do campo de nova senha refletiu o valor digitado."
+      },
+      {
+        "number": 14,
+        "action": "Usuário repetiu a nova senha no campo de confirmação.",
+        "data": "Nova@12345",
+        "response": "O campo de confirmação foi preenchido, igualando os valores de nova senha e sua repetição."
+      },
+      {
+        "number": 15,
+        "action": "Usuário confirmou a alteração de senha acionando o botão de mudança.",
+        "data": "",
+        "response": "Os campos do formulário foram limpos, indicando que a solicitação de troca foi processada."
+      },
+      {
+        "number": 16,
+        "action": "Sistema concluiu o processamento da troca de senha.",
+        "data": "",
+        "response": "A interface exibiu a mensagem informando que a senha foi alterada com sucesso."
+      },
+      {
+        "number": 17,
+        "action": "Usuário acessou a tela de login para entrar com a nova senha.",
+        "data": "",
+        "response": "A página de login foi exibida com os campos de e-mail e senha vazios."
+      },
+      {
+        "number": 18,
+        "action": "Usuário informou o e-mail da conta para realizar o login.",
+        "data": "E-mail de teste gerado para o cenário",
+        "response": "O campo de e-mail foi preenchido sem outras alterações visuais relevantes."
+      },
+      {
+        "number": 19,
+        "action": "Usuário informou a nova senha definida na recuperação.",
+        "data": "Nova@12345",
+        "response": "O campo de senha foi preenchido, habilitando o botão de login."
+      },
+      {
+        "number": 20,
+        "action": "Usuário confirmou o login acionando o botão correspondente.",
+        "data": "",
+        "response": "A aplicação redirecionou para a listagem de produtos da loja, exibindo itens como Apple Juice, Banana Juice e Carrot Juice com seus respectivos preços, confirmando que o acesso foi concedido com a nova senha."
+      },
+      {
+        "number": 21,
+        "action": "Sistema finalizou o carregamento da listagem de produtos após o login.",
+        "data": "",
+        "response": "A lista completa de produtos permaneceu visível, indicando que o usuário estava autenticado e navegando na área principal da loja."
+      }
+    ]
+  }
+}

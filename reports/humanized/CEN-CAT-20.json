@@ -1,0 +1,37 @@
+{
+  "scenario_id": "CEN-CAT-20",
+  "fingerprint": "983de21235ed725134c11d80fa7a79787120a8adfa46505a71aa5fd2353f76f5",
+  "content": {
+    "flow": "O visitante acessou a área de busca do catálogo e preencheu o campo de pesquisa apenas com espaços em branco, confirmando a ação com a tecla Enter. O objetivo era verificar como o sistema trata uma busca sem termo significativo, observando se a listagem de produtos permanece íntegra mesmo diante de uma entrada sem conteúdo real.",
+    "precondition": "O catálogo de produtos estava disponível e carregado, exibindo a listagem completa de itens antes de qualquer interação com a busca.",
+    "observed_result": "Após confirmar a busca contendo apenas espaços, a URL passou a refletir o termo pesquisado (espaços codificados) e o título da página mudou para indicar resultados de busca. Apesar dessa mudança de contexto, a listagem de produtos exibida permaneceu a mesma apresentada na tela inicial do catálogo, com os mesmos itens, preços e opção de adicionar ao carrinho, sem mensagens de erro ou de ausência de resultados.",
+    "messages": [],
+    "data": "Termo de busca: espaços em branco (' ')",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O visitante abriu a área de busca do catálogo a partir da página inicial de produtos.",
+        "data": "Navegação para a tela de busca",
+        "response": "A interface carregou a tela de busca mantendo visível a listagem completa de produtos, como Apple Juice, Apple Pomace, Banana Juice e demais itens, com seus respectivos preços e botões de adicionar ao carrinho."
+      },
+      {
+        "number": 2,
+        "action": "O visitante preencheu o campo de busca utilizando apenas espaços em branco, sem digitar nenhum termo real.",
+        "data": "Espaços em branco no campo de busca",
+        "response": "Nenhuma alteração visual foi percebida na listagem de produtos exibida; a tela permaneceu mostrando o mesmo conjunto de itens do catálogo, sem indícios de filtragem."
+      },
+      {
+        "number": 3,
+        "action": "O visitante confirmou a busca pressionando Enter, submetendo o termo composto apenas por espaços.",
+        "data": "Confirmação da busca com espaços em branco",
+        "response": "A URL foi atualizada para refletir o parâmetro de busca com espaços codificados, e o título da página passou a indicar 'Search Results'. A listagem de produtos exibida continuou apresentando os mesmos itens do catálogo completo."
+      },
+      {
+        "number": 4,
+        "action": "O visitante aguardou a estabilização da interface após a submissão da busca.",
+        "data": "Nenhum dado adicional informado",
+        "response": "A tela manteve a listagem de produtos inalterada, confirmando que a busca com espaços em branco não removeu nem alterou os itens exibidos, mantendo o comportamento de exibição total do catálogo."
+      }
+    ]
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "scenario_id": "CEN-CAT-03",
+  "fingerprint": "0082674c940d173ba4cd1c5989eb563f88bfc81c1e621404eeccc4d670109207",
+  "content": {
+    "flow": "O cliente utiliza o campo de busca do catálogo para localizar produtos pelo nome, digitando um termo e confirmando a pesquisa. A funcionalidade filtra a listagem completa de produtos, exibindo apenas os itens cujo nome corresponde ao termo informado.",
+    "precondition": "O catálogo de produtos está disponível e exibe a listagem completa de itens antes da realização da busca.",
+    "observed_result": "Após a confirmação da pesquisa, a listagem de produtos foi substituída: em vez dos 46 itens exibidos originalmente, a página passou a mostrar apenas 3 resultados relacionados ao termo pesquisado (Apple Juice, Apple Pomace e Pineapple Juice), com o título da seção alterado para indicar que se trata de um resultado de busca e a contagem de itens atualizada para refletir o novo total.",
+    "messages": [
+      "Search Results - Apple"
+    ],
+    "data": "Termo de busca: Apple",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O cliente acessa a página de busca do catálogo, que inicialmente apresenta a listagem completa de produtos disponíveis.",
+        "data": "",
+        "response": "A interface carrega a lista geral 'All Products', exibindo 46 itens no total, incluindo produtos como Apple Juice, Banana Juice e Carrot Juice."
+      },
+      {
+        "number": 2,
+        "action": "O cliente digita o termo de busca no campo de pesquisa.",
+        "data": "Apple",
+        "response": "O campo recebe o texto digitado; a listagem de produtos na tela ainda corresponde ao catálogo completo, sem filtragem aplicada neste momento."
+      },
+      {
+        "number": 3,
+        "action": "O cliente confirma a pesquisa pressionando Enter.",
+        "data": "",
+        "response": "A página é atualizada para exibir os resultados da busca: o título passa a ser 'Search Results - Apple' e a listagem é reduzida a 3 produtos (Apple Juice, Apple Pomace e Pineapple Juice), com a contagem indicando 1–3 de 3 itens."
+      },
+      {
+        "number": 4,
+        "action": "O cliente aguarda a estabilização da interface após a aplicação do filtro de busca.",
+        "data": "",
+        "response": "A tela permanece estável, mantendo os 3 resultados filtrados sem novas alterações visuais."
+      }
+    ]
+  }
+}

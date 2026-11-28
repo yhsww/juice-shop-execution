@@ -1,0 +1,54 @@
+{
+  "scenario_id": "CEN-CHK-04",
+  "fingerprint": "dc1a6839347799e47cba78f104563a44818be03aae0d4cb06f7be9f22940a56d",
+  "content": {
+    "flow": "A partir do carrinho com um item (Apple Juice 1000ml), o cliente avançou para a etapa de escolha de endereço de entrega. A tela de seleção exibiu o endereço já cadastrado do cliente e, antes de qualquer escolha, o botão de avanço (Continue) permaneceu bloqueado. Ao tocar no endereço listado, o cartão passou a ser reconhecido como selecionado e o botão de avanço tornou-se habilitado, liberando a continuidade do checkout.",
+    "precondition": "O carrinho já continha o produto Apple Juice (1000ml) e havia um endereço previamente cadastrado para o cliente (Rua Teste, 100, Fortaleza, CE).",
+    "observed_result": "O botão de avanço (Continue), inicialmente desabilitado na tela de seleção de endereço, passou a ficar habilitado após o cliente selecionar o endereço cadastrado, confirmando que a escolha do endereço é condição para liberar a continuidade do checkout.",
+    "messages": [
+      "Checkout",
+      "Select an address",
+      "Add New Address",
+      "Continue"
+    ],
+    "data": "Endereço utilizado: Rua Teste, 100, Fortaleza, CE, 60000000, Brazil; produto no carrinho: Apple Juice (1000ml), quantidade 1, valor 1.99¤.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O cliente acessou a tela do carrinho, onde o item previamente adicionado permanecia listado.",
+        "data": "Apple Juice (1000ml), quantidade 1",
+        "response": "A interface exibiu o carrinho com o produto, preço unitário de 1.99¤, preço total de 1.99¤ e o botão de Checkout disponível."
+      },
+      {
+        "number": 2,
+        "action": "O cliente acionou o avanço do carrinho para a etapa de endereço (Checkout).",
+        "data": "",
+        "response": "A aplicação navegou para a tela de seleção de endereço, exibindo o endereço cadastrado do cliente e a opção de adicionar um novo endereço, além do botão Continue."
+      },
+      {
+        "number": 3,
+        "action": "O cliente aguardou o carregamento completo da tela de seleção de endereço.",
+        "data": "",
+        "response": "A tela permaneceu estável, mantendo visíveis o endereço cadastrado e o botão de avanço."
+      },
+      {
+        "number": 4,
+        "action": "Verificação do estado do botão de avanço antes da seleção de um endereço.",
+        "data": "",
+        "response": "O botão Continue foi confirmado como desabilitado, impedindo o avanço sem uma escolha de endereço."
+      },
+      {
+        "number": 5,
+        "action": "O cliente selecionou o endereço cadastrado (Rua Teste, 100) na lista apresentada.",
+        "data": "Rua Teste, 100, Fortaleza, CE, 60000000, Brazil",
+        "response": "O endereço foi destacado como selecionado na tela, mantendo os demais elementos da interface inalterados."
+      },
+      {
+        "number": 6,
+        "action": "Verificação do estado do botão de avanço após a seleção do endereço.",
+        "data": "",
+        "response": "O botão Continue foi confirmado como habilitado, liberando a progressão para a próxima etapa do checkout."
+      }
+    ]
+  }
+}

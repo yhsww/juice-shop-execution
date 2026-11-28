@@ -1,0 +1,31 @@
+{
+  "scenario_id": "CEN-CHK-12",
+  "fingerprint": "51952f6d90ba517bb3eef029138a69b20623f5f1f74d9499d8e34b059c26489d",
+  "content": {
+    "flow": "Na etapa de pagamento do checkout, o cliente interage com a seção de métodos disponíveis para localizar alternativas ao cartão cadastrado. Ao acionar o item 'Other payment options', a área correspondente se expande e passa a exibir uma lista de formas de pagamento adicionais, sem que o cliente precise sair da tela de revisão do pedido.",
+    "precondition": "Cliente autenticado, com a etapa de pagamento do checkout acessível e a seção 'Other payment options' visível, porém ainda recolhida, na tela 'My Payment Options'.",
+    "observed_result": "A seção 'Other payment options', inicialmente apresentada apenas como um título recolhido, foi expandida e passou a listar as opções adicionais disponíveis: Donations, Credit Card, Merchandise, Spreadshirt (US), Spreadshirt (DE), StickerYou, Leanpub e OpenSea. Os elementos já existentes na tela, como 'Add new card' e 'Pay using wallet' com saldo 0.00, permaneceram visíveis acima da nova lista, e os botões de navegação 'Back' e 'Continue' continuaram disponíveis.",
+    "messages": [],
+    "data": "Nenhum dado adicional foi utilizado; a interação ocorreu sobre a seção 'Other payment options' da tela de pagamento.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O cliente acessa a tela de pagamento do checkout ('My Payment Options'), onde ficam visíveis as opções de adicionar cartão, pagar com carteira e a seção recolhida de outras opções de pagamento.",
+        "data": "",
+        "response": "A tela carregou exibindo as opções 'Add new card', 'Pay using wallet' (com saldo de 0.00), o campo para cupom de desconto e a seção 'Other payment options' ainda fechada, além dos botões 'Back' e 'Continue'."
+      },
+      {
+        "number": 2,
+        "action": "O cliente clica sobre o item 'Other payment options' para expandir a lista de alternativas de pagamento.",
+        "data": "",
+        "response": "A seção se expandiu e passou a exibir as opções adicionais: Donations, Credit Card, Merchandise, Spreadshirt (US), Spreadshirt (DE), StickerYou, Leanpub e OpenSea, mantendo visíveis os elementos anteriores da tela."
+      },
+      {
+        "number": 3,
+        "action": "O cliente aguarda a estabilização da interface após a expansão da seção.",
+        "data": "",
+        "response": "Nenhuma alteração adicional foi detectada; a lista de outras opções de pagamento permaneceu expandida e exibida da mesma forma."
+      }
+    ]
+  }
+}

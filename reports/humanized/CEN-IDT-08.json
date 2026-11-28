@@ -1,0 +1,51 @@
+{
+  "scenario_id": "CEN-IDT-08",
+  "fingerprint": "ba7b8c80b4580f8e67f47c199f249446c3891d3122ddc59a23a5e0551e028525",
+  "content": {
+    "flow": "O cliente acessou a área de gerenciamento de conta destinada à troca de senha e preencheu os campos exigidos para concluir a operação: senha atual, nova senha e confirmação da nova senha. Após o preenchimento, o cliente acionou o controle de confirmação, e o sistema processou a solicitação de alteração, retornando uma resposta de sucesso diretamente na própria tela, sem necessidade de redirecionamento.",
+    "precondition": "Era necessário que o cliente estivesse autenticado na aplicação, com uma conta de teste válida, para acessar a área de alteração de senha.",
+    "observed_result": "Após o envio do formulário, a interface exibiu a mensagem 'Your password was successfully changed.' na própria tela de alteração de senha, e os campos de senha atual, nova senha e confirmação foram limpos (contadores de caracteres retornaram a 0/40 e 0/20), indicando que o formulário foi reiniciado após a confirmação da troca.",
+    "messages": [
+      "Your password was successfully changed."
+    ],
+    "data": "Senha atual de teste e nova senha de teste (Teste@123456) informada nos campos 'New Password' e 'Repeat New Password'.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O cliente acessou a tela de alteração de senha a partir da área de conta.",
+        "data": "",
+        "response": "A interface carregou o formulário de troca de senha, exibindo os campos 'Current Password', 'New Password' e 'Repeat New Password', além do botão 'Change'."
+      },
+      {
+        "number": 2,
+        "action": "O cliente preencheu o campo referente à senha atual da conta.",
+        "data": "Senha atual de teste",
+        "response": "O campo recebeu o valor informado, sem alterações visuais adicionais na tela."
+      },
+      {
+        "number": 3,
+        "action": "O cliente preencheu o campo de nova senha desejada.",
+        "data": "Teste@123456",
+        "response": "O contador de caracteres do campo 'New Password' passou a refletir 12 caracteres digitados, confirmando o preenchimento."
+      },
+      {
+        "number": 4,
+        "action": "O cliente repetiu a nova senha no campo de confirmação.",
+        "data": "Teste@123456",
+        "response": "O contador de caracteres do campo 'Repeat New Password' passou a indicar 12 caracteres, igualando-se ao valor do campo anterior."
+      },
+      {
+        "number": 5,
+        "action": "O cliente confirmou a alteração acionando o botão 'Change'.",
+        "data": "",
+        "response": "A interface exibiu a mensagem 'Your password was successfully changed.' e os campos do formulário foram limpos, retornando aos contadores 0/40 e 0/20."
+      },
+      {
+        "number": 6,
+        "action": "O sistema estabilizou a tela após o processamento da solicitação.",
+        "data": "",
+        "response": "A mensagem de sucesso permaneceu visível e o formulário permaneceu limpo, confirmando que nenhuma alteração adicional ocorreu após a confirmação."
+      }
+    ]
+  }
+}

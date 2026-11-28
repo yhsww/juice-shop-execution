@@ -1,0 +1,30 @@
+{
+  "scenario_id": "CEN-CAT-17",
+  "fingerprint": "bda16db528d83ed8644a1922545f1d958b6c02673a4faef016c7b07ea6b62d72",
+  "content": {
+    "flow": "O teste acessa diretamente a página Score Board do Juice Shop, área que concentra a listagem de desafios de hacking e de código disponíveis na aplicação. A navegação para essa tela substitui a listagem de produtos pela estrutura de categorias e desafios, permitindo conferir o progresso geral do usuário e os itens cadastrados em cada categoria de vulnerabilidade.",
+    "precondition": "O catálogo de produtos da loja está carregado e acessível antes da navegação para o Score Board.",
+    "observed_result": "A navegação para a rota do Score Board substituiu a tela inicial de produtos por um painel com indicadores de progresso (percentuais de Hacking Challenges e Coding Challenges, contagem de desafios resolvidos por nível de dificuldade) e por uma listagem extensa de desafios agrupados por categorias como Broken Access Control, XSS, Injection, Sensitive Data Exposure, entre outras. Cada item da lista exibe nome do desafio, descrição, tags (como Tutorial, Good for Demos, Danger Zone) e um contador de dicas utilizadas no formato 'x/y'. A interface permaneceu estável após o carregamento, sem alterações visuais adicionais na sequência.",
+    "messages": [
+      "Broken Access Control SSRF Request a hidden resource on server through server. Code Analysis lightbulb_outlined 0/4",
+      "Injection SSTi Infect the server with juicy malware by abusing arbitrary command execution. (This challenge is potentially harmful on Docker!) Contraption Danger Zone Code Analysis info_outline lightbulb_outlined 0/4",
+      "Insecure Deserialization Successful RCE DoS Perform a Remote Code Execution that occupies the server for a while without using infinite loops. (This challenge is potentially harmful on Docker!) Danger Zone info_outline lightbulb_outlined 0/2",
+      "XSS Video XSS Embed an XSS payload into our promo video. (This challenge is potentially harmful on Docker!) Danger Zone info_outline lightbulb_outlined 0/4"
+    ],
+    "data": "Nenhum dado de entrada foi utilizado; a interação consistiu apenas em acessar a página do Score Board.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário acessa a página do Score Board a partir da tela de produtos, utilizando o link/rota correspondente dessa seção do menu.",
+        "data": "Score Board",
+        "response": "A tela de produtos foi substituída pelo painel do Score Board, exibindo indicadores de progresso (percentuais de desafios de hacking e de código, total de desafios resolvidos por nível) e a listagem completa de desafios organizados por categoria, incluindo filtros de dificuldade, status e tags visíveis na parte superior da página."
+      },
+      {
+        "number": 2,
+        "action": "O usuário aguarda a estabilização da página após o carregamento inicial do Score Board.",
+        "data": "",
+        "response": "Nenhuma alteração visual adicional foi detectada; a listagem de desafios e os indicadores de progresso permaneceram exibidos da mesma forma observada imediatamente após o acesso à página."
+      }
+    ]
+  }
+}

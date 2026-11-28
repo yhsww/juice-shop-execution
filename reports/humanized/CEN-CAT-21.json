@@ -1,0 +1,31 @@
+{
+  "scenario_id": "CEN-CAT-21",
+  "fingerprint": "14feda8b7de5b7841dd1cd043d9e155972fe61490f1eea5ce17a64d5faa3170a",
+  "content": {
+    "flow": "O cenário busca verificar o comportamento da loja quando um visitante sem sessão ativa tenta acessar a funcionalidade de avaliação de um produto. Na execução registrada, o usuário navegou pela vitrine de produtos e abriu o detalhe do item Apple Juice (1000ml), chegando à tela que exibe a descrição do produto e o total de avaliações já cadastradas. As evidências capturadas não demonstram, no entanto, a interação efetiva com um campo de texto para redigir uma nova avaliação nem qualquer mensagem de bloqueio ou redirecionamento para login — a execução se limitou à abertura e visualização do modal de detalhes do produto.",
+    "precondition": "Visitante sem sessão ativa, identificado pelo ícone genérico de conta e pelo carrinho de compras vazio exibido no cabeçalho da loja.",
+    "observed_result": "Ao abrir o detalhe do produto Apple Juice (1000ml), a interface exibiu um modal com a descrição 'The all-time classic.', o preço de 1.99¤ e a indicação de 4 avaliações já existentes para o item. Não há evidência nos dados capturados de que um campo de nova avaliação tenha sido aberto ou preenchido, nem de qualquer mensagem informando a necessidade de login para avaliar — essa parte do fluxo não foi comprovadamente exercitada pela execução.",
+    "messages": [],
+    "data": "Produto consultado: Apple Juice (1000ml)",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Acessar a página inicial da loja sem estar autenticado, visualizando a vitrine completa de produtos disponíveis.",
+        "data": "Página inicial da loja",
+        "response": "A lista de produtos foi carregada, exibindo itens como Apple Juice (1000ml) a 1.99¤, Apple Pomace, Banana Juice e outros, cada um com a opção de adicionar ao carrinho."
+      },
+      {
+        "number": 2,
+        "action": "Selecionar o produto Apple Juice (1000ml) na vitrine para visualizar seus detalhes.",
+        "data": "Apple Juice (1000ml)",
+        "response": "Abriu-se um modal de detalhes exibindo a descrição 'The all-time classic.', o preço de 1.99¤ e o total de 4 avaliações já registradas para o produto."
+      },
+      {
+        "number": 3,
+        "action": "Aguardar possível atualização adicional da interface após a abertura do modal de detalhes.",
+        "data": "",
+        "response": "Nenhuma mudança adicional foi observada; o modal permaneceu exibindo as mesmas informações de descrição, preço e contagem de avaliações."
+      }
+    ]
+  }
+}

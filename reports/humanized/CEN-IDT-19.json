@@ -1,0 +1,52 @@
+{
+  "scenario_id": "CEN-IDT-19",
+  "fingerprint": "19073d4ebdd79029eea908292404f4717100d58d620decf3d7df4450071985d6",
+  "content": {
+    "flow": "O teste avalia o comportamento do formulário de cadastro quando os campos de pergunta de segurança e resposta são deixados em branco. O visitante acessa a tela de registro, preenche e-mail e as duas senhas, mas não seleciona uma pergunta de segurança nem informa a resposta, e então verifica se o botão de registro permanece bloqueado para envio.",
+    "precondition": "Visitante sem sessão ativa acessando a tela de registro de usuário pela primeira vez.",
+    "observed_result": "Após o preenchimento do e-mail e das senhas, os contadores de caracteres dos campos de senha foram atualizados (de 0/20 para 11/20 e de 0/40 para 11/40), confirmando que os dados foram registrados nos campos. Os campos de pergunta de segurança e resposta permaneceram vazios durante toda a execução. Ao final, o botão de registro foi verificado como desabilitado, impedindo o envio do formulário sem a pergunta de segurança preenchida.",
+    "messages": [
+      "Password must be 5-40 characters long.",
+      "Security Question This cannot be changed later!"
+    ],
+    "data": "E-mail: cen-cen-idt-19-762de05d79@example.com; Senha e confirmação de senha: Teste@12345; Pergunta de segurança e resposta deixadas em branco.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Acessar a tela de cadastro de novo usuário",
+        "data": "",
+        "response": "A página de registro foi carregada exibindo os campos de e-mail, senha, repetição de senha e pergunta de segurança, todos vazios."
+      },
+      {
+        "number": 2,
+        "action": "Informar o e-mail no campo correspondente",
+        "data": "cen-cen-idt-19-762de05d79@example.com",
+        "response": "O campo de e-mail recebeu o valor digitado, sem alterações visíveis em outras partes do formulário."
+      },
+      {
+        "number": 3,
+        "action": "Informar a senha no campo de senha",
+        "data": "Teste@12345",
+        "response": "O contador de caracteres do campo de senha passou de 0/20 para 11/20, confirmando que o valor foi registrado."
+      },
+      {
+        "number": 4,
+        "action": "Repetir a mesma senha no campo de confirmação",
+        "data": "Teste@12345",
+        "response": "O contador de caracteres do campo de repetição de senha passou de 0/40 para 11/40, indicando que as senhas foram preenchidas de forma consistente."
+      },
+      {
+        "number": 5,
+        "action": "Aguardar a interface processar o preenchimento, sem informar pergunta de segurança ou resposta",
+        "data": "",
+        "response": "A tela permaneceu estável, com os campos de pergunta de segurança e resposta continuando vazios."
+      },
+      {
+        "number": 6,
+        "action": "Verificar o estado do botão de registro",
+        "data": "",
+        "response": "O botão de registro foi confirmado como desabilitado, impedindo a conclusão do cadastro sem a pergunta de segurança respondida."
+      }
+    ]
+  }
+}

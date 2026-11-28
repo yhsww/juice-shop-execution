@@ -1,0 +1,95 @@
+{
+  "scenario_id": "CEN-CAR-10",
+  "fingerprint": "627b941ed5b4366e030f5fdd0ddc1b3945758f018086edbeb89a7b57b0366f9c",
+  "content": {
+    "flow": "A partir da listagem de produtos, o cliente clicou repetidamente no botão de adicionar ao carrinho do item Apple Juice (1000ml), observando o contador de itens do carrinho crescer a cada clique. Após acumular cinco unidades do mesmo produto, uma nova tentativa de adição foi bloqueada pela loja, que exibiu um aviso informando o limite máximo permitido por produto.",
+    "precondition": "Cliente autenticado na loja, com o carrinho de compras vazio antes do início das adições.",
+    "observed_result": "O contador do carrinho (ícone 'Your Basket') subiu progressivamente de 0 para 5 conforme os cliques sucessivos no botão de adicionar Apple Juice (1000ml), com mensagens de confirmação a cada unidade incluída. Ao tentar adicionar uma sexta unidade, o contador permaneceu em 5 e a interface exibiu um alerta informando que o limite de 5 itens daquele produto havia sido atingido, impedindo nova adição.",
+    "messages": [
+      "Placed Apple Juice (1000ml) into basket.",
+      "Added another Apple Juice (1000ml) to basket.",
+      "You can order only up to 5 items of this product."
+    ],
+    "data": "Produto: Apple Juice (1000ml); 6 cliques consecutivos no botão Add to Basket.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Usuário acessou a página inicial de produtos da loja.",
+        "data": "",
+        "response": "A listagem de produtos foi carregada, exibindo o catálogo completo com o carrinho ('Your Basket') zerado."
+      },
+      {
+        "number": 2,
+        "action": "Usuário clicou em 'Add to Basket' no card de Apple Juice (1000ml) pela primeira vez.",
+        "data": "Apple Juice (1000ml)",
+        "response": "O contador do carrinho passou de 0 para 1 e uma mensagem confirmou que o produto foi colocado no carrinho."
+      },
+      {
+        "number": 3,
+        "action": "Usuário aguardou a interface estabilizar após a primeira adição.",
+        "data": "",
+        "response": "Nenhuma alteração adicional foi observada; o carrinho permaneceu com 1 item."
+      },
+      {
+        "number": 4,
+        "action": "Usuário clicou novamente em 'Add to Basket' no mesmo produto.",
+        "data": "Apple Juice (1000ml)",
+        "response": "O contador do carrinho avançou para 2 e a interface exibiu mensagem confirmando a inclusão de mais uma unidade do produto."
+      },
+      {
+        "number": 5,
+        "action": "Usuário aguardou a interface estabilizar após a segunda adição.",
+        "data": "",
+        "response": "Nenhuma alteração adicional foi observada; o carrinho permaneceu com 2 itens."
+      },
+      {
+        "number": 6,
+        "action": "Usuário clicou pela terceira vez em 'Add to Basket' no mesmo produto.",
+        "data": "Apple Juice (1000ml)",
+        "response": "O contador do carrinho avançou para 3 e a mensagem de confirmação de nova unidade foi exibida novamente."
+      },
+      {
+        "number": 7,
+        "action": "Usuário aguardou a interface estabilizar após a terceira adição.",
+        "data": "",
+        "response": "Nenhuma alteração adicional foi observada; o carrinho permaneceu com 3 itens."
+      },
+      {
+        "number": 8,
+        "action": "Usuário clicou pela quarta vez em 'Add to Basket' no mesmo produto.",
+        "data": "Apple Juice (1000ml)",
+        "response": "O contador do carrinho avançou para 4, com nova mensagem confirmando a adição."
+      },
+      {
+        "number": 9,
+        "action": "Usuário aguardou a interface estabilizar após a quarta adição.",
+        "data": "",
+        "response": "Nenhuma alteração adicional foi observada; o carrinho permaneceu com 4 itens."
+      },
+      {
+        "number": 10,
+        "action": "Usuário clicou pela quinta vez em 'Add to Basket' no mesmo produto.",
+        "data": "Apple Juice (1000ml)",
+        "response": "O contador do carrinho avançou para 5, atingindo o limite máximo permitido para o produto, com mensagem confirmando a adição."
+      },
+      {
+        "number": 11,
+        "action": "Usuário aguardou a interface estabilizar após a quinta adição.",
+        "data": "",
+        "response": "Nenhuma alteração adicional foi observada; o carrinho permaneceu com 5 itens."
+      },
+      {
+        "number": 12,
+        "action": "Usuário tentou clicar pela sexta vez em 'Add to Basket' no mesmo produto, excedendo o limite permitido.",
+        "data": "Apple Juice (1000ml)",
+        "response": "A loja recusou a nova adição: o contador do carrinho permaneceu em 5 e foi exibido um aviso informando que só é possível pedir até 5 unidades daquele produto."
+      },
+      {
+        "number": 13,
+        "action": "Usuário aguardou a interface estabilizar após a tentativa recusada.",
+        "data": "",
+        "response": "Nenhuma alteração adicional foi observada; o carrinho permaneceu com 5 itens, confirmando que o bloqueio foi mantido."
+      }
+    ]
+  }
+}

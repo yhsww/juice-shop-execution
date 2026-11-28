@@ -1,0 +1,48 @@
+{
+  "scenario_id": "CEN-CHK-05",
+  "fingerprint": "0346f3d03a34b1abb4e677411aa8d46964f3a159205c5295054081b96c6f01bc",
+  "content": {
+    "flow": "A partir da tela de método de entrega, com o endereço já preenchido, o cliente avalia as opções de velocidade de envio disponíveis (One Day, Fast e Standard Delivery) e escolhe a opção Standard Delivery, sem custo adicional e prazo de 5 dias. Ao confirmar a seleção e avançar, o sistema conduz o cliente da etapa de entrega para a etapa seguinte do checkout, onde passam a ser exibidas as opções de pagamento.",
+    "precondition": "Cliente autenticado no sistema, com endereço de entrega já cadastrado e exibido na tela (Cliente Teste, Rua Teste, 100, Fortaleza, CE, com telefone informado), prestes a escolher a velocidade de entrega do pedido.",
+    "observed_result": "A tela de entrega deixou de ser exibida e a navegação avançou para a página de opções de pagamento, confirmando a transição de etapa do checkout. Nessa nova tela passaram a ser exibidos os meios de pagamento disponíveis (cartão de crédito/débito e carteira digital), a opção de adicionar cupom de desconto e o aviso de que o pedido ainda pode ser revisado antes de ser finalizado. O saldo da carteira apareceu zerado e o valor a pagar foi exibido de forma inconsistente (NaN), o que não impediu o avanço do fluxo.",
+    "messages": [
+      "Choose a delivery speed",
+      "Price Expected Delivery One Day Delivery 0.99¤ 1 Days Fast Delivery 0.50¤ 3 Days Standard Delivery 0.00¤ 5 Days",
+      "My Payment Options Add new card Add a credit or debit card Pay using wallet Wallet Balance 0.00 Pay NaN¤ Add a coupon Add a coupon code to receive discounts Other payment options",
+      "You can review this order before it is finalized."
+    ],
+    "data": "Endereço de entrega: Cliente Teste, Rua Teste, 100, Fortaleza, CE, Brazil, telefone 8599999999. Método de entrega selecionado: Standard Delivery, custo 0.00¤, prazo estimado de 5 dias.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O cliente acessa a tela de escolha de método de entrega, onde o endereço cadastrado já está visível junto com as opções de velocidade de envio.",
+        "data": "Endereço de entrega exibido: Cliente Teste, Rua Teste, 100, Fortaleza, CE, Brazil",
+        "response": "A interface exibiu o endereço de entrega e as três opções de velocidade (One Day Delivery, Fast Delivery e Standard Delivery) com seus respectivos preços e prazos estimados."
+      },
+      {
+        "number": 2,
+        "action": "O cliente seleciona a opção de entrega Standard Delivery dentre as alternativas listadas.",
+        "data": "Standard Delivery - 0.00¤ - 5 Days",
+        "response": "A lista de opções de entrega permaneceu visível com a opção Standard Delivery disponível para seleção, sem indicação visual adicional de mudança de estado na tela."
+      },
+      {
+        "number": 3,
+        "action": "O cliente aguarda a interface processar a seleção feita antes de prosseguir.",
+        "data": "",
+        "response": "A tela de entrega permaneceu estável, mantendo as mesmas informações de endereço e opções de envio visíveis."
+      },
+      {
+        "number": 4,
+        "action": "O cliente confirma a escolha clicando no botão para continuar o checkout.",
+        "data": "",
+        "response": "A aplicação navegou da tela de entrega para a tela de pagamento, exibindo as opções de meio de pagamento, o saldo da carteira, a opção de cupom de desconto e o aviso de revisão do pedido antes da finalização."
+      },
+      {
+        "number": 5,
+        "action": "O cliente aguarda a atualização completa da tela de pagamento após a transição.",
+        "data": "",
+        "response": "A tela de pagamento permaneceu estável, mantendo visíveis as opções de cartão, carteira digital, cupom de desconto e o botão para continuar o processo de checkout."
+      }
+    ]
+  }
+}

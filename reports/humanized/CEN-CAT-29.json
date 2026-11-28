@@ -1,0 +1,32 @@
+{
+  "scenario_id": "CEN-CAT-29",
+  "fingerprint": "56ce7d1b2f557b032a17aa559ec2b5ce74b539ee0090595e6ae976c7188e847a",
+  "content": {
+    "flow": "O visitante acessa a página institucional 'About Us' da loja, que apresenta o histórico corporativo, políticas da empresa, um bloco de feedback de clientes e links para redes sociais. A navegação para essa rota substitui o conteúdo de produtos exibido anteriormente por um texto institucional estático, confirmando que a página carrega corretamente seu conteúdo e seus componentes de rodapé.",
+    "precondition": "O catálogo de produtos está disponível e o visitante está navegando sem autenticação.",
+    "observed_result": "A interface deixou de exibir a listagem de produtos e passou a mostrar o conteúdo da página 'About Us', incluindo os textos de histórico e política corporativa, a seção de feedback de clientes e os links para redes sociais (BlueSky, Mastodon, Twitter, Facebook, Slack, Reddit), além dos atalhos para Press Kit e NFT. O bloco de feedback de clientes foi atualizado dinamicamente, trocando o comentário inicialmente exibido por outro diferente após o carregamento da página.",
+    "messages": [
+      "About Us",
+      "Corporate History & Policy",
+      "Customer Feedback",
+      "Check out our boring terms of use if you are interested in such lame stuff.",
+      "Follow us on Social Media",
+      "Nothing useful available here! (***der@juice-sh.op)"
+    ],
+    "data": "—",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O visitante acessou a página 'About Us' a partir do menu, saindo da listagem de produtos.",
+        "data": "Rota de destino: página About Us",
+        "response": "A URL foi atualizada para a seção About Us e a interface passou a exibir o título 'About Us', o texto de histórico corporativo, um comentário inicial na seção de feedback de clientes e os links de redes sociais no rodapé."
+      },
+      {
+        "number": 2,
+        "action": "O usuário aguardou o carregamento completo do conteúdo da página.",
+        "data": "",
+        "response": "O comentário exibido na seção de feedback de clientes foi substituído por outro, indicando que esse bloco é carregado de forma assíncrona após a renderização inicial da página."
+      }
+    ]
+  }
+}

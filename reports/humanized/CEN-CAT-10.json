@@ -1,0 +1,33 @@
+{
+  "scenario_id": "CEN-CAT-10",
+  "fingerprint": "f70f9acb79dd7310c5c24a00d9edc664353e6c26c7c0c65fa9041e1b1b6be357",
+  "content": {
+    "flow": "O teste avalia a navegação entre páginas da listagem de produtos do catálogo. Partindo da primeira página, com itens como Apple Juice, Apple Pomace e Banana Juice exibidos de 1 a 16 de 46 produtos, o usuário aciona o controle de paginação para avançar. Em resposta, a listagem é substituída por um novo conjunto de produtos, passando a exibir os itens de 17 a 32 de 46, incluindo Melon Bike, Melon Juice e diversos itens da linha OWASP Juice Shop (camisetas, adesivos, canecas, entre outros), alguns deles marcados como 'Sold Out' ou com indicação de estoque limitado ('Only 3 left').",
+    "precondition": "O catálogo precisa conter produtos suficientes para serem distribuídos em múltiplas páginas, com indicação de contagem total de itens e controle de paginação disponível na listagem.",
+    "observed_result": "Após avançar a página, a grade de produtos foi completamente substituída: a primeira leva de itens (Apple Juice, Apple Pomace, Banana Juice, entre outros) deu lugar a uma nova leva (Melon Bike, Melon Juice, produtos licenciados OWASP Juice Shop), e o indicador de posição passou de '1 – 16 de 46' para '17 – 32 de 46', confirmando o avanço efetivo entre páginas do catálogo.",
+    "messages": [
+      "Language has been changed to English Force page reload"
+    ],
+    "data": "Nenhum dado adicional foi utilizado; a interação ocorreu apenas sobre os controles de paginação da listagem de produtos.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Usuário acessa a página inicial do catálogo de produtos.",
+        "data": "Página inicial do catálogo",
+        "response": "A listagem exibe a primeira página de produtos (itens 1 a 16 de 46), incluindo Apple Juice, Apple Pomace, Banana Juice, Basil Smoothie e Berry Juice, com preços e botões de adicionar ao carrinho visíveis para cada item."
+      },
+      {
+        "number": 2,
+        "action": "Usuário aciona o controle de avançar página na listagem de produtos.",
+        "data": "Controle de paginação 'Next'",
+        "response": "A listagem é atualizada para exibir o próximo conjunto de produtos (itens 17 a 32 de 46), substituindo os itens anteriores por Melon Bike, Melon Juice e itens da linha de produtos licenciados OWASP Juice Shop, alguns indicados como esgotados ('Sold Out') ou com estoque limitado."
+      },
+      {
+        "number": 3,
+        "action": "Usuário aguarda a estabilização da interface após a mudança de página.",
+        "data": "Nenhum dado adicional",
+        "response": "A listagem permanece exibindo o conteúdo da segunda página (itens 17 a 32 de 46), sem novas alterações visuais, confirmando que a transição entre páginas se completou."
+      }
+    ]
+  }
+}

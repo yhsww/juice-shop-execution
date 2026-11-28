@@ -1,0 +1,47 @@
+{
+  "scenario_id": "CEN-CHK-13",
+  "fingerprint": "20b287a6d2e4a0d5532b780a1315f19e8be208308bbb750adcc2a77bcc4be3db",
+  "content": {
+    "flow": "A partir da tela de métodos de pagamento do checkout, o cliente expande a seção de opções alternativas de pagamento e seleciona a alternativa relacionada a 'Credit Card' associada às doações do projeto. Essa interação redireciona o cliente para fora da aplicação de compras, levando-o até a página de documentação do OWASP Juice Shop que explica como apoiar o projeto financeiramente.",
+    "precondition": "Cliente autenticado, na etapa de pagamento do checkout, com a seção 'Other payment options' disponível para expansão, sem nenhum item de pagamento real selecionado ainda (saldo de carteira em 0.00).",
+    "observed_result": "Ao clicar em 'Other payment options', a interface expandiu a lista exibindo alternativas como Donations/Credit Card, Merchandise (Spreadshirt US, Spreadshirt DE, StickerYou, Leanpub, OpenSea). A seleção da opção 'Credit Card' (vinculada à doação) saiu completamente do contexto da loja: a URL mudou para a página de documentação externa 'Pwning OWASP Juice Shop', seção 'Donations', que apresenta texto explicativo sobre como contribuir financeiramente com o projeto, incluindo um link de doação via Stripe. A tela de checkout e o estado do carrinho não foram alterados por essa navegação.",
+    "messages": [
+      "Other payment options",
+      "Donations (Thank you for supporting OWASP Juice Shop!)",
+      "Please continue reading to learn more about supporting the OWASP Juice Shop financially!"
+    ],
+    "data": "Nenhum dado de pagamento real foi utilizado; saldo de carteira exibido em 0.00.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Carregamento da etapa de pagamento do checkout, exibindo as opções de 'My Payment Options' (adicionar cartão, usar carteira, adicionar cupom) e a seção recolhida 'Other payment options'.",
+        "data": "",
+        "response": "A página de pagamento foi exibida com saldo de carteira em 0.00 e os controles padrão de pagamento visíveis, além do link para expandir outras opções."
+      },
+      {
+        "number": 2,
+        "action": "Cliente clica em 'Other payment options' para expandir as alternativas de pagamento.",
+        "data": "",
+        "response": "A seção se expandiu revelando uma lista de opções adicionais: Donations (Credit Card), Merchandise (Spreadshirt US, Spreadshirt DE, StickerYou), Leanpub e OpenSea."
+      },
+      {
+        "number": 3,
+        "action": "Aguarda a estabilização da interface após a expansão da lista.",
+        "data": "",
+        "response": "Nenhuma mudança adicional foi observada; a lista expandida permaneceu visível e estável."
+      },
+      {
+        "number": 4,
+        "action": "Cliente seleciona a opção 'Credit Card', vinculada à doação ao projeto.",
+        "data": "",
+        "response": "A navegação saiu da aplicação de checkout e abriu a página de documentação externa do OWASP Juice Shop sobre doações, exibindo texto explicativo sobre formas de apoiar o projeto financeiramente."
+      },
+      {
+        "number": 5,
+        "action": "Aguarda a estabilização da página externa após o redirecionamento.",
+        "data": "",
+        "response": "Nenhuma mudança adicional foi detectada; o conteúdo da página de doações permaneceu exibido integralmente."
+      }
+    ]
+  }
+}

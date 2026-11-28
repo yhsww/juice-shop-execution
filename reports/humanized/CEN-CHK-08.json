@@ -1,0 +1,40 @@
+{
+  "scenario_id": "CEN-CHK-08",
+  "fingerprint": "08374e9abeb14f8aca7c40a2b94109d16341f0910e769c713ea526cb129457f3",
+  "content": {
+    "flow": "Na etapa de pagamento do checkout, o cliente acessa a tela de opções de pagamento e seleciona o cartão de crédito já cadastrado, identificado pelos últimos quatro dígitos 0002, para que esse método seja utilizado na finalização do pedido.",
+    "precondition": "Cliente autenticado, com endereço e método de entrega já definidos no checkout, e um cartão de teste previamente cadastrado terminado em 0002.",
+    "observed_result": "A tela de 'My Payment Options' permaneceu exibindo o cartão cadastrado (terminado em 0002, em nome de Cliente Teste, validade 12/2090) como opção disponível, junto com os botões de navegação 'Back' e 'Continue'. Não foi possível confirmar visualmente uma alteração de estado (como destaque ou marcação de seleção) no cartão após o clique, já que o conteúdo textual da tela permaneceu o mesmo antes e depois da interação.",
+    "messages": [
+      "My Payment Options ************0002 Cliente Teste 12/2090 Add new card Add a credit or debit card Pay using wallet Wallet Balance 0.00 Pay NaN¤ Add a coupon Add a coupon code to receive discounts Other payment options",
+      "You can review this order before it is finalized."
+    ],
+    "data": "Cartão de teste cadastrado terminado em 0002, em nome de Cliente Teste, validade 12/2090.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O cliente chega à tela de opções de pagamento do checkout, onde o cartão cadastrado já está listado.",
+        "data": "Cartão terminado em 0002",
+        "response": "A tela exibe o cartão cadastrado (0002, Cliente Teste, 12/2090), a opção de adicionar novo cartão, pagamento via carteira digital e os botões de navegação Back e Continue."
+      },
+      {
+        "number": 2,
+        "action": "O sistema estabiliza a exibição da tela de pagamento antes da próxima interação.",
+        "data": "",
+        "response": "A tela de opções de pagamento permanece a mesma, sem alterações visuais."
+      },
+      {
+        "number": 3,
+        "action": "O cliente clica sobre a linha correspondente ao cartão terminado em 0002 para selecioná-lo como forma de pagamento.",
+        "data": "Cartão terminado em 0002",
+        "response": "A interface manteve o mesmo conteúdo visível (cartão listado, opções de pagamento e botões de navegação), sem uma confirmação textual explícita de seleção capturada na execução."
+      },
+      {
+        "number": 4,
+        "action": "O sistema processa a interação e estabiliza a tela após o clique no cartão.",
+        "data": "",
+        "response": "A tela de pagamento permanece exibindo o cartão cadastrado e os botões Back e Continue disponíveis para prosseguir no checkout."
+      }
+    ]
+  }
+}

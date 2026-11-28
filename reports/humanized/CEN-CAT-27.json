@@ -1,0 +1,28 @@
+{
+  "scenario_id": "CEN-CAT-27",
+  "fingerprint": "1b17b1209625d44b249762f6a2cfbdd7337c6c6fe69f640448d9c3461c481513",
+  "content": {
+    "flow": "Um visitante acessa a seção Photo Wall da aplicação para visualizar o mural de fotos compartilhadas pela comunidade. Ao carregar a página, o sistema primeiro exibe brevemente um estado vazio e, em seguida, apresenta um conjunto de publicações com imagens, legendas e créditos de autoria, confirmando que o mural possui conteúdo disponível para exibição.",
+    "precondition": "O catálogo da aplicação está disponível e o visitante não está autenticado ao acessar a página do mural de fotos.",
+    "observed_result": "A página de Photo Wall passou de um estado transitório sem resultados ('No results found / No memories have been shared yet.') para a exibição de uma lista de publicações com fotos, legendas descritivas e créditos de autores (como @bkimminich, @evmrox e @j0hNny), incluindo um item com link para a página 'Bee Haven'. Após o carregamento, a interface permaneceu estável, sem novas alterações visuais.",
+    "messages": [
+      "No results found",
+      "No memories have been shared yet."
+    ],
+    "data": "Rota acessada: Photo Wall ()",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O visitante navega até a página do mural de fotos a partir da navegação lateral da aplicação.",
+        "data": "Acesso à seção Photo Wall",
+        "response": "A interface exibiu momentaneamente a mensagem de que nenhuma memória havia sido compartilhada, e logo em seguida carregou o mural com várias publicações contendo fotos, legendas e créditos de autoria."
+      },
+      {
+        "number": 2,
+        "action": "O usuário aguarda a estabilização da página após o carregamento inicial do mural.",
+        "data": "—",
+        "response": "O conteúdo do mural permaneceu exibido sem alterações adicionais, confirmando que as publicações carregadas se mantiveram visíveis na tela."
+      }
+    ]
+  }
+}

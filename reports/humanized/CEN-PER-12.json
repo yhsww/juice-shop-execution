@@ -1,0 +1,27 @@
+{
+  "scenario_id": "CEN-PER-12",
+  "fingerprint": "e2667e38962214b8eb8e7375da4104bf271680bad319e47443ba008507be32cf",
+  "content": {
+    "flow": "Um visitante sem sessão ativa tentou acessar diretamente a página de perfil do usuário por meio da rota /profile. O sistema deveria redirecionar ou bloquear o acesso a dados pessoais de um usuário não autenticado, e a tentativa resultou em uma falha no servidor ao processar a requisição.",
+    "precondition": "O visitante não possui sessão ativa nem está autenticado na aplicação antes de tentar acessar a página de perfil.",
+    "observed_result": "Ao acessar a rota de perfil sem autenticação, a aplicação não exibiu os dados pessoais do usuário nem uma tela de login; em vez disso, o servidor retornou um erro interno (HTTP 500), exibindo uma página de erro com detalhes técnicos da aplicação em vez do conteúdo esperado de perfil. Esse estado de erro permaneceu inalterado mesmo após aguardar a atualização da interface.",
+    "messages": [
+      "OWASP Juice Shop (Express ^4.22.1) 500 Error: Blocked illegal activity by ::ffff:172.18.0.1 at /juice-shop/build/routes/userProfile.js:69:18"
+    ],
+    "data": "Rota acessada: /profile",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O visitante, sem estar autenticado, inseriu diretamente o endereço da página de perfil no navegador, tentando acessar a área restrita.",
+        "data": "/profile",
+        "response": "A navegação foi concluída, porém o servidor não retornou a página de perfil esperada; em vez disso, exibiu uma tela de erro interno (500), indicando que a tentativa de acesso foi bloqueada como atividade ilegítima."
+      },
+      {
+        "number": 2,
+        "action": "Aguardou-se um intervalo para verificar se a interface se atualizaria ou se algum redirecionamento ocorreria após o erro inicial.",
+        "data": "",
+        "response": "A tela de erro permaneceu exatamente como estava, sem nenhuma mudança visual, confirmando que o acesso continuou bloqueado e nenhuma informação de perfil foi exposta."
+      }
+    ]
+  }
+}

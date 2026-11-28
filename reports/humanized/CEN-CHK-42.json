@@ -1,0 +1,108 @@
+{
+  "scenario_id": "CEN-CHK-42",
+  "fingerprint": "432d085dabbf9071acd00f982204a9ca4d6d3490f4564c6c546683a383884473",
+  "content": {
+    "flow": "Um visitante sem conta acessou o formulário de cadastro da loja, preencheu os campos obrigatórios (e-mail, senha, confirmação de senha e uma pergunta de segurança com resposta) e concluiu o registro. Em seguida, usou as credenciais recém-criadas para efetuar login e, já autenticado, acessou a seção de histórico de pedidos para verificar o que era exibido para uma conta que ainda não realizou nenhuma compra.",
+    "precondition": "Nenhuma conta estava previamente criada para o e-mail utilizado; o teste partiu da tela inicial da loja sem sessão autenticada.",
+    "observed_result": "Após o cadastro, o sistema confirmou a criação da conta com uma mensagem de sucesso e redirecionou para a tela de login. O login com as credenciais recém-criadas foi aceito, levando o usuário à listagem de produtos. Ao abrir o histórico de pedidos, a interface exibiu a seção 'Order History' informando que nenhum resultado foi encontrado, com a mensagem explícita de que o cliente ainda não realizou nenhum pedido.",
+    "messages": [
+      "Registration completed successfully.",
+      "You can now log in.",
+      "No results found",
+      "You have not placed any orders yet."
+    ],
+    "data": "E-mail de cadastro (formato cen-cen-chk-42-...@example.com), senha Teste@12345 (preenchida e repetida), pergunta de segurança 'Your favorite book?' com resposta 'resposta-teste'",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Usuário abriu a página de criação de nova conta.",
+        "data": "—",
+        "response": "A interface exibiu o formulário de registro com os campos de e-mail, senha, repetição de senha e pergunta de segurança, todos vazios."
+      },
+      {
+        "number": 2,
+        "action": "Usuário informou o endereço de e-mail no campo correspondente do formulário de cadastro.",
+        "data": "cen-cen-chk-42-91666193f4@example.com",
+        "response": "O campo de e-mail passou a exibir o valor digitado, sem alterações em outras áreas do formulário."
+      },
+      {
+        "number": 3,
+        "action": "Usuário definiu a senha da nova conta no campo de senha.",
+        "data": "Teste@12345",
+        "response": "O contador de caracteres do campo de senha atualizou para 11/20, confirmando que a senha foi registrada no formulário."
+      },
+      {
+        "number": 4,
+        "action": "Usuário repetiu a senha no campo de confirmação para validar a correspondência.",
+        "data": "Teste@12345",
+        "response": "O contador de caracteres do campo de repetição de senha passou a exibir 11/40, indicando que o valor foi aceito."
+      },
+      {
+        "number": 5,
+        "action": "Usuário escolheu uma pergunta de segurança na lista de opções disponíveis.",
+        "data": "Your favorite book?",
+        "response": "A lista de opções foi substituída pela pergunta selecionada, habilitando o campo de resposta correspondente."
+      },
+      {
+        "number": 6,
+        "action": "Usuário preencheu o campo de resposta referente à pergunta de segurança escolhida.",
+        "data": "resposta-teste",
+        "response": "O campo de resposta passou a exibir o texto informado, completando os dados exigidos pelo formulário."
+      },
+      {
+        "number": 7,
+        "action": "Usuário confirmou o cadastro acionando o botão de registro.",
+        "data": "—",
+        "response": "A aplicação concluiu o cadastro e redirecionou para a tela de login, exibindo uma mensagem confirmando que a conta foi criada e que o login já podia ser realizado."
+      },
+      {
+        "number": 8,
+        "action": "Usuário aguardou a estabilização da tela de login após o redirecionamento.",
+        "data": "—",
+        "response": "A tela de login permaneceu exibida, mantendo visível a mensagem de confirmação do cadastro."
+      },
+      {
+        "number": 9,
+        "action": "Usuário acessou novamente a página de login para iniciar a autenticação.",
+        "data": "—",
+        "response": "A tela de login foi apresentada com os campos de e-mail e senha disponíveis para preenchimento."
+      },
+      {
+        "number": 10,
+        "action": "Usuário informou o e-mail da conta recém-criada no campo de login.",
+        "data": "cen-cen-chk-42-91666193f4@example.com",
+        "response": "O campo de e-mail do login passou a exibir o valor digitado."
+      },
+      {
+        "number": 11,
+        "action": "Usuário informou a senha correspondente à conta no campo de login.",
+        "data": "Teste@12345",
+        "response": "O campo de senha do login registrou o valor informado, habilitando a tentativa de autenticação."
+      },
+      {
+        "number": 12,
+        "action": "Usuário confirmou a autenticação acionando o botão de login.",
+        "data": "—",
+        "response": "O sistema autenticou o usuário e exibiu a listagem de produtos da loja, indicando que o acesso à conta foi concedido."
+      },
+      {
+        "number": 13,
+        "action": "Usuário aguardou o carregamento completo da listagem de produtos após o login.",
+        "data": "—",
+        "response": "A listagem de produtos permaneceu estável, confirmando que a navegação pós-login foi concluída."
+      },
+      {
+        "number": 14,
+        "action": "Usuário acessou a seção de histórico de pedidos da própria conta.",
+        "data": "—",
+        "response": "A interface exibiu o título 'Order History' acompanhado da mensagem de que nenhum resultado foi encontrado e de que o cliente ainda não realizou nenhum pedido."
+      },
+      {
+        "number": 15,
+        "action": "Usuário aguardou a estabilização da tela de histórico de pedidos.",
+        "data": "—",
+        "response": "A mensagem de ausência de pedidos permaneceu visível, confirmando que o estado da conta não apresenta nenhum pedido registrado."
+      }
+    ]
+  }
+}

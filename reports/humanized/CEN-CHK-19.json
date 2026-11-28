@@ -1,0 +1,33 @@
+{
+  "scenario_id": "CEN-CHK-19",
+  "fingerprint": "946cfd59e6b0be7c224dc0add609913fc773d9bd58deae0a20a7242a092ebf31",
+  "content": {
+    "flow": "O cliente parte da tela de histórico de pedidos, onde o pedido realizado (Apple Juice 1000ml) aparece listado com status 'In Transit', e aciona a opção de rastreamento vinculada a esse pedido. Essa ação direciona o cliente para uma tela de resultados específica do pedido, na qual passam a ser exibidos o prazo estimado de entrega e os detalhes dos itens comprados.",
+    "precondition": "Cliente autenticado, com um pedido já concluído (Apple Juice 1000ml, quantidade 1, valor total 1.99¤) disponível no histórico de pedidos.",
+    "observed_result": "A navegação inicial para o histórico exibe o pedido identificado por #4efc-0b4aef7f3af4e9d1 com status 'In Transit'. Ao acionar o rastreamento desse pedido, a interface é substituída pela tela 'Search Results', que passa a mostrar o prazo de entrega estimado em 5 dias, o item do pedido (Apple Juice 1000ml, 1.99¤, quantidade 1) e a informação de pontos de bônus acumulados (0). Essa tela permaneceu estável após a atualização, sem novas mudanças visuais.",
+    "messages": [
+      "Placed Apple Juice (1000ml) into basket."
+    ],
+    "data": "Pedido #4efc-0b4aef7f3af4e9d1, produto Apple Juice (1000ml), quantidade 1, valor total 1.99¤.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Acessar a tela de histórico de pedidos para localizar o pedido realizado.",
+        "data": "Pedido #4efc-0b4aef7f3af4e9d1",
+        "response": "A tela de histórico passou a exibir o pedido com status 'In Transit', mostrando o item Apple Juice (1000ml), quantidade 1 e valor total de 1.99¤."
+      },
+      {
+        "number": 2,
+        "action": "Acionar a opção de rastreamento associada ao pedido exibido no histórico.",
+        "data": "Pedido #4efc-0b4aef7f3af4e9d1",
+        "response": "A interface mudou para a tela 'Search Results', exibindo o prazo estimado de entrega de 5 dias e os detalhes do pedido, incluindo os pontos de bônus acumulados (0)."
+      },
+      {
+        "number": 3,
+        "action": "Aguardar a estabilização da tela de resultados de rastreamento.",
+        "data": "",
+        "response": "Nenhuma alteração adicional foi registrada; a tela manteve as informações de prazo de entrega e detalhes do pedido já exibidas."
+      }
+    ]
+  }
+}

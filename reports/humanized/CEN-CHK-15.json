@@ -1,0 +1,39 @@
+{
+  "scenario_id": "CEN-CHK-15",
+  "fingerprint": "fb03ff39d2db70ed7906e75623d3e9c4761023ca7cb1ea247971df2eef36377f",
+  "content": {
+    "flow": "Na etapa de pagamento do checkout, o cliente utilizou o campo de cupom para inserir um código promocional e solicitou o resgate do benefício. A interface processou a tentativa e respondeu indicando que o código informado não é válido, mantendo o pedido sem desconto aplicado.",
+    "precondition": "Cliente autenticado e posicionado na etapa de pagamento do checkout, com o campo de inserção de cupom disponível e nenhum desconto aplicado previamente (saldo de carteira zerado e nenhum cupom ativo).",
+    "observed_result": "Após a tentativa de resgate, a interface exibiu a mensagem 'Invalid coupon.' e o campo de cupom retornou ao estado vazio, sem nenhum desconto refletido no valor do pedido. O código TESTE12345 foi rejeitado e o checkout permaneceu na mesma etapa, sem avanço para a confirmação do pagamento.",
+    "messages": [
+      "Invalid coupon."
+    ],
+    "data": "Código de cupom testado: TESTE12345",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Usuário acessou a etapa de pagamento do checkout, onde ficam disponíveis as opções de forma de pagamento e o campo para aplicação de cupom de desconto.",
+        "data": "",
+        "response": "A página de pagamento foi carregada exibindo as opções 'Add new card', 'Pay using wallet' e a seção 'Add a coupon', sem nenhum cupom aplicado."
+      },
+      {
+        "number": 2,
+        "action": "Usuário preencheu o campo de cupom com o código promocional a ser testado.",
+        "data": "TESTE12345",
+        "response": "O campo de cupom exibiu o texto digitado e o botão 'Redeem' tornou-se disponível para confirmação do resgate."
+      },
+      {
+        "number": 3,
+        "action": "Usuário acionou o botão 'Redeem' para solicitar a aplicação do cupom informado.",
+        "data": "",
+        "response": "A interface retornou a mensagem 'Invalid coupon.' e o campo de cupom foi limpo, sem aplicar nenhum desconto ao pedido."
+      },
+      {
+        "number": 4,
+        "action": "Usuário aguardou a estabilização da tela após a tentativa de resgate.",
+        "data": "",
+        "response": "Nenhuma alteração adicional foi observada; a mensagem de cupom inválido permaneceu visível e o checkout continuou na mesma etapa de pagamento."
+      }
+    ]
+  }
+}

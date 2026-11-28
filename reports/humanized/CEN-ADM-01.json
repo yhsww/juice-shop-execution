@@ -1,0 +1,59 @@
+{
+  "scenario_id": "CEN-ADM-01",
+  "fingerprint": "efd779ea32da3b7bd298278a8ab92a69da22779c47e79c8301a30367ca0fefd4",
+  "content": {
+    "flow": "O teste reproduz o acesso de uma conta administrativa ao painel de gestão do Juice Shop. A partir da tela de login, as credenciais do administrador foram informadas e, após a autenticação, o sistema foi direcionado para a área administrativa, onde passaram a ser exibidos dados de gestão da loja, como a lista de usuários cadastrados e os comentários de clientes.",
+    "precondition": "A aplicação Juice Shop estava em execução e disponível na tela inicial de login, sem nenhum usuário autenticado (carrinho com 0 itens).",
+    "observed_result": "Após a autenticação, o indicador do carrinho passou a exibir 6 itens, confirmando que a sessão do usuário foi reconhecida pelo sistema. Em seguida, ao acessar a área administrativa, a interface deixou de mostrar o catálogo de produtos e passou a exibir painéis exclusivos de administração: uma lista de usuários registrados (incluindo e-mails como admin@juice-sh.op, jim@juice-sh.op e bender@juice-sh.op) e uma seção de feedback de clientes com avaliações e comentários, confirmando o acesso autorizado à área restrita.",
+    "messages": [
+      "Language has been changed to English",
+      "Login",
+      "Log in"
+    ],
+    "data": "E-mail: admin@juice-sh.op; senha: admin123.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário acessou a tela de login da aplicação.",
+        "data": "",
+        "response": "A página exibiu o formulário de login com os campos de e-mail e senha, além da opção de login com Google."
+      },
+      {
+        "number": 2,
+        "action": "O usuário informou o e-mail da conta administrativa no campo correspondente.",
+        "data": "admin@juice-sh.op",
+        "response": "O campo de e-mail foi preenchido e o formulário manteve os demais elementos de login visíveis, sem indicar erro."
+      },
+      {
+        "number": 3,
+        "action": "O usuário informou a senha da conta administrativa no campo de senha.",
+        "data": "admin123",
+        "response": "O campo de senha foi preenchido; nenhuma alteração visual adicional foi percebida na tela nesse momento."
+      },
+      {
+        "number": 4,
+        "action": "O usuário confirmou a autenticação clicando no botão de login.",
+        "data": "",
+        "response": "A aplicação saiu da tela de login e passou a exibir a página de produtos, com o indicador do carrinho atualizado para 6 itens, evidenciando que a sessão foi autenticada com sucesso."
+      },
+      {
+        "number": 5,
+        "action": "O usuário aguardou a estabilização da interface após o login.",
+        "data": "",
+        "response": "A listagem de produtos permaneceu exibida sem alterações adicionais, confirmando que a navegação pós-login já havia se completado."
+      },
+      {
+        "number": 6,
+        "action": "O usuário acessou a área administrativa da aplicação.",
+        "data": "",
+        "response": "A interface substituiu o catálogo de produtos por painéis administrativos, exibindo a lista de usuários registrados e a seção de feedback de clientes, confirmando o acesso à área restrita."
+      },
+      {
+        "number": 7,
+        "action": "O usuário aguardou a atualização final da interface da área administrativa.",
+        "data": "",
+        "response": "Os painéis de usuários registrados e de feedback de clientes permaneceram visíveis e estáveis, confirmando que o conteúdo administrativo foi totalmente carregado."
+      }
+    ]
+  }
+}

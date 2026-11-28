@@ -1,0 +1,124 @@
+{
+  "scenario_id": "CEN-PER-09",
+  "fingerprint": "a84cc6175a7c2a89111ef4f704da17a7869763123cd973208803582356a0e4d3",
+  "content": {
+    "flow": "O teste cadastrou inicialmente um novo endereço (destinatário 'Cliente Alternativo', com telefone, CEP, endereço, cidade, estado e país preenchidos) e confirmou seu salvamento na lista de endereços. Em seguida, a partir dessa lista, o endereço salvo foi reaberto para edição, o nome do destinatário foi alterado para 'Cliente Editado' mantendo os demais dados, e o formulário foi reenviado. A interface retornou à lista de endereços exibindo o registro já atualizado com o novo nome.",
+    "precondition": "Cliente autenticado na loja, com acesso ao formulário de cadastro de endereços e à listagem de endereços salvos; o próprio teste criou o endereço que seria posteriormente editado.",
+    "observed_result": "O endereço anteriormente listado como 'Cliente Alternativo' passou a ser exibido como 'Cliente Editado', mantendo os mesmos dados de rua, cidade, estado, CEP e país. A tela de endereços salvos exibiu confirmação de que o registro de Fortaleza foi atualizado com sucesso.",
+    "messages": [
+      "The address at Fortaleza has been successfully added to your addresses.",
+      "The address at Fortaleza has been successfully updated."
+    ],
+    "data": "Nome do destinatário alterado de 'Cliente Alternativo' para 'Cliente Editado'; endereço: Rua Alternativa, 200, Fortaleza, CE, 60000000, Brazil; telefone 8599999999.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Acessou o formulário de cadastro de novo endereço",
+        "data": "",
+        "response": "O formulário 'Add New Address' foi exibido com os campos Country, Name, Mobile Number, ZIP Code, Address, City e State vazios."
+      },
+      {
+        "number": 2,
+        "action": "Aguardou o carregamento completo do formulário",
+        "data": "",
+        "response": "O formulário permaneceu estável, sem alterações visuais adicionais."
+      },
+      {
+        "number": 3,
+        "action": "Preencheu o campo de país do novo endereço",
+        "data": "Brazil",
+        "response": "O valor foi aceito no campo sem alterar o layout do formulário."
+      },
+      {
+        "number": 4,
+        "action": "Preencheu o nome do destinatário",
+        "data": "Cliente Alternativo",
+        "response": "O campo Name recebeu o valor informado."
+      },
+      {
+        "number": 5,
+        "action": "Preencheu o número de telefone",
+        "data": "8599999999",
+        "response": "O campo Mobile Number recebeu o valor informado."
+      },
+      {
+        "number": 6,
+        "action": "Preencheu o CEP do endereço",
+        "data": "60000000",
+        "response": "O contador de caracteres do campo ZIP Code passou a indicar 8/8, confirmando o preenchimento completo."
+      },
+      {
+        "number": 7,
+        "action": "Preencheu o campo de endereço (rua e número)",
+        "data": "Rua Alternativa, 200",
+        "response": "O contador de caracteres do campo Address passou a indicar 20/160, refletindo o texto digitado."
+      },
+      {
+        "number": 8,
+        "action": "Preencheu a cidade do endereço",
+        "data": "Fortaleza",
+        "response": "O campo City recebeu o valor informado, sem mudanças adicionais na tela."
+      },
+      {
+        "number": 9,
+        "action": "Preencheu o estado",
+        "data": "CE",
+        "response": "O campo State recebeu o valor informado."
+      },
+      {
+        "number": 10,
+        "action": "Confirmou o cadastro do endereço clicando em Submit",
+        "data": "",
+        "response": "A aplicação foi redirecionada para a página de produtos, indicando o fim do fluxo de cadastro."
+      },
+      {
+        "number": 11,
+        "action": "Aguardou a estabilização da página de produtos",
+        "data": "",
+        "response": "A listagem de produtos permaneceu exibida sem novas alterações."
+      },
+      {
+        "number": 12,
+        "action": "Acessou a lista de endereços salvos",
+        "data": "",
+        "response": "A página exibiu o endereço recém-cadastrado com o destinatário 'Cliente Alternativo' e os dados completos de Rua Alternativa, 200, Fortaleza, CE, 60000000, Brazil, junto de uma confirmação de que o endereço havia sido adicionado com sucesso."
+      },
+      {
+        "number": 13,
+        "action": "Aguardou a estabilização da lista de endereços",
+        "data": "",
+        "response": "O endereço cadastrado continuou visível na listagem, sem mudanças adicionais."
+      },
+      {
+        "number": 14,
+        "action": "Selecionou o endereço salvo para edição",
+        "data": "",
+        "response": "A aplicação abriu o formulário de edição já preenchido com os dados anteriores (CEP 8/8 e endereço com 20/160 caracteres preservados)."
+      },
+      {
+        "number": 15,
+        "action": "Aguardou o carregamento do formulário de edição",
+        "data": "",
+        "response": "O formulário permaneceu estável com os dados previamente cadastrados."
+      },
+      {
+        "number": 16,
+        "action": "Alterou o nome do destinatário no formulário de edição",
+        "data": "Cliente Editado",
+        "response": "O campo Name passou a conter o novo valor, substituindo 'Cliente Alternativo'."
+      },
+      {
+        "number": 17,
+        "action": "Confirmou a edição clicando em Submit",
+        "data": "",
+        "response": "A aplicação retornou à lista de endereços salvos exibindo o registro com o nome atualizado para 'Cliente Editado' e uma mensagem confirmando que o endereço de Fortaleza foi atualizado com sucesso."
+      },
+      {
+        "number": 18,
+        "action": "Aguardou a estabilização final da tela",
+        "data": "",
+        "response": "A listagem permaneceu exibindo o endereço com o nome 'Cliente Editado' e a confirmação de atualização visível."
+      }
+    ]
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "scenario_id": "CEN-PER-11",
+  "fingerprint": "ba053eabe1f1e02f68b56aa9d9da1e322e4c0dad3386102064a1b1960150d488",
+  "content": {
+    "flow": "O cenário cobre o ciclo completo de gerenciamento de um cartão em 'My Payment Options': primeiro o cartão terminado em 0002 é cadastrado através do formulário 'Add new card', preenchendo nome, número, mês e ano de validade, e em seguida esse mesmo cartão é removido da lista de métodos de pagamento salvos. A interação demonstra que, após a remoção, o cartão deixa de constar na lista exibida ao cliente, confirmando que a exclusão teve efeito sobre o estado persistido.",
+    "precondition": "Cliente autenticado acessando a tela 'My Payment Options', sem cartão previamente listado — o próprio fluxo cadastra o cartão terminado em 0002 antes de executar a remoção.",
+    "observed_result": "Após a ação de remoção, o cartão identificado como ************0002, em nome de 'Cliente Teste' com validade 12/2090, que havia sido exibido na lista de métodos de pagamento logo após o cadastro, deixou de aparecer na tela. A estrutura da página retornou ao estado anterior ao cadastro, exibindo apenas a seção 'Add new card' sem nenhum cartão listado.",
+    "messages": [
+      "Registration completed successfully. You can now log in.",
+      "Your card ending with 0002 has been saved for your convenience."
+    ],
+    "data": "Nome: Cliente Teste; Número do cartão: 4000000000000002 (exibido mascarado como ************0002); Validade: 12/2090",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Acessar a página 'My Payment Options'",
+        "data": "",
+        "response": "A página carregou exibindo a seção de métodos de pagamento sem nenhum cartão listado e com a opção 'Add new card' disponível."
+      },
+      {
+        "number": 2,
+        "action": "Aguardar a estabilização da tela após o carregamento",
+        "data": "",
+        "response": "Nenhuma alteração visual adicional; a tela permaneceu exibindo apenas a opção de adicionar um novo cartão."
+      },
+      {
+        "number": 3,
+        "action": "Clicar em 'Add new card' para iniciar o cadastro",
+        "data": "",
+        "response": "O formulário de cadastro foi exibido, com os campos Name, Card Number, Expiry Month, Expiry Year e o botão Submit."
+      },
+      {
+        "number": 4,
+        "action": "Aguardar a estabilização do formulário",
+        "data": "",
+        "response": "Nenhuma mudança adicional detectada; o formulário permaneceu visível e vazio."
+      },
+      {
+        "number": 5,
+        "action": "Preencher o campo 'Name' com o titular do cartão",
+        "data": "Cliente Teste",
+        "response": "O campo recebeu o valor informado, sem alterações estruturais adicionais na tela."
+      },
+      {
+        "number": 6,
+        "action": "Preencher o campo 'Card Number' com o número do cartão",
+        "data": "4000000000000002",
+        "response": "O contador de caracteres do campo passou de 0/16 para 16/16, confirmando o preenchimento completo do número."
+      },
+      {
+        "number": 7,
+        "action": "Selecionar o mês de validade no campo 'Expiry Month'",
+        "data": "12",
+        "response": "A opção '12' foi selecionada no seletor, sem outras mudanças visuais na tela."
+      },
+      {
+        "number": 8,
+        "action": "Selecionar o ano de validade no campo 'Expiry Year'",
+        "data": "2090",
+        "response": "A opção '2090' foi selecionada no seletor, mantendo os demais campos preenchidos."
+      },
+      {
+        "number": 9,
+        "action": "Clicar em 'Submit' para confirmar o cadastro do cartão",
+        "data": "",
+        "response": "O cartão ************0002, em nome de Cliente Teste com validade 12/2090, passou a ser exibido na lista de 'My Payment Options', acompanhado da mensagem de confirmação de que o cartão foi salvo."
+      },
+      {
+        "number": 10,
+        "action": "Aguardar a estabilização da tela após o cadastro",
+        "data": "",
+        "response": "O cartão recém-cadastrado permaneceu visível na lista, junto com a mensagem de confirmação ainda exibida."
+      },
+      {
+        "number": 11,
+        "action": "Clicar no controle de remoção associado ao cartão cadastrado",
+        "data": "",
+        "response": "O cartão ************0002 deixou de aparecer na lista de métodos de pagamento, e a tela voltou a exibir apenas o formulário 'Add new card' vazio."
+      },
+      {
+        "number": 12,
+        "action": "Aguardar a atualização final da interface",
+        "data": "",
+        "response": "A ausência do cartão na lista foi mantida, confirmando que nenhum método de pagamento permaneceu cadastrado após a remoção."
+      }
+    ]
+  }
+}

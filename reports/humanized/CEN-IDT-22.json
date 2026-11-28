@@ -1,0 +1,53 @@
+{
+  "scenario_id": "CEN-IDT-22",
+  "fingerprint": "c08076ea62046aa4bda8bd91eb3f17c892f4084f729e26e8755c26aad9f64ed0",
+  "content": {
+    "flow": "O teste verificou se, após encerrar a sessão pelo menu Account, a página de histórico de pedidos permanece protegida contra acesso direto. O usuário autenticado abriu o menu Account, selecionou a opção de logout e, em seguida, tentou acessar a rota de histórico de pedidos diretamente, sem passar por login novamente.",
+    "precondition": "Cliente autenticado com sessão ativa, navegando na página inicial de produtos da loja.",
+    "observed_result": "Após o logout, o menu Account passou a exibir a opção 'Login' no lugar das opções de conta autenticada, confirmando o encerramento da sessão. Ao tentar acessar diretamente a página de histórico de pedidos em seguida, a aplicação não exibiu dados de pedidos nem solicitou autenticação explícita: a tela carregou o título 'Order History' acompanhado da mensagem 'No results found / You have not placed any orders yet', sem qualquer pedido ou informação vinculada à conta anteriormente autenticada.",
+    "messages": [
+      "Order History",
+      "No results found",
+      "You have not placed any orders yet."
+    ],
+    "data": "Rota acessada diretamente após o logout do cliente autenticado.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Usuário abriu a página inicial de produtos da loja (rota raiz).",
+        "data": "/#/",
+        "response": "A listagem de produtos foi carregada normalmente, exibindo itens como Apple Juice, Banana Juice e outros com seus respectivos preços e botões de adicionar ao carrinho."
+      },
+      {
+        "number": 2,
+        "action": "Usuário clicou no ícone/menu 'Account' no cabeçalho.",
+        "data": "",
+        "response": "O menu suspenso de conta foi aberto, exibindo o e-mail do usuário autenticado e as opções 'Orders & Payment', 'Privacy & Security' e 'Logout'."
+      },
+      {
+        "number": 3,
+        "action": "Usuário selecionou a opção 'Logout' dentro do menu Account.",
+        "data": "",
+        "response": "A sessão foi encerrada: o menu Account deixou de exibir as opções de conta autenticada e passou a mostrar a opção 'Login' em seu lugar."
+      },
+      {
+        "number": 4,
+        "action": "Aguardou a estabilização da interface após o logout.",
+        "data": "",
+        "response": "Nenhuma alteração adicional foi observada; a página permaneceu na listagem de produtos com o estado de usuário deslogado."
+      },
+      {
+        "number": 5,
+        "action": "Usuário digitou diretamente a rota de histórico de pedidos na barra de navegação.",
+        "data": "",
+        "response": "A página de histórico de pedidos foi carregada, mas não exibiu nenhum pedido associado à conta: apresentou apenas o título 'Order History' e a mensagem informando que não há pedidos registrados."
+      },
+      {
+        "number": 6,
+        "action": "Aguardou a estabilização final da interface.",
+        "data": "",
+        "response": "A tela permaneceu estável, confirmando que nenhum dado de pedidos da conta anteriormente autenticada ficou acessível após o logout."
+      }
+    ]
+  }
+}

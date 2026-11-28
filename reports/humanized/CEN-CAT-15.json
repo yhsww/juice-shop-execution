@@ -1,0 +1,45 @@
+{
+  "scenario_id": "CEN-CAT-15",
+  "fingerprint": "5102ffce1d54676acbbf5223bdc1cff62ba9664eed6da641e272c4595a6ebe24",
+  "content": {
+    "flow": "O teste reproduz a jornada de um visitante que, a partir da página inicial da loja, utiliza o menu de navegação para acessar a área de autenticação. Partindo da listagem de produtos, o usuário aciona o ícone de conta no cabeçalho, que expõe a opção de login, e em seguida seleciona essa opção para ser direcionado à tela de autenticação, confirmando que o acesso ao login está disponível diretamente pela navegação do catálogo.",
+    "precondition": "A loja está carregada com o catálogo de produtos disponível na página inicial, sem nenhuma sessão de usuário autenticada.",
+    "observed_result": "A interação com o menu de conta expôs a opção de login no cabeçalho, substituindo o indicador de conta. Ao selecionar essa opção, a página foi redirecionada da listagem de produtos para a tela de autenticação, que passou a exibir os campos de Email e Senha, o link para recuperação de senha, o botão de login, a opção de login via Google e o convite para novos clientes se cadastrarem.",
+    "messages": [
+      "Login"
+    ],
+    "data": "Nenhum dado de entrada foi utilizado; a navegação ocorreu apenas por interação com elementos do menu.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Carregar a página inicial da loja, exibindo a listagem de produtos disponíveis no catálogo.",
+        "data": "Página inicial (/#/)",
+        "response": "A página inicial foi exibida normalmente, com a lista completa de produtos e seus respectivos preços visíveis, sem indicação de usuário autenticado."
+      },
+      {
+        "number": 2,
+        "action": "Acionar o ícone de conta no cabeçalho da loja.",
+        "data": "Ícone 'Account'",
+        "response": "O menu de conta foi expandido, substituindo o ícone por uma opção de 'Login' visível no cabeçalho, indicando que o usuário não está autenticado."
+      },
+      {
+        "number": 3,
+        "action": "Aguardar a estabilização da interface após abrir o menu de conta.",
+        "data": "Não aplicável",
+        "response": "Nenhuma alteração adicional foi percebida; o menu permaneceu exibindo a opção de login disponível."
+      },
+      {
+        "number": 4,
+        "action": "Selecionar a opção 'Login' exibida no menu de conta.",
+        "data": "Opção 'Login'",
+        "response": "A aplicação navegou da página inicial para a tela de autenticação, passando a exibir os campos de Email e Senha, o link 'Forgot your password?', o botão 'Log in', a opção de login com Google e o link para novos clientes."
+      },
+      {
+        "number": 5,
+        "action": "Aguardar o carregamento completo da tela de login.",
+        "data": "Não aplicável",
+        "response": "A tela de login permaneceu estável, confirmando a exibição definitiva do formulário de autenticação."
+      }
+    ]
+  }
+}

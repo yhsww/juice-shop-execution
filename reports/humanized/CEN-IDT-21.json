@@ -1,0 +1,56 @@
+{
+  "scenario_id": "CEN-IDT-21",
+  "fingerprint": "ddcf90d45d177de54b7f217bebe16ed4a85b8fc512cf090c100ce626befa3461",
+  "content": {
+    "flow": "O teste avalia o comportamento do botão de login da tela de autenticação diante do preenchimento parcial dos campos. Primeiro, com o formulário totalmente vazio, verifica-se o estado do botão 'Log in'; em seguida, apenas o campo de e-mail é preenchido e o estado do botão é checado novamente, sem que a senha seja informada.",
+    "precondition": "O visitante acessa a aplicação sem possuir sessão autenticada e navega até a tela de login, onde os campos de e-mail e senha estão vazios.",
+    "observed_result": "Em ambas as verificações - com o formulário vazio e com apenas o e-mail preenchido - o botão 'Log in' permaneceu desabilitado, confirmando que a ação de login não fica disponível enquanto o campo de senha não é preenchido.",
+    "messages": [
+      "Login",
+      "Forgot your password?",
+      "Log in",
+      "Remember me",
+      "Not yet a customer?",
+      "Log in with Google"
+    ],
+    "data": "Nenhum dado no formulário na primeira verificação; em seguida, apenas o e-mail cen-cen-idt-21-910ee4993a@example.com foi preenchido, mantendo o campo de senha vazio.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário acessa a tela de login da aplicação.",
+        "data": "",
+        "response": "A interface carrega o formulário de autenticação, exibindo os campos de e-mail e senha, o link 'Forgot your password?' e o botão 'Log in', além da opção de login via Google."
+      },
+      {
+        "number": 2,
+        "action": "O usuário aguarda o carregamento completo da tela de login.",
+        "data": "",
+        "response": "A tela permanece estável, sem alterações visuais adicionais, confirmando que o formulário já está totalmente carregado."
+      },
+      {
+        "number": 3,
+        "action": "O usuário verifica o estado do botão de login com o formulário vazio.",
+        "data": "",
+        "response": "O botão 'Log in' é constatado como desabilitado, impedindo o envio do formulário sem dados preenchidos."
+      },
+      {
+        "number": 4,
+        "action": "O usuário preenche apenas o campo de e-mail, deixando a senha em branco.",
+        "data": "cen-cen-idt-21-910ee4993a@example.com",
+        "response": "O campo de e-mail passa a exibir o valor informado, enquanto o restante do formulário permanece inalterado e o campo de senha continua vazio."
+      },
+      {
+        "number": 5,
+        "action": "O usuário aguarda a atualização da interface após o preenchimento do e-mail.",
+        "data": "",
+        "response": "Nenhuma mudança adicional é observada na tela além do valor já preenchido no campo de e-mail."
+      },
+      {
+        "number": 6,
+        "action": "O usuário verifica novamente o estado do botão de login, agora com apenas o e-mail preenchido.",
+        "data": "",
+        "response": "O botão 'Log in' permanece desabilitado, indicando que a ausência da senha impede a conclusão do login mesmo com o e-mail informado."
+      }
+    ]
+  }
+}

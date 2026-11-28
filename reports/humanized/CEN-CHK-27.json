@@ -1,0 +1,72 @@
+{
+  "scenario_id": "CEN-CHK-27",
+  "fingerprint": "db447f7d2e51968f79f1a0c526f4d3779df8a7668c99b6d4a31c0820fe7b8410",
+  "content": {
+    "flow": "O cenário valida a navegação de retorno dentro do checkout: a partir da etapa de entrega, o cliente escolhe a opção Standard Delivery, avança até a etapa de pagamento e, em seguida, retorna à etapa anterior usando o controle de voltar. Ao reabrir a tela de entrega, verifica-se se é possível selecionar novamente a mesma opção de frete, confirmando que a navegação entre etapas não bloqueia nem corrompe a interação com os métodos de entrega.",
+    "precondition": "Cliente autenticado na loja, com endereço de entrega já cadastrado e selecionado, estando na etapa de escolha do método de entrega do checkout.",
+    "observed_result": "Após selecionar Standard Delivery e avançar, a aplicação carregou a tela de opções de pagamento (cartão, carteira digital e cupom). Ao acionar o controle de retorno, a aplicação voltou corretamente para a etapa de escolha do método de entrega, exibindo novamente o endereço cadastrado e as três opções de frete (One Day Delivery, Fast Delivery e Standard Delivery) com seus respectivos preços e prazos. A opção Standard Delivery pôde ser clicada novamente nessa segunda exibição da tela, sem erros ou bloqueios, confirmando que o estado da etapa de entrega é reconstituído de forma consistente ao navegar de volta.",
+    "messages": [
+      "Delivery Address Cliente Teste Rua Teste, 100, Fortaleza, CE, 60000000 Brazil Phone Number 8599999999",
+      "Choose a delivery speed Price Expected Delivery One Day Delivery 0.99¤ 1 Days Fast Delivery 0.50¤ 3 Days Standard Delivery 0.00¤ 5 Days",
+      "My Payment Options Add new card Add a credit or debit card Pay using wallet Wallet Balance 0.00 Add a coupon Add a coupon code to receive discounts Other payment options",
+      "You can review this order before it is finalized."
+    ],
+    "data": "Método de entrega selecionado: Standard Delivery (0.00¤, prazo de 5 dias). Endereço de entrega utilizado: Cliente Teste, Rua Teste, 100, Fortaleza, CE, 60000000, Brazil, telefone 8599999999.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Acessar a etapa de escolha do método de entrega do checkout, já com o endereço de entrega previamente cadastrado exibido.",
+        "data": "Endereço de entrega: Cliente Teste, Rua Teste, 100, Fortaleza, CE",
+        "response": "A tela exibiu o endereço de entrega selecionado e as três opções de frete disponíveis (One Day Delivery, Fast Delivery e Standard Delivery), cada uma com preço e prazo estimado, além dos botões de voltar e continuar."
+      },
+      {
+        "number": 2,
+        "action": "Selecionar a opção de frete Standard Delivery na lista de métodos de entrega.",
+        "data": "Standard Delivery - 0.00¤ - 5 dias",
+        "response": "A opção Standard Delivery passou a constar como selecionada entre as alternativas de frete, mantendo a tela de escolha de entrega visível com o botão de continuar disponível."
+      },
+      {
+        "number": 3,
+        "action": "Avançar da etapa de entrega para a etapa de pagamento utilizando o botão de continuar.",
+        "data": "",
+        "response": "A aplicação navegou para a tela de opções de pagamento, exibindo alternativas como adicionar cartão, pagar com carteira digital, adicionar cupom e outras formas de pagamento, além da indicação de que o pedido pode ser revisado antes da finalização."
+      },
+      {
+        "number": 4,
+        "action": "Aguardar o carregamento completo da tela de opções de pagamento.",
+        "data": "",
+        "response": "A tela de pagamento permaneceu estável, exibindo as mesmas opções de pagamento sem alterações adicionais."
+      },
+      {
+        "number": 5,
+        "action": "Retornar à etapa anterior do checkout utilizando o botão de voltar disponível na tela de pagamento.",
+        "data": "",
+        "response": "A aplicação retornou para a etapa de escolha do método de entrega, voltando a exibir o endereço de entrega cadastrado e as opções de frete (One Day Delivery, Fast Delivery e Standard Delivery)."
+      },
+      {
+        "number": 6,
+        "action": "Aguardar a estabilização da tela de escolha do método de entrega após o retorno.",
+        "data": "",
+        "response": "A tela de entrega permaneceu exibida de forma consistente, com o endereço e as opções de frete disponíveis para nova seleção."
+      },
+      {
+        "number": 7,
+        "action": "Selecionar novamente a opção Standard Delivery na tela de entrega reaberta.",
+        "data": "Standard Delivery - 0.00¤ - 5 dias",
+        "response": "A opção Standard Delivery pôde ser clicada normalmente, sem indicação de erro ou bloqueio, permanecendo entre as alternativas de frete disponíveis na tela."
+      },
+      {
+        "number": 8,
+        "action": "Aguardar a atualização da interface após a nova seleção do método de entrega.",
+        "data": "",
+        "response": "A tela de entrega manteve as opções de frete e o endereço cadastrado visíveis, sem alterações inesperadas."
+      },
+      {
+        "number": 9,
+        "action": "Verificar se a opção Standard Delivery está marcada como selecionada após o retorno à etapa de entrega.",
+        "data": "Standard Delivery",
+        "response": "A verificação confirmou que a opção Standard Delivery podia ser selecionada novamente na tela de entrega, validando que o retorno de etapa no checkout preserva a possibilidade de escolha do método de frete."
+      }
+    ]
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "scenario_id": "CEN-CAT-25",
+  "fingerprint": "c9c6ce247c4cf57753145dd1693a4cf16a75e942b1044ed17af1ee5d05310109",
+  "content": {
+    "flow": "O visitante acessa a área de busca do catálogo e utiliza o campo de pesquisa para localizar um produto específico pelo nome, com o objetivo de verificar os detalhes exibidos para esse item, incluindo preço e situação de estoque.",
+    "precondition": "O catálogo de produtos está disponível e acessível para visitantes não autenticados, exibindo inicialmente a listagem completa de itens.",
+    "observed_result": "A busca retornou exclusivamente o produto 'Juice Shop \"Permafrost\" 2020 Edition', substituindo a listagem geral de produtos por um resultado único. O item é exibido com o preço de 9999.99¤ e com o indicador de estoque 'Only 1 left', valores destoantes dos demais produtos do catálogo, que apresentam preços entre menos de 1¤ e pouco mais de 89¤.",
+    "messages": [
+      "Search Results - Permafrost",
+      "Only 1 left",
+      "Items per page: 16 1 – 1 of 1"
+    ],
+    "data": "Termo de busca: Permafrost. Produto retornado: Juice Shop \"Permafrost\" 2020 Edition, preço 9999.99¤, estoque indicado como 'Only 1 left'.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Acessou a área de busca do catálogo, que inicialmente exibiu a listagem completa de produtos disponíveis, incluindo itens como Apple Juice, Banana Juice e Carrot Juice com preços variando entre 0,89¤ e 89,99¤.",
+        "data": "",
+        "response": "A interface carregou a listagem geral de produtos, paginada em 16 itens por página, totalizando 46 produtos no catálogo."
+      },
+      {
+        "number": 2,
+        "action": "Preencheu o campo de busca com o termo referente ao produto de interesse.",
+        "data": "Permafrost",
+        "response": "O campo de busca registrou o termo digitado, sem alteração visível na listagem de produtos exibida até o momento."
+      },
+      {
+        "number": 3,
+        "action": "Confirmou a busca pressionando Enter, acionando a filtragem do catálogo pelo termo informado.",
+        "data": "Permafrost",
+        "response": "A interface substituiu a listagem geral por um único resultado: o produto 'Juice Shop \"Permafrost\" 2020 Edition', com preço de 9999.99¤ e indicação 'Only 1 left', sob o título 'Search Results - Permafrost'."
+      },
+      {
+        "number": 4,
+        "action": "Aguardou a estabilização da tela de resultados para confirmar a exibição final do item localizado.",
+        "data": "",
+        "response": "A tela permaneceu estável, mantendo o produto 'Permafrost' como único resultado, com preço e aviso de estoque reduzido visíveis."
+      }
+    ]
+  }
+}

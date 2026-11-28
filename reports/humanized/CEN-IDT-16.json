@@ -1,0 +1,31 @@
+{
+  "scenario_id": "CEN-IDT-16",
+  "fingerprint": "4779aadd0709524b57a80cb97c0970818fda8e48fed36ad82fd356f9ffb479a0",
+  "content": {
+    "flow": "O cenário avalia a reação do formulário de cadastro quando o cliente informa um e-mail em formato inválido. A partir da tela de registro, o campo de endereço de e-mail foi preenchido com um valor que não segue a estrutura padrão de e-mail, e a interface foi observada para verificar se algum indicativo de erro de formato seria exibido ao usuário.",
+    "precondition": "A tela de cadastro de novo usuário (User Registration) está aberta, exibindo os campos de e-mail, senha, repetição de senha e pergunta de segurança.",
+    "observed_result": "Após o preenchimento do campo de e-mail com um valor sem formato válido, a estrutura da tela de cadastro permaneceu praticamente a mesma: os campos de senha, repetição de senha, pergunta de segurança e o botão de registro continuaram visíveis e inalterados. Nos textos capturados pela execução não foi identificada nenhuma mensagem de erro específica associada ao campo de e-mail, nem alteração perceptível relacionada à validação do formato informado.",
+    "messages": [],
+    "data": "E-mail informado no campo de cadastro: teste-sem-formato",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Abrir a tela de cadastro de novo usuário",
+        "data": "",
+        "response": "A página de registro foi carregada, exibindo os campos de e-mail, senha (com exigência de 5 a 40 caracteres), repetição de senha, pergunta de segurança e o botão de registro."
+      },
+      {
+        "number": 2,
+        "action": "Preencher o campo de endereço de e-mail com um valor sem formato de e-mail válido",
+        "data": "teste-sem-formato",
+        "response": "O conteúdo da tela se manteve com a mesma estrutura de campos; não foi registrada nenhuma mensagem de erro de formato associada ao e-mail digitado nos textos capturados."
+      },
+      {
+        "number": 3,
+        "action": "Aguardar a atualização da interface após o preenchimento do campo",
+        "data": "",
+        "response": "Nenhuma mudança visual adicional foi detectada; o formulário de cadastro permaneceu no mesmo estado observado no passo anterior."
+      }
+    ]
+  }
+}

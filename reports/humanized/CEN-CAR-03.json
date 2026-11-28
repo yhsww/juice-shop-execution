@@ -1,0 +1,33 @@
+{
+  "scenario_id": "CEN-CAR-03",
+  "fingerprint": "e9cc39bc7736210247de7d61295591f242e3377dc34f86c8fcb57042c42233b7",
+  "content": {
+    "flow": "O cenário tem como objetivo verificar se o cliente consegue aumentar a quantidade de um item já presente no carrinho. A interação ocorreu na tela de carrinho, onde o controle de incremento associado ao produto Apple Juice (1000ml) foi acionado. Após o clique, a tela foi observada novamente para confirmar se a quantidade e o valor total haviam sido atualizados.",
+    "precondition": "O carrinho já continha o produto Apple Juice (1000ml) com quantidade 1 e valor unitário de 1.99¤, conforme exibido na tela ao acessar o carrinho.",
+    "observed_result": "Após o clique no controle de aumento de quantidade, a tela do carrinho continuou exibindo o produto Apple Juice (1000ml) com quantidade 1 e o valor total permaneceu em 1.99¤. Não houve evidência visual de que a quantidade tenha sido alterada para 2 unidades nem de que o valor total tenha sido recalculado.",
+    "messages": [
+      "Placed Apple Juice (1000ml) into basket."
+    ],
+    "data": "Produto: Apple Juice (1000ml); quantidade exibida antes e depois da ação: 1; preço unitário: 1.99¤; valor total exibido: 1.99¤.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Acessar a tela do carrinho de compras",
+        "data": "Apple Juice (1000ml)",
+        "response": "O carrinho foi exibido contendo o produto Apple Juice (1000ml), com quantidade 1, preço unitário de 1.99¤ e valor total de 1.99¤."
+      },
+      {
+        "number": 2,
+        "action": "Clicar no controle de aumento de quantidade associado ao produto no carrinho",
+        "data": "Apple Juice (1000ml)",
+        "response": "A tela permaneceu exibindo o mesmo produto com quantidade 1 e valor total de 1.99¤, sem alteração visível nesses valores após a ação."
+      },
+      {
+        "number": 3,
+        "action": "Observar a tela do carrinho após a interação, aguardando possível atualização",
+        "data": "",
+        "response": "Nenhuma mudança adicional foi detectada: a quantidade e o valor total do produto permaneceram iguais aos observados no passo anterior."
+      }
+    ]
+  }
+}

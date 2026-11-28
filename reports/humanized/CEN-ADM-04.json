@@ -1,0 +1,29 @@
+{
+  "scenario_id": "CEN-ADM-04",
+  "fingerprint": "7f08cf461baaeea51a9e4dcd26b93c296e8f15bc42a21e95f587b9d1a7661a04",
+  "content": {
+    "flow": "Um cliente autenticado, sem privilégios administrativos, tenta acessar diretamente a área de administração do sistema digitando a rota correspondente no navegador. A aplicação identifica que o usuário não possui permissão para essa área e bloqueia o acesso, impedindo a exibição do painel administrativo.",
+    "precondition": "O usuário está autenticado na aplicação com uma conta comum, sem perfil de administrador.",
+    "observed_result": "Ao tentar acessar a página de administração, a tela de produtos é substituída por uma página de erro, exibindo o código 403 e a indicação de que o acesso não é permitido. Nenhum conteúdo administrativo é carregado, e essa restrição permanece mesmo após aguardar a atualização da interface.",
+    "messages": [
+      "403 You are not allowed to access this page!",
+      "You are not allowed to access this page!",
+      "403"
+    ],
+    "data": "Rota de administração ()",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário, já navegando na listagem de produtos, tenta acessar a página de administração digitando a rota correspondente.",
+        "data": "",
+        "response": "A interface bloqueia o acesso e substitui o conteúdo da tela pela mensagem de erro 403, informando que o acesso à página não é permitido."
+      },
+      {
+        "number": 2,
+        "action": "O usuário aguarda para verificar se a interface atualiza ou libera o conteúdo administrativo.",
+        "data": "",
+        "response": "A tela de erro 403 permanece inalterada, confirmando que o acesso continua bloqueado e nenhum conteúdo adicional é exibido."
+      }
+    ]
+  }
+}

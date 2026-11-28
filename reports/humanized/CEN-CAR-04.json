@@ -1,0 +1,29 @@
+{
+  "scenario_id": "CEN-CAR-04",
+  "fingerprint": "65456129e012300e1dffeb14df5fd0e46df5268161053f0337bec67da14937d8",
+  "content": {
+    "flow": "O cliente acessa a tela do carrinho para verificar o valor total referente ao item previamente adicionado, conferindo se o preço exibido corresponde à quantidade e ao produto selecionado antes de prosseguir para o checkout.",
+    "precondition": "O carrinho já contém um produto adicionado (Apple Juice 1000ml), conforme indicado pelo indicador de item no ícone de carrinho e pela mensagem de confirmação de inclusão exibida anteriormente.",
+    "observed_result": "Ao abrir a tela de carrinho, passou a ser exibido o produto Apple Juice (1000ml) com quantidade 1 e preço unitário de 1.99¤, acompanhado do campo 'Total Price' apresentando o valor 1.99¤, confirmando que o total reflete corretamente o item presente no carrinho.",
+    "messages": [
+      "Placed Apple Juice (1000ml) into basket.",
+      "Total Price: 1.99¤",
+      "You will gain 0 Bonus Points from this order!"
+    ],
+    "data": "Produto: Apple Juice (1000ml); Quantidade: 1; Preço unitário: 1.99¤; Total exibido: 1.99¤",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O cliente navega até a tela do carrinho para visualizar os itens selecionados e o valor total da compra.",
+        "data": "Tela de carrinho (Your Basket)",
+        "response": "A interface carregou o carrinho exibindo o produto Apple Juice (1000ml), quantidade 1, preço unitário 1.99¤ e o campo Total Price com o valor 1.99¤, além da mensagem de confirmação de que o produto foi colocado no carrinho."
+      },
+      {
+        "number": 2,
+        "action": "O cliente aguarda a estabilização da tela para confirmar que os valores exibidos permanecem consistentes.",
+        "data": "Nenhum dado adicional informado",
+        "response": "A tela manteve o mesmo estado, preservando o produto, a quantidade e o Total Price em 1.99¤, sem alterações visuais adicionais."
+      }
+    ]
+  }
+}

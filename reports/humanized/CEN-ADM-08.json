@@ -1,0 +1,39 @@
+{
+  "scenario_id": "CEN-ADM-08",
+  "fingerprint": "230de77e5044900c576a1d114470685f70f0721de1c08fa01540aedb856bb853",
+  "content": {
+    "flow": "O administrador tenta localizar, dentro da área administrativa, uma tela voltada à gestão de produtos ou pedidos. Ao acessar o painel de Administration, o sistema exibe apenas seções de Registered Users e Customer Feedback, sem nenhuma opção relacionada a produtos ou pedidos. Na sequência, o administrador tenta acessar diretamente a tela de Accounting, mas o sistema nega o acesso, indicando que esse recurso não está disponível para o perfil autenticado.",
+    "precondition": "Administrador autenticado e com sessão ativa, navegando a partir da listagem de produtos da loja.",
+    "observed_result": "A área de Administration carregou normalmente, exibindo a lista de usuários registrados (com paginação indicando 234 registros) e os comentários de clientes (6 registros), mas nenhuma seção voltada a produtos ou pedidos foi disponibilizada. Ao tentar acessar a tela de Accounting em seguida, a interface substituiu completamente o conteúdo anterior por uma página de erro 403, informando que o acesso não é permitido para esse usuário.",
+    "messages": [
+      "You are not allowed to access this page!"
+    ],
+    "data": "Rotas acessadas: administration e accounting",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O administrador navega até a área de Administration a partir da tela de produtos.",
+        "data": "administration",
+        "response": "A interface carregou o painel administrativo exibindo as abas Registered Users (lista de e-mails de usuários cadastrados) e Customer Feedback (avaliações e comentários de clientes), sem qualquer seção dedicada a produtos ou pedidos."
+      },
+      {
+        "number": 2,
+        "action": "O administrador aguarda a estabilização da tela após o carregamento da área administrativa.",
+        "data": "",
+        "response": "Nenhuma alteração adicional foi percebida; o conteúdo permaneceu o mesmo exibido imediatamente após o carregamento, confirmando que a tela de Administration já estava totalmente carregada."
+      },
+      {
+        "number": 3,
+        "action": "O administrador tenta acessar a tela de Accounting em busca de informações relacionadas a pedidos.",
+        "data": "accounting",
+        "response": "O sistema bloqueou o acesso e substituiu o conteúdo da página pela mensagem de erro 403, informando que o usuário não tem permissão para acessar aquela página."
+      },
+      {
+        "number": 4,
+        "action": "O administrador aguarda a estabilização da tela após a tentativa de acesso negada.",
+        "data": "",
+        "response": "A mensagem de erro 403 permaneceu exibida sem nenhuma mudança adicional na interface."
+      }
+    ]
+  }
+}

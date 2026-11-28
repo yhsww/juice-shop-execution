@@ -1,0 +1,46 @@
+{
+  "scenario_id": "CEN-IDT-02",
+  "fingerprint": "58cfd39ac48ef100c0b4b561751d76d68e8340a48eb916c6aecf617cd0151e3a",
+  "content": {
+    "flow": "O teste reproduz o preenchimento do formulário de cadastro de usuário, informando um e-mail válido e, em seguida, duas senhas diferentes nos campos de senha e confirmação de senha, com o objetivo de observar como a tela reage a essa divergência antes do envio do formulário.",
+    "precondition": "Tela de cadastro de usuário (User Registration) aberta, com os campos Email, Password, Repeat Password e Security Question visíveis e vazios.",
+    "observed_result": "À medida que os campos foram preenchidos, a interface atualizou em tempo real os contadores de caracteres associados a cada campo: o campo de senha passou a exibir 11/20 após o preenchimento, e o campo de repetição de senha passou a exibir 10/40. Não houve clique no botão de registro durante a execução, portanto a página permaneceu na tela de cadastro, sem confirmação de envio nem exibição de mensagem explícita relacionada à divergência entre as duas senhas informadas. A última etapa, de espera, não registrou nenhuma alteração adicional na tela.",
+    "messages": [
+      "Password must be 5-40 characters long.",
+      "Language has been changed to English Force page reload"
+    ],
+    "data": "E-mail: teste2@example.com; Senha: Teste@12345 (11 caracteres); Repetição de senha: Teste@1234 (10 caracteres)",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Acessar a tela de cadastro de usuário a partir da navegação inicial da aplicação",
+        "data": "",
+        "response": "A página carregou o formulário de User Registration, exibindo os campos Email, Password, Repeat Password, Security Question e o botão Register, junto de um aviso de cookies e uma mensagem indicando que o idioma foi definido para inglês."
+      },
+      {
+        "number": 2,
+        "action": "Preencher o campo de e-mail do formulário de cadastro",
+        "data": "teste2@example.com",
+        "response": "O campo de e-mail passou a exibir o valor informado, sem alteração nos demais campos do formulário."
+      },
+      {
+        "number": 3,
+        "action": "Preencher o campo de senha",
+        "data": "Teste@12345",
+        "response": "O contador de caracteres do campo de senha foi atualizado para 11/20, refletindo o valor digitado, enquanto o campo de repetição de senha permaneceu vazio (0/40)."
+      },
+      {
+        "number": 4,
+        "action": "Preencher o campo de repetição de senha com um valor diferente do informado anteriormente",
+        "data": "Teste@1234",
+        "response": "O contador de caracteres do campo de repetição de senha foi atualizado para 10/40, mantendo o campo de senha original inalterado (11/20)."
+      },
+      {
+        "number": 5,
+        "action": "Aguardar a estabilização da interface após o preenchimento dos campos",
+        "data": "",
+        "response": "Nenhuma alteração adicional foi observada na tela; os valores e contadores preenchidos nas etapas anteriores permaneceram como estavam, sem envio do formulário."
+      }
+    ]
+  }
+}

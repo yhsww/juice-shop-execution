@@ -1,0 +1,63 @@
+{
+  "scenario_id": "CEN-IDT-14",
+  "fingerprint": "fb3b8e426a89f7f30e6c22ab119da34670adf123f35ece495dd63b30ebd747ae",
+  "content": {
+    "flow": "O cenário valida o comportamento do sistema ao tentar criar uma nova conta utilizando um endereço de e-mail que já pertence a um usuário cadastrado. O usuário preenche todo o formulário de cadastro (e-mail, senha, confirmação de senha, pergunta de segurança e resposta) e, ao confirmar o registro, a aplicação impede a criação da conta e sinaliza o conflito diretamente no campo de e-mail.",
+    "precondition": "Já existe uma conta cadastrada utilizando o e-mail teste@example.com, e o usuário está na tela de registro de novo cliente, com o formulário em branco.",
+    "observed_result": "Após o envio do formulário, o cadastro não é concluído: o usuário permanece na própria tela de registro, com os dados preenchidos mantidos nos campos, e passa a ser exibida a informação de que o e-mail informado já está em uso, impedindo a criação de uma nova conta com esse endereço.",
+    "messages": [
+      "Email must be unique"
+    ],
+    "data": "E-mail: teste@example.com; Senha e confirmação de senha preenchidas; Pergunta de segurança: Your favorite book?; Resposta: a",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Usuário acessa a tela de registro de novo cliente.",
+        "data": "",
+        "response": "A página de cadastro é carregada, exibindo os campos de e-mail, senha, repetição de senha, pergunta de segurança e resposta, além do botão de registro."
+      },
+      {
+        "number": 2,
+        "action": "Usuário informa o endereço de e-mail no campo correspondente.",
+        "data": "teste@example.com",
+        "response": "O valor é registrado no campo de e-mail, sem indicação de erro neste momento."
+      },
+      {
+        "number": 3,
+        "action": "Usuário define a senha de acesso no campo de senha.",
+        "data": "Teste@12345",
+        "response": "O campo de senha passa a exibir a contagem de caracteres preenchidos, confirmando que o valor foi aceito."
+      },
+      {
+        "number": 4,
+        "action": "Usuário repete a mesma senha no campo de confirmação.",
+        "data": "Teste@12345",
+        "response": "O campo de confirmação de senha reflete a mesma contagem de caracteres, indicando que a senha foi repetida."
+      },
+      {
+        "number": 5,
+        "action": "Usuário seleciona uma pergunta de segurança na lista de opções disponíveis.",
+        "data": "Your favorite book?",
+        "response": "A pergunta escolhida passa a ser exibida como selecionada no formulário, liberando o campo de resposta."
+      },
+      {
+        "number": 6,
+        "action": "Usuário preenche a resposta da pergunta de segurança.",
+        "data": "a",
+        "response": "O valor é aceito no campo de resposta, sem alteração visual adicional relevante."
+      },
+      {
+        "number": 7,
+        "action": "Usuário aciona o botão de registro para concluir o cadastro.",
+        "data": "",
+        "response": "A interface não avança para uma tela de sucesso; em vez disso, o campo de e-mail passa a exibir a indicação de que o endereço já está em uso, mantendo os demais dados preenchidos no formulário."
+      },
+      {
+        "number": 8,
+        "action": "Usuário aguarda a atualização da interface após o envio.",
+        "data": "",
+        "response": "A tela permanece na página de registro, consolidando a exibição da mensagem de e-mail duplicado e confirmando que o cadastro não foi efetivado."
+      }
+    ]
+  }
+}

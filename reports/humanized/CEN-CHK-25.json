@@ -1,0 +1,31 @@
+{
+  "scenario_id": "CEN-CHK-25",
+  "fingerprint": "a8f8d855223e93303899019093d8e761b38aefdba6bbe04a3dcf9fa86465b3a2",
+  "content": {
+    "flow": "O cenário valida o comportamento da etapa de pagamento quando o cliente ainda não selecionou nenhuma forma de pagamento. Ao acessar a tela de opções de pagamento, o sistema apresenta as alternativas disponíveis (cartão, carteira digital e outras opções), mas mantém o avanço do pedido bloqueado até que uma forma de pagamento seja efetivamente escolhida.",
+    "precondition": "Cliente autenticado no sistema e com método de entrega já definido, chegando à tela de seleção de forma de pagamento sem nenhuma opção de pagamento previamente escolhida.",
+    "observed_result": "A tela de pagamento permaneceu estável, exibindo as opções disponíveis (adicionar cartão, pagar com carteira com saldo zerado e outras formas de pagamento) sem nenhuma selecionada. O controle de avanço do pedido (Continue) permaneceu no estado desabilitado durante toda a verificação, confirmando que o sistema impede a progressão do checkout sem a definição de uma forma de pagamento.",
+    "messages": [],
+    "data": "Tela de pagamento acessada sem seleção de forma de pagamento; saldo de carteira exibido como 0.00.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Cliente acessa a etapa de pagamento do checkout sem ter selecionado nenhuma forma de pagamento.",
+        "data": "Tela de opções de pagamento",
+        "response": "A interface exibe as opções de pagamento (adicionar cartão, usar carteira, outras opções), com o botão de avançar o pedido visível mas sem nenhuma forma de pagamento marcada."
+      },
+      {
+        "number": 2,
+        "action": "Verificação do estado do controle de avanço do pedido para confirmar que está bloqueado.",
+        "data": "Controle de avanço (Continue)",
+        "response": "O controle permanece desabilitado, impedindo o cliente de prosseguir para a confirmação do pedido."
+      },
+      {
+        "number": 3,
+        "action": "Aguarda a estabilização da interface para confirmar que o bloqueio se mantém.",
+        "data": "",
+        "response": "Nenhuma alteração ocorreu na tela; as opções de pagamento continuam exibidas sem seleção e o avanço permanece bloqueado."
+      }
+    ]
+  }
+}

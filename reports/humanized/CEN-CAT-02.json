@@ -1,0 +1,33 @@
+{
+  "scenario_id": "CEN-CAT-02",
+  "fingerprint": "54c73b8e172271a0f751ffefbd7f0c335d1ace2d090ad4984de5b1915f874106",
+  "content": {
+    "flow": "A jornada parte da listagem geral de produtos da loja, onde o cliente localiza o item Apple Juice (1000ml) entre os demais cartões exibidos. Ao clicar sobre o produto, a interface abre uma janela de detalhes específica daquele item, trazendo informações complementares que não estavam visíveis na listagem, como descrição do produto e avaliações. A interação demonstra o funcionamento da visualização expandida de um produto individual dentro do catálogo.",
+    "precondition": "O catálogo de produtos estava carregado e acessível, exibindo a lista completa de itens disponíveis, incluindo o produto Apple Juice (1000ml) com seu preço exibido no cartão correspondente.",
+    "observed_result": "Após o clique no produto, surgiu uma janela sobreposta com o detalhamento do item: o nome completo 'Apple Juice (1000ml)', a descrição 'The all-time classic.', o preço de 1.99¤ e a seção de avaliações indicando 4 reviews. A tela manteve a listagem de produtos ao fundo e passou a exibir um botão de fechamento para retornar à navegação anterior.",
+    "messages": [
+      "Apple Juice (1000ml) The all-time classic. 1.99¤ Reviews (4) close Close"
+    ],
+    "data": "Produto: Apple Juice (1000ml), preço 1.99¤",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário acessou a página inicial da loja, exibindo a listagem completa de produtos disponíveis para compra.",
+        "data": "Página inicial do catálogo",
+        "response": "A listagem de produtos foi carregada normalmente, mostrando itens como Apple Juice (1000ml) a 1.99¤ junto a outros produtos do catálogo, cada um com seu respectivo botão de adicionar ao carrinho."
+      },
+      {
+        "number": 2,
+        "action": "O usuário selecionou o cartão do produto 'Apple Juice' na listagem para abrir sua visualização detalhada.",
+        "data": "Produto: Apple Juice (1000ml)",
+        "response": "A interface abriu uma janela de detalhes sobre o produto selecionado, exibindo nome, descrição ('The all-time classic.'), preço de 1.99¤ e a contagem de avaliações (4 reviews), com opção de fechamento disponível."
+      },
+      {
+        "number": 3,
+        "action": "O usuário aguardou a estabilização da tela após a abertura dos detalhes do produto.",
+        "data": "",
+        "response": "A janela de detalhes do Apple Juice permaneceu exibida sem alterações adicionais, mantendo visíveis o preço, a descrição e as avaliações do produto sobre o fundo da listagem."
+      }
+    ]
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "scenario_id": "CEN-CHK-06",
+  "fingerprint": "52d1fac0f5cb31fc4ccb5fdf8d5f193f32627eb1ff076ea514a3abb634a6b809",
+  "content": {
+    "flow": "A partir da tela de método de entrega, com o endereço já preenchido, o cliente verificou que o botão de avanço permanecia bloqueado enquanto nenhuma opção de entrega estava marcada. Em seguida, selecionou a opção Standard Delivery dentre as três velocidades disponíveis e o botão Continue passou a ficar habilitado, permitindo avançar para a etapa de pagamento.",
+    "precondition": "Cliente autenticado, com endereço de entrega já cadastrado e selecionado (Cliente Teste, Rua Teste 100, Fortaleza, CE), na tela de escolha do método de entrega.",
+    "observed_result": "Após a seleção de Standard Delivery, o botão Continue, antes bloqueado, tornou-se habilitado. Ao confirmar o avanço, a aplicação navegou da tela de método de entrega para a tela de opções de pagamento (My Payment Options), onde passaram a ser exibidos os meios de pagamento disponíveis (cartão, carteira digital, cupom) e a confirmação de que o pedido pode ser revisado antes da finalização.",
+    "messages": [
+      "You can review this order before it is finalized."
+    ],
+    "data": "Método de entrega selecionado: Standard Delivery (0.00, prazo de 5 dias), entre as opções One Day Delivery (0.99, 1 dia) e Fast Delivery (0.50, 3 dias).",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Usuário acessou a tela de escolha do método de entrega, que exibiu o endereço de entrega já cadastrado e as três opções de velocidade de entrega disponíveis.",
+        "data": "Endereço: Rua Teste, 100, Fortaleza, CE",
+        "response": "A tela carregou com o endereço de entrega, telefone e a lista de métodos de entrega (One Day, Fast e Standard Delivery), além dos botões Back e Continue."
+      },
+      {
+        "number": 2,
+        "action": "Verificação de que o botão Continue permanece desabilitado antes de qualquer seleção de método de entrega.",
+        "data": "",
+        "response": "O botão de avanço permaneceu bloqueado, impedindo a continuidade do checkout sem a escolha de um método de entrega."
+      },
+      {
+        "number": 3,
+        "action": "Usuário selecionou a opção Standard Delivery na lista de métodos de entrega.",
+        "data": "Standard Delivery (0.00, 5 dias)",
+        "response": "A opção Standard Delivery foi marcada entre as alternativas disponíveis, preparando a liberação do avanço."
+      },
+      {
+        "number": 4,
+        "action": "Verificação de que o botão Continue passou a ficar habilitado após a seleção do método de entrega.",
+        "data": "",
+        "response": "O botão de avanço tornou-se habilitado, confirmando que a seleção do método de entrega desbloqueou a continuidade do checkout."
+      },
+      {
+        "number": 5,
+        "action": "Usuário clicou no botão Continue para confirmar o método de entrega e avançar para a etapa seguinte.",
+        "data": "Standard Delivery",
+        "response": "A aplicação navegou para a tela de opções de pagamento, exibindo métodos como cartão de crédito/débito, carteira digital com saldo e opção de cupom, além da confirmação de que o pedido pode ser revisado antes da finalização."
+      },
+      {
+        "number": 6,
+        "action": "Aguardar a estabilização da interface após a mudança de tela.",
+        "data": "",
+        "response": "A tela de opções de pagamento permaneceu estável, com todas as opções de pagamento e o botão Continue visíveis."
+      }
+    ]
+  }
+}

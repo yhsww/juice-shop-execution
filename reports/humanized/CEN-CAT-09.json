@@ -1,0 +1,33 @@
+{
+  "scenario_id": "CEN-CAT-09",
+  "fingerprint": "2c1edd68673db6b0ec9e200af5084c43ec210f2146bb7a5dc9918413925b3f15",
+  "content": {
+    "flow": "O cenário valida a navegação entre páginas da listagem de produtos do catálogo. Partindo da primeira página de produtos, o usuário aciona o controle de paginação para avançar e a interface substitui o conjunto de itens exibidos pelo lote seguinte, mantendo a estrutura de navegação, busca e carrinho inalterada.",
+    "precondition": "O catálogo estava carregado e acessível na primeira página de listagem, exibindo os 16 primeiros produtos (de um total de 46) com a indicação 'Items per page: 16' e '1 – 16 of 46'.",
+    "observed_result": "Após o avanço de página, a listagem passou a exibir um novo conjunto de produtos (itens 17 a 32 de 46), diferente do grupo inicial, incluindo itens como Melon Bike, Melon Juice e produtos da linha OWASP Juice Shop (camisetas, adesivos, canecas, entre outros). O indicador de paginação foi atualizado de '1 – 16 of 46' para '17 – 32 of 46', confirmando que a página seguinte foi carregada corretamente. O carrinho permaneceu vazio (0 itens) durante toda a interação.",
+    "messages": [
+      "Language has been changed to English Force page reload"
+    ],
+    "data": "Nenhum dado de entrada foi utilizado; a interação ocorreu apenas sobre o controle de paginação da listagem de produtos.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Acessou a página inicial do catálogo, que exibiu a primeira leva de produtos disponíveis para compra.",
+        "data": "",
+        "response": "A listagem carregou normalmente, mostrando produtos como Apple Juice, Banana Juice e Berry Juice, com o indicador de paginação '1 – 16 of 46' e o carrinho zerado."
+      },
+      {
+        "number": 2,
+        "action": "Clicou no controle 'Next' da paginação para avançar para o próximo conjunto de produtos da listagem.",
+        "data": "",
+        "response": "A interface atualizou o conteúdo da página, substituindo os produtos exibidos pelo lote seguinte (itens 17 a 32), com o indicador de paginação alterado para '17 – 32 of 46'."
+      },
+      {
+        "number": 3,
+        "action": "Aguardou a estabilização da interface após o avanço de página, sem realizar nova interação.",
+        "data": "",
+        "response": "A listagem permaneceu estável exibindo o segundo lote de produtos (17 – 32 de 46), confirmando que a navegação entre páginas foi concluída sem reversão ou recarregamento adicional."
+      }
+    ]
+  }
+}

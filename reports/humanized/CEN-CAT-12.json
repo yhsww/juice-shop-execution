@@ -1,0 +1,33 @@
+{
+  "scenario_id": "CEN-CAT-12",
+  "fingerprint": "f946c68095e621447e07fdbfd7ed993e80d38b07bce12732abcfc67a18824c86",
+  "content": {
+    "flow": "O cliente navega pela listagem de produtos da loja e seleciona o item Apple Juice para consultar seus detalhes. Ao abrir o produto, a interface exibe um painel com informações complementares, incluindo a quantidade de avaliações associadas a ele, permitindo ao cliente verificar a área de reviews sem sair da página de catálogo.",
+    "precondition": "O catálogo de produtos está disponível e carregado na página inicial, exibindo a lista completa de itens, incluindo Apple Juice (1000ml) ao preço de 1.99¤.",
+    "observed_result": "Ao clicar sobre o produto Apple Juice, um painel de detalhes foi aberto sobre a listagem, exibindo o nome do produto, a descrição 'The all-time classic.', o preço de 1.99¤ e o indicador 'Reviews (4)', confirmando que o produto possui quatro avaliações registradas. O painel permaneceu visível com opção de fechamento, sem alterar a listagem de produtos ao fundo.",
+    "messages": [
+      "Reviews (4)"
+    ],
+    "data": "Produto consultado: Apple Juice (1000ml), preço 1.99¤.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Acessar a página inicial da loja para visualizar a listagem de produtos disponíveis.",
+        "data": "Página inicial do catálogo",
+        "response": "A listagem completa de produtos foi exibida, incluindo Apple Juice (1000ml) a 1.99¤ entre os demais itens disponíveis para compra."
+      },
+      {
+        "number": 2,
+        "action": "Selecionar o produto Apple Juice na listagem para abrir seus detalhes.",
+        "data": "Produto: Apple Juice",
+        "response": "Um painel de detalhes do produto foi aberto sobre a listagem, mostrando nome, descrição, preço de 1.99¤ e o indicador 'Reviews (4)', confirmando a existência de quatro avaliações associadas ao item."
+      },
+      {
+        "number": 3,
+        "action": "Aguardar a estabilização da interface após a abertura do painel de detalhes.",
+        "data": "",
+        "response": "O painel de detalhes do produto permaneceu exibido sem alterações adicionais, mantendo visíveis as informações de preço e o contador de avaliações."
+      }
+    ]
+  }
+}

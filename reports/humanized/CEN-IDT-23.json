@@ -1,0 +1,51 @@
+{
+  "scenario_id": "CEN-IDT-23",
+  "fingerprint": "1129d95e4c3516b51076c11e0de1250d03afb9e82c392775740707ee732e2bc8",
+  "content": {
+    "flow": "O teste avalia a proteção da tela de alteração de senha ao tentar concluir a troca informando uma senha atual incorreta, mesmo com a nova senha preenchida corretamente e confirmada de forma idêntica nos dois campos. O objetivo é verificar se o sistema bloqueia a operação quando a credencial atual não corresponde à senha real da conta.",
+    "precondition": "Usuário autenticado acessando a tela de alteração de senha, com os campos do formulário inicialmente vazios.",
+    "observed_result": "A senha não foi alterada. Após o envio do formulário, a tela permaneceu na mesma página de troca de senha, os campos 'New Password' e 'Repeat New Password' foram limpos (contadores zerados) e passou a ser exibida a mensagem de erro informando que a senha atual está incorreta. A requisição de alteração de senha enviada ao servidor retornou falha de autorização.",
+    "messages": [
+      "Current password is not correct."
+    ],
+    "data": "Senha atual informada: Errada@999; nova senha e confirmação: Nova@12345.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Acessar a tela de alteração de senha",
+        "data": "",
+        "response": "A página carregou exibindo o formulário com os campos Current Password, New Password e Repeat New Password, todos vazios, e o botão Change disponível."
+      },
+      {
+        "number": 2,
+        "action": "Preencher o campo de senha atual com uma senha incorreta",
+        "data": "Errada@999",
+        "response": "O campo foi preenchido e o formulário manteve o estado normal, sem exibir erro imediato, aguardando o preenchimento dos demais campos."
+      },
+      {
+        "number": 3,
+        "action": "Preencher o campo de nova senha",
+        "data": "Nova@12345",
+        "response": "O contador de caracteres do campo foi atualizado para 10/40, indicando que a nova senha atende ao requisito mínimo de tamanho."
+      },
+      {
+        "number": 4,
+        "action": "Preencher o campo de confirmação da nova senha",
+        "data": "Nova@12345",
+        "response": "O contador do campo de confirmação foi atualizado para 10/20, refletindo a senha repetida corretamente e habilitando a submissão do formulário."
+      },
+      {
+        "number": 5,
+        "action": "Enviar o formulário clicando no botão Change",
+        "data": "",
+        "response": "O sistema rejeitou a solicitação: a página exibiu a mensagem 'Current password is not correct.' e os campos de nova senha e confirmação foram limpos (0/40 e 0/20), permanecendo na mesma tela de alteração de senha."
+      },
+      {
+        "number": 6,
+        "action": "Aguardar a estabilização da interface após o envio",
+        "data": "",
+        "response": "Nenhuma mudança adicional ocorreu; a mensagem de erro e o estado dos campos permaneceram inalterados, confirmando que a troca de senha não foi concluída."
+      }
+    ]
+  }
+}

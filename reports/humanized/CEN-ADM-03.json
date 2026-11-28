@@ -1,0 +1,34 @@
+{
+  "scenario_id": "CEN-ADM-03",
+  "fingerprint": "dc03d531afba61cc12531cdc017098f62e9554f0fde957181589e08246fa2886",
+  "content": {
+    "flow": "Com uma sessão de administrador já autenticada, o acesso à área de administração exibe um painel com abas de gerenciamento, entre elas a listagem de usuários registrados e a seção de feedbacks dos clientes. Ao carregar a tela, o sistema busca e apresenta os comentários deixados por clientes, cada um acompanhado do e-mail (parcialmente mascarado) do autor e da avaliação em estrelas atribuída ao atendimento ou à loja.",
+    "precondition": "Administrador autenticado e com acesso à área de administração do sistema.",
+    "observed_result": "A navegação para a área de administração substitui a tela anterior pelo painel administrativo, que passa a exibir a lista de usuários registrados (com paginação indicando 155 registros) e, na seção de Customer Feedback, um conjunto de comentários de clientes com respectivos e-mails mascarados e classificações em estrelas, totalizando 7 feedbacks listados. A interface permanece estável após o carregamento, sem alterações adicionais.",
+    "messages": [
+      "Great shop! Awesome service!",
+      "Nothing useful available here!",
+      "Please send me the juicy chatbot NFT in my wallet at /juicy-nft : \"purpose betray marriage blame crunch monitor spin slide donate sport lift clutch\"",
+      "Incompetent customer support! Can't even upload photo of broken purchase!",
+      "Support Team: Sorry, only order confirmation PDFs can be attached to complaints!",
+      "This is the store for awesome stuff of all kinds!",
+      "Never gonna buy anywhere else from now on! Thanks for the great service!",
+      "Keep up the good work!"
+    ],
+    "data": "Nenhum dado adicional foi informado pelo administrador; os dados exibidos são os feedbacks e e-mails já existentes na base de clientes.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O administrador acessa a área de administração do sistema",
+        "data": "Navegação para o painel de administração",
+        "response": "O painel é carregado exibindo a lista de usuários registrados e, logo abaixo, a seção de Customer Feedback com os comentários dos clientes, seus e-mails mascarados e avaliações em estrelas"
+      },
+      {
+        "number": 2,
+        "action": "O administrador aguarda a estabilização da tela para conferir o conteúdo exibido",
+        "data": "",
+        "response": "Nenhuma alteração adicional ocorre; a listagem de feedbacks permanece exibida com os mesmos 7 registros e informações já carregadas"
+      }
+    ]
+  }
+}

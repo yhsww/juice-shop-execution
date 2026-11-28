@@ -1,0 +1,28 @@
+{
+  "scenario_id": "CEN-CHK-17",
+  "fingerprint": "f9e7dadbf5f0d35c9be8686a483337e83cdbe010fdac4b8ac495bb5235ff0d98",
+  "content": {
+    "flow": "O cliente, já autenticado e com uma compra finalizada, acessa a área de histórico de pedidos para consultar as compras realizadas. Ao abrir essa seção, a interface carrega os dados do pedido mais recente, exibindo suas informações de forma organizada em vez de apresentar a tela vazia de 'nenhum pedido encontrado' que normalmente aparece antes de qualquer compra.",
+    "precondition": "Cliente autenticado no sistema e com um pedido já concluído anteriormente, condição necessária para que o histórico de pedidos tenha conteúdo a ser exibido.",
+    "observed_result": "A tela de Histórico de Pedidos passou a exibir o pedido realizado, identificado pelo código #f6d0-4eedaffec3ff0a74, com status 'In Transit', valor total de 1.99¤, bônus de 0 pontos e o item Apple Juice (1000ml) listado com preço unitário, quantidade 1 e preço total correspondente. Antes do carregamento completo, a tela chegou a mostrar momentaneamente a mensagem de que nenhum pedido havia sido realizado, sendo substituída pelos dados reais do pedido assim que a página terminou de carregar.",
+    "messages": [
+      "No results found / You have not placed any orders yet.",
+      "Placed Apple Juice (1000ml) into basket."
+    ],
+    "data": "Pedido #f6d0-4eedaffec3ff0a74; produto Apple Juice (1000ml); quantidade 1; preço unitário e total de 1.99¤.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O cliente navega até a seção de Histórico de Pedidos para consultar as compras já realizadas.",
+        "data": "Acesso à página de Order History",
+        "response": "A interface primeiro exibiu brevemente a indicação de que nenhum pedido havia sido feito, mas em seguida carregou e apresentou o pedido #f6d0-4eedaffec3ff0a74 com status 'In Transit', valor total de 1.99¤ e o item Apple Juice (1000ml) detalhado na lista de produtos do pedido."
+      },
+      {
+        "number": 2,
+        "action": "O cliente aguarda a estabilização da tela após o carregamento inicial do histórico.",
+        "data": "",
+        "response": "A tela permaneceu estável, mantendo visíveis os dados completos do pedido #f6d0-4eedaffec3ff0a74, sem novas alterações no conteúdo exibido."
+      }
+    ]
+  }
+}

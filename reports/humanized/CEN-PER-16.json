@@ -1,0 +1,47 @@
+{
+  "scenario_id": "CEN-PER-16",
+  "fingerprint": "eb9cb57c6eb5da986d3248daec029862661079952d0cb76acabb8c3d9bdc272b",
+  "content": {
+    "flow": "O cliente acessa a área de reclamação da loja para relatar um problema com um pedido. Após abrir o formulário de contato, ele preenche o campo de mensagem com o relato do ocorrido e envia a solicitação. O sistema processa o envio e devolve uma confirmação ao usuário, encerrando o fluxo de registro da reclamação.",
+    "precondition": "O cliente já está autenticado na loja e navega até a tela de reclamação (Complaint), que exibe um formulário com campo de mensagem, campo de nota fiscal e botão de envio, inicialmente vazio.",
+    "observed_result": "Após o preenchimento e envio da mensagem, o formulário deixou de exibir o contador de caracteres zerado e passou a apresentar uma confirmação de recebimento, informando que o suporte entrará em contato e exibindo um número de referência da reclamação (#3). O campo de mensagem, por sua vez, passou a exibir um aviso solicitando texto, indicando que o conteúdo do formulário foi limpo após o envio bem-sucedido.",
+    "messages": [
+      "Customer support will get in touch with you soon!",
+      "Your complaint reference is #3",
+      "Please provide a text."
+    ],
+    "data": "Mensagem de reclamação: 'Pedido chegou incompleto - teste'",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O cliente acessa a página de reclamação da loja.",
+        "data": "",
+        "response": "A tela de Complaint é carregada, exibindo o formulário com os campos 'Customer Message' e 'Invoice', ambos vazios, e os botões de envio."
+      },
+      {
+        "number": 2,
+        "action": "O sistema aguarda a estabilização da interface antes da próxima interação.",
+        "data": "",
+        "response": "Nenhuma alteração visual é registrada; o formulário permanece no mesmo estado, pronto para preenchimento."
+      },
+      {
+        "number": 3,
+        "action": "O cliente digita o relato do problema no campo de mensagem do formulário.",
+        "data": "Pedido chegou incompleto - teste",
+        "response": "O contador de caracteres do campo passa de 0 para 32, confirmando que o texto foi registrado no campo de mensagem."
+      },
+      {
+        "number": 4,
+        "action": "O cliente aciona o botão de envio da reclamação.",
+        "data": "",
+        "response": "A interface substitui o formulário em branco por uma mensagem de confirmação, informando que o suporte entrará em contato e apresentando o número de referência da reclamação (#3); o campo de mensagem passa a exibir o aviso 'Please provide a text.', indicando que foi limpo após o envio."
+      },
+      {
+        "number": 5,
+        "action": "O sistema aguarda a estabilização final da tela após o envio.",
+        "data": "",
+        "response": "A tela permanece exibindo a confirmação do envio, sem novas alterações visuais."
+      }
+    ]
+  }
+}

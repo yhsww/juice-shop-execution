@@ -1,0 +1,47 @@
+{
+  "scenario_id": "CEN-CHK-14",
+  "fingerprint": "e412dca1736439cb02bfb955b89d9765773201499b7d3b92a46cebdfb03dbe4f",
+  "content": {
+    "flow": "Na etapa de pagamento do checkout, o cliente expandiu a seção de opções alternativas de pagamento para localizar os links de lojas de merchandise (como Spreadshirt, StickerYou e Leanpub) e selecionou uma das lojas externas listadas, saindo da aplicação Juice Shop em direção ao site parceiro correspondente.",
+    "precondition": "Cliente autenticado, com a etapa de pagamento do pedido acessível e a seção 'Other payment options' disponível para expansão na tela de opções de pagamento.",
+    "observed_result": "Ao expandir a seção 'Other payment options', a interface passou a exibir a lista completa de alternativas, incluindo Donations, Credit Card Merchandise e os links de lojas externas (Spreadshirt US, Spreadshirt DE, StickerYou, Leanpub, OpenSea). Ao selecionar o link da Spreadshirt (US), o navegador saiu do domínio da aplicação e foi redirecionado para o site externo da loja parceira, que exibiu uma mensagem informando indisponibilidade do serviço para a região de acesso.",
+    "messages": [
+      "Service unavailable in your region",
+      "We do not serve your country for e-commerce purposes.",
+      "If you are a partner operating from this country, please connect via a VPN in the EU or US."
+    ],
+    "data": "Nenhum pagamento real foi processado; a interação ocorreu apenas sobre os links de opções de merchandise disponíveis na tela de pagamento.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O cliente acessou a tela de opções de pagamento do pedido.",
+        "data": "",
+        "response": "A página carregou exibindo as opções disponíveis: adicionar cartão, pagar com carteira (saldo zerado) e a seção recolhida 'Other payment options'."
+      },
+      {
+        "number": 2,
+        "action": "O cliente clicou em 'Other payment options' para expandir a lista de alternativas.",
+        "data": "",
+        "response": "A seção se expandiu, revelando os itens Donations, Credit Card Merchandise e os links das lojas externas Spreadshirt (US), Spreadshirt (DE), StickerYou, Leanpub e OpenSea."
+      },
+      {
+        "number": 3,
+        "action": "O cliente aguardou a interface estabilizar após a expansão da seção.",
+        "data": "",
+        "response": "Nenhuma mudança adicional foi detectada; a lista de opções permaneceu visível e estável na tela."
+      },
+      {
+        "number": 4,
+        "action": "O cliente selecionou o link 'Spreadshirt (US)' dentre as opções de merchandise exibidas.",
+        "data": "Spreadshirt (US)",
+        "response": "O navegador saiu da aplicação Juice Shop e foi direcionado ao site externo da loja Spreadshirt, que exibiu uma mensagem de serviço indisponível para a região de acesso."
+      },
+      {
+        "number": 5,
+        "action": "O cliente aguardou a atualização final da página de destino.",
+        "data": "",
+        "response": "A página do site externo permaneceu exibindo a mensagem de indisponibilidade regional, sem novas alterações visuais."
+      }
+    ]
+  }
+}

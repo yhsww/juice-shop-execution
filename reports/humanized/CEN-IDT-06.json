@@ -1,0 +1,27 @@
+{
+  "scenario_id": "CEN-IDT-06",
+  "fingerprint": "7d6ec6486c9ec30c8c3c8b7a22dbd0da5af90cdd81c540061e7c9eeec2098f08",
+  "content": {
+    "flow": "O cenário tinha como objetivo verificar a navegação direta para a área de perfil do cliente após autenticação. Ao acessar a rota correspondente ao perfil, a aplicação não exibiu os dados da conta: em vez disso, retornou uma página de erro do servidor, indicando que a solicitação foi tratada como atividade não permitida. A interface permaneceu nesse estado de erro durante a espera subsequente, sem evoluir para a tela de perfil.",
+    "precondition": "Era necessário haver uma conta de teste disponível para autenticação antes da tentativa de acesso à área de perfil.",
+    "observed_result": "Em vez de carregar a página de perfil do cliente, a aplicação respondeu com uma tela de erro 500 do servidor, informando o bloqueio de uma atividade considerada ilegal na rota de perfil do usuário. Essa tela de erro permaneceu inalterada mesmo após aguardar atualização da interface, confirmando que o acesso à funcionalidade não foi concluído com sucesso do ponto de vista funcional.",
+    "messages": [
+      "OWASP Juice Shop (Express ^4.22.1) 500 Error: Blocked illegal activity by ::ffff:172.18.0.1 at /juice-shop/build/routes/userProfile.js:69:18"
+    ],
+    "data": "Rota de perfil (/profile) utilizada como destino da navegação.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário navegou diretamente para a área de perfil da conta.",
+        "data": "/profile",
+        "response": "A aplicação não exibiu o perfil esperado; em vez disso, apresentou uma página de erro do servidor (código 500), indicando bloqueio da requisição por atividade considerada ilegal."
+      },
+      {
+        "number": 2,
+        "action": "O usuário aguardou para verificar se a interface atualizaria após o carregamento inicial.",
+        "data": "",
+        "response": "Nenhuma mudança ocorreu: a mesma tela de erro do servidor permaneceu visível, sem carregamento dos dados de perfil."
+      }
+    ]
+  }
+}

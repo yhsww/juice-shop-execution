@@ -1,0 +1,136 @@
+{
+  "scenario_id": "CEN-CAR-13",
+  "fingerprint": "58bcff7f45a01972f9e13e017a0a3419124196ddde35d1d738abb38c3f59f765",
+  "content": {
+    "flow": "Um visitante sem sessão ativa adiciona o produto Apple Juice (1000ml) ao carrinho e consulta o carrinho, visualizando-o identificado como 'Your Basket (anonymous)'. Em seguida, o visitante realiza um cadastro de conta nova, efetua login com essas credenciais e reabre o carrinho, verificando se o item adicionado antes da autenticação permanece associado à sessão agora identificada pelo e-mail da conta logada.",
+    "precondition": "Nenhuma sessão de usuário ativa no navegador; o carrinho inicia vazio (contador em 0) antes de qualquer adição de item.",
+    "observed_result": "O item Apple Juice (1000ml), quantidade 1, ao preço de 1.99¤, permaneceu no carrinho antes e depois do login: no estado anônimo o carrinho era identificado como 'Your Basket (anonymous)' e, após autenticação com a conta recém-criada, o mesmo carrinho passou a ser identificado como 'Your Basket (cen-cen-car-13-341dbf1612@example.com)', mantendo o mesmo produto, quantidade e preço total de 1.99¤.",
+    "messages": [
+      "Placed Apple Juice (1000ml) into basket.",
+      "Registration completed successfully. You can now log in."
+    ],
+    "data": "Produto: Apple Juice (1000ml), quantidade 1, preço 1.99¤; conta criada e usada para login: cen-cen-car-13-341dbf1612@example.com.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário acessa a página inicial da loja, exibindo a listagem de produtos com o carrinho vazio (contador zerado).",
+        "data": "",
+        "response": "A página carregou com a lista completa de produtos disponíveis e o indicador do carrinho mostrando 0 itens."
+      },
+      {
+        "number": 2,
+        "action": "O usuário clica no botão de adicionar ao carrinho do produto Apple Juice (1000ml).",
+        "data": "Apple Juice (1000ml)",
+        "response": "O indicador do carrinho passou de 0 para 1 item e uma mensagem de confirmação informou que o produto foi colocado no carrinho."
+      },
+      {
+        "number": 3,
+        "action": "O usuário aguarda a estabilização da interface após a adição do produto.",
+        "data": "",
+        "response": "Nenhuma alteração adicional foi percebida; o estado do carrinho com 1 item permaneceu exibido."
+      },
+      {
+        "number": 4,
+        "action": "O usuário abre a página do carrinho para conferir o item adicionado.",
+        "data": "",
+        "response": "O carrinho foi exibido como 'Your Basket (anonymous)', contendo Apple Juice (1000ml), quantidade 1, com preço total de 1.99¤."
+      },
+      {
+        "number": 5,
+        "action": "O usuário aguarda a estabilização da tela do carrinho.",
+        "data": "",
+        "response": "Nenhuma mudança adicional foi observada; os dados do carrinho anônimo permaneceram os mesmos."
+      },
+      {
+        "number": 6,
+        "action": "O usuário acessa a tela de cadastro de nova conta.",
+        "data": "",
+        "response": "O formulário de registro foi exibido com os campos de e-mail, senha, confirmação de senha e pergunta de segurança."
+      },
+      {
+        "number": 7,
+        "action": "O usuário preenche o campo de e-mail do formulário de cadastro.",
+        "data": "cen-cen-car-13-341dbf1612@example.com",
+        "response": "O campo de e-mail foi preenchido sem alterações visuais adicionais no restante do formulário."
+      },
+      {
+        "number": 8,
+        "action": "O usuário preenche o campo de senha do cadastro.",
+        "data": "Teste@12345",
+        "response": "O contador de caracteres da senha foi atualizado para refletir o texto digitado."
+      },
+      {
+        "number": 9,
+        "action": "O usuário preenche o campo de confirmação de senha.",
+        "data": "Teste@12345",
+        "response": "O contador de caracteres do campo de repetição de senha foi atualizado de acordo com o valor informado."
+      },
+      {
+        "number": 10,
+        "action": "O usuário seleciona uma pergunta de segurança na lista de opções do cadastro.",
+        "data": "Your favorite book?",
+        "response": "A pergunta selecionada passou a ser exibida como escolhida no formulário, habilitando o campo de resposta."
+      },
+      {
+        "number": 11,
+        "action": "O usuário preenche o campo de resposta da pergunta de segurança.",
+        "data": "resposta-teste",
+        "response": "O campo de resposta foi preenchido sem outras mudanças visuais relevantes no formulário."
+      },
+      {
+        "number": 12,
+        "action": "O usuário confirma o cadastro clicando no botão de registro.",
+        "data": "",
+        "response": "A aplicação redirecionou para a tela de login e exibiu a mensagem confirmando que o cadastro foi concluído com sucesso."
+      },
+      {
+        "number": 13,
+        "action": "O usuário aguarda a estabilização da tela de login após o cadastro.",
+        "data": "",
+        "response": "A mensagem de confirmação do cadastro continuou visível, sem outras alterações na tela."
+      },
+      {
+        "number": 14,
+        "action": "O usuário acessa novamente a tela de login para realizar a autenticação.",
+        "data": "",
+        "response": "O formulário de login foi exibido com os campos de e-mail e senha disponíveis para preenchimento."
+      },
+      {
+        "number": 15,
+        "action": "O usuário preenche o campo de e-mail na tela de login com a conta recém-criada.",
+        "data": "cen-cen-car-13-341dbf1612@example.com",
+        "response": "O campo de e-mail foi preenchido sem mudanças adicionais perceptíveis na tela."
+      },
+      {
+        "number": 16,
+        "action": "O usuário preenche o campo de senha na tela de login.",
+        "data": "Teste@12345",
+        "response": "O campo de senha foi preenchido, habilitando o botão de login para submissão."
+      },
+      {
+        "number": 17,
+        "action": "O usuário confirma a autenticação clicando no botão de login.",
+        "data": "",
+        "response": "A aplicação redirecionou para a listagem de produtos, mantendo o indicador do carrinho com 1 item, agora associado à conta autenticada."
+      },
+      {
+        "number": 18,
+        "action": "O usuário aguarda a estabilização da tela após o login.",
+        "data": "",
+        "response": "Nenhuma mudança adicional foi percebida além da permanência do estado logado com o carrinho ainda contendo 1 item."
+      },
+      {
+        "number": 19,
+        "action": "O usuário acessa novamente a página do carrinho já autenticado.",
+        "data": "",
+        "response": "O carrinho passou a ser exibido como 'Your Basket (cen-cen-car-13-341dbf1612@example.com)', mantendo o Apple Juice (1000ml), quantidade 1 e total de 1.99¤."
+      },
+      {
+        "number": 20,
+        "action": "O usuário aguarda a estabilização final da tela do carrinho autenticado.",
+        "data": "",
+        "response": "Nenhuma mudança adicional foi detectada; os dados do carrinho associado à conta permaneceram constantes."
+      }
+    ]
+  }
+}

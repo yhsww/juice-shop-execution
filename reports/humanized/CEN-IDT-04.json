@@ -1,0 +1,45 @@
+{
+  "scenario_id": "CEN-IDT-04",
+  "fingerprint": "261efbccf1450f5818f1d5389e1073f16c749ca7d019808833001aba93e927b5",
+  "content": {
+    "flow": "O teste reproduz a tentativa de acesso de um cliente que possui um e-mail válido, mas digita uma senha incorreta no formulário de login. Após preencher os dois campos e confirmar a autenticação, o sistema processa a requisição e nega o acesso, mantendo o usuário na tela de login.",
+    "precondition": "Era necessário haver uma conta de teste cadastrada para que a tentativa de autenticação fizesse sentido, com o usuário partindo da página inicial da loja antes de acessar a tela de login.",
+    "observed_result": "A autenticação foi rejeitada: a requisição de login retornou falha (401) e a interface permaneceu na tela de login, agora exibindo a mensagem de erro 'Invalid email or password.' acima dos campos de e-mail e senha. Nenhuma sessão foi iniciada e o usuário não avançou para a área autenticada.",
+    "messages": [
+      "Invalid email or password."
+    ],
+    "data": "E-mail de teste: cen-cen-idt-04-b4702e66ef@example.com; Senha incorreta utilizada: SenhaErrada@123.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Usuário acessou a tela de login a partir da página inicial da loja.",
+        "data": "Rota de login",
+        "response": "A página carregou o formulário de autenticação, exibindo os campos de e-mail e senha, além das opções 'Forgot your password?' e 'Log in with Google'."
+      },
+      {
+        "number": 2,
+        "action": "Usuário preencheu o campo de e-mail com um endereço válido de teste.",
+        "data": "cen-cen-idt-04-b4702e66ef@example.com",
+        "response": "O campo de e-mail foi preenchido e permaneceu visível no formulário, sem alterações adicionais na estrutura da página."
+      },
+      {
+        "number": 3,
+        "action": "Usuário preencheu o campo de senha com uma senha incorreta.",
+        "data": "SenhaErrada@123",
+        "response": "O valor foi inserido no campo de senha sem gerar mudanças visuais na tela, mantendo o formulário pronto para envio."
+      },
+      {
+        "number": 4,
+        "action": "Usuário clicou no botão 'Log in' para confirmar a tentativa de autenticação.",
+        "data": "Ação de clique no botão de login",
+        "response": "O sistema processou a requisição de autenticação e retornou erro, exibindo a mensagem 'Invalid email or password.' no topo do formulário, indicando que as credenciais informadas não foram aceitas."
+      },
+      {
+        "number": 5,
+        "action": "Sistema aguardou a estabilização da interface após a resposta de erro.",
+        "data": "Nenhum dado adicional informado",
+        "response": "A tela permaneceu estável exibindo a mensagem de erro e os campos de login, confirmando que o acesso não foi concedido."
+      }
+    ]
+  }
+}

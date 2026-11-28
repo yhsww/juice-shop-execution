@@ -1,0 +1,28 @@
+{
+  "scenario_id": "CEN-CHK-24",
+  "fingerprint": "ba8f5343e61b72236a3ce85b93f5a0c5ebae17871a7e53601c8ac08499c58a3a",
+  "content": {
+    "flow": "Com o endereço de entrega já definido, o cliente acessa diretamente a etapa de escolha do método de entrega do checkout. A tela exibe o endereço cadastrado e apresenta as opções de velocidade de envio disponíveis, sem que nenhuma delas esteja pré-selecionada, permitindo observar como a interface se comporta quando o usuário ainda não escolheu uma modalidade de entrega.",
+    "precondition": "O cliente já possui um endereço de entrega cadastrado e selecionado, estando pronto para prosseguir para a etapa de definição do método de entrega.",
+    "observed_result": "A página de método de entrega carrega corretamente exibindo o endereço do cliente (Cliente Teste, Rua Teste, 100, Fortaleza, CE, Brasil, com telefone informado) e lista as três opções de entrega disponíveis com seus respectivos preços e prazos: One Day Delivery (0,99, 1 dia), Fast Delivery (0,50, 3 dias) e Standard Delivery (0,00, 5 dias). Nenhuma opção aparece previamente marcada, e os botões de navegação 'Back' e 'Continue' permanecem visíveis, mas a tela permanece estável sem seleção automática de método.",
+    "messages": [
+      "Delivery Address Cliente Teste Rua Teste, 100, Fortaleza, CE, 60000000 Brazil Phone Number 8599999999",
+      "Choose a delivery speed Price Expected Delivery One Day Delivery 0.99¤ 1 Days Fast Delivery 0.50¤ 3 Days Standard Delivery 0.00¤ 5 Days"
+    ],
+    "data": "Endereço: Cliente Teste, Rua Teste, 100, Fortaleza, CE, 60000-000, Brasil, telefone 8599999999. Opções de entrega exibidas: One Day Delivery (0,99 / 1 dia), Fast Delivery (0,50 / 3 dias), Standard Delivery (0,00 / 5 dias).",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Acessar a tela de escolha do método de entrega do checkout, já com o endereço previamente selecionado.",
+        "data": "Nenhum dado adicional informado nesta etapa.",
+        "response": "A interface carrega o endereço cadastrado e exibe as três opções de velocidade de entrega com preços e prazos correspondentes, sem nenhuma opção marcada como selecionada."
+      },
+      {
+        "number": 2,
+        "action": "Aguardar a estabilização da tela após o carregamento inicial.",
+        "data": "Nenhum dado adicional.",
+        "response": "A tela permanece inalterada, mantendo o endereço exibido e as opções de entrega listadas, confirmando que nenhum método é selecionado automaticamente pela aplicação."
+      }
+    ]
+  }
+}

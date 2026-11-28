@@ -1,0 +1,45 @@
+{
+  "scenario_id": "CEN-CAT-28",
+  "fingerprint": "0cb238478404cac82634e9fc5b7ce869f50d66fd5f16d6c0783a5b6568cb41d0",
+  "content": {
+    "flow": "O visitante acessa a página inicial da loja, abre o menu lateral de navegação e seleciona a opção 'AI Chat' (identificada no menu com o selo 'IMPROVED'). Essa interação direciona o usuário para uma nova seção da aplicação dedicada ao assistente virtual da loja.",
+    "precondition": "Catálogo de produtos disponível e carregado na página inicial, com o menu lateral acessível para navegação.",
+    "observed_result": "A navegação pelo menu lateral até a opção 'AI Chat' altera a URL da aplicação para a seção de chatbot. A tela passa a exibir uma interface de assistente virtual chamado 'Juicy the Smart Assistant', com a mensagem de boas-vindas 'Delivering excellency one token at a time' e dois controles de interação disponíveis: um para solicitar uma sugestão ('Get a suggestion') e outro para obter ajuda ('Get help'). O conteúdo anterior de listagem de produtos deixa de ser exibido, confirmando a transição para a tela do assistente.",
+    "messages": [
+      "Delivering excellency one token at a time"
+    ],
+    "data": "Nenhum dado de entrada foi utilizado pelo usuário durante o fluxo; a interação se limitou à navegação por menu.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Usuário acessa a página inicial da loja, onde a listagem de produtos é carregada.",
+        "data": "Página inicial (/#/)",
+        "response": "A interface exibe a vitrine de produtos com itens como Apple Juice, Banana Juice e outros, cada um com preço e botão de adicionar ao carrinho."
+      },
+      {
+        "number": 2,
+        "action": "Usuário abre o menu lateral de navegação clicando no ícone correspondente.",
+        "data": "—",
+        "response": "O menu lateral é exibido sobrepondo o conteúdo da página, mostrando opções como Customer Feedback, AI Chat (com selo IMPROVED), About Us, Photo Wall e Score Board."
+      },
+      {
+        "number": 3,
+        "action": "Usuário aguarda a estabilização da interface após a abertura do menu.",
+        "data": "—",
+        "response": "Nenhuma alteração adicional é percebida; o menu lateral permanece aberto com as mesmas opções visíveis."
+      },
+      {
+        "number": 4,
+        "action": "Usuário seleciona a opção 'AI Chat' dentro do menu lateral.",
+        "data": "—",
+        "response": "A aplicação navega para a seção do assistente virtual, exibindo o título 'Juicy the Smart Assistant', a mensagem de boas-vindas e os botões de sugestão e ajuda, substituindo a listagem de produtos."
+      },
+      {
+        "number": 5,
+        "action": "Usuário aguarda a estabilização da interface na nova tela do assistente.",
+        "data": "—",
+        "response": "A tela do assistente permanece estável, mantendo visíveis o título, a mensagem inicial e os dois controles de interação (sugestão e ajuda), sem novas mudanças."
+      }
+    ]
+  }
+}

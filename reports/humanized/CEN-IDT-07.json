@@ -1,0 +1,27 @@
+{
+  "scenario_id": "CEN-IDT-07",
+  "fingerprint": "7ffc474cdd8f8e9c3f062b4e3daa8dffa4bcb913b4567afb0939e56e981a6686",
+  "content": {
+    "flow": "O teste teve como objetivo validar o acesso à área de privacidade e segurança da conta, onde normalmente é possível alterar dados do perfil. A evidência registrada mostra a navegação da tela de busca de produtos para a seção de privacidade e segurança, porém não há registro de preenchimento de campo nem de acionamento de um botão de salvar. Dessa forma, a execução comprova a transição de tela, mas não demonstra de forma explícita a edição e confirmação de um dado específico do perfil.",
+    "precondition": "Usuário autenticado na aplicação, conforme indicado pelas chamadas de login bem-sucedidas registradas antes da navegação para a área de conta.",
+    "observed_result": "A URL foi alterada de uma tela de listagem de produtos para a rota de privacidade e segurança da conta, e o conteúdo exibido deixou de mostrar os produtos para apresentar apenas os elementos fixos do cabeçalho (menu, busca, conta, carrinho) e o aviso de cookies. Não foi capturada nenhuma confirmação visual de que um dado do perfil tenha sido efetivamente alterado ou salvo.",
+    "messages": [
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!"
+    ],
+    "data": "Rota acessada: (seção de privacidade e segurança da conta)",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Usuário acessou a área de privacidade e segurança da conta a partir da tela de produtos.",
+        "data": "",
+        "response": "A tela de listagem de produtos foi substituída pela tela de privacidade e segurança; o conteúdo visível passou a mostrar apenas os elementos padrão do cabeçalho e o aviso de cookies, sem exibir um formulário de edição de perfil capturado na evidência."
+      },
+      {
+        "number": 2,
+        "action": "Usuário aguardou a interface estabilizar após o carregamento da nova tela.",
+        "data": "",
+        "response": "Nenhuma alteração visual adicional foi detectada; a tela permaneceu exibindo apenas o cabeçalho padrão e o aviso de cookies, sem indicação de confirmação de alteração de dados."
+      }
+    ]
+  }
+}

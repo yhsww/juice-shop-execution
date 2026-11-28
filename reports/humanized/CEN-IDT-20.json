@@ -1,0 +1,45 @@
+{
+  "scenario_id": "CEN-IDT-20",
+  "fingerprint": "1c784288b4ef0e6c64af982bad429ff85815b5e484a032386a45077b2d089a86",
+  "content": {
+    "flow": "O teste reproduz a tentativa de acesso de um visitante que tenta autenticar-se utilizando um e-mail que não está cadastrado na loja. Após acessar a tela de login e preencher os campos de e-mail e senha com dados inválidos, o usuário aciona o botão de login. A interface reage rejeitando a tentativa e exibindo um aviso de credenciais inválidas, mantendo o visitante na tela de login sem conceder acesso à conta.",
+    "precondition": "O visitante acessa o sistema sem nenhuma sessão de usuário ativa, ou seja, não está autenticado previamente.",
+    "observed_result": "Após o envio do formulário com um e-mail inexistente, a tela de login passou a exibir a mensagem 'Invalid email or password.' acima dos campos de entrada. O usuário permaneceu na página de login, sem qualquer indicação de conta criada ou sessão iniciada, confirmando que o acesso foi negado.",
+    "messages": [
+      "Invalid email or password."
+    ],
+    "data": "E-mail: nao-existe-cen-cen-idt-20-eb5ce960ed@example.com (não cadastrado); Senha: Teste@12345",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Acessar a página de login da loja",
+        "data": "",
+        "response": "A tela de login foi carregada, exibindo os campos de Email e Password, o botão 'Log in' e a opção de login via Google."
+      },
+      {
+        "number": 2,
+        "action": "Preencher o campo de e-mail com um endereço não cadastrado",
+        "data": "nao-existe-cen-cen-idt-20-eb5ce960ed@example.com",
+        "response": "O valor foi registrado no campo de e-mail, sem qualquer mensagem de erro ou validação exibida neste momento."
+      },
+      {
+        "number": 3,
+        "action": "Preencher o campo de senha com uma senha qualquer",
+        "data": "Teste@12345",
+        "response": "O valor foi registrado no campo de senha, sem alterações visuais adicionais na tela."
+      },
+      {
+        "number": 4,
+        "action": "Acionar o botão 'Log in' para enviar as credenciais informadas",
+        "data": "",
+        "response": "A interface atualizou a tela de login exibindo a mensagem 'Invalid email or password.', indicando que a tentativa de autenticação foi rejeitada."
+      },
+      {
+        "number": 5,
+        "action": "Aguardar a estabilização da interface após a tentativa de login",
+        "data": "",
+        "response": "A mensagem de erro permaneceu visível e a tela de login continuou sendo exibida, sem redirecionamento para a área autenticada."
+      }
+    ]
+  }
+}

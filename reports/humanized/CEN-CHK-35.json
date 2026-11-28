@@ -1,0 +1,57 @@
+{
+  "scenario_id": "CEN-CHK-35",
+  "fingerprint": "4945c8f1fe1137d664e1a85c215422db47d8d5dc1f6f7476ec8707ec6799bce5",
+  "content": {
+    "flow": "Na tela de formas de pagamento da loja, o cliente abriu o formulário de cadastro de um novo cartão e preencheu apenas o nome do titular e o número do cartão, sem selecionar mês e ano de validade. O objetivo era verificar se o sistema permite confirmar o cadastro do cartão mesmo sem essa informação ser definida pelo usuário.",
+    "precondition": "Cliente autenticado na loja, com um método de entrega já selecionado durante o checkout, chegando à etapa de pagamento onde é possível adicionar um novo cartão de crédito ou débito.",
+    "observed_result": "O formulário de novo cartão foi exibido com os campos Nome, Número do Cartão, Mês de Expiração e Ano de Expiração. O nome e o número do cartão (16 dígitos) foram preenchidos corretamente, confirmados pelo contador de caracteres do campo Número do Cartão, que passou de 0/16 para 16/16. Os campos de mês e ano de expiração permaneceram sem seleção. O botão de envio do formulário (Submit) permaneceu desabilitado, impedindo a confirmação do cadastro do cartão sem que a validade fosse informada.",
+    "messages": [
+      "Add a coupon Add a coupon code to receive discounts"
+    ],
+    "data": "Nome do titular: Cliente Teste; Número do cartão: 4000000000000002 (16 dígitos); Mês e ano de validade não selecionados.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Acessar a etapa de pagamento do checkout, onde são exibidas as opções de forma de pagamento disponíveis.",
+        "data": "",
+        "response": "A tela carregou exibindo as opções 'Add new card', pagamento via carteira (saldo 0.00) e campo para cupom de desconto, além dos botões de navegação Back e Continue."
+      },
+      {
+        "number": 2,
+        "action": "Selecionar a opção para adicionar um novo cartão de crédito ou débito.",
+        "data": "",
+        "response": "O formulário de cadastro de cartão foi exibido, contendo os campos Name, Card Number, Expiry Month, Expiry Year e o botão Submit."
+      },
+      {
+        "number": 3,
+        "action": "Aguardar o carregamento completo do formulário antes de preencher os campos.",
+        "data": "",
+        "response": "O formulário permaneceu estável, sem alterações visuais, mantendo todos os campos vazios e disponíveis para preenchimento."
+      },
+      {
+        "number": 4,
+        "action": "Preencher o campo de nome do titular do cartão.",
+        "data": "Cliente Teste",
+        "response": "O campo Name foi preenchido, mas o restante do formulário, incluindo o contador do número do cartão (0/16), permaneceu inalterado."
+      },
+      {
+        "number": 5,
+        "action": "Preencher o campo de número do cartão, sem interagir com os seletores de mês e ano de validade.",
+        "data": "4000000000000002",
+        "response": "O contador do campo Card Number atualizou de 0/16 para 16/16, confirmando que os 16 dígitos foram registrados. Os campos Expiry Month e Expiry Year permaneceram sem seleção."
+      },
+      {
+        "number": 6,
+        "action": "Aguardar a atualização da interface após o preenchimento dos dados do cartão.",
+        "data": "",
+        "response": "O formulário manteve o nome e o número do cartão preenchidos, com os campos de validade ainda vazios, sem alterações adicionais na tela."
+      },
+      {
+        "number": 7,
+        "action": "Verificar o estado do botão de confirmação do formulário com a validade do cartão não preenchida.",
+        "data": "",
+        "response": "O botão Submit permaneceu desabilitado, impedindo o envio do formulário enquanto mês e ano de expiração não fossem selecionados."
+      }
+    ]
+  }
+}

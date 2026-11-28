@@ -1,0 +1,27 @@
+{
+  "scenario_id": "CEN-CAT-08",
+  "fingerprint": "f16ee595e66391511e9e54ace0e1e0e581a7500462b9d7803cbeb3e1a4f06067",
+  "content": {
+    "flow": "O teste avalia o comportamento da área de busca quando o cliente acessa a tela de pesquisa sem informar nenhum termo. O objetivo é confirmar que, mesmo sem um filtro de busca aplicado, a navegação pelo catálogo permanece funcional e os produtos continuam acessíveis ao usuário.",
+    "precondition": "O catálogo de produtos está disponível e acessível para navegação, sem nenhum termo de busca previamente aplicado.",
+    "observed_result": "Ao acessar a tela de pesquisa sem informar termo algum, o sistema não bloqueia a navegação nem exibe uma lista vazia de forma permanente: a listagem de produtos é carregada normalmente, exibindo itens como Apple Juice, Banana Juice, Berry Juice e Carrot Juice com seus respectivos preços, organizados em páginas (1–16 de 46 itens). Houve um momento transitório em que a interface mostrou contagem zerada ('0 of 0'), mas esse estado não se manteve, sendo substituído pela listagem completa do catálogo.",
+    "messages": [
+      "Language has been changed to English Force page reload"
+    ],
+    "data": "Termo de busca vazio.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário acessa a área de pesquisa do catálogo sem digitar nenhum termo no campo de busca.",
+        "data": "Termo vazio",
+        "response": "A tela de pesquisa é carregada e, após uma breve transição, exibe a listagem completa de produtos do catálogo (Apple Juice, Apple Pomace, Banana Juice, Berry Juice, entre outros), com paginação indicando 1–16 de 46 itens."
+      },
+      {
+        "number": 2,
+        "action": "O usuário aguarda a estabilização da interface após o carregamento da página de pesquisa.",
+        "data": "",
+        "response": "A listagem de produtos permanece exibida sem alterações adicionais, confirmando que o catálogo continua navegável mesmo sem um termo de busca informado."
+      }
+    ]
+  }
+}

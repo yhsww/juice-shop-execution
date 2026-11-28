@@ -1,0 +1,28 @@
+{
+  "scenario_id": "CEN-CHK-18",
+  "fingerprint": "15510dc869773a6067032561e341441570c8fcb694e5e827294da2aa3f9ed298",
+  "content": {
+    "flow": "O cliente acessa a área de histórico de pedidos para conferir os detalhes de uma compra já finalizada, verificando se os dados do pedido (identificação, valores e itens) estão corretamente disponíveis para consulta.",
+    "precondition": "Cliente autenticado na loja, com um pedido já concluído a partir do checkout de um item colocado anteriormente no carrinho.",
+    "observed_result": "Ao abrir a página de histórico, o sistema passou a exibir o pedido realizado, mostrando o identificador do pedido, o valor total cobrado, o status de bônus, a situação de envio (em trânsito) e a listagem do produto comprado com seu preço unitário, quantidade e subtotal. Antes da exibição completa, a tela chegou a apresentar momentaneamente a indicação de que nenhum pedido havia sido encontrado, sendo substituída em seguida pelos dados reais do pedido.",
+    "messages": [
+      "Placed Apple Juice (1000ml) into basket.",
+      "No results found You have not placed any orders yet."
+    ],
+    "data": "Pedido com identificador #4be9-fab8c991f8d130e8, contendo o produto Apple Juice (1000ml), quantidade 1, preço unitário 1.99¤ e total do pedido 1.99¤.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O cliente navega até a página de Histórico de Pedidos (Order History) para consultar as compras realizadas.",
+        "data": "Acesso à seção de histórico de pedidos",
+        "response": "A interface primeiro exibiu brevemente a mensagem de que nenhum pedido havia sido registrado, e em seguida carregou e apresentou o pedido existente, com identificador, valor total, bônus, status de envio e o detalhamento do produto Apple Juice (1000ml) com preço, quantidade e total."
+      },
+      {
+        "number": 2,
+        "action": "O cliente aguarda a estabilização da tela após o carregamento inicial do histórico.",
+        "data": "",
+        "response": "A página manteve exibidos os mesmos dados do pedido já carregado (identificador, total de 1.99¤, bônus 0, status em trânsito e o item Apple Juice (1000ml)), sem novas alterações visuais."
+      }
+    ]
+  }
+}

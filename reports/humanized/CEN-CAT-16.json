@@ -1,0 +1,31 @@
+{
+  "scenario_id": "CEN-CAT-16",
+  "fingerprint": "17725bc1f60b00d2bf13fae69e70d5cff831c25ec83636b1b98c02edc40e3979",
+  "content": {
+    "flow": "O cliente, estando na tela de listagem de produtos, navega até a página institucional de Política de Privacidade da loja. A interface substitui o conteúdo de catálogo exibido anteriormente pelo texto completo da política, permitindo ao cliente consultar as informações sobre coleta e uso de dados pessoais sem sair da experiência da própria loja.",
+    "precondition": "O catálogo de produtos estava carregado e acessível, com o cliente navegando normalmente pela loja antes de acessar a página institucional.",
+    "observed_result": "A tela deixou de exibir a listagem de produtos (itens como Apple Juice, Banana Juice, Carrot Juice, entre outros, com preços e botões 'Add to Basket') e passou a apresentar o conteúdo textual da Política de Privacidade, incluindo título, data de vigência (15 de março de 2019) e as seções sobre coleta, uso, transferência e divulgação de dados, até o contato por e-mail ao final da página.",
+    "messages": [
+      "Privacy Policy",
+      "OWASP Juice Shop (\"us\", \"we\", or \"our\") operates the website (the \"Service\").",
+      "This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use our Service and the choices you have associated with that data. Our Privacy Policy for OWASP Juice Shop is created with the help of the Free Privacy Policy website.",
+      "OWASP Juice Shop may disclose your Personal Data in the good faith belief that such action is necessary to:",
+      "By email: donotreply@owasp-juice.shop"
+    ],
+    "data": "Nenhum dado de entrada foi utilizado; a interação consistiu apenas no acesso à página institucional de política de privacidade.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O cliente acionou a navegação para a página de Política de Privacidade, saindo da tela de listagem de produtos.",
+        "data": "Nenhum dado informado",
+        "response": "A interface carregou e exibiu o conteúdo da Política de Privacidade, com título, data de vigência e os parágrafos iniciais sobre coleta e uso de dados, substituindo a grade de produtos anteriormente visível."
+      },
+      {
+        "number": 2,
+        "action": "O cliente permaneceu na página aguardando a estabilização do conteúdo carregado.",
+        "data": "Nenhum dado informado",
+        "response": "A página manteve o conteúdo da Política de Privacidade já exibido, sem alterações visuais adicionais, confirmando que o texto completo permaneceu disponível para leitura."
+      }
+    ]
+  }
+}

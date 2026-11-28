@@ -1,0 +1,109 @@
+{
+  "scenario_id": "CEN-CHK-28",
+  "fingerprint": "d00f84853af096301f36c9b897e29762ecbe3da66ebd14aa65c550a456a3e7df",
+  "content": {
+    "flow": "A partir do carrinho contendo o produto Apple Juice, o cliente avançou por todas as etapas do checkout — seleção de endereço de entrega, escolha da modalidade de envio e seleção do cartão cadastrado — até confirmar e finalizar a compra. Cada etapa liberou o acesso à seguinte somente após a confirmação dos dados, culminando na geração de um pedido com página de confirmação.",
+    "precondition": "Cliente autenticado no sistema, com um endereço (Rua Teste, 100, Fortaleza/CE) e um cartão terminado em 0002 já cadastrados, e com o produto Apple Juice (1000ml) presente no carrinho com preço unitário de 1.99¤.",
+    "observed_result": "O pedido foi concluído com sucesso: a interface exibiu a mensagem de agradecimento pela compra, confirmando que o pedido foi registrado e está em processamento, com previsão de entrega em 5 dias pela modalidade Standard Delivery. O resumo final do pedido mostrou o produto Apple Juice (1000ml), quantidade 1, valor total de 1.99¤ (sem custo de entrega ou desconto), endereço de entrega confirmado e o indicador de itens no carrinho passou de 1 para 0, evidenciando que a compra foi efetivada.",
+    "messages": [
+      "Thank you for your purchase!",
+      "Your order has been placed and is being processed.",
+      "You can check for status updates on our Track Orders page.",
+      "Your order will be delivered in 5 days.",
+      "You have gained 0 Bonus Points from this order!"
+    ],
+    "data": "Produto: Apple Juice (1000ml), quantidade 1, valor unitário 1.99¤; endereço: Rua Teste, 100, Fortaleza/CE; modalidade de entrega: Standard Delivery (0.00¤, 5 dias); forma de pagamento: cartão terminado em 0002; total do pedido: 1.99¤.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário acessou a tela do carrinho de compras, onde o produto previamente adicionado estava disponível para revisão.",
+        "data": "Apple Juice (1000ml), quantidade 1",
+        "response": "A interface exibiu o item no carrinho com preço unitário de 1.99¤ e valor total de 1.99¤, além do botão para prosseguir ao checkout."
+      },
+      {
+        "number": 2,
+        "action": "O usuário acionou o botão de finalização de compra a partir do carrinho.",
+        "data": "",
+        "response": "A tela avançou para a seleção de endereço de entrega, exibindo o endereço já cadastrado do cliente."
+      },
+      {
+        "number": 3,
+        "action": "O usuário aguardou o carregamento da tela de seleção de endereço.",
+        "data": "",
+        "response": "A tela de seleção de endereço permaneceu estável, sem alterações visuais adicionais."
+      },
+      {
+        "number": 4,
+        "action": "O usuário selecionou o endereço de entrega cadastrado.",
+        "data": "Rua Teste, 100, Fortaleza, CE, 60000000, Brasil",
+        "response": "O endereço permaneceu destacado como selecionado, mantendo a opção de continuar disponível."
+      },
+      {
+        "number": 5,
+        "action": "O usuário confirmou a escolha do endereço e avançou para a etapa seguinte.",
+        "data": "",
+        "response": "A interface avançou para a tela de método de entrega, exibindo o endereço confirmado, o número de telefone associado e as opções de entrega disponíveis com seus respectivos preços e prazos."
+      },
+      {
+        "number": 6,
+        "action": "O usuário aguardou o carregamento da tela de método de entrega.",
+        "data": "",
+        "response": "A tela permaneceu estável, exibindo as opções de entrega disponíveis."
+      },
+      {
+        "number": 7,
+        "action": "O usuário selecionou a modalidade de entrega Standard Delivery entre as opções apresentadas.",
+        "data": "Standard Delivery, 0.00¤, 5 dias",
+        "response": "A opção Standard Delivery permaneceu destacada como selecionada, sem custo adicional de frete."
+      },
+      {
+        "number": 8,
+        "action": "O usuário confirmou a modalidade de entrega e avançou para a etapa de pagamento.",
+        "data": "",
+        "response": "A interface exibiu a tela de opções de pagamento, mostrando o cartão cadastrado terminado em 0002, o nome do titular e a validade, além do valor total a pagar de 1.99¤."
+      },
+      {
+        "number": 9,
+        "action": "O usuário aguardou o carregamento da tela de pagamento.",
+        "data": "",
+        "response": "A tela de pagamento permaneceu estável, exibindo o cartão disponível e o valor a ser pago."
+      },
+      {
+        "number": 10,
+        "action": "O usuário selecionou o cartão de crédito cadastrado como forma de pagamento.",
+        "data": "Cartão terminado em 0002",
+        "response": "O cartão selecionado permaneceu destacado, mantendo disponível a opção de continuar para revisão do pedido."
+      },
+      {
+        "number": 11,
+        "action": "O usuário aguardou a confirmação da seleção do método de pagamento.",
+        "data": "",
+        "response": "A tela permaneceu estável, sem alterações adicionais."
+      },
+      {
+        "number": 12,
+        "action": "O usuário confirmou a forma de pagamento e avançou para a revisão final do pedido.",
+        "data": "",
+        "response": "A interface exibiu a tela de resumo do pedido, consolidando endereço de entrega, método de pagamento (cartão terminado em 0002), o produto Apple Juice com seu valor, e o total da compra de 1.99¤, com opção para finalizar e pagar."
+      },
+      {
+        "number": 13,
+        "action": "O usuário aguardou o carregamento da tela de resumo do pedido.",
+        "data": "",
+        "response": "A tela de resumo permaneceu estável, exibindo todos os dados consolidados do pedido antes da confirmação final."
+      },
+      {
+        "number": 14,
+        "action": "O usuário confirmou a finalização da compra a partir da tela de resumo do pedido.",
+        "data": "",
+        "response": "A interface avançou para a página de conclusão do pedido, exibindo a mensagem de que o pedido foi realizado e está em processamento, com previsão de entrega em 5 dias."
+      },
+      {
+        "number": 15,
+        "action": "O usuário aguardou o carregamento final da página de confirmação.",
+        "data": "",
+        "response": "A página exibiu a mensagem de agradecimento pela compra, o resumo final do pedido com o produto Apple Juice, quantidade 1, valor total de 1.99¤, e o indicador do carrinho passou a mostrar 0 itens, confirmando que a compra foi concluída."
+      }
+    ]
+  }
+}

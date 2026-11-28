@@ -1,0 +1,64 @@
+{
+  "scenario_id": "CEN-IDT-28",
+  "fingerprint": "6c49dfd60eeae763f76ff4430017a9925321cffc5e60ffe0f5eeb44d9e9bf02c",
+  "content": {
+    "flow": "O teste avalia se o formulário de cadastro pode ser submetido pressionando a tecla Enter, sem a necessidade de clicar no botão Register. O visitante preenche todos os campos obrigatórios do cadastro (e-mail, senha, confirmação de senha, pergunta de segurança e resposta) e, ao concluir o preenchimento do último campo, pressiona Enter em vez de acionar o botão de envio. O sistema processa a submissão da mesma forma que processaria um clique no botão, confirmando que o atalho de teclado é uma via funcional equivalente para finalizar o cadastro.",
+    "precondition": "Visitante sem sessão ativa, acessando a página de cadastro de novo usuário.",
+    "observed_result": "Após pressionar Enter no campo de resposta da pergunta de segurança, a aplicação submeteu o formulário e redirecionou o visitante da tela de cadastro para a tela de login. Na nova tela passou a ser exibida a mensagem de confirmação de que o cadastro foi concluído, indicando que a conta foi criada com sucesso mesmo sem o uso do botão Register.",
+    "messages": [
+      "Registration completed successfully.",
+      "You can now log in."
+    ],
+    "data": "E-mail de cadastro gerado para o teste, senha Teste@12345 informada nos campos de senha e confirmação, pergunta de segurança 'Your favorite book?' com resposta 'a'.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Visitante acessa a página de cadastro de novo usuário.",
+        "data": "",
+        "response": "A tela de Cadastro de Usuário é exibida, apresentando os campos de e-mail, senha, confirmação de senha, pergunta de segurança, resposta e o botão Register."
+      },
+      {
+        "number": 2,
+        "action": "Visitante preenche o campo de endereço de e-mail.",
+        "data": "cen-cen-idt-28-2c88e7ebed@example.com",
+        "response": "O valor é aceito no campo sem alterações visuais adicionais na tela."
+      },
+      {
+        "number": 3,
+        "action": "Visitante preenche o campo de senha.",
+        "data": "Teste@12345",
+        "response": "O contador de caracteres do campo de senha passa a exibir 11/20, confirmando que o valor foi registrado."
+      },
+      {
+        "number": 4,
+        "action": "Visitante preenche o campo de confirmação de senha.",
+        "data": "Teste@12345",
+        "response": "O contador de caracteres do campo de confirmação passa a exibir 11/40, indicando que a senha repetida coincide em tamanho com a informada anteriormente."
+      },
+      {
+        "number": 5,
+        "action": "Visitante seleciona uma pergunta de segurança na lista de opções disponíveis.",
+        "data": "Your favorite book?",
+        "response": "A lista de opções é fechada e a pergunta escolhida passa a ser exibida como selecionada no campo Security Question."
+      },
+      {
+        "number": 6,
+        "action": "Visitante preenche o campo de resposta da pergunta de segurança.",
+        "data": "a",
+        "response": "O valor é aceito no campo de resposta, sem alterações visuais adicionais na tela."
+      },
+      {
+        "number": 7,
+        "action": "Visitante pressiona a tecla Enter com o foco no último campo preenchido, em vez de clicar no botão Register.",
+        "data": "",
+        "response": "A aplicação submete o formulário de cadastro e redireciona o visitante para a tela de Login, onde é exibida a mensagem confirmando que o cadastro foi concluído com sucesso."
+      },
+      {
+        "number": 8,
+        "action": "Aguarda a estabilização da interface após o redirecionamento.",
+        "data": "",
+        "response": "A tela de Login permanece exibida com a mensagem de confirmação de cadastro visível, sem novas alterações de estado."
+      }
+    ]
+  }
+}

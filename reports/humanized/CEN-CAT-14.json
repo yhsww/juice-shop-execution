@@ -1,0 +1,39 @@
+{
+  "scenario_id": "CEN-CAT-14",
+  "fingerprint": "7db315e5d7bd63fb4ababcd58c3d0c28e676cfce4fa5ed1144f8b8fd70f9159a",
+  "content": {
+    "flow": "O cenário valida a jornada de um cliente que seleciona um produto no catálogo da loja, adiciona-o ao carrinho e em seguida acessa o carrinho pela navegação principal para conferir o item adicionado.",
+    "precondition": "O catálogo de produtos está disponível e acessível na página inicial da loja, exibindo a listagem completa de itens com preços e botões de adição ao carrinho.",
+    "observed_result": "Após a adição do produto, o indicador do carrinho no menu superior passou de 0 para 1 item. Ao abrir o carrinho, a tela passou a exibir o produto Apple Juice (1000ml) com quantidade 1, preço unitário de 1.99¤ e preço total de 1.99¤, confirmando que o item selecionado no catálogo foi efetivamente incorporado ao carrinho de compras.",
+    "messages": [
+      "Placed Apple Juice (1000ml) into basket."
+    ],
+    "data": "Produto: Apple Juice (1000ml), preço unitário 1.99¤, quantidade 1.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário acessa a página inicial da loja, onde é exibida a listagem de produtos do catálogo.",
+        "data": "Página inicial da loja",
+        "response": "A página carrega normalmente, exibindo a lista de produtos disponíveis, incluindo Apple Juice (1000ml) com preço de 1.99¤ e o indicador do carrinho zerado."
+      },
+      {
+        "number": 2,
+        "action": "O usuário aciona o botão de adicionar ao carrinho referente ao produto Apple Juice (1000ml).",
+        "data": "Produto: Apple Juice (1000ml)",
+        "response": "O sistema confirma a inclusão do item exibindo a mensagem de confirmação 'Placed Apple Juice (1000ml) into basket.' e o contador do carrinho no menu passa a exibir 1 item."
+      },
+      {
+        "number": 3,
+        "action": "O usuário clica no ícone/link do carrinho ('Your Basket') no menu de navegação para visualizar os itens selecionados.",
+        "data": "Navegação para a página do carrinho",
+        "response": "A interface é redirecionada para a tela do carrinho, que passa a exibir o produto Apple Juice (1000ml) com quantidade 1, preço unitário 1.99¤ e preço total de 1.99¤, além da opção de finalizar a compra."
+      },
+      {
+        "number": 4,
+        "action": "O usuário aguarda a estabilização da tela do carrinho após o carregamento.",
+        "data": "",
+        "response": "A tela do carrinho permanece exibindo o mesmo conteúdo carregado anteriormente, confirmando que a informação do produto adicionado se manteve consistente sem alterações adicionais."
+      }
+    ]
+  }
+}

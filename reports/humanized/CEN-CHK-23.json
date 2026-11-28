@@ -1,0 +1,25 @@
+{
+  "scenario_id": "CEN-CHK-23",
+  "fingerprint": "78d87c97bd14203f68d5eaa7721ed6e4b0d3b3583cb47fcf11b69d94f04e67d4",
+  "content": {
+    "flow": "O cenário buscava verificar o comportamento do checkout quando o cliente avança para a etapa de entrega sem ter um endereço explicitamente selecionado. Ao transitar da etapa de método de entrega para a etapa de seleção de endereço, a interface carregou a tela 'Select an address' já exibindo o endereço previamente cadastrado do cliente, disponibilizado como opção pronta para seleção, juntamente com a alternativa de cadastrar um novo endereço e o botão para prosseguir o checkout.",
+    "precondition": "Carrinho contendo um produto e cliente autenticado, chegando à etapa de endereço a partir da etapa de método de entrega, sem endereço previamente marcado como selecionado para o pedido.",
+    "observed_result": "A tela de seleção de endereço foi carregada exibindo o endereço cadastrado do cliente (Rua Teste, 100, Fortaleza, CE, 60000000, Brazil), apresentado como opção disponível para uso no checkout, além do atalho para adicionar um novo endereço. O botão para continuar o checkout permaneceu visível e habilitado. Após aguardar, a tela não apresentou nenhuma alteração adicional, mantendo o mesmo estado.",
+    "messages": [],
+    "data": "Endereço do cliente exibido na tela: Cliente Teste, Rua Teste, 100, Fortaleza, CE, 60000000, Brazil.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O cliente avançou da etapa de método de entrega para a etapa de seleção de endereço do checkout.",
+        "data": "Rota de seleção de endereço",
+        "response": "A interface exibiu a tela 'Select an address' com o endereço cadastrado do cliente listado como opção selecionável, a opção de adicionar novo endereço e o botão Continue disponível."
+      },
+      {
+        "number": 2,
+        "action": "Aguardou-se a estabilização da interface após o carregamento da tela de endereço.",
+        "data": "",
+        "response": "Nenhuma mudança visual adicional ocorreu; a tela permaneceu exibindo o mesmo endereço cadastrado e o botão Continue habilitado."
+      }
+    ]
+  }
+}

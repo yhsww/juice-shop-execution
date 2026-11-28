@@ -1,0 +1,51 @@
+{
+  "scenario_id": "CEN-CAR-07",
+  "fingerprint": "f6003d4f0c7455457e1237ad790e21a1f1a70531c19d39c41927a3f78a377060",
+  "content": {
+    "flow": "O teste verifica se um item adicionado ao carrinho permanece registrado quando o cliente navega para outras áreas da loja antes de retornar ao carrinho. Partindo da listagem de produtos, o item Apple Juice foi incluído na seleção de compra, e em seguida o cliente navegou até a área de busca de produtos antes de acessar a tela do carrinho para conferir se o item ainda estava presente.",
+    "precondition": "O catálogo de produtos estava disponível e acessível, com o carrinho inicialmente vazio (indicador de carrinho exibindo zero itens).",
+    "observed_result": "O indicador de carrinho passou de 0 para 1 item imediatamente após a adição do produto, permanecendo com essa contagem durante a navegação pela área de busca. Ao acessar a tela do carrinho, o item Apple Juice (1000ml) estava listado com quantidade 1, preço unitário de 1.99¤ e valor total de 1.99¤, confirmando que a seleção não foi perdida ao mudar de tela.",
+    "messages": [
+      "Placed Apple Juice (1000ml) into basket."
+    ],
+    "data": "Produto: Apple Juice (1000ml), quantidade: 1, preço unitário: 1.99¤.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O cliente acessou a página inicial com a listagem de produtos.",
+        "data": "",
+        "response": "A página exibiu o catálogo completo de produtos com o indicador de carrinho mostrando 0 itens."
+      },
+      {
+        "number": 2,
+        "action": "O cliente selecionou a opção de adicionar o produto Apple Juice ao carrinho.",
+        "data": "Apple Juice (1000ml)",
+        "response": "O indicador de carrinho foi atualizado de 0 para 1 item, e uma confirmação informou que o produto havia sido colocado no carrinho."
+      },
+      {
+        "number": 3,
+        "action": "O cliente navegou para a área de busca de produtos, afastando-se da tela inicial.",
+        "data": "",
+        "response": "A interface carregou a tela de busca, mantendo o indicador de carrinho com 1 item visível no cabeçalho."
+      },
+      {
+        "number": 4,
+        "action": "O cliente aguardou o carregamento completo da área de busca.",
+        "data": "",
+        "response": "O conteúdo da página de busca foi totalmente exibido, sem alteração na contagem do carrinho."
+      },
+      {
+        "number": 5,
+        "action": "O cliente acessou a tela do carrinho para verificar os itens selecionados.",
+        "data": "",
+        "response": "A tela do carrinho exibiu o produto Apple Juice (1000ml) com quantidade 1, preço unitário de 1.99¤ e preço total de 1.99¤, confirmando a persistência do item."
+      },
+      {
+        "number": 6,
+        "action": "O cliente aguardou a estabilização da tela do carrinho.",
+        "data": "",
+        "response": "A tela permaneceu exibindo o mesmo item e valores, sem mudanças adicionais."
+      }
+    ]
+  }
+}

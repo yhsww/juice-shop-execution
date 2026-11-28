@@ -1,0 +1,37 @@
+{
+  "scenario_id": "CEN-ADM-07",
+  "fingerprint": "6c9ddee2faee708772d4b58cf4327b954f0ae16865583564b8377e3c7254abe6",
+  "content": {
+    "flow": "O administrador acessa o painel de Administração, na aba de Customer Feedback, onde é exibida a lista de avaliações deixadas por clientes. Ao acionar o controle de remoção associado ao primeiro feedback da lista, a interface processa a exclusão e atualiza a listagem, refletindo a retirada do item selecionado do conjunto de feedbacks exibidos.",
+    "precondition": "Administrador autenticado no painel de Administração, com a aba de Customer Feedback carregada e contendo ao menos um feedback registrado.",
+    "observed_result": "O feedback 'Great shop! Awesome service!' (identificado como item de id 2 na lista), que ocupava a primeira posição, deixou de aparecer na listagem. O contador de itens da seção Customer Feedback foi atualizado de '1 – 7 of 7' para '1 – 6 of 6', e a lista passou a exibir, na primeira posição, o feedback 'Nothing useful available here!'.",
+    "messages": [],
+    "data": "Feedback removido: 'Great shop! Awesome service!' (associado a um e-mail parcialmente mascarado terminando em @juice-sh.op, avaliação de 4 estrelas)",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Acessar o painel de Administração, que carrega as abas de Usuários Registrados e Customer Feedback",
+        "data": "Rota de administração",
+        "response": "A página de Administração foi exibida com a lista de usuários registrados e a seção de Customer Feedback contendo 7 itens, incluindo o feedback 'Great shop! Awesome service!' na primeira posição"
+      },
+      {
+        "number": 2,
+        "action": "Aguardar o carregamento completo da listagem de feedbacks",
+        "data": "—",
+        "response": "A lista de feedbacks permaneceu estável, exibindo os mesmos 7 itens já carregados, sem alterações visuais adicionais"
+      },
+      {
+        "number": 3,
+        "action": "Acionar o controle de remoção no primeiro item da lista de Customer Feedback",
+        "data": "Feedback 'Great shop! Awesome service!'",
+        "response": "O feedback foi removido da listagem; o total de itens exibidos caiu de 7 para 6, e o feedback 'Nothing useful available here!' passou a ocupar a primeira posição"
+      },
+      {
+        "number": 4,
+        "action": "Aguardar a estabilização da interface após a remoção",
+        "data": "—",
+        "response": "A lista permaneceu consistente com 6 feedbacks, sem o item removido, confirmando que a exclusão foi mantida"
+      }
+    ]
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "scenario_id": "CEN-IDT-25",
+  "fingerprint": "2e389fa6f9ce563a88e5b52a03372b377247f19d8e501144d4075ce8f6b3542b",
+  "content": {
+    "flow": "O teste cria uma conta nova informando uma pergunta de segurança com resposta conhecida, finaliza o cadastro e, em seguida, acessa a tela de recuperação de senha dessa mesma conta. Ao tentar redefinir a senha, o usuário responde à pergunta de segurança de forma incorreta e informa uma nova senha. O objetivo é verificar se o sistema impede a troca de senha quando a resposta de segurança não corresponde à cadastrada.",
+    "precondition": "Era necessário que uma conta estivesse previamente registrada, com e-mail válido e uma pergunta de segurança definida com resposta conhecida ('resposta-teste'), permitindo que o fluxo de recuperação de senha pudesse ser testado em seguida.",
+    "observed_result": "Após o preenchimento da nova senha e da resposta incorreta para a pergunta de segurança, a tela de 'Forgot Password' permaneceu ativa e exibiu a mensagem 'Wrong answer to security question.' no topo do formulário. Os campos de nova senha foram reiniciados (voltando ao estado vazio, indicado pelos contadores retornando a 0/20), confirmando que a senha não foi alterada e o usuário não avançou para a tela de login.",
+    "messages": [
+      "Registration completed successfully.",
+      "You can now log in.",
+      "Wrong answer to security question."
+    ],
+    "data": "E-mail cadastrado no próprio cenário; senha inicial 'Teste@12345'; pergunta de segurança 'Your favorite book?' com resposta 'resposta-teste'; na recuperação, resposta informada 'errada' e nova senha 'Nova@12345'.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Acessou a tela de cadastro de novo usuário",
+        "data": "",
+        "response": "O formulário de 'User Registration' foi exibido, com os campos de e-mail, senha, repetição de senha e pergunta de segurança disponíveis para preenchimento."
+      },
+      {
+        "number": 2,
+        "action": "Informou o e-mail para a nova conta no campo correspondente",
+        "data": "e-mail gerado para o cenário",
+        "response": "O campo de e-mail foi preenchido sem alterações adicionais na tela."
+      },
+      {
+        "number": 3,
+        "action": "Definiu a senha da nova conta",
+        "data": "Teste@12345",
+        "response": "O contador de caracteres da senha passou a refletir os 11 caracteres digitados, confirmando que o campo aceitou o valor."
+      },
+      {
+        "number": 4,
+        "action": "Repetiu a senha no campo de confirmação",
+        "data": "Teste@12345",
+        "response": "O contador de caracteres do campo de repetição também passou a exibir 11 caracteres, indicando que os valores de senha e confirmação coincidiam."
+      },
+      {
+        "number": 5,
+        "action": "Selecionou a pergunta de segurança a ser usada na conta",
+        "data": "Your favorite book?",
+        "response": "A lista de opções de perguntas foi substituída pela pergunta selecionada, que passou a ser exibida no campo de 'Security Question'."
+      },
+      {
+        "number": 6,
+        "action": "Preencheu a resposta correta para a pergunta de segurança escolhida",
+        "data": "resposta-teste",
+        "response": "O campo de resposta foi preenchido sem alterações visuais adicionais, mantendo os demais campos do formulário já preenchidos."
+      },
+      {
+        "number": 7,
+        "action": "Confirmou o cadastro clicando em 'Register'",
+        "data": "",
+        "response": "A aplicação redirecionou para a tela de login e exibiu a mensagem de confirmação 'Registration completed successfully.' seguida de 'You can now log in.'."
+      },
+      {
+        "number": 8,
+        "action": "Aguardou a estabilização da tela de login após o cadastro",
+        "data": "",
+        "response": "A tela de login permaneceu exibida com a mensagem de sucesso do cadastro ainda visível."
+      },
+      {
+        "number": 9,
+        "action": "Acessou a tela de recuperação de senha ('Forgot Password')",
+        "data": "",
+        "response": "O formulário de recuperação foi exibido, contendo os campos de e-mail, pergunta de segurança, nova senha e confirmação de nova senha."
+      },
+      {
+        "number": 10,
+        "action": "Informou o e-mail da conta cadastrada anteriormente",
+        "data": "e-mail cadastrado no cenário",
+        "response": "O campo de e-mail foi preenchido sem indicação visual de erro ou validação imediata."
+      },
+      {
+        "number": 11,
+        "action": "Aguardou a interface processar o e-mail informado",
+        "data": "",
+        "response": "O formulário de recuperação permaneceu estável, sem alteração visível nos campos."
+      },
+      {
+        "number": 12,
+        "action": "Informou uma resposta incorreta para a pergunta de segurança da conta",
+        "data": "errada",
+        "response": "O campo de resposta foi preenchido, sem exibir mensagem de erro neste momento."
+      },
+      {
+        "number": 13,
+        "action": "Definiu a nova senha desejada",
+        "data": "Nova@12345",
+        "response": "O contador de caracteres do campo de nova senha passou a refletir os 10 caracteres digitados."
+      },
+      {
+        "number": 14,
+        "action": "Repetiu a nova senha no campo de confirmação",
+        "data": "Nova@12345",
+        "response": "O contador de caracteres do campo de confirmação também passou a exibir 10 caracteres, igualando-se ao campo de nova senha."
+      },
+      {
+        "number": 15,
+        "action": "Confirmou a alteração de senha clicando em 'Change'",
+        "data": "",
+        "response": "A interface exibiu a mensagem 'Wrong answer to security question.' no topo do formulário, e os campos de nova senha e confirmação foram reiniciados para o estado vazio."
+      },
+      {
+        "number": 16,
+        "action": "Aguardou a estabilização da tela após a tentativa de troca de senha",
+        "data": "",
+        "response": "A tela de recuperação permaneceu exibida com a mensagem de erro 'Wrong answer to security question.' mantida visível, confirmando que a senha não foi alterada."
+      }
+    ]
+  }
+}

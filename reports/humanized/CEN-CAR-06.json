@@ -1,0 +1,33 @@
+{
+  "scenario_id": "CEN-CAR-06",
+  "fingerprint": "86194ddd60719961ee3ee33a02525285d1a1af79fe47b4a8eeb4c3d13a2faa8a",
+  "content": {
+    "flow": "A partir da tela do carrinho contendo um item, o cliente removeu o produto listado utilizando o controle de exclusão disponível na linha do item, com o objetivo de esvaziar completamente a seleção antes de finalizar a compra.",
+    "precondition": "O carrinho possuía um item cadastrado: Apple Juice (1000ml), quantidade 1, com preço unitário de 1.99¤ e preço total de 1.99¤.",
+    "observed_result": "Após a remoção, o item Apple Juice (1000ml) deixou de aparecer na listagem do carrinho, o contador de itens no ícone do carrinho mudou de 1 para 0, e o valor de 'Total Price' passou de 1.99¤ para 0¤. A área de itens do carrinho ficou vazia, mantendo apenas o resumo com preço total zerado e a indicação de 0 Bonus Points, confirmando que o carrinho foi esvaziado.",
+    "messages": [
+      "Placed Apple Juice (1000ml) into basket."
+    ],
+    "data": "Produto: Apple Juice (1000ml); quantidade: 1; preço unitário: 1.99¤.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário acessou a tela do carrinho de compras, onde o item previamente adicionado estava listado.",
+        "data": "Apple Juice (1000ml), quantidade 1, 1.99¤",
+        "response": "A página exibiu o carrinho com o produto Apple Juice (1000ml), quantidade 1 e preço total de 1.99¤."
+      },
+      {
+        "number": 2,
+        "action": "O usuário acionou o controle de remoção do item listado no carrinho.",
+        "data": "",
+        "response": "O contador de itens no ícone do carrinho mudou de 1 para 0 e o valor total exibido passou a ser 0¤, indicando que o item foi removido da lista."
+      },
+      {
+        "number": 3,
+        "action": "O usuário aguardou a atualização completa da interface após a remoção.",
+        "data": "",
+        "response": "A área de produtos do carrinho ficou vazia, permanecendo visível apenas o resumo com 'Total Price: 0¤' e a mensagem de pontos de bônus zerados, confirmando o estado de carrinho vazio."
+      }
+    ]
+  }
+}

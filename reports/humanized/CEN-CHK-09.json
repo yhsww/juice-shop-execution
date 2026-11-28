@@ -1,0 +1,47 @@
+{
+  "scenario_id": "CEN-CHK-09",
+  "fingerprint": "1b5f24cbabd13dc22cdc333851e6f0374c4eb5591547ac8efb47bd80c1c6d192",
+  "content": {
+    "flow": "O cliente, já na etapa de métodos de pagamento do checkout, seleciona o cartão de teste cadastrado (terminado em 0002) e avança para a confirmação da compra. Ao confirmar a seleção e prosseguir, o sistema valida o método de pagamento escolhido e conduz o cliente para a tela de resumo do pedido, onde ficam consolidados o endereço de entrega, o método de pagamento e os valores do pedido.",
+    "precondition": "Cliente autenticado, com endereço de entrega já definido e um cartão de teste terminado em 0002 previamente cadastrado na conta, disponível na tela de opções de pagamento.",
+    "observed_result": "A seleção do cartão terminado em 0002 foi mantida como método de pagamento ativo e, ao avançar, a aplicação navegou da tela de pagamento para a tela de resumo do pedido. Nessa nova tela passaram a ser exibidos o endereço de entrega do cliente, o método de pagamento confirmado (cartão terminado em 0002, com o nome do titular), e o resumo de valores do pedido (itens, entrega, promoção e total), além do botão para finalizar e pagar o pedido.",
+    "messages": [
+      "Payment Method Card ending in 0002 Card Holder\" Cliente Teste",
+      "Order Summary Items 0.00¤ Delivery 0.00¤ Promotion 0.00¤ Total Price 0.00¤",
+      "You will gain 0 Bonus Points from this order!"
+    ],
+    "data": "Cartão de teste cadastrado terminado em 0002, utilizado como método de pagamento selecionado para o pedido.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O cliente acessa a tela de opções de pagamento, onde o cartão de teste terminado em 0002 já aparece listado como forma de pagamento disponível.",
+        "data": "Tela de opções de pagamento (My Payment Options)",
+        "response": "A interface exibiu a lista de opções de pagamento, incluindo o cartão terminado em 0002 associado ao cliente, além de alternativas como carteira digital e cupom de desconto."
+      },
+      {
+        "number": 2,
+        "action": "O cliente seleciona a linha correspondente ao cartão terminado em 0002 como método de pagamento para o pedido.",
+        "data": "Cartão terminado em 0002",
+        "response": "A linha do cartão permaneceu destacada como selecionada na tela, sem alteração de página, indicando que o método de pagamento foi mantido como escolha ativa."
+      },
+      {
+        "number": 3,
+        "action": "O sistema aguarda a estabilização da interface após a seleção do cartão.",
+        "data": "",
+        "response": "A tela de opções de pagamento permaneceu estável, exibindo o cartão selecionado e o botão de continuar disponível."
+      },
+      {
+        "number": 4,
+        "action": "O cliente aciona o botão para avançar (\"Continue\"), confirmando o método de pagamento e prosseguindo no checkout.",
+        "data": "",
+        "response": "A aplicação navegou da tela de pagamento para a tela de resumo do pedido, passando a exibir o endereço de entrega, o método de pagamento confirmado (cartão terminado em 0002) e os valores consolidados do pedido (itens, entrega, promoção e total), junto com o botão para finalizar a compra."
+      },
+      {
+        "number": 5,
+        "action": "O sistema aguarda o carregamento completo da tela de resumo do pedido.",
+        "data": "",
+        "response": "A tela de resumo permaneceu estável, exibindo de forma consistente o endereço de entrega, o método de pagamento selecionado e o resumo de valores do pedido."
+      }
+    ]
+  }
+}

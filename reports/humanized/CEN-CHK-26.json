@@ -1,0 +1,29 @@
+{
+  "scenario_id": "CEN-CHK-26",
+  "fingerprint": "c31f25217a39410c90f84746f9c4334b5b8b9f2b140ee84fbcaa8bab3750365d",
+  "content": {
+    "flow": "O teste acessa diretamente a página de resumo do pedido para verificar se o valor total exibido reflete corretamente a composição entre o item do carrinho, a entrega e eventuais promoções. A verificação consiste em observar se o total apresentado no resumo é consistente com o preço do produto adicionado anteriormente ao carrinho.",
+    "precondition": "Era necessário que o cliente já estivesse autenticado, com endereço de entrega e forma de pagamento cadastrados, e com um item (Apple Juice 1000ml) previamente inserido no carrinho, de modo que a página de resumo pudesse calcular o total do pedido.",
+    "observed_result": "A página de resumo exibiu o endereço de entrega, o método de pagamento e o item do carrinho (Apple Juice 1000ml, quantidade 1, valor unitário 1,99¤). O bloco de totais apresentou Items 1,99¤, Delivery 0,00¤, Promotion 0,00¤ e Total Price 1,99¤, demonstrando que o valor total do resumo corresponde exatamente ao valor do item presente no carrinho, sem acréscimos de frete ou descontos aplicados.",
+    "messages": [
+      "Order Summary Items 1.99¤ Delivery 0.00¤ Promotion 0.00¤ Total Price 1.99¤",
+      "Your Basket (cen-cen-chk-26-17b00a10d7@example.com) Apple Juice (1000ml) 1 1.99¤",
+      "You will gain 0 Bonus Points from this order!"
+    ],
+    "data": "Produto: Apple Juice (1000ml); quantidade: 1; valor unitário: 1,99¤; total do resumo: 1,99¤.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário acessou a página de resumo do pedido, onde são consolidados os dados de entrega, pagamento e o total da compra.",
+        "data": "Apple Juice (1000ml), quantidade 1",
+        "response": "A interface carregou o endereço de entrega, o cartão de pagamento cadastrado e o item do carrinho, exibindo o bloco de resumo com Items 1,99¤, Delivery 0,00¤, Promotion 0,00¤ e Total Price 1,99¤, igual ao valor do produto no carrinho."
+      },
+      {
+        "number": 2,
+        "action": "O usuário aguardou a estabilização da tela para confirmar que os valores exibidos permaneciam consistentes após o carregamento completo da página.",
+        "data": "",
+        "response": "Os dados de endereço, pagamento, item e total permaneceram inalterados, confirmando que o valor de 1,99¤ exibido no resumo correspondia ao total do carrinho sem variações."
+      }
+    ]
+  }
+}

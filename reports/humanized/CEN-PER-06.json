@@ -1,0 +1,29 @@
+{
+  "scenario_id": "CEN-PER-06",
+  "fingerprint": "89802af458a2d9ef9ea074ac8e4097f077fb521778ab776d735507c6d1a92226",
+  "content": {
+    "flow": "O cliente autenticado acessou a área de histórico de pedidos a partir da navegação por produtos, buscando consultar compras anteriores realizadas na loja. A interface respondeu carregando a seção específica de pedidos, substituindo a listagem de produtos pela tela de histórico do cliente.",
+    "precondition": "Cliente autenticado na aplicação, previamente navegando na listagem de produtos (carrinho vazio, 0 itens).",
+    "observed_result": "A tela de produtos foi substituída pela tela de Histórico de Pedidos. Como o cliente não possui compras registradas, a área exibiu um estado vazio, informando explicitamente que nenhum pedido foi encontrado para essa conta.",
+    "messages": [
+      "Order History",
+      "No results found",
+      "You have not placed any orders yet."
+    ],
+    "data": "Nenhum dado pessoal ou produto específico foi utilizado; a consulta refere-se apenas ao histórico de pedidos do cliente autenticado.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário acessou a área de Histórico de Pedidos a partir da tela de listagem de produtos.",
+        "data": "Acesso à seção de histórico de pedidos",
+        "response": "A interface saiu da listagem de produtos e carregou a tela 'Order History', exibindo a mensagem de que nenhum pedido foi encontrado para o cliente ('No results found' / 'You have not placed any orders yet.')."
+      },
+      {
+        "number": 2,
+        "action": "O usuário aguardou a estabilização da tela após o carregamento do histórico.",
+        "data": "",
+        "response": "A tela permaneceu estável, mantendo a mensagem de ausência de pedidos, sem novas atualizações visuais."
+      }
+    ]
+  }
+}

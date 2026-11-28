@@ -1,0 +1,29 @@
+{
+  "scenario_id": "CEN-PER-03",
+  "fingerprint": "c28d3641fe08418d24b5f7b9f7762ce315e4f52f91dccdc806b03d951357db83",
+  "content": {
+    "flow": "O cliente autenticado acessa a área destinada aos métodos de pagamento salvos, saindo da tela de busca de produtos e chegando à página 'My Payment Options'. A navegação resulta na exibição da seção de gerenciamento de cartões, onde é apresentada a opção para cadastrar um novo cartão de crédito ou débito, sem exibir nenhum cartão previamente salvo na conta.",
+    "precondition": "O cliente já está autenticado na aplicação antes de acessar a área de opções de pagamento.",
+    "observed_result": "A interface deixou de exibir a listagem de produtos e passou a mostrar a tela 'My Payment Options', contendo o controle 'Add new card' com a descrição 'Add a credit or debit card'. Não há indicação de cartões já cadastrados na conta consultada.",
+    "messages": [
+      "My Payment Options",
+      "Add new card",
+      "Add a credit or debit card"
+    ],
+    "data": "Nenhum dado real de cartão foi utilizado; apenas a navegação para a área de métodos de pagamento salvos.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário acessa a área de opções de pagamento a partir da navegação da conta, saindo da tela de busca de produtos.",
+        "data": "Área: My Payment Options",
+        "response": "A interface atualiza a URL e substitui a listagem de produtos pela tela de opções de pagamento, exibindo o título 'My Payment Options' e o botão 'Add new card' com a descrição 'Add a credit or debit card'."
+      },
+      {
+        "number": 2,
+        "action": "O usuário aguarda a estabilização da tela após o carregamento da área de pagamento.",
+        "data": "",
+        "response": "A tela permanece estável, mantendo exibidos o título 'My Payment Options' e a opção para adicionar um novo cartão, sem novas mudanças visuais."
+      }
+    ]
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "scenario_id": "CEN-CHK-43",
+  "fingerprint": "7411192bf4d3f0c18c0271854fd57ded8e84cd61267f263af7b4d0dcf6d0dc7c",
+  "content": {
+    "flow": "Na etapa de pagamento do pedido, o cliente autenticado expandiu a seção 'Other payment options' para visualizar alternativas de pagamento além de cartão e carteira digital. A expansão revelou um conjunto de opções externas, incluindo doação ao projeto e links para lojas de merchandising, sem que o cliente efetivamente selecionasse nenhuma delas.",
+    "precondition": "Cliente autenticado com acesso à etapa de revisão de pagamento do pedido, onde as opções de pagamento padrão (cartão e carteira) já estavam disponíveis e a seção 'Other payment options' estava visível, porém recolhida.",
+    "observed_result": "Após a interação, a seção antes recolhida passou a exibir uma lista expandida de opções adicionais: Donations (com agradecimento por apoiar o projeto), pagamento via Credit Card, e opções de Merchandise com links para lojas oficiais (Spreadshirt US, Spreadshirt DE, StickerYou, Leanpub e OpenSea). Nenhuma dessas opções foi selecionada, e os elementos de navegação (Back/Continue) permaneceram disponíveis na tela.",
+    "messages": [
+      "Other payment options",
+      "Donations (Thank you for supporting OWASP Juice Shop!)",
+      "Credit Card",
+      "Merchandise (Official stores for OWASP Juice Shop apparel, mugs and stickers!)"
+    ],
+    "data": "Seção 'Other payment options' na etapa de pagamento do pedido",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Acessar a etapa de pagamento do pedido, onde são exibidas as opções padrão (cartão, carteira) e a seção recolhida 'Other payment options'",
+        "data": "—",
+        "response": "A tela de pagamento carregou normalmente, exibindo as opções de cartão, carteira com saldo zerado, campo de cupom e a seção 'Other payment options' ainda fechada"
+      },
+      {
+        "number": 2,
+        "action": "Clicar sobre a seção 'Other payment options' para expandi-la",
+        "data": "—",
+        "response": "A seção se expandiu, revelando as opções Donations, Credit Card e Merchandise, esta última com links para as lojas Spreadshirt (US), Spreadshirt (DE), StickerYou, Leanpub e OpenSea"
+      },
+      {
+        "number": 3,
+        "action": "Aguardar a estabilização da interface após a expansão da seção",
+        "data": "—",
+        "response": "A lista de opções expandidas permaneceu visível e estável, sem alterações adicionais na tela"
+      }
+    ]
+  }
+}

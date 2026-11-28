@@ -1,0 +1,100 @@
+{
+  "scenario_id": "CEN-CHK-02",
+  "fingerprint": "71b3e84b9b63ae113c25fc94fba51b9b5ed56a4b3141387586fcd89a13719c76",
+  "content": {
+    "flow": "A partir do carrinho com um item já selecionado, o cliente avança para o checkout e, na etapa de seleção de endereço, opta por cadastrar um novo endereço de entrega. O formulário de novo endereço é preenchido com dados de país, nome, telefone, CEP, logradouro, cidade e estado, e o envio do formulário retorna o cliente à tela de seleção de endereços, agora exibindo o endereço recém-criado como opção disponível.",
+    "precondition": "Cliente autenticado no sistema, com um produto (Apple Juice 1000ml) presente no carrinho antes do início do checkout.",
+    "observed_result": "Após o envio do formulário, a tela de seleção de endereço passou a exibir um novo cartão de endereço com os dados informados (Cliente Teste, Rua Teste, 100, Fortaleza, CE, 60000000, Brazil), substituindo a tela em branco que antes só oferecia a opção de adicionar um novo endereço. Uma notificação confirmou que o endereço em Fortaleza foi adicionado com sucesso à lista de endereços do cliente.",
+    "messages": [
+      "Placed Apple Juice (1000ml) into basket.",
+      "The address at Fortaleza has been successfully added to your addresses."
+    ],
+    "data": "País: Brazil; Nome: Cliente Teste; Telefone: 8599999999; CEP: 60000000; Endereço: Rua Teste, 100; Cidade: Fortaleza; Estado: CE",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Acessar a página do carrinho de compras",
+        "data": "",
+        "response": "A interface exibiu o item Apple Juice (1000ml) com quantidade 1, preço unitário de 1.99¤ e preço total de 1.99¤, além do botão de Checkout."
+      },
+      {
+        "number": 2,
+        "action": "Selecionar a opção de finalizar a compra (Checkout)",
+        "data": "",
+        "response": "A tela foi substituída pela etapa de seleção de endereço, exibindo a opção para adicionar um novo endereço e um botão para continuar o checkout."
+      },
+      {
+        "number": 3,
+        "action": "Aguardar o carregamento da tela de seleção de endereço",
+        "data": "",
+        "response": "Nenhuma alteração adicional foi observada; a tela permaneceu exibindo a opção de adicionar novo endereço."
+      },
+      {
+        "number": 4,
+        "action": "Selecionar a opção para cadastrar um novo endereço",
+        "data": "",
+        "response": "O formulário de cadastro de endereço foi exibido, contendo os campos País, Nome, Telefone, CEP, Endereço, Cidade e Estado, todos inicialmente vazios."
+      },
+      {
+        "number": 5,
+        "action": "Aguardar o carregamento completo do formulário",
+        "data": "",
+        "response": "Nenhuma mudança visual adicional foi registrada; o formulário permaneceu disponível para preenchimento."
+      },
+      {
+        "number": 6,
+        "action": "Informar o país no campo correspondente do formulário",
+        "data": "Brazil",
+        "response": "O campo País recebeu o valor informado, sem alterações visuais adicionais na estrutura do formulário."
+      },
+      {
+        "number": 7,
+        "action": "Informar o nome do destinatário no campo correspondente",
+        "data": "Cliente Teste",
+        "response": "O campo Nome recebeu o valor informado, mantendo os demais campos do formulário inalterados."
+      },
+      {
+        "number": 8,
+        "action": "Informar o número de telefone no campo correspondente",
+        "data": "8599999999",
+        "response": "O campo Telefone recebeu o valor informado, sem alterações visuais adicionais."
+      },
+      {
+        "number": 9,
+        "action": "Informar o CEP no campo correspondente",
+        "data": "60000000",
+        "response": "O contador de caracteres do campo CEP passou a indicar 8/8, confirmando o preenchimento completo do valor informado."
+      },
+      {
+        "number": 10,
+        "action": "Informar o endereço (logradouro e número) no campo correspondente",
+        "data": "Rua Teste, 100",
+        "response": "O contador de caracteres do campo Endereço passou a indicar 14/160, confirmando o preenchimento do valor informado."
+      },
+      {
+        "number": 11,
+        "action": "Informar a cidade no campo correspondente",
+        "data": "Fortaleza",
+        "response": "O campo Cidade recebeu o valor informado, sem alterações visuais adicionais relevantes."
+      },
+      {
+        "number": 12,
+        "action": "Informar o estado no campo correspondente",
+        "data": "CE",
+        "response": "O campo Estado recebeu o valor informado, completando os dados necessários do formulário."
+      },
+      {
+        "number": 13,
+        "action": "Confirmar o cadastro do endereço através do botão Submit",
+        "data": "",
+        "response": "A interface retornou à tela de seleção de endereço, agora exibindo o cartão com o endereço cadastrado (Cliente Teste, Rua Teste, 100, Fortaleza, CE, 60000000, Brazil) e uma notificação confirmando a inclusão bem-sucedida do endereço em Fortaleza."
+      },
+      {
+        "number": 14,
+        "action": "Aguardar a estabilização da tela após o cadastro",
+        "data": "",
+        "response": "A tela permaneceu exibindo o endereço cadastrado e a notificação de sucesso, sem novas alterações."
+      }
+    ]
+  }
+}

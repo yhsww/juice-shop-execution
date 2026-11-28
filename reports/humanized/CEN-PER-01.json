@@ -1,0 +1,25 @@
+{
+  "scenario_id": "CEN-PER-01",
+  "fingerprint": "8ca7e93e4faebd399f3d43bb2d2ed47046776ce54f23363c9cc63a0b64a24fe2",
+  "content": {
+    "flow": "O cenário teve como objetivo validar o acesso à tela de dados da conta a partir da navegação do usuário autenticado. A automação direcionou o navegador para a área de perfil, porém a interface não chegou a exibir informações de conta: o conteúdo permaneceu sendo a listagem de produtos da loja, como preços e botões de adicionar ao carrinho, sem qualquer campo ou seção específica de dados pessoais do usuário.",
+    "precondition": "Usuário já autenticado na aplicação, partindo da tela de busca de produtos antes de acionar a navegação para a área de conta.",
+    "observed_result": "Houve mudança de endereço indicando a tentativa de acesso à página de conta, mas a tela carregada e capturada continuou mostrando o catálogo de produtos (itens, preços e botões de compra), sem evidência visual de que os dados da conta do usuário foram efetivamente exibidos. Não há confirmação, pelas evidências coletadas, de que a funcionalidade de visualização de dados da conta apresentou as informações esperadas.",
+    "messages": [],
+    "data": "Navegação para a área de conta do usuário autenticado; nenhum dado de formulário foi inserido nos passos registrados.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário acionou a navegação para a tela de conta a partir do fluxo autenticado.",
+        "data": "Acesso à área de conta do usuário",
+        "response": "A URL foi alterada para o endereço correspondente à página de conta, porém o conteúdo exibido na tela permaneceu sendo a listagem de produtos da loja, sem indícios visuais de dados pessoais carregados."
+      },
+      {
+        "number": 2,
+        "action": "O usuário aguardou a interface se atualizar após a navegação.",
+        "data": "",
+        "response": "Nenhuma mudança adicional foi percebida na tela; o conteúdo continuou mostrando a listagem de produtos já presente no passo anterior, sem exibir elementos específicos de dados da conta."
+      }
+    ]
+  }
+}

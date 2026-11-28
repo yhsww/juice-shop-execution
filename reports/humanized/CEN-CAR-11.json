@@ -1,0 +1,64 @@
+{
+  "scenario_id": "CEN-CAR-11",
+  "fingerprint": "6b5e2eb9f0a3e48008f9156321155753d2a36b7924e253fcd6297fd90c5fba23",
+  "content": {
+    "flow": "O cenário buscou validar o controle de estoque limitado em um produto exclusivo. A partir da busca pelo item 'Juice Shop \"Permafrost\" 2020 Edition', sinalizado na listagem como 'Only 1 left', o usuário tentou adicioná-lo ao carrinho duas vezes consecutivas. A primeira tentativa foi aceita normalmente, incrementando o carrinho; a segunda tentativa, mesmo repetindo a mesma ação sobre o mesmo produto, foi bloqueada pela aplicação, que impediu a inclusão de uma segunda unidade e comunicou a restrição ao usuário.",
+    "precondition": "Cliente autenticado com carrinho vazio, navegando na busca de produtos onde o item 'Juice Shop \"Permafrost\" 2020 Edition' (9999.99¤) aparece listado com o indicador 'Only 1 left'.",
+    "observed_result": "Após a primeira adição, o contador do carrinho passou de 0 para 1 e a interface confirmou a inclusão do produto. Na segunda tentativa de adicionar o mesmo item, o contador do carrinho permaneceu em 1 (sem incremento) e a interface exibiu um aviso informando que não é possível adicionar mais unidades daquele produto, confirmando que o limite de estoque foi respeitado.",
+    "messages": [
+      "Placed Juice Shop \"Permafrost\" 2020 Edition into basket.",
+      "You can order only up to 1 items of this product."
+    ],
+    "data": "Produto: Juice Shop \"Permafrost\" 2020 Edition, preço 9999.99¤, estoque indicado como 'Only 1 left'; termo de busca utilizado: Permafrost.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Usuário acessou a tela de busca de produtos.",
+        "data": "",
+        "response": "A listagem completa de produtos foi exibida, incluindo o item Permafrost com a marcação 'Only 1 left' e preço 9999.99¤."
+      },
+      {
+        "number": 2,
+        "action": "Usuário digitou o termo de busca no campo de pesquisa para localizar o produto desejado.",
+        "data": "Permafrost",
+        "response": "O campo recebeu o texto digitado, sem alteração visível na listagem até a confirmação da busca."
+      },
+      {
+        "number": 3,
+        "action": "Usuário confirmou a busca pressionando Enter.",
+        "data": "",
+        "response": "A página foi atualizada para exibir os resultados da busca, mostrando apenas o produto 'Juice Shop \"Permafrost\" 2020 Edition' com a marcação 'Only 1 left' e preço 9999.99¤ (1 de 1 resultado)."
+      },
+      {
+        "number": 4,
+        "action": "Sistema processou a atualização da tela de resultados.",
+        "data": "",
+        "response": "A tela permaneceu estável, exibindo o único resultado encontrado para o termo pesquisado."
+      },
+      {
+        "number": 5,
+        "action": "Usuário clicou no botão de adicionar o produto Permafrost ao carrinho pela primeira vez.",
+        "data": "",
+        "response": "O contador do carrinho foi atualizado de 0 para 1 e a interface exibiu a confirmação de que o produto foi colocado no carrinho."
+      },
+      {
+        "number": 6,
+        "action": "Sistema processou a atualização após a primeira adição.",
+        "data": "",
+        "response": "A mensagem de confirmação da adição permaneceu visível e o contador do carrinho manteve o valor 1."
+      },
+      {
+        "number": 7,
+        "action": "Usuário clicou novamente no botão de adicionar o mesmo produto ao carrinho, tentando incluir uma segunda unidade.",
+        "data": "",
+        "response": "A interface bloqueou a ação e exibiu um aviso informando que só é permitido pedir até 1 unidade desse produto; o contador do carrinho permaneceu em 1."
+      },
+      {
+        "number": 8,
+        "action": "Sistema processou a atualização após a tentativa bloqueada.",
+        "data": "",
+        "response": "O aviso de limite de unidades permaneceu visível na tela, confirmando que a segunda unidade não foi incluída no carrinho."
+      }
+    ]
+  }
+}

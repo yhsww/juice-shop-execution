@@ -1,0 +1,36 @@
+{
+  "scenario_id": "CEN-CHK-11",
+  "fingerprint": "0517987c6c78dd8289332717c00aa5672c68a60202a1d4157859a38d15ea17a5",
+  "content": {
+    "flow": "A partir da tela de resumo do pedido, com endereço de entrega e forma de pagamento já definidos, o cliente aciona a confirmação da compra. A ação envia o pedido para processamento e a aplicação direciona o usuário para uma página de conclusão, onde é exibida a confirmação de que o pedido foi registrado com sucesso.",
+    "precondition": "Cliente autenticado, com endereço de entrega e método de pagamento (cartão final 0002) já cadastrados, e com o resumo do pedido disponível para revisão antes da confirmação.",
+    "observed_result": "Após o clique em confirmar e pagar, a URL da aplicação muda de order-summary para order-completion, indicando a criação do pedido. A tela passa a exibir a mensagem de agradecimento pela compra, informando que o pedido foi realizado e está em processamento, com previsão de entrega em 5 dias. O resumo do pedido na tela final deixa de exibir o botão de confirmação e os dados de pagamento, mantendo apenas o endereço de entrega e o resumo de valores.",
+    "messages": [
+      "Thank you for your purchase! Your order has been placed and is being processed.",
+      "You can check for status updates on our Track Orders page.",
+      "Your order will be delivered in 5 days.",
+      "You have gained 0 Bonus Points from this order!"
+    ],
+    "data": "Endereço de entrega: Cliente Teste, Rua Teste, 100, Fortaleza, CE, 60000000, Brasil; telefone 8599999999; pagamento com cartão final 0002.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Usuário acessa a tela de resumo do pedido para revisar os dados antes da confirmação.",
+        "data": "Resumo do pedido (endereço de entrega, forma de pagamento e valores)",
+        "response": "A interface exibe o endereço de entrega, o método de pagamento (cartão final 0002) e o resumo de valores do pedido, junto ao botão para confirmar e pagar."
+      },
+      {
+        "number": 2,
+        "action": "Usuário aciona o botão de confirmação do pedido para efetivar a compra.",
+        "data": "Ação de confirmação (sem dado adicional informado)",
+        "response": "A aplicação processa a solicitação e redireciona para a página de conclusão do pedido, exibindo a mensagem de agradecimento e a informação de que o pedido foi registrado e está sendo processado, com prazo de entrega estimado."
+      },
+      {
+        "number": 3,
+        "action": "Usuário aguarda a atualização da tela após a confirmação.",
+        "data": "Nenhum dado adicional",
+        "response": "A tela de conclusão permanece estável, mantendo visíveis a mensagem de confirmação do pedido, o endereço de entrega e o resumo final de valores, sem alterações adicionais."
+      }
+    ]
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "scenario_id": "CEN-CAR-14",
+  "fingerprint": "830758bd70c04b8c7bc03fa6b772df481a1f864f9c895ce2c9f9a6ece6eb6c45",
+  "content": {
+    "flow": "Um visitante sem sessão ativa adiciona o produto Apple Juice (1000ml) ao carrinho a partir da listagem de produtos e segue para o carrinho para finalizar a compra. Ao acionar o botão de finalização do pedido, o sistema identifica que não há usuário autenticado e redireciona a navegação para a tela de login, impedindo que o checkout prossiga sem identificação do cliente.",
+    "precondition": "Nenhuma sessão de usuário estava ativa antes do início da interação; o visitante acessou a loja de forma anônima.",
+    "observed_result": "O produto Apple Juice foi incluído no carrinho (contador do carrinho passou de 0 para 1 e o item passou a aparecer na tela de carrinho com valor total de 1.99¤), porém, ao tentar avançar para o checkout, a aplicação não concluiu o pedido: em vez disso, a tela foi substituída pela página de login, indicando que a finalização da compra está condicionada à autenticação do usuário.",
+    "messages": [
+      "Placed Apple Juice (1000ml) into basket."
+    ],
+    "data": "Produto: Apple Juice (1000ml), quantidade 1, valor unitário 1.99¤, total do carrinho 1.99¤.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Usuário acessou a página inicial da loja, onde a listagem de produtos disponíveis é exibida.",
+        "data": "Página inicial",
+        "response": "A lista de produtos foi carregada, exibindo itens como Apple Juice (1000ml) a 1.99¤, entre outros, com o contador do carrinho indicando 0 itens."
+      },
+      {
+        "number": 2,
+        "action": "Usuário selecionou a opção de adicionar o produto Apple Juice ao carrinho.",
+        "data": "Apple Juice (1000ml)",
+        "response": "O contador do carrinho foi atualizado de 0 para 1 e surgiu uma notificação confirmando que o produto foi colocado no carrinho."
+      },
+      {
+        "number": 3,
+        "action": "Usuário aguardou a estabilização da tela após a inclusão do produto.",
+        "data": "",
+        "response": "Nenhuma alteração adicional foi observada; a interface permaneceu consistente com o estado anterior, mantendo o item no carrinho."
+      },
+      {
+        "number": 4,
+        "action": "Usuário acessou a tela do carrinho de compras para revisar o pedido.",
+        "data": "Carrinho de compras",
+        "response": "A tela passou a exibir o item Apple Juice (1000ml) com quantidade 1, preço unitário 1.99¤ e valor total do pedido de 1.99¤, além da opção de finalizar a compra."
+      },
+      {
+        "number": 5,
+        "action": "Usuário aguardou a estabilização da tela do carrinho.",
+        "data": "",
+        "response": "Nenhuma mudança adicional foi detectada; o conteúdo do carrinho permaneceu o mesmo."
+      },
+      {
+        "number": 6,
+        "action": "Usuário acionou a opção de finalizar a compra a partir do carrinho.",
+        "data": "",
+        "response": "A navegação foi redirecionada para a tela de login, exibindo campos de e-mail e senha, em vez de avançar para as etapas de finalização do pedido."
+      },
+      {
+        "number": 7,
+        "action": "Usuário aguardou a estabilização da tela após o redirecionamento.",
+        "data": "",
+        "response": "A tela de login permaneceu exibida sem novas alterações, confirmando que o fluxo de checkout foi interrompido até que haja autenticação."
+      }
+    ]
+  }
+}

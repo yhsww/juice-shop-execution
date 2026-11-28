@@ -1,0 +1,69 @@
+{
+  "scenario_id": "CEN-IDT-18",
+  "fingerprint": "aecc721f8c3822d46b75fcb56acf46145a75ea204c6bad83e3e500a83f67da72",
+  "content": {
+    "flow": "O teste verifica se o formulário de cadastro impede o envio quando a senha informada é muito curta. O visitante preencheu e-mail, senha e confirmação de senha com apenas 3 caracteres, além de selecionar uma pergunta de segurança e informar uma resposta. O formulário manteve, durante toda a digitação, a mensagem indicando o requisito de tamanho mínimo da senha (5 a 40 caracteres) e o contador de caracteres acompanhou o valor digitado (3/20 e 3/40), sem nunca atingir o mínimo exigido. Ao final do preenchimento, a verificação confirmou que o botão de registro permaneceu desabilitado, impedindo o envio do cadastro com uma senha inválida.",
+    "precondition": "Visitante sem sessão ativa, com a tela de cadastro (User Registration) aberta e todos os campos do formulário em branco.",
+    "observed_result": "O contador de caracteres do campo de senha e da confirmação de senha passou a refletir o valor digitado (3/20 e 3/40, respectivamente), e a mensagem de requisito de tamanho mínimo permaneceu visível durante todo o preenchimento. Mesmo após completar o-mail, senha, confirmação, pergunta e resposta de segurança, o botão de registro (person_add Register) permaneceu desabilitado, confirmando que o cadastro não pôde ser concluído com uma senha de apenas 3 caracteres.",
+    "messages": [
+      "Password must be 5-40 characters long."
+    ],
+    "data": "E-mail: cen-cen-idt-18-7ac48cf7b8@example.com; Senha e confirmação: 123; Pergunta de segurança: Your favorite book?; Resposta: a",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Usuário acessa a tela de cadastro de novo usuário (User Registration).",
+        "data": "",
+        "response": "A página de cadastro é carregada exibindo os campos de e-mail, senha, confirmação de senha, pergunta de segurança e resposta, com a mensagem de requisito de senha (5-40 caracteres) já visível."
+      },
+      {
+        "number": 2,
+        "action": "Usuário preenche o campo de endereço de e-mail.",
+        "data": "cen-cen-idt-18-7ac48cf7b8@example.com",
+        "response": "O valor é aceito no campo sem alterações visuais adicionais na estrutura da página."
+      },
+      {
+        "number": 3,
+        "action": "Usuário preenche o campo de senha com um valor abaixo do mínimo exigido.",
+        "data": "123",
+        "response": "O contador de caracteres do campo passa a exibir 3/20, enquanto a mensagem de requisito de tamanho mínimo (5-40 caracteres) continua visível, sinalizando que o valor não atende ao mínimo."
+      },
+      {
+        "number": 4,
+        "action": "Usuário preenche o campo de confirmação de senha com o mesmo valor.",
+        "data": "123",
+        "response": "O contador de caracteres do campo de confirmação passa a exibir 3/40, mantendo a mensagem de requisito de senha visível no formulário."
+      },
+      {
+        "number": 5,
+        "action": "Usuário seleciona uma pergunta de segurança na lista de opções disponíveis.",
+        "data": "Your favorite book?",
+        "response": "A lista de opções é exibida e, após a seleção, a pergunta escolhida passa a ser exibida no campo correspondente, liberando o campo de resposta."
+      },
+      {
+        "number": 6,
+        "action": "Usuário preenche o campo de resposta da pergunta de segurança.",
+        "data": "a",
+        "response": "O valor é registrado no campo de resposta, sem alterações adicionais na estrutura visível da página."
+      },
+      {
+        "number": 7,
+        "action": "Usuário move o foco para fora do campo de resposta.",
+        "data": "",
+        "response": "Nenhuma mudança visual adicional foi observada na interface."
+      },
+      {
+        "number": 8,
+        "action": "Aguarda-se a estabilização da interface após o preenchimento completo do formulário.",
+        "data": "",
+        "response": "A página permanece exibindo todos os campos preenchidos e a mensagem de requisito de senha ainda visível."
+      },
+      {
+        "number": 9,
+        "action": "Verifica-se o estado do botão de registro após o preenchimento do formulário com senha inválida.",
+        "data": "",
+        "response": "O botão de registro (Register) permanece desabilitado, impedindo o envio do cadastro com a senha de 3 caracteres."
+      }
+    ]
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "scenario_id": "CEN-CHK-38",
+  "fingerprint": "7dc94dd82d60afe4aa1564cc2dd734ac736caa12636d0c154e49e1bebd6dd0ce",
+  "content": {
+    "flow": "O teste verifica o que acontece quando um cliente autenticado, com um item já no carrinho, acessa diretamente a tela de Resumo do Pedido sem antes definir endereço de entrega, método de entrega ou forma de pagamento. O objetivo é observar se a aplicação bloqueia esse acesso ou permite a visualização do resumo mesmo com etapas anteriores pendentes.",
+    "precondition": "Cliente autenticado com sessão ativa, carrinho contendo uma unidade de Apple Juice (1000ml) no valor de 1.99¤, sem nenhuma etapa de endereço, entrega ou pagamento concluída na sessão.",
+    "observed_result": "A tela de Resumo do Pedido foi carregada normalmente, exibindo o item do carrinho (Apple Juice 1000ml, quantidade 1, 1.99¤), com os campos de Entrega e Promoção zerados e o Total do Pedido igual ao valor do produto. O botão para finalizar e pagar o pedido permaneceu disponível. Nos bastidores, as tentativas de obter os dados de entrega, endereço e cartão de pagamento retornaram erro, confirmando que nenhuma dessas informações estava definida para o pedido, embora a interface não tenha bloqueado visualmente o acesso à tela nem impedido a exibição do botão de finalização.",
+    "messages": [
+      "Placed Apple Juice (1000ml) into basket."
+    ],
+    "data": "Produto: Apple Juice (1000ml); Quantidade: 1; Valor unitário: 1.99¤",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Acessar diretamente a tela de Resumo do Pedido, pulando as etapas de endereço, entrega e pagamento",
+        "data": "Carrinho com 1 unidade de Apple Juice (1000ml)",
+        "response": "A página carregou exibindo o item do carrinho, com Entrega e Promoção em 0.00¤ e Total do Pedido em 1.99¤, além do botão para finalizar e pagar o pedido. As buscas por dados de entrega, endereço e cartão associados ao pedido não retornaram resultados válidos, indicando que essas etapas não haviam sido preenchidas."
+      },
+      {
+        "number": 2,
+        "action": "Aguardar para verificar se a interface reagia à ausência de dados de entrega, endereço ou pagamento",
+        "data": "—",
+        "response": "Nenhuma mudança visual ocorreu; a tela permaneceu exibindo o mesmo resumo do pedido, sem alerta, bloqueio ou redirecionamento para completar as etapas pendentes."
+      }
+    ]
+  }
+}

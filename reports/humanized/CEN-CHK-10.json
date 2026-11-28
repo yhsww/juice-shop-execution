@@ -1,0 +1,30 @@
+{
+  "scenario_id": "CEN-CHK-10",
+  "fingerprint": "8df628248078b0dfddc9d1ac36f44f1573c06eb972924fc83895f1522c19bcd4",
+  "content": {
+    "flow": "O cliente acessa a tela de resumo do pedido após já ter definido endereço de entrega, método de entrega e forma de pagamento. A página consolida essas informações em seções distintas, permitindo conferir os dados antes de finalizar a compra, sem que nenhuma alteração seja feita nesse momento.",
+    "precondition": "Cliente autenticado, com endereço de entrega, método de pagamento e itens de carrinho já vinculados ao pedido.",
+    "observed_result": "A tela de resumo do pedido exibiu de forma consolidada o endereço de entrega cadastrado (Cliente Teste, Rua Teste, 100, Fortaleza, CE, 60000000, Brazil, telefone 8599999999), o método de pagamento associado (cartão terminado em 0002, em nome de Cliente Teste) e o bloco de totais do pedido (Items, Delivery, Promotion e Total Price, todos em 0.00). O botão para finalizar e pagar o pedido ficou disponível na tela, assim como a indicação de pontos de bônus a serem obtidos. Nenhuma alteração foi realizada durante a conferência, apenas a visualização dos dados.",
+    "messages": [
+      "Delivery Address Cliente Teste Rua Teste, 100, Fortaleza, CE, 60000000 Brazil Phone Number 8599999999",
+      "Payment Method Card ending in 0002 Card Holder\" Cliente Teste",
+      "Order Summary Items 0.00¤ Delivery 0.00¤ Promotion 0.00¤ Total Price 0.00¤",
+      "You will gain 0 Bonus Points from this order!"
+    ],
+    "data": "Endereço de entrega: Rua Teste, 100, Fortaleza, CE, 60000000, Brazil; telefone 8599999999; cartão terminado em 0002 em nome de Cliente Teste; carrinho sem itens monetizados (totais em 0.00).",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O cliente acessa a tela de resumo do pedido para conferir os dados consolidados antes da confirmação da compra.",
+        "data": "Nenhum dado adicional informado pelo cliente neste passo.",
+        "response": "A interface exibiu o endereço de entrega completo, o método de pagamento com cartão terminado em 0002, o resumo de valores do pedido (Items, Delivery, Promotion e Total Price, todos em 0.00) e o botão para finalizar e pagar o pedido."
+      },
+      {
+        "number": 2,
+        "action": "O cliente permanece na tela aguardando que todas as informações do resumo sejam carregadas e exibidas.",
+        "data": "Nenhum dado adicional informado.",
+        "response": "A tela manteve as informações já exibidas no passo anterior, sem alterações visuais, confirmando que o resumo do pedido permaneceu estável e consistente."
+      }
+    ]
+  }
+}

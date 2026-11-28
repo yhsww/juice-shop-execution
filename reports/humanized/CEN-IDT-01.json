@@ -1,0 +1,64 @@
+{
+  "scenario_id": "CEN-IDT-01",
+  "fingerprint": "83bf425421084be52bdcdae87f19c391d17f722935f6dbaa0e312627b122919a",
+  "content": {
+    "flow": "A partir da página de produtos, o usuário acessa o formulário de criação de conta e preenche os campos obrigatórios (e-mail, senha, confirmação de senha, pergunta de segurança e resposta). Ao confirmar o cadastro, a aplicação direciona o usuário para a tela de login, indicando que a conta foi criada e está pronta para uso.",
+    "precondition": "Usuário não autenticado, navegando na loja sem sessão ativa, com um endereço de e-mail ainda não utilizado em nenhum cadastro.",
+    "observed_result": "Após o envio do formulário, a tela de cadastro foi substituída pela tela de login, e passou a ser exibida uma confirmação informando que o registro foi concluído com sucesso e que o acesso já pode ser feito com as credenciais criadas.",
+    "messages": [
+      "Registration completed successfully.",
+      "You can now log in."
+    ],
+    "data": "E-mail informado durante o teste; senha Teste@12345 preenchida nos campos de senha e confirmação; pergunta de segurança 'Your favorite book?' com resposta 'a'.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Usuário acessa a tela de criação de conta a partir da página inicial da loja.",
+        "data": "",
+        "response": "A página de produtos deu lugar ao formulário de cadastro, exibindo os campos de e-mail, senha, confirmação de senha, pergunta de segurança e resposta, além do botão de registro."
+      },
+      {
+        "number": 2,
+        "action": "Usuário informa o endereço de e-mail no campo correspondente do formulário.",
+        "data": "e-mail de teste gerado para o cenário",
+        "response": "O campo de e-mail passou a exibir o valor digitado, mantendo os demais campos do formulário inalterados e vazios."
+      },
+      {
+        "number": 3,
+        "action": "Usuário define a senha de acesso no campo de senha.",
+        "data": "Teste@12345",
+        "response": "O contador de caracteres do campo de senha atualizou de 0/20 para 11/20, confirmando que o valor foi registrado no campo."
+      },
+      {
+        "number": 4,
+        "action": "Usuário repete a senha no campo de confirmação para validar a correspondência.",
+        "data": "Teste@12345",
+        "response": "O contador de caracteres do campo de confirmação passou de 0/40 para 11/40, indicando que a senha repetida foi aceita no campo."
+      },
+      {
+        "number": 5,
+        "action": "Usuário seleciona uma pergunta de segurança na lista de opções disponíveis.",
+        "data": "Your favorite book?",
+        "response": "A lista de opções foi fechada e o campo passou a exibir a pergunta escolhida, habilitando o campo de resposta logo abaixo."
+      },
+      {
+        "number": 6,
+        "action": "Usuário preenche o campo de resposta referente à pergunta de segurança selecionada.",
+        "data": "a",
+        "response": "O campo de resposta recebeu o valor informado, sem alterações visuais adicionais no restante do formulário."
+      },
+      {
+        "number": 7,
+        "action": "Usuário conclui o cadastro acionando o botão de registro.",
+        "data": "",
+        "response": "A aplicação saiu da tela de cadastro e exibiu a tela de login, acompanhada de uma mensagem confirmando a conclusão do registro e orientando o usuário a realizar o login."
+      },
+      {
+        "number": 8,
+        "action": "Usuário aguarda a estabilização da tela após o envio do formulário.",
+        "data": "",
+        "response": "A tela de login permaneceu exibida, com a mensagem de registro concluído ainda visível, sem novas alterações de estado."
+      }
+    ]
+  }
+}

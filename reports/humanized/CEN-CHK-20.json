@@ -1,0 +1,36 @@
+{
+  "scenario_id": "CEN-CHK-20",
+  "fingerprint": "6e69556e672af492ee2c4093161acb43ddef90da08d076219d3a6b1295b2e41f",
+  "content": {
+    "flow": "O cliente acessa o histórico de pedidos para localizar um pedido já concluído e, a partir dele, aciona a opção de acompanhamento para visualizar o status logístico atual. A navegação parte da listagem de pedidos até a tela de rastreamento específica daquele pedido, onde passam a ser exibidos os detalhes de entrega.",
+    "precondition": "Cliente autenticado na loja, com um pedido já concluído e registrado no histórico de pedidos (pedido com Apple Juice 1000ml, valor total de 1.99¤).",
+    "observed_result": "Ao abrir o histórico de pedidos, o pedido identificado como #bfaf-468c39c3aa337a41 aparece com status 'In Transit', indicando que ainda está em trânsito. Ao acionar o rastreamento desse pedido, a tela muda para os resultados de busca do pedido, exibindo o prazo estimado de entrega de 5 dias, os produtos comprados (Apple Juice 1000ml, quantidade 1, total 1.99¤) e os pontos de bônus a serem creditados (0 pontos). Essas informações permaneceram estáveis após a atualização da interface, confirmando que o status de trânsito foi exibido corretamente.",
+    "messages": [
+      "Placed Apple Juice (1000ml) into basket.",
+      "In Transit",
+      "Expected Delivery 5 Days",
+      "Bonus Points Earned: 0 (The bonus points from this order will be added 1:1 to your wallet ¤-fund for future purchases!)"
+    ],
+    "data": "Pedido #bfaf-468c39c3aa337a41 contendo Apple Juice (1000ml), quantidade 1, valor unitário 1.99¤, total 1.99¤.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O cliente acessa a tela de histórico de pedidos para localizar o pedido concluído.",
+        "data": "Histórico de pedidos",
+        "response": "A interface exibiu o pedido #bfaf-468c39c3aa337a41 com total de 1.99¤, 0 pontos de bônus e status 'In Transit', junto ao produto Apple Juice (1000ml) na listagem."
+      },
+      {
+        "number": 2,
+        "action": "O cliente aciona a opção de rastrear o pedido listado.",
+        "data": "Pedido #bfaf-468c39c3aa337a41",
+        "response": "A tela foi substituída pela página de resultados de rastreamento do pedido, apresentando prazo estimado de entrega de 5 dias, os itens do pedido e a informação de pontos de bônus a receber."
+      },
+      {
+        "number": 3,
+        "action": "O cliente aguarda a estabilização da tela de rastreamento para conferir as informações exibidas.",
+        "data": "",
+        "response": "Nenhuma alteração adicional ocorreu na tela; as informações de prazo de entrega, produto e bônus permaneceram as mesmas exibidas no passo anterior, confirmando a estabilidade do status apresentado."
+      }
+    ]
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "scenario_id": "CEN-PER-05",
+  "fingerprint": "bcf2d8067175a375f10ac4d9b35a86cedb55a2cdcb571760e34862f3b33d7e22",
+  "content": {
+    "flow": "Com o cliente já autenticado, o teste acessa diretamente a área de privacidade e segurança destinada à troca de senha. A navegação leva o usuário da tela de busca de produtos para a tela específica de alteração de senha, onde o sistema disponibiliza os campos necessários para essa operação.",
+    "precondition": "O cliente já está autenticado na aplicação antes de acessar a tela de alteração de senha.",
+    "observed_result": "A interface deixou de exibir a listagem de produtos e passou a apresentar o formulário de alteração de senha, com os campos 'Current Password', 'New Password' e 'Repeat New Password', além da regra de tamanho da senha (5 a 40 caracteres) e do botão 'Change'. Essa troca de conteúdo confirma que a navegação para a tela de alteração de senha foi concluída com sucesso.",
+    "messages": [
+      "Password must be 5-40 characters long."
+    ],
+    "data": "Rota de destino: tela de alteração de senha (). Nenhuma senha real foi informada ou registrada durante a execução.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário acessa a funcionalidade de alteração de senha a partir da área de conta, sendo direcionado da tela de busca de produtos para a tela dedicada a essa operação.",
+        "data": "Rota de destino: alteração de senha",
+        "response": "A tela de produtos foi substituída pelo formulário 'Change Password', exibindo os campos 'Current Password', 'New Password', 'Repeat New Password', a regra de validação de tamanho da senha e o botão 'Change'."
+      },
+      {
+        "number": 2,
+        "action": "O usuário aguarda a estabilização da tela após o carregamento do formulário de alteração de senha.",
+        "data": "",
+        "response": "O formulário de alteração de senha permaneceu exibido sem alterações adicionais, confirmando que a tela carregou completamente e está pronta para uso."
+      }
+    ]
+  }
+}

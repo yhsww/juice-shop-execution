@@ -1,0 +1,37 @@
+{
+  "scenario_id": "CEN-ADM-06",
+  "fingerprint": "920e14474d66ca796ffdc227f7364248978a702dd074693dbea8840197d3d8c6",
+  "content": {
+    "flow": "O administrador acessa a área de Administração do sistema, onde é exibida a lista de usuários cadastrados na loja. Ao selecionar o primeiro usuário da lista (admin@juice-sh.op), a interface exibe um painel com os dados detalhados desse registro, permitindo consultar informações individuais sem sair da tela de administração.",
+    "precondition": "O administrador já está autenticado e possui acesso à área de Administration, onde a lista de usuários registrados está disponível para consulta.",
+    "observed_result": "Após a seleção do usuário na lista, um painel de detalhes é exibido sobreposto à tela de administração, mostrando o identificador do usuário (User #1), o e-mail associado (admin@juice-sh.op) e as datas de criação e atualização do registro. A lista de usuários e o restante da tela de administração permanecem visíveis ao fundo, e o painel inclui um controle para fechá-lo.",
+    "messages": [],
+    "data": "Usuário consultado: admin@juice-sh.op (User #1), com datas de criação e atualização do registro exibidas no painel de detalhes.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O administrador acessa a tela de Administração, que carrega a lista de usuários registrados e o painel de feedback de clientes.",
+        "data": "—",
+        "response": "A interface exibe a seção Administration com as abas Registered Users e Customer Feedback, listando os e-mails dos usuários cadastrados (admin@juice-sh.op, jim@juice-sh.op, bender@juice-sh.op, entre outros) com paginação indicando 1–10 de 234 registros."
+      },
+      {
+        "number": 2,
+        "action": "O sistema aguarda a estabilização da tela após o carregamento inicial dos dados.",
+        "data": "—",
+        "response": "Nenhuma alteração visual é registrada; a lista de usuários e o painel de feedback permanecem exibidos como no passo anterior."
+      },
+      {
+        "number": 3,
+        "action": "O administrador seleciona o primeiro usuário da lista para visualizar seus detalhes.",
+        "data": "admin@juice-sh.op",
+        "response": "Um painel de detalhes é aberto sobre a tela, exibindo os campos User #1, Email (admin@juice-sh.op), Created at e Updated at (ambos com o mesmo registro de data/hora), além de um botão para fechar o painel."
+      },
+      {
+        "number": 4,
+        "action": "O sistema aguarda a estabilização da interface após a abertura do painel de detalhes.",
+        "data": "—",
+        "response": "Nenhuma alteração adicional é observada; o painel com os dados do usuário admin@juice-sh.op permanece visível na tela."
+      }
+    ]
+  }
+}

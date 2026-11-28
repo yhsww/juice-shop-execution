@@ -1,0 +1,41 @@
+{
+  "scenario_id": "CEN-CAT-13",
+  "fingerprint": "637821886b333d6e29f3151c18d477b51656af6fd3dc33b58108230c55e6281e",
+  "content": {
+    "flow": "O cliente acessa a área de busca do catálogo e insere um termo que combina acento, barra e outros caracteres especiais, com o objetivo de verificar se a pesquisa trata corretamente entradas fora do padrão alfanumérico simples. Após confirmar a busca, a interface processa o termo e atualiza a página de resultados conforme o texto digitado.",
+    "precondition": "O catálogo de produtos está disponível e acessível, exibindo inicialmente a listagem completa de itens antes de qualquer busca ser realizada.",
+    "observed_result": "Após a confirmação da busca, a listagem geral de produtos foi substituída pela tela de resultados, que passou a exibir o termo pesquisado no título da página (\"Search Results - Limão / Açaí\") e a mensagem \"No results found\", indicando que nenhum produto correspondeu ao termo com acento e barra informado. O contador de itens mudou de 46 produtos exibidos para 0 de 0, confirmando que a lista de produtos foi esvaziada nesse estado.",
+    "messages": [
+      "Search Results - Limão / Açaí",
+      "No results found",
+      "Try adjusting your search to find what you're looking for."
+    ],
+    "data": "Termo de busca: Limão / Açaí",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O cliente acessa a página de busca do catálogo, que inicialmente carrega a listagem completa de produtos disponíveis.",
+        "data": "",
+        "response": "A página de busca é exibida com todos os produtos do catálogo listados, incluindo itens como Apple Juice, Banana Juice e Carrot Juice, com paginação indicando o total de 46 produtos."
+      },
+      {
+        "number": 2,
+        "action": "O cliente preenche o campo de busca com o termo contendo acento, barra e caracteres especiais.",
+        "data": "Limão / Açaí",
+        "response": "O campo de busca recebe o termo digitado e a listagem de produtos permanece visível enquanto o texto é inserido, sem alteração imediata nos resultados exibidos."
+      },
+      {
+        "number": 3,
+        "action": "O cliente confirma a busca pressionando Enter, acionando o processamento do termo informado.",
+        "data": "",
+        "response": "A página é atualizada para a tela de resultados, exibindo o título \"Search Results - Limão / Açaí\" e a mensagem de que nenhum produto foi encontrado, com o contador de itens zerado (0 de 0)."
+      },
+      {
+        "number": 4,
+        "action": "O cliente aguarda para verificar se a interface sofre alguma atualização adicional após a exibição dos resultados.",
+        "data": "",
+        "response": "Nenhuma mudança adicional ocorre na tela; a mensagem de ausência de resultados e o estado zerado da listagem permanecem estáveis."
+      }
+    ]
+  }
+}

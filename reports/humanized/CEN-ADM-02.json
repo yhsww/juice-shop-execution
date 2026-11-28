@@ -1,0 +1,27 @@
+{
+  "scenario_id": "CEN-ADM-02",
+  "fingerprint": "1ef7af310a1ee565a0932c3b0ef24f2a653fce15cba0262bb41e4e64ba347060",
+  "content": {
+    "flow": "O administrador acessa a área de administração do sistema para conferir a lista de usuários cadastrados na loja. A navegação direciona para a tela de Administration, onde a seção de Registered Users exibe os e-mails dos usuários existentes, paginados em grupos de 10 registros, enquanto a seção de Customer Feedback apresenta as avaliações registradas pelos clientes.",
+    "precondition": "Administrador já autenticado no sistema, com sessão ativa antes de acessar a área administrativa.",
+    "observed_result": "A tela de Administration passou a exibir a lista de usuários registrados (10 e-mails visíveis em uma paginação que totaliza 155 registros) e, logo abaixo, a seção de Customer Feedback com comentários e avaliações de clientes (totalizando 7 registros). Após um período de espera, a interface manteve esse mesmo conteúdo estável, sem alterações adicionais.",
+    "messages": [
+      "Language has been changed to English Force page reload"
+    ],
+    "data": "Lista de e-mails de usuários registrados (ex.: admin@juice-sh.op, jim@juice-sh.op, bender@juice-sh.op, entre outros) e comentários de feedback de clientes associados a avaliações por estrelas.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O administrador acessa a rota de administração a partir da tela de busca de produtos, com o objetivo de visualizar os usuários cadastrados no sistema.",
+        "data": "Rota de administração",
+        "response": "A interface foi atualizada da tela de busca para a tela de Administration, exibindo a seção Registered Users com 10 e-mails de usuários em uma listagem paginada (1–10 de 155) e, logo abaixo, a seção Customer Feedback com comentários e avaliações de clientes (1–7 de 7)."
+      },
+      {
+        "number": 2,
+        "action": "O administrador aguarda para verificar se a interface carrega conteúdo adicional ou sofre alguma alteração após o carregamento inicial.",
+        "data": "Nenhum dado adicional",
+        "response": "A tela permaneceu estável, continuando a exibir a mesma lista de usuários registrados e os mesmos comentários de feedback, sem mudanças perceptíveis no conteúdo."
+      }
+    ]
+  }
+}

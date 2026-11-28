@@ -1,0 +1,41 @@
+{
+  "scenario_id": "CEN-CAT-06",
+  "fingerprint": "416b93e68259042f06b916dc29ea6dfeeeb79f3bd1fb177152094bf9a314a5c5",
+  "content": {
+    "flow": "O cliente utiliza o campo de busca do catálogo para pesquisar o termo 'Limão', contendo caractere acentuado, com o objetivo de verificar se o sistema interpreta corretamente entradas em português. Após digitar o termo e confirmar a pesquisa, a interface substitui a listagem completa de produtos pela tela de resultados correspondente ao termo buscado.",
+    "precondition": "O catálogo de produtos está disponível e acessível, exibindo inicialmente a listagem completa de itens na página de busca.",
+    "observed_result": "A página deixou de exibir a listagem geral de produtos (como Apple Juice, Banana Juice, Carrot Juice, entre outros) e passou a mostrar a tela 'Search Results - Limão', indicando que a busca foi processada com o termo acentuado. Como não há produto correspondente no catálogo, a interface exibiu a mensagem de ausência de resultados, com o contador de itens zerado (0 de 0).",
+    "messages": [
+      "Search Results - Limão",
+      "No results found",
+      "Try adjusting your search to find what you're looking for."
+    ],
+    "data": "Termo pesquisado: Limão",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O cliente acessa a página de busca do catálogo, que inicialmente carrega a listagem completa de produtos disponíveis.",
+        "data": "",
+        "response": "A página de busca é carregada exibindo todos os produtos do catálogo, como Apple Juice, Banana Juice e Carrot Juice, com paginação indicando o total de itens."
+      },
+      {
+        "number": 2,
+        "action": "O cliente digita o termo 'Limão' no campo de busca, incluindo o caractere acentuado.",
+        "data": "Limão",
+        "response": "O campo de busca recebe o termo digitado; a listagem de produtos ainda permanece visível neste momento, aguardando a confirmação da pesquisa."
+      },
+      {
+        "number": 3,
+        "action": "O cliente confirma a pesquisa pressionando Enter.",
+        "data": "Limão",
+        "response": "A tela é atualizada para 'Search Results - Limão', e a listagem de produtos é substituída pela mensagem de que nenhum resultado foi encontrado para o termo pesquisado."
+      },
+      {
+        "number": 4,
+        "action": "O cliente aguarda a estabilização da interface após a pesquisa.",
+        "data": "",
+        "response": "Nenhuma alteração adicional é observada; a tela permanece exibindo a mensagem de ausência de resultados para o termo 'Limão'."
+      }
+    ]
+  }
+}

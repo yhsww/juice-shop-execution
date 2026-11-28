@@ -1,0 +1,75 @@
+{
+  "scenario_id": "CEN-CHK-29",
+  "fingerprint": "5db9a337a61c5bd31a6c50b5204234f69506e36857ba083b84d83538cb662f80",
+  "content": {
+    "flow": "O teste verificou o comportamento do formulário de cadastro de novo endereço quando o campo City é deliberadamente deixado em branco. O usuário preencheu País, Nome, Celular, CEP, Endereço e Estado, mas não informou a Cidade, e em seguida tentou confirmar o cadastro por meio do botão de envio.",
+    "precondition": "Cliente autenticado acessando diretamente o formulário de criação de novo endereço, sem necessidade de itens no carrinho.",
+    "observed_result": "Mesmo com todos os demais campos preenchidos corretamente, o botão de envio do formulário permaneceu desabilitado, impedindo a confirmação do cadastro enquanto o campo City não for preenchido, o que evidencia que esse campo é tratado como obrigatório pela validação do formulário.",
+    "messages": [
+      "Placed Apple Juice (1000ml) into basket."
+    ],
+    "data": "País: Brazil; Nome: Cliente Alternativo; Celular: 8599999999; CEP: 60000000; Endereço: Rua Alternativa, 200; Estado: CE; campo City não preenchido.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Acessou a página de cadastro de novo endereço",
+        "data": "",
+        "response": "O formulário 'Add New Address' foi exibido com todos os campos vazios (Country, Name, Mobile Number, ZIP Code, Address, City, State) e os botões Back e Submit disponíveis."
+      },
+      {
+        "number": 2,
+        "action": "Aguardou o carregamento completo da tela",
+        "data": "",
+        "response": "Nenhuma alteração visual adicional foi observada; o formulário permaneceu estável e pronto para preenchimento."
+      },
+      {
+        "number": 3,
+        "action": "Preencheu o campo Country",
+        "data": "Brazil",
+        "response": "O valor foi aceito no campo e a estrutura da página se atualizou mantendo os demais campos vazios."
+      },
+      {
+        "number": 4,
+        "action": "Preencheu o campo Name",
+        "data": "Cliente Alternativo",
+        "response": "O nome foi registrado no campo sem alterações visuais relevantes no restante do formulário."
+      },
+      {
+        "number": 5,
+        "action": "Preencheu o campo Mobile Number",
+        "data": "8599999999",
+        "response": "O número foi aceito no campo, sem impacto visível nos demais elementos da tela."
+      },
+      {
+        "number": 6,
+        "action": "Preencheu o campo ZIP Code",
+        "data": "60000000",
+        "response": "O contador de caracteres do campo passou de 0/8 para 8/8, confirmando que o CEP foi inserido por completo."
+      },
+      {
+        "number": 7,
+        "action": "Preencheu o campo Address",
+        "data": "Rua Alternativa, 200",
+        "response": "O contador de caracteres do campo Address passou de 0/160 para 20/160, confirmando o preenchimento do endereço."
+      },
+      {
+        "number": 8,
+        "action": "Preencheu o campo State",
+        "data": "CE",
+        "response": "O valor foi aceito no campo State, sem alterações relevantes nos demais elementos do formulário."
+      },
+      {
+        "number": 9,
+        "action": "Aguardou a atualização da interface após preencher todos os campos, exceto City",
+        "data": "",
+        "response": "O formulário permaneceu estável, exibindo todos os campos preenchidos com exceção de City, e o botão Submit continuou visível na tela."
+      },
+      {
+        "number": 10,
+        "action": "Verificou o estado do botão Submit sem preencher o campo City",
+        "data": "",
+        "response": "O botão de envio permaneceu desabilitado, confirmando que o formulário não pode ser submetido enquanto a Cidade não for informada."
+      }
+    ]
+  }
+}

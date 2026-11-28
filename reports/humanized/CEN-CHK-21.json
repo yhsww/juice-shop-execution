@@ -1,0 +1,32 @@
+{
+  "scenario_id": "CEN-CHK-21",
+  "fingerprint": "cd1df89a13203d6b3492cb23391f6c5a07db65ae3b0b8d8c5e1b0fea482704bd",
+  "content": {
+    "flow": "O teste verifica se um cliente autenticado consegue localizar um pedido já concluído no histórico de pedidos e, a partir dele, gerar a confirmação em PDF correspondente. A navegação até a tela de histórico exibiu o pedido com seus dados de compra, e o acionamento do botão de impressão redirecionou o navegador para o arquivo de confirmação do pedido selecionado.",
+    "precondition": "Cliente autenticado na loja, com um pedido já concluído (status 'In Transit') disponível na listagem do histórico de pedidos.",
+    "observed_result": "A tela de histórico passou a exibir o pedido com identificador #8aba-49360e919592c772, contendo o item Apple Juice (1000ml), quantidade 1, preço unitário e total de 1.99¤, além do status de envio 'In Transit'. Ao acionar a opção de impressão da confirmação, a aplicação navegou para o endereço do arquivo PDF referente a esse pedido específico, confirmando que o documento foi gerado e associado corretamente ao pedido exibido.",
+    "messages": [
+      "Order History",
+      "No results found You have not placed any orders yet.",
+      "Order ID #8aba-49360e919592c772",
+      "Total Price 1.99¤",
+      "Bonus 0",
+      "Print Order Confirmation"
+    ],
+    "data": "Pedido #8aba-49360e919592c772 contendo Apple Juice (1000ml), quantidade 1, preço unitário 1.99¤, total 1.99¤.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Acessar a tela de histórico de pedidos do cliente autenticado.",
+        "data": "Histórico de pedidos",
+        "response": "A página carregou o pedido concluído, exibindo seu identificador, o item adquirido (Apple Juice 1000ml), quantidade, valores e o status de entrega 'In Transit'."
+      },
+      {
+        "number": 2,
+        "action": "Acionar a opção de impressão da confirmação do pedido listado no histórico.",
+        "data": "Pedido #8aba-49360e919592c772",
+        "response": "O navegador foi redirecionado para o arquivo PDF de confirmação correspondente a esse pedido, indicando que o documento foi gerado com sucesso a partir do item selecionado no histórico."
+      }
+    ]
+  }
+}

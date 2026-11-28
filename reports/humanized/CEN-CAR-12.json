@@ -1,0 +1,58 @@
+{
+  "scenario_id": "CEN-CAR-12",
+  "fingerprint": "fcaf55cc3e8f9df213edd01cd957bc64dc8a1fcde15a2814d0b4b441d8307a38",
+  "content": {
+    "flow": "O cliente autenticado selecionou o produto Apple Juice (1000ml) na listagem e utilizou o controle 'Add to Basket' duas vezes consecutivas no mesmo item. Em seguida, acessou a página do carrinho para verificar como a repetição da ação foi refletida no pedido.",
+    "precondition": "Cliente autenticado na loja, com o carrinho de compras vazio antes do início da interação.",
+    "observed_result": "Após as duas interações com o mesmo produto, o carrinho passou a exibir uma única linha para Apple Juice (1000ml), com quantidade igual a 2 e preço unitário de 1.99¤, totalizando 3.98¤. O indicador de itens do carrinho no cabeçalho foi atualizado de 0 para 2, confirmando que o sistema consolidou as adições em vez de criar duas entradas separadas.",
+    "messages": [
+      "Placed Apple Juice (1000ml) into basket.",
+      "Added another Apple Juice (1000ml) to basket."
+    ],
+    "data": "Apple Juice (1000ml) - quantidade 2 - preço unitário 1.99¤ - total 3.98¤",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário acessou a página inicial de produtos da loja.",
+        "data": "Página inicial de produtos",
+        "response": "A listagem completa de produtos foi carregada, exibindo itens como Apple Juice, Apple Pomace, Banana Juice, entre outros, com o indicador do carrinho zerado."
+      },
+      {
+        "number": 2,
+        "action": "O usuário clicou no botão 'Add to Basket' do produto Apple Juice (1000ml) pela primeira vez.",
+        "data": "Apple Juice (1000ml)",
+        "response": "Uma mensagem confirmando a inclusão do produto foi exibida ('Placed Apple Juice (1000ml) into basket.') e o contador de itens no cabeçalho passou de 0 para 1."
+      },
+      {
+        "number": 3,
+        "action": "O usuário aguardou a estabilização da interface após a primeira adição.",
+        "data": "",
+        "response": "Nenhuma alteração adicional foi percebida além do estado já consolidado, com o contador do carrinho mantido em 1."
+      },
+      {
+        "number": 4,
+        "action": "O usuário clicou novamente no botão 'Add to Basket' do mesmo produto Apple Juice (1000ml).",
+        "data": "Apple Juice (1000ml)",
+        "response": "A interface exibiu uma nova mensagem, desta vez indicando a adição de mais uma unidade ('Added another Apple Juice (1000ml) to basket.'), e o contador do carrinho foi atualizado de 1 para 2."
+      },
+      {
+        "number": 5,
+        "action": "O usuário aguardou a estabilização da interface após a segunda adição.",
+        "data": "",
+        "response": "O estado permaneceu estável, com o indicador do carrinho mantendo o valor 2, sem novas alterações visuais."
+      },
+      {
+        "number": 6,
+        "action": "O usuário abriu a página do carrinho de compras para conferir o resultado das adições.",
+        "data": "Carrinho de compras",
+        "response": "A página do carrinho exibiu uma única linha para Apple Juice (1000ml), com quantidade 2, preço unitário 1.99¤ e valor total de 3.98¤, confirmando que as duas adições foram somadas em um único item."
+      },
+      {
+        "number": 7,
+        "action": "O usuário aguardou a estabilização final da página do carrinho.",
+        "data": "",
+        "response": "A página manteve os dados consolidados: Apple Juice (1000ml), quantidade 2, total de 3.98¤, sem indicação de pontos de bônus para o pedido."
+      }
+    ]
+  }
+}

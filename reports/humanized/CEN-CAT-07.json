@@ -1,0 +1,41 @@
+{
+  "scenario_id": "CEN-CAT-07",
+  "fingerprint": "89347f7cb4c1822cf75eaccaf20de6f130be069a956c8ed224b23d182c13f107",
+  "content": {
+    "flow": "O cenário valida o comportamento do campo de busca do catálogo ao receber um termo com caracteres especiais e acentuação. O cliente acessa a área de produtos, insere o termo 'Açaí / Limão' no campo de pesquisa e confirma a busca, permitindo observar se a interface processa a entrada sem travar ou apresentar erro visual, mesmo quando não há produtos correspondentes.",
+    "precondition": "O catálogo de produtos está disponível e acessível, exibindo a listagem completa de itens antes da realização da busca.",
+    "observed_result": "Após a confirmação da busca, a listagem completa de produtos foi substituída por uma tela de resultados específica, exibindo o cabeçalho 'Search Results - Açaí / Limão' e a mensagem 'No results found', acompanhada da orientação 'Try adjusting your search to find what you're looking for'. O contador de itens passou a exibir '0 of 0', confirmando que nenhum produto correspondeu ao termo pesquisado. A interface manteve-se estável, sem erros ou travamentos, mesmo após o uso de acentuação e do caractere especial '/'.",
+    "messages": [
+      "Search Results - Açaí / Limão",
+      "No results found",
+      "Try adjusting your search to find what you're looking for."
+    ],
+    "data": "Termo de busca: Açaí / Limão",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário acessou a área de busca do catálogo, partindo da listagem geral de produtos.",
+        "data": "",
+        "response": "A página carregou normalmente, exibindo a listagem completa de produtos (Apple Juice, Banana Juice, Carrot Juice, entre outros) com paginação de 16 itens por página."
+      },
+      {
+        "number": 2,
+        "action": "O usuário preencheu o campo de pesquisa com o termo contendo acento e caractere especial.",
+        "data": "Açaí / Limão",
+        "response": "O campo de busca aceitou a digitação sem travar a interface, mantendo a listagem de produtos visível enquanto o texto era inserido."
+      },
+      {
+        "number": 3,
+        "action": "O usuário confirmou a pesquisa pressionando Enter.",
+        "data": "Açaí / Limão",
+        "response": "A interface foi atualizada para a tela de resultados, exibindo o título 'Search Results - Açaí / Limão', a mensagem de ausência de resultados e o contador zerado '0 of 0'."
+      },
+      {
+        "number": 4,
+        "action": "O usuário aguardou a estabilização da tela após o envio da busca.",
+        "data": "",
+        "response": "Nenhuma alteração adicional foi detectada: a tela de 'No results found' permaneceu exibida de forma estável, confirmando que a busca foi concluída sem erros de interface."
+      }
+    ]
+  }
+}

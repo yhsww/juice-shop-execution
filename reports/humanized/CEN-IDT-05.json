@@ -1,0 +1,40 @@
+{
+  "scenario_id": "CEN-IDT-05",
+  "fingerprint": "1423651f9f5d3e89d89e1cbeea973b1a5cb4c4562f2f1cce7e5371b63e5e3c6b",
+  "content": {
+    "flow": "O cenário valida o encerramento da sessão de um cliente autenticado na loja de sucos. Partindo da página inicial de produtos, o usuário acessa o menu de conta, onde é possível visualizar seu e-mail cadastrado e opções como Orders & Payment, Privacy & Security e Logout. Ao selecionar a opção de logout, a sessão autenticada é encerrada e o menu de conta passa a exibir a opção de Login no lugar das informações do usuário logado, confirmando que o sistema não reconhece mais a sessão anterior.",
+    "precondition": "O cliente precisa estar autenticado no sistema, com uma sessão ativa, antes de iniciar o processo de encerramento de sessão.",
+    "observed_result": "Após a interação com a opção de Logout, o menu que antes exibia o e-mail do usuário autenticado e as opções de conta (Orders & Payment, Privacy & Security, Logout) passou a exibir a opção 'Login', indicando que a sessão foi encerrada e o usuário retornou ao estado de visitante não autenticado.",
+    "messages": [
+      "account_circle cen-cen-idt-05-ce4171f1bf@example.com check_circle_outline Orders & Payment security Privacy & Security power_settings_new Logout",
+      "exit_to_app Login"
+    ],
+    "data": "E-mail de teste utilizado na sessão autenticada (cen-cen-idt-05-ce4171f1bf@example.com); nenhum outro dado adicional foi necessário para o fluxo.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário acessa a página inicial da loja, que carrega a listagem de produtos disponíveis.",
+        "data": "Rota inicial da aplicação",
+        "response": "A página inicial é carregada exibindo o catálogo completo de produtos (como Apple Juice, Banana Juice, Carrot Juice, entre outros), com paginação indicando 1–16 de 46 itens."
+      },
+      {
+        "number": 2,
+        "action": "O usuário clica no ícone/menu de conta para acessar as opções do perfil autenticado.",
+        "data": "Nenhum dado adicional",
+        "response": "O menu de conta é expandido, exibindo o e-mail do usuário autenticado e as opções Orders & Payment, Privacy & Security e Logout."
+      },
+      {
+        "number": 3,
+        "action": "O usuário seleciona a opção de Logout dentro do menu de conta.",
+        "data": "Nenhum dado adicional",
+        "response": "A estrutura da página é atualizada: o menu de conta deixa de exibir as informações do usuário autenticado e passa a mostrar a opção 'Login', confirmando o encerramento da sessão."
+      },
+      {
+        "number": 4,
+        "action": "O usuário aguarda a estabilização da interface após o logout.",
+        "data": "Nenhum dado adicional",
+        "response": "Nenhuma alteração visual adicional foi detectada além da transição já observada, com a listagem de produtos permanecendo visível normalmente na tela."
+      }
+    ]
+  }
+}

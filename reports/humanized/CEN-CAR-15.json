@@ -1,0 +1,36 @@
+{
+  "scenario_id": "CEN-CAR-15",
+  "fingerprint": "0414aa871275a7a996469ddaf3a8d610aaea714dc23b001dc0de1e9cb700423c",
+  "content": {
+    "flow": "O teste verifica o comportamento da tela de carrinho quando o cliente autenticado não possui nenhum item adicionado. Ao acessar a página do carrinho, a interface exibe o total zerado e o botão de Checkout permanece presente, mas em estado não habilitado, impedindo que o cliente avance para a finalização da compra sem produtos selecionados.",
+    "precondition": "Cliente autenticado em uma conta recém-criada, sem nenhum produto previamente adicionado ao carrinho.",
+    "observed_result": "A página do carrinho exibe o valor total em 0 e a indicação de que o pedido geraria 0 pontos de bônus, confirmando a ausência de itens. O botão de Checkout permanece visível, porém foi confirmado como desabilitado, bloqueando o início do processo de finalização de compra enquanto o carrinho estiver vazio.",
+    "messages": [
+      "Your Basket",
+      "Total Price: 0¤",
+      "Checkout",
+      "You will gain 0 Bonus Points from this order!"
+    ],
+    "data": "Carrinho vazio (0 itens), total de 0¤, conta de cliente autenticado sem compras anteriores.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O cliente navega até a página do carrinho de compras.",
+        "data": "Acesso à tela de carrinho",
+        "response": "A interface carrega o carrinho do cliente autenticado exibindo-o vazio, com total de 0¤ e indicação de 0 pontos de bônus para o pedido, além do botão de Checkout visível na tela."
+      },
+      {
+        "number": 2,
+        "action": "Aguarda-se a estabilização da interface após o carregamento da página.",
+        "data": "",
+        "response": "Nenhuma alteração visual ocorre; o carrinho permanece exibindo total 0¤ e as mesmas informações de pedido vazio."
+      },
+      {
+        "number": 3,
+        "action": "Verifica-se o estado do botão de Checkout na tela de carrinho vazio.",
+        "data": "",
+        "response": "O botão de Checkout é confirmado como desabilitado, impedindo que o cliente prossiga para a finalização da compra sem itens no carrinho."
+      }
+    ]
+  }
+}

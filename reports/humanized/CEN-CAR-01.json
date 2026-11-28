@@ -1,0 +1,33 @@
+{
+  "scenario_id": "CEN-CAR-01",
+  "fingerprint": "5dff86702e65989fc8cd23f9dbd96e90ad98b8676124aed3ca5818861780d675",
+  "content": {
+    "flow": "O cenário valida a adição de um item do catálogo ao carrinho de compras. Partindo da listagem de produtos, o usuário aciona o controle de inclusão associado ao produto Apple Juice (1000ml); a interface responde atualizando o indicador do carrinho e confirmando a inclusão por meio de uma notificação temporária, demonstrando que o item passou a integrar a seleção de compra do cliente.",
+    "precondition": "O catálogo de produtos está carregado e disponível na página inicial, exibindo itens com preço e botão de inclusão no carrinho, antes de qualquer interação do usuário.",
+    "observed_result": "Após a ação sobre o produto Apple Juice (1000ml), o contador do carrinho, antes zerado, passou a exibir 1 item, e uma notificação confirmando a inclusão do produto no carrinho foi exibida na tela. A listagem de produtos permaneceu visível e inalterada, evidenciando que apenas o estado do carrinho foi afetado.",
+    "messages": [
+      "Placed Apple Juice (1000ml) into basket."
+    ],
+    "data": "Produto: Apple Juice (1000ml), preço 1.99¤",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Acessar a página inicial da loja, onde o catálogo de produtos é exibido com preços e botões de inclusão no carrinho",
+        "data": "Página inicial",
+        "response": "A listagem completa de produtos foi carregada, incluindo o item Apple Juice (1000ml) com preço de 1.99¤ e o indicador do carrinho exibindo 0 itens"
+      },
+      {
+        "number": 2,
+        "action": "Selecionar o controle de inclusão no carrinho correspondente ao produto Apple Juice (1000ml)",
+        "data": "Apple Juice (1000ml)",
+        "response": "O indicador do carrinho foi atualizado para 1 item e uma mensagem de confirmação informando que o produto foi colocado no carrinho foi exibida na interface"
+      },
+      {
+        "number": 3,
+        "action": "Aguardar a estabilização da interface após a inclusão do item",
+        "data": "",
+        "response": "A tela manteve o indicador do carrinho em 1 item e a listagem de produtos permaneceu exibida sem alterações adicionais"
+      }
+    ]
+  }
+}

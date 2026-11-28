@@ -1,0 +1,53 @@
+{
+  "scenario_id": "CEN-CAT-24",
+  "fingerprint": "a8b34565da9fb28aea1d3c9ae0aa7680895efc5a1ab7a7a213364abcfcfd584d",
+  "content": {
+    "flow": "O cenário valida que um item fora do padrão de suco pode ser localizado e detalhado normalmente no catálogo. A partir da listagem geral de produtos, foi utilizado o campo de busca para filtrar pelo termo 'Artwork', o que restringiu a lista a um único resultado. Em seguida, o item foi selecionado para abrir sua página de detalhe, onde ficaram visíveis o preço e a descrição completos do produto.",
+    "precondition": "O catálogo de produtos estava disponível e acessível para um visitante não autenticado, exibindo a listagem completa de itens à venda.",
+    "observed_result": "A busca por 'Artwork' reduziu a listagem de 46 itens para apenas 1 resultado correspondente: 'Best Juice Shop Salesman Artwork', com indicação de estoque limitado ('Only 1 left') e preço de 5000¤. Ao abrir o detalhe do item, a interface passou a exibir também a descrição completa do produto, a quantidade de avaliações (500) e os controles de reviews, confirmando que o item é tratado pelo sistema como um produto comum de catálogo, apesar de não ser um suco.",
+    "messages": [
+      "Only 1 left",
+      "Search Results - Artwork",
+      "Items per page: 16 1 – 1 of 1"
+    ],
+    "data": "Produto: Best Juice Shop Salesman Artwork; Preço: 5000¤; Termo de busca: Artwork",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Acessar a área de busca de produtos a partir da navegação inicial do catálogo.",
+        "data": "",
+        "response": "A interface carregou a listagem completa de produtos, exibindo 46 itens no total, incluindo o 'Best Juice Shop Salesman Artwork' com preço de 5000¤ e indicação de estoque reduzido."
+      },
+      {
+        "number": 2,
+        "action": "Digitar o termo de busca no campo de pesquisa para localizar o item de interesse.",
+        "data": "Artwork",
+        "response": "O campo recebeu o texto digitado, sem alteração imediata na listagem de produtos exibida."
+      },
+      {
+        "number": 3,
+        "action": "Confirmar a busca pressionando Enter.",
+        "data": "",
+        "response": "A listagem foi atualizada para exibir apenas o resultado correspondente ao termo buscado, mostrando o título 'Search Results - Artwork' e um único item: 'Best Juice Shop Salesman Artwork' (5000¤), com contagem '1 – 1 of 1'."
+      },
+      {
+        "number": 4,
+        "action": "Aguardar a estabilização da página de resultados.",
+        "data": "",
+        "response": "A tela permaneceu exibindo o único resultado da busca, sem novas alterações visuais."
+      },
+      {
+        "number": 5,
+        "action": "Selecionar o produto 'Best Juice Shop Salesman Artwork' para abrir seus detalhes.",
+        "data": "",
+        "response": "Foi exibido um painel de detalhe com o nome do produto, a descrição completa sobre a obra (pintura digital representando o personagem Stan), o preço de 5000¤ e a contagem de 500 avaliações, além da opção de fechar o detalhe."
+      },
+      {
+        "number": 6,
+        "action": "Aguardar a estabilização da tela de detalhe do produto.",
+        "data": "",
+        "response": "As informações de descrição, preço e avaliações permaneceram visíveis, sem mudanças adicionais na interface."
+      }
+    ]
+  }
+}

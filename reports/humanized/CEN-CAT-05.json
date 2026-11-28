@@ -1,0 +1,41 @@
+{
+  "scenario_id": "CEN-CAT-05",
+  "fingerprint": "17ff74618ffb86a319ffc2da33b30c6e2636681099716fba499734b3d9958b7c",
+  "content": {
+    "flow": "O cenário valida o comportamento da busca do catálogo quando o cliente pesquisa por um termo que não corresponde a nenhum produto cadastrado. Partindo da listagem completa de produtos, o usuário aciona o campo de busca, digita um termo inexistente e confirma a pesquisa, levando o sistema a atualizar a tela para um estado específico de ausência de resultados, em vez de manter a listagem padrão.",
+    "precondition": "O catálogo de produtos está disponível e carregado, exibindo a listagem completa de itens (como Apple Juice, Banana Juice, Carrot Juice, entre outros) antes do início da busca.",
+    "observed_result": "Após a confirmação da pesquisa, a listagem de produtos foi substituída por uma tela de resultados vazia, identificada pelo título 'Search Results - ProdutoInexistenteXYZ', exibindo a mensagem 'No results found' e o texto complementar orientando o usuário a ajustar os termos de busca. O contador de itens passou a indicar '0 of 0', confirmando que nenhum produto foi retornado para o termo pesquisado.",
+    "messages": [
+      "Search Results - ProdutoInexistenteXYZ",
+      "No results found",
+      "Try adjusting your search to find what you're looking for."
+    ],
+    "data": "Termo pesquisado: ProdutoInexistenteXYZ",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Usuário acessa a área de busca do catálogo, inicialmente exibida sobre a listagem completa de produtos.",
+        "data": "",
+        "response": "A interface carrega a tela de busca mantendo visível a listagem geral de produtos, como Apple Juice, Apple Pomace e Banana Juice, com paginação indicando 46 itens no total."
+      },
+      {
+        "number": 2,
+        "action": "Usuário digita o termo de busca no campo correspondente.",
+        "data": "ProdutoInexistenteXYZ",
+        "response": "O campo de busca recebe o termo digitado; a listagem de produtos permanece visível na tela até a confirmação da pesquisa."
+      },
+      {
+        "number": 3,
+        "action": "Usuário confirma a pesquisa pressionando Enter.",
+        "data": "",
+        "response": "A tela é atualizada para exibir o resultado da busca: o título passa a mostrar 'Search Results - ProdutoInexistenteXYZ', a listagem de produtos desaparece e surge a mensagem 'No results found' acompanhada da orientação para ajustar o termo pesquisado, com contador de itens em '0 of 0'."
+      },
+      {
+        "number": 4,
+        "action": "Usuário aguarda a estabilização da tela após o retorno da busca.",
+        "data": "",
+        "response": "A tela de resultado vazio permanece estável, sem novas alterações visuais, confirmando que o estado de 'sem resultados' é o resultado final da pesquisa."
+      }
+    ]
+  }
+}

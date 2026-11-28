@@ -1,0 +1,106 @@
+{
+  "scenario_id": "CEN-PER-10",
+  "fingerprint": "4cb57dbff7705f3b48d7d9fe89ba91b6f2070fa4209df5c95dbc767e4b0fcc37",
+  "content": {
+    "flow": "O cenário cobre a exclusão de um endereço previamente cadastrado pelo cliente. Após preencher e confirmar o formulário de novo endereço, o usuário acessa a lista de endereços salvos e aciona a remoção do registro recém-criado, verificando se ele deixa de constar na lista.",
+    "precondition": "Cliente autenticado no sistema. Como o próprio cenário precisa de um endereço existente para testar a remoção, ele primeiro cadastra um endereço completo (país, nome, telefone, CEP, logradouro, cidade e estado) antes de executar a exclusão.",
+    "observed_result": "Após o cadastro, o endereço 'Cliente Alternativo' com o logradouro 'Rua Alternativa, 200, Fortaleza, CE, 60000000' e país Brazil passou a aparecer na lista 'My saved addresses'. Ao acionar a remoção desse endereço, ele deixou de ser exibido na lista, restando apenas a opção de adicionar um novo endereço, e a interface exibiu uma confirmação textual de que a remoção foi concluída.",
+    "messages": [
+      "The address at Fortaleza has been successfully added to your addresses.",
+      "Your address has been removed."
+    ],
+    "data": "País: Brazil; Nome: Cliente Alternativo; Telefone: 8599999999; CEP: 60000000; Endereço: Rua Alternativa, 200; Cidade: Fortaleza; Estado: CE",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Usuário acessa o formulário de cadastro de novo endereço.",
+        "data": "",
+        "response": "O formulário 'Add New Address' é exibido com os campos Country, Name, Mobile Number, ZIP Code, Address, City e State vazios, prontos para preenchimento."
+      },
+      {
+        "number": 2,
+        "action": "Sistema carrega completamente a tela do formulário antes da interação.",
+        "data": "",
+        "response": "O formulário permanece estável, sem alterações visuais adicionais."
+      },
+      {
+        "number": 3,
+        "action": "Usuário informa o país do novo endereço no campo correspondente.",
+        "data": "Brazil",
+        "response": "O valor é registrado no campo Country, sem alteração visível adicional na tela."
+      },
+      {
+        "number": 4,
+        "action": "Usuário informa o nome do destinatário no campo Name.",
+        "data": "Cliente Alternativo",
+        "response": "O valor é registrado no campo Name, mantendo o restante do formulário inalterado."
+      },
+      {
+        "number": 5,
+        "action": "Usuário informa o número de telefone no campo Mobile Number.",
+        "data": "8599999999",
+        "response": "O valor é registrado no campo, sem mudanças visuais relevantes no restante da tela."
+      },
+      {
+        "number": 6,
+        "action": "Usuário informa o CEP no campo ZIP Code.",
+        "data": "60000000",
+        "response": "O contador de caracteres do campo é atualizado para 8/8, indicando que o CEP foi preenchido por completo."
+      },
+      {
+        "number": 7,
+        "action": "Usuário informa o logradouro no campo Address.",
+        "data": "Rua Alternativa, 200",
+        "response": "O contador de caracteres do campo Address passa a exibir 20/160, confirmando a digitação do endereço."
+      },
+      {
+        "number": 8,
+        "action": "Usuário informa a cidade no campo City.",
+        "data": "Fortaleza",
+        "response": "O valor é registrado no campo City, sem alterações visuais adicionais relevantes."
+      },
+      {
+        "number": 9,
+        "action": "Usuário informa o estado no campo State.",
+        "data": "CE",
+        "response": "O valor é registrado no campo State, completando os dados obrigatórios do formulário."
+      },
+      {
+        "number": 10,
+        "action": "Usuário confirma o cadastro clicando no botão 'Submit'.",
+        "data": "",
+        "response": "A aplicação navega para a página de produtos, indicando que o envio do formulário foi processado."
+      },
+      {
+        "number": 11,
+        "action": "Sistema finaliza o carregamento da página após o envio do formulário.",
+        "data": "",
+        "response": "A tela de produtos permanece estável, sem novas mudanças visuais."
+      },
+      {
+        "number": 12,
+        "action": "Usuário acessa a lista de endereços salvos.",
+        "data": "",
+        "response": "A página 'My saved addresses' exibe o endereço recém-cadastrado ('Cliente Alternativo', Rua Alternativa, 200, Fortaleza, CE, 60000000, Brazil) e uma mensagem confirma que o endereço foi adicionado com sucesso."
+      },
+      {
+        "number": 13,
+        "action": "Sistema conclui a atualização da lista de endereços.",
+        "data": "",
+        "response": "O endereço cadastrado permanece visível na lista, sem alterações adicionais."
+      },
+      {
+        "number": 14,
+        "action": "Usuário aciona a remoção do endereço salvo.",
+        "data": "",
+        "response": "O endereço 'Cliente Alternativo' deixa de ser exibido na lista, restando apenas a opção de adicionar novo endereço, e a interface exibe a mensagem 'Your address has been removed.'"
+      },
+      {
+        "number": 15,
+        "action": "Sistema finaliza a atualização da lista após a remoção.",
+        "data": "",
+        "response": "A lista de endereços salvos permanece vazia quanto ao registro removido, confirmando que a exclusão foi mantida."
+      }
+    ]
+  }
+}

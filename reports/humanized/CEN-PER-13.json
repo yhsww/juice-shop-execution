@@ -1,0 +1,28 @@
+{
+  "scenario_id": "CEN-PER-13",
+  "fingerprint": "5ee38276852f4cbf14c6e56a0256de3bf0000b62f34390ec02049cfbd22fd356",
+  "content": {
+    "flow": "O teste verifica o que ocorre quando um visitante sem sessão ativa tenta acessar diretamente a página de endereços salvos. Ao navegar para essa área restrita sem estar autenticado, o sistema bloqueia o acesso e exibe uma tela de erro, impedindo a visualização de dados pessoais associados à conta.",
+    "precondition": "Nenhuma sessão de usuário estava ativa no navegador antes do acesso à página de endereços salvos.",
+    "observed_result": "A tentativa de acesso direto à página de endereços salvos resultou em uma tela de erro 403, informando que é necessário fazer login para visualizar aquele conteúdo. A interface manteve apenas os elementos padrão do cabeçalho (menu, busca, conta, carrinho vazio e seletor de idioma), sem exibir qualquer dado de endereço, confirmando que a área protegida não foi carregada.",
+    "messages": [
+      "403",
+      "Please login to view this page."
+    ],
+    "data": "Rota de endereços salvos (), acessada sem autenticação prévia.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O visitante tentou acessar diretamente a página de endereços salvos sem possuir sessão autenticada.",
+        "data": "Rota de endereços salvos",
+        "response": "A interface bloqueou o acesso e exibiu a mensagem de erro 403 com o texto 'Please login to view this page.', mantendo apenas os elementos genéricos do cabeçalho do site."
+      },
+      {
+        "number": 2,
+        "action": "Aguardou-se para verificar se a interface sofreria alguma alteração adicional após o bloqueio inicial.",
+        "data": "—",
+        "response": "Nenhuma mudança foi observada; a tela de erro 403 permaneceu exibida, confirmando que o acesso continuava negado."
+      }
+    ]
+  }
+}

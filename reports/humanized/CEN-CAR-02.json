@@ -1,0 +1,28 @@
+{
+  "scenario_id": "CEN-CAR-02",
+  "fingerprint": "fbcac39fcea098212cf5c55d6b6607c88e0ab766184b76cac2703c9b08632b6a",
+  "content": {
+    "flow": "O cliente acessa diretamente a página do carrinho para conferir os produtos previamente selecionados antes de prosseguir para o checkout. A navegação até essa tela exibe o conteúdo já armazenado na sessão de compra, permitindo revisar item, quantidade e valor antes de decidir pela finalização do pedido.",
+    "precondition": "Já existia um produto adicionado ao carrinho (Apple Juice 1000ml), proveniente de uma seleção feita anteriormente na listagem de produtos.",
+    "observed_result": "Ao abrir a tela do carrinho, o item Apple Juice (1000ml) passou a ser exibido na lista de produtos selecionados, com quantidade 1 e preço unitário de 1.99¤. O valor total do pedido foi recalculado e exibido como 1.99¤, e o botão de Checkout ficou disponível para dar sequência à compra. Também foi exibida a informação de que o pedido geraria 0 pontos de bônus.",
+    "messages": [
+      "Placed Apple Juice (1000ml) into basket.",
+      "You will gain 0 Bonus Points from this order!"
+    ],
+    "data": "Produto: Apple Juice (1000ml); quantidade: 1; preço unitário: 1.99¤; valor total do carrinho: 1.99¤.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário acessa a tela do carrinho de compras para visualizar os itens previamente selecionados.",
+        "data": "Carrinho com 1 item (Apple Juice 1000ml)",
+        "response": "A interface exibiu o carrinho com o produto Apple Juice (1000ml), quantidade 1, preço de 1.99¤ e total do pedido de 1.99¤, além do botão de Checkout disponível."
+      },
+      {
+        "number": 2,
+        "action": "O usuário aguarda a estabilização da tela após o carregamento do carrinho.",
+        "data": "Nenhum dado adicional",
+        "response": "A listagem do carrinho permaneceu estável, mantendo o item Apple Juice (1000ml), a quantidade 1, o preço de 1.99¤ e o total de 1.99¤ exibidos na tela."
+      }
+    ]
+  }
+}

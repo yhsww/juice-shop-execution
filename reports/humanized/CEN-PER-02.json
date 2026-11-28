@@ -1,0 +1,28 @@
+{
+  "scenario_id": "CEN-PER-02",
+  "fingerprint": "046f90ae77141e68ec889d2fd49afccd6ee46915f3542ff9ae93a183bd3ce308",
+  "content": {
+    "flow": "O cliente acessa a área destinada aos endereços de entrega previamente cadastrados, navegando da tela de busca de produtos diretamente para a seção 'My saved addresses'. O objetivo é verificar se a interface carrega corretamente essa área e disponibiliza o controle para visualizar ou adicionar endereços.",
+    "precondition": "Cliente autenticado na aplicação, com sessão ativa e navegação iniciada a partir da tela de busca de produtos.",
+    "observed_result": "A navegação saiu da tela de listagem de produtos e passou a exibir a seção 'My saved addresses', com o cabeçalho da página confirmando o carregamento da área de endereços e o botão 'Add New Address' disponível para cadastro de um novo endereço. A consulta à API de endereços retornou sucesso, indicando que a listagem foi processada pelo sistema. O texto visível não apresentou endereços específicos cadastrados, apenas o título da seção e a opção de adicionar um novo registro.",
+    "messages": [
+      "My saved addresses",
+      "Add New Address"
+    ],
+    "data": "Rota de endereços salvos ()",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O cliente navega até a área de endereços salvos a partir da tela de busca de produtos.",
+        "data": "",
+        "response": "A URL foi alterada para a seção de endereços e a interface passou a exibir o cabeçalho 'My saved addresses' junto ao botão 'Add New Address', confirmando o carregamento da página."
+      },
+      {
+        "number": 2,
+        "action": "O cliente aguarda a estabilização da interface após o carregamento da página de endereços.",
+        "data": "",
+        "response": "Nenhuma alteração adicional foi percebida; a tela permaneceu exibindo o título 'My saved addresses' e o botão para adicionar um novo endereço, indicando que o carregamento já estava completo."
+      }
+    ]
+  }
+}

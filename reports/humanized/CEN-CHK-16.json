@@ -1,0 +1,39 @@
+{
+  "scenario_id": "CEN-CHK-16",
+  "fingerprint": "312c2afabe7e6082e5009b7c191981ce1395f2646bea6ed7114acfa90543161c",
+  "content": {
+    "flow": "O cliente acessou o histórico de pedidos e localizou o pedido concluído, identificado pelo número do pedido, valor total e status 'In Transit'. A partir dessa tela, ele utilizou o controle de impressão da confirmação do pedido, que expôs a opção 'Print Order Confirmation' na interface, permitindo preparar a confirmação do pedido para impressão.",
+    "precondition": "Cliente autenticado na loja e com um pedido já concluído, contendo ao menos um item registrado (Apple Juice 1000ml), disponível para consulta na tela de Histórico de Pedidos.",
+    "observed_result": "A tela de Histórico de Pedidos passou a exibir os detalhes do pedido concluído (ID do pedido, valor total, status de envio e item comprado) e, após a interação do cliente, o rótulo 'Print Order Confirmation' tornou-se visível na interface, indicando que a opção de impressão da confirmação do pedido foi disponibilizada.",
+    "messages": [
+      "Placed Apple Juice (1000ml) into basket."
+    ],
+    "data": "Pedido concluído contendo o produto Apple Juice (1000ml), quantidade 1, valor total 1.99¤.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O cliente acessou a tela de Histórico de Pedidos para consultar o pedido concluído.",
+        "data": "Histórico de Pedidos",
+        "response": "A interface exibiu o pedido com ID, valor total de 1.99¤, status 'In Transit' e o item Apple Juice (1000ml) com quantidade 1."
+      },
+      {
+        "number": 2,
+        "action": "O cliente aguardou a estabilização da tela após o carregamento do pedido.",
+        "data": "",
+        "response": "Nenhuma alteração adicional foi observada; os dados do pedido permaneceram exibidos da mesma forma."
+      },
+      {
+        "number": 3,
+        "action": "O cliente interagiu com a opção de impressão da confirmação do pedido.",
+        "data": "Opção 'Print Order Confirmation'",
+        "response": "A interface atualizou seu conteúdo e passou a exibir o rótulo 'Print Order Confirmation' junto aos detalhes do pedido, indicando que a opção de impressão foi acionada."
+      },
+      {
+        "number": 4,
+        "action": "O cliente aguardou a estabilização da interface após acionar a impressão.",
+        "data": "",
+        "response": "Nenhuma mudança adicional foi detectada; a tela manteve os detalhes do pedido e o rótulo de impressão visível."
+      }
+    ]
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "scenario_id": "CEN-IDT-27",
+  "fingerprint": "ea8ee517fd09fe9ff4182ba597580a875015b40581acf361731f8b26015c7f09",
+  "content": {
+    "flow": "O visitante acessa a tela de recuperação de senha e informa um e-mail que não está cadastrado no sistema. O objetivo é verificar se, mesmo sem uma conta correspondente, a interface libera o campo de pergunta de segurança para preenchimento, o que indicaria uma falha de validação.",
+    "precondition": "Nenhuma sessão ativa; o visitante acessa a página de recuperação de senha sem estar autenticado.",
+    "observed_result": "Após o preenchimento do e-mail inexistente, o campo de Pergunta de Segurança permaneceu indisponível para interação, indicando que o sistema não libera essa etapa quando o e-mail informado não corresponde a uma conta cadastrada.",
+    "messages": [],
+    "data": "E-mail informado: nao-existe-cen-cen-idt-27-1c57622267@example.com (endereço inexistente, sem conta associada)",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O visitante abre a tela de recuperação de senha pelo menu de conta.",
+        "data": "Acesso à página de recuperação de senha",
+        "response": "A página carrega os campos de Email, Pergunta de Segurança e Nova Senha, com o botão Change exibido."
+      },
+      {
+        "number": 2,
+        "action": "O visitante preenche o campo de e-mail com um endereço que não possui cadastro no sistema.",
+        "data": "nao-existe-cen-cen-idt-27-1c57622267@example.com",
+        "response": "A interface realiza uma consulta ao sistema para verificar o e-mail informado, mas não exibe nenhuma pergunta de segurança correspondente na tela."
+      },
+      {
+        "number": 3,
+        "action": "O visitante aguarda para permitir que a interface processe a verificação do e-mail informado.",
+        "data": "",
+        "response": "Nenhuma alteração visual ocorre; o campo de Pergunta de Segurança permanece sem conteúdo."
+      },
+      {
+        "number": 4,
+        "action": "É verificado se o campo de Pergunta de Segurança continua bloqueado para preenchimento.",
+        "data": "",
+        "response": "O campo permanece desabilitado, confirmando que a pergunta de segurança não é liberada para um e-mail não cadastrado."
+      }
+    ]
+  }
+}

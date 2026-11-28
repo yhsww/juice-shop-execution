@@ -1,0 +1,25 @@
+{
+  "scenario_id": "CEN-CAT-11",
+  "fingerprint": "01ed689bbf3a6b9dee55c69c891e1454788babd999ac3dd2276cad19067ce0f9",
+  "content": {
+    "flow": "O cenário valida se o preço de um produto específico é exibido corretamente na listagem do catálogo. O usuário acessa a página inicial da loja e localiza o item Apple Juice (1000ml) entre os produtos listados, conferindo o valor monetário associado a ele antes de qualquer decisão de compra.",
+    "precondition": "O catálogo de produtos deve estar disponível e acessível ao cliente, exibindo a listagem padrão de itens na página inicial.",
+    "observed_result": "Ao carregar a página inicial, a listagem de produtos foi exibida com todos os itens visíveis, incluindo Apple Juice (1000ml) com o valor de 1.99¤ claramente apresentado ao lado do botão de adicionar ao carrinho. A grade de produtos permaneceu estável durante a espera, confirmando que o preço exibido corresponde ao carregamento inicial do catálogo, sem qualquer indicação de erro ou ausência de valor.",
+    "messages": [],
+    "data": "Produto: Apple Juice (1000ml), preço exibido: 1.99¤.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário acessa a página inicial da loja, onde a listagem completa de produtos é carregada.",
+        "data": "Página inicial do catálogo",
+        "response": "A interface exibiu a grade de produtos com nomes e preços, incluindo Apple Juice (1000ml) com valor de 1.99¤ e o botão para adicionar ao carrinho posicionado ao lado do preço."
+      },
+      {
+        "number": 2,
+        "action": "O usuário aguarda a estabilização da interface para confirmar que os dados exibidos permanecem consistentes.",
+        "data": "",
+        "response": "A listagem de produtos manteve-se inalterada, com o preço de Apple Juice (1000ml) permanecendo visível em 1.99¤, sem alterações ou mensagens de erro."
+      }
+    ]
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "scenario_id": "CEN-PER-14",
+  "fingerprint": "d663c042a93225dfc4c418fc817b57a24fd134cbd9cc9bc71e02ec0d8cd17fa5",
+  "content": {
+    "flow": "O cliente autenticado acessa a seção de carteira digital a partir da navegação do sistema, com o objetivo de visualizar o saldo disponível e as opções de movimentação financeira. Ao carregar a página, a interface exibe o painel da carteira com o valor atual do saldo e os controles para adicionar fundos.",
+    "precondition": "Cliente autenticado no sistema, navegando a partir da área de busca de produtos.",
+    "observed_result": "A tela de carteira digital passou a ser exibida, apresentando o saldo atual zerado (0.00), o campo para informar valor de depósito e o botão de ação para adicionar fundos. A requisição de consulta de saldo foi realizada com sucesso ao carregar a página.",
+    "messages": [
+      "Registration completed successfully. You can now log in."
+    ],
+    "data": "Saldo da carteira exibido: 0.00",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário acessa a seção de carteira digital pelo menu do sistema",
+        "data": "—",
+        "response": "A página foi atualizada para o painel da carteira, exibindo o título 'Digital Wallet', o saldo atual (0.00), o campo de valor para depósito e o botão 'Deposit'. Uma mensagem de confirmação de cadastro recém-concluído ainda aparecia na tela nesse momento."
+      },
+      {
+        "number": 2,
+        "action": "O usuário aguarda o carregamento completo da página da carteira",
+        "data": "—",
+        "response": "A tela permaneceu estável, mantendo o saldo em 0.00 e os mesmos elementos do painel da carteira, sem alterações adicionais visíveis."
+      }
+    ]
+  }
+}

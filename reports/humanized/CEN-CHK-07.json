@@ -1,0 +1,69 @@
+{
+  "scenario_id": "CEN-CHK-07",
+  "fingerprint": "3d8469ddc8497387a20a10fee5d3c12e02744f9f493312816f25c8bcfc7892f0",
+  "content": {
+    "flow": "Na etapa de pagamento do checkout, o usuário acessou a opção de cadastrar um novo cartão de crédito, preencheu os dados do titular, número do cartão e data de validade, e confirmou o cadastro. A interface passou a exibir o cartão recém-cadastrado como uma opção disponível na lista de métodos de pagamento salvos.",
+    "precondition": "Usuário autenticado e na etapa de pagamento do checkout, com a tela 'My Payment Options' exibida e ainda sem nenhum cartão cadastrado.",
+    "observed_result": "Após o envio do formulário, a lista de métodos de pagamento passou a exibir o novo cartão cadastrado, identificado pelos últimos quatro dígitos (0002), nome do titular (Cliente Teste) e data de validade (12/2090). Uma notificação confirmando o salvamento do cartão foi exibida na tela.",
+    "messages": [
+      "Your card ending with 0002 has been saved for your convenience."
+    ],
+    "data": "Nome do titular: Cliente Teste; Número do cartão: 4000000000000002 (exibido como ************0002); Validade: 12/2090",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Usuário acessou a tela de opções de pagamento do pedido.",
+        "data": "",
+        "response": "A tela 'My Payment Options' foi exibida, mostrando as opções 'Add new card', pagamento via carteira com saldo de 0.00 e opção de cupom de desconto."
+      },
+      {
+        "number": 2,
+        "action": "Usuário selecionou a opção para adicionar um novo cartão de crédito.",
+        "data": "",
+        "response": "Um formulário foi exibido com os campos Name, Card Number, Expiry Month e Expiry Year, além de um botão para confirmar o cadastro."
+      },
+      {
+        "number": 3,
+        "action": "Sistema processou a abertura do formulário antes de permitir o preenchimento.",
+        "data": "",
+        "response": "O formulário de cadastro de cartão permaneceu visível, sem alterações adicionais na tela."
+      },
+      {
+        "number": 4,
+        "action": "Usuário preencheu o campo de nome do titular do cartão.",
+        "data": "Cliente Teste",
+        "response": "O campo de nome foi preenchido, sem alteração visual relevante no restante do formulário."
+      },
+      {
+        "number": 5,
+        "action": "Usuário preencheu o campo de número do cartão com um número de teste.",
+        "data": "4000000000000002",
+        "response": "O contador de caracteres do campo Card Number avançou de 0/16 para 16/16, indicando que o número completo foi registrado no campo."
+      },
+      {
+        "number": 6,
+        "action": "Usuário selecionou o mês de validade do cartão.",
+        "data": "12",
+        "response": "O campo Expiry Month exibiu o valor selecionado, sem outras mudanças visuais no formulário."
+      },
+      {
+        "number": 7,
+        "action": "Usuário selecionou o ano de validade do cartão.",
+        "data": "2090",
+        "response": "O campo Expiry Year exibiu o valor selecionado, completando os dados obrigatórios do formulário."
+      },
+      {
+        "number": 8,
+        "action": "Usuário confirmou o cadastro do cartão clicando em 'Submit'.",
+        "data": "",
+        "response": "O cartão passou a aparecer na lista de métodos de pagamento salvos, exibido como ************0002, Cliente Teste, 12/2090, acompanhado da mensagem de confirmação de que o cartão foi salvo."
+      },
+      {
+        "number": 9,
+        "action": "Sistema finalizou a atualização da interface após o cadastro.",
+        "data": "",
+        "response": "A lista de pagamentos manteve o cartão recém-cadastrado visível, junto com a mensagem de confirmação do salvamento."
+      }
+    ]
+  }
+}

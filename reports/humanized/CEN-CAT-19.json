@@ -1,0 +1,40 @@
+{
+  "scenario_id": "CEN-CAT-19",
+  "fingerprint": "c4d209192bc27fc0a5a27d7613a1a9a5d75529232c7cfa73ce5a921025fc8955",
+  "content": {
+    "flow": "O teste avalia a robustez do campo de busca do catálogo ao receber um termo extremamente longo. O visitante acessa a área de produtos, insere no campo de pesquisa uma sequência repetida da palavra 'suco' totalizando cerca de 300 caracteres e confirma a busca pressionando Enter. O objetivo é verificar se a aplicação processa essa entrada sem travar e como exibe o resultado ao usuário.",
+    "precondition": "O catálogo de produtos está disponível e carregado, exibindo a listagem padrão de itens antes de qualquer busca ser realizada.",
+    "observed_result": "Após o envio do termo longo, a listagem de produtos que antes exibia dezenas de itens (como Apple Juice, Banana Juice, Berry Juice, entre outros) foi substituída por uma tela de resultados vazia. A interface passou a mostrar o cabeçalho 'Search Results' seguido do termo buscado por extenso, acompanhado da mensagem de ausência de resultados e do indicador de contagem zerado (0 de 0 itens). A aplicação manteve-se estável e responsiva durante todo o processo, sem erros ou travamentos.",
+    "messages": [
+      "No results found",
+      "Try adjusting your search to find what you're looking for."
+    ],
+    "data": "Termo de busca: 'suco' repetido até totalizar aproximadamente 300 caracteres.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Visitante acessa a área de busca do catálogo, que carrega a listagem completa de produtos disponíveis na loja.",
+        "data": "",
+        "response": "A tela exibe a listagem padrão de produtos, incluindo itens como Apple Juice, Banana Juice, Berry Juice e outros, com paginação indicando o total de itens disponíveis no catálogo."
+      },
+      {
+        "number": 2,
+        "action": "Visitante preenche o campo de busca com um termo extenso, formado pela repetição da palavra 'suco'.",
+        "data": "sucosucosuco... (aproximadamente 300 caracteres)",
+        "response": "O campo aceita a digitação do termo longo sem apresentar erro visual ou travamento; a listagem de produtos permanece inalterada enquanto o termo é inserido."
+      },
+      {
+        "number": 3,
+        "action": "Visitante confirma a busca pressionando Enter para submeter o termo digitado.",
+        "data": "",
+        "response": "A interface atualiza o conteúdo da página, substituindo a listagem de produtos por uma tela de resultados que exibe o termo pesquisado no título e informa que nenhum produto foi encontrado, com o contador de itens zerado."
+      },
+      {
+        "number": 4,
+        "action": "Sistema processa a consulta e estabiliza a exibição do resultado da busca.",
+        "data": "",
+        "response": "A tela de resultados permanece estável, confirmando a mensagem de ausência de resultados e o indicador '0 de 0' itens, sem qualquer sinal de erro ou instabilidade na aplicação."
+      }
+    ]
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "scenario_id": "CEN-CAT-04",
+  "fingerprint": "da9b71f515fbf93bbe9b041c8f5104782d420ec7dc0e5de1f1d67388c5279aa6",
+  "content": {
+    "flow": "O cliente acessa a área de busca do catálogo e utiliza apenas uma parte do nome de um produto para localizar itens relacionados. Ao digitar o termo parcial e confirmar a pesquisa, o sistema interpreta a entrada e filtra a listagem de produtos, exibindo somente os itens cujo nome contém a sequência de caracteres informada, mesmo sem o nome completo ter sido digitado.",
+    "precondition": "O catálogo de produtos está disponível e acessível, exibindo inicialmente a listagem completa de itens antes de qualquer pesquisa ser realizada.",
+    "observed_result": "Após a pesquisa com o termo parcial, a listagem de produtos foi reduzida de 46 itens (visualização completa do catálogo) para apenas 4 resultados, passando a exibir o título 'Search Results - Appl' e os produtos Apple Juice (1000ml), Apple Pomace, OWASP Snakes and Ladders - Web Applications e Pineapple Juice (1000ml), todos contendo a sequência 'Appl' no nome. A contagem de itens exibida também foi atualizada para refletir o novo total filtrado.",
+    "messages": [
+      "Search Results - Appl"
+    ],
+    "data": "Termo de busca parcial: Appl",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Usuário acessa a tela de busca de produtos a partir da navegação do catálogo.",
+        "data": "",
+        "response": "A interface carrega a listagem completa de produtos disponíveis, exibindo itens como Apple Juice, Banana Juice e outros, totalizando 46 produtos distribuídos em páginas."
+      },
+      {
+        "number": 2,
+        "action": "Usuário digita o termo parcial no campo de busca.",
+        "data": "Appl",
+        "response": "O campo de busca recebe o texto digitado, mantendo a listagem completa de produtos visível até a confirmação da pesquisa."
+      },
+      {
+        "number": 3,
+        "action": "Usuário confirma a pesquisa pressionando Enter.",
+        "data": "",
+        "response": "A interface atualiza o título da página para 'Search Results - Appl' e substitui a listagem completa por um conjunto filtrado de 4 produtos cujos nomes contêm o termo pesquisado: Apple Juice (1000ml), Apple Pomace, OWASP Snakes and Ladders - Web Applications e Pineapple Juice (1000ml)."
+      },
+      {
+        "number": 4,
+        "action": "Usuário aguarda a estabilização da tela após a aplicação do filtro.",
+        "data": "",
+        "response": "A listagem filtrada permanece estável, confirmando que os 4 resultados correspondentes ao termo parcial continuam exibidos sem novas alterações."
+      }
+    ]
+  }
+}

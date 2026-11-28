@@ -1,0 +1,87 @@
+{
+  "scenario_id": "CEN-CHK-33",
+  "fingerprint": "310c6194c98718343d3cb20ef53e48192d879aac67561a15b977c8e9c572aa80",
+  "content": {
+    "flow": "O cenário valida o comportamento do formulário de cadastro de endereço quando o campo ZIP Code recebe uma quantidade de dígitos superior ao limite permitido. O cliente autenticado acessa o formulário de novo endereço, preenche os campos obrigatórios (país, nome, telefone, CEP, endereço, cidade e estado) e, ao digitar um CEP com 12 dígitos no campo ZIP Code, o sistema reage exibindo um contador que ultrapassa o limite esperado, sinalizando que o valor extrapola o tamanho permitido para esse campo.",
+    "precondition": "Cliente autenticado acessando o formulário de cadastro de novo endereço, com todos os demais campos obrigatórios preenchidos antes da inserção do CEP.",
+    "observed_result": "Ao digitar o valor '123456789012' no campo ZIP Code, o contador de caracteres do campo passou a exibir '12/8', evidenciando que a quantidade digitada excedeu o limite de 8 caracteres definido para o campo. Mesmo após completar o preenchimento dos demais campos do formulário e sair do campo ZIP Code (via tecla Tab), o botão Submit permaneceu desabilitado, impedindo o envio do formulário com o CEP fora do padrão aceito.",
+    "messages": [
+      "ZIP Code 12/8"
+    ],
+    "data": "ZIP Code: '123456789012' (CEP com 12 dígitos, excedendo o limite de 8 caracteres do campo); demais campos preenchidos: Country 'Brazil', Name 'Cliente Alternativo', Mobile Number '8599999999', Address 'Rua Alternativa, 200', City 'Fortaleza', State 'CE'.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Acessar o formulário de cadastro de novo endereço",
+        "data": "",
+        "response": "A página de criação de endereço é carregada, exibindo os campos Country, Name, Mobile Number, ZIP Code (com contador 0/8), Address, City e State, além do botão Submit."
+      },
+      {
+        "number": 2,
+        "action": "Aguardar o carregamento completo da interface do formulário",
+        "data": "",
+        "response": "Nenhuma alteração visual adicional é percebida; o formulário permanece estável com todos os campos vazios."
+      },
+      {
+        "number": 3,
+        "action": "Preencher o campo Country com o país do endereço",
+        "data": "Brazil",
+        "response": "O valor é registrado no campo, sem alteração visível relevante na estrutura do formulário."
+      },
+      {
+        "number": 4,
+        "action": "Preencher o campo Name com o nome do destinatário",
+        "data": "Cliente Alternativo",
+        "response": "O valor é registrado no campo, sem alteração visível relevante na estrutura do formulário."
+      },
+      {
+        "number": 5,
+        "action": "Preencher o campo Mobile Number com o telefone de contato",
+        "data": "8599999999",
+        "response": "O valor é registrado no campo, sem alteração visível relevante na estrutura do formulário."
+      },
+      {
+        "number": 6,
+        "action": "Preencher o campo ZIP Code com um CEP de 12 dígitos",
+        "data": "123456789012",
+        "response": "O contador de caracteres do campo ZIP Code passa de '0/8' para '12/8', indicando visualmente que o valor informado ultrapassa o limite permitido para o campo."
+      },
+      {
+        "number": 7,
+        "action": "Preencher o campo Address com o logradouro",
+        "data": "Rua Alternativa, 200",
+        "response": "O contador de caracteres do campo Address é atualizado para '20/160', refletindo a quantidade de caracteres digitados dentro do limite permitido."
+      },
+      {
+        "number": 8,
+        "action": "Preencher o campo City com a cidade do endereço",
+        "data": "Fortaleza",
+        "response": "O valor é registrado no campo, sem alteração visível relevante adicional na estrutura do formulário."
+      },
+      {
+        "number": 9,
+        "action": "Preencher o campo State com a sigla do estado",
+        "data": "CE",
+        "response": "O valor é registrado no campo, sem alteração visível relevante adicional na estrutura do formulário."
+      },
+      {
+        "number": 10,
+        "action": "Pressionar a tecla Tab para sair do campo State e mover o foco entre os campos do formulário",
+        "data": "",
+        "response": "O foco percorre os campos ZIP Code e Address, mantendo os valores e contadores já preenchidos, sem disparar nova validação visível."
+      },
+      {
+        "number": 11,
+        "action": "Aguardar a estabilização da interface após o preenchimento de todos os campos",
+        "data": "",
+        "response": "Nenhuma mudança visual adicional é detectada; os valores e contadores permanecem como exibidos anteriormente, incluindo o contador '12/8' no campo ZIP Code."
+      },
+      {
+        "number": 12,
+        "action": "Verificar o estado do botão Submit após o preenchimento do formulário com o CEP inválido",
+        "data": "",
+        "response": "O botão Submit permanece desabilitado, confirmando que o formulário não permite o envio enquanto o campo ZIP Code contiver um valor acima do limite de caracteres permitido."
+      }
+    ]
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "scenario_id": "CEN-IDT-12",
+  "fingerprint": "1b491593faf60ab7447fed21013acf7865bfa02897d3d36ef5fdae30330de558",
+  "content": {
+    "flow": "O teste tentou acessar diretamente a área de exclusão de dados (rota /dataerasure) para verificar a disponibilidade dessa funcionalidade de privacidade. Em vez de carregar a página esperada, a aplicação retornou um erro de servidor, impedindo a verificação da opção de exclusão.",
+    "precondition": "Era esperado que houvesse uma conta de teste disponível para autenticação antes do acesso à área de privacidade.",
+    "observed_result": "Ao navegar para a rota de exclusão de dados, a interface não exibiu o formulário ou opção de exclusão esperada. Em seu lugar, a tela passou a mostrar uma mensagem de erro 500 do servidor (Express), com detalhes técnicos de stack trace, indicando falha no processamento da requisição pelo backend. O estado permaneceu inalterado mesmo após aguardar, confirmando que a página de erro era o estado final da tentativa de acesso.",
+    "messages": [
+      "OWASP Juice Shop (Express ^4.22.1) 500 Error: Blocked illegal activity"
+    ],
+    "data": "Rota acessada: /dataerasure",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário tentou acessar a área de exclusão de dados navegando diretamente para a rota correspondente, a partir da página inicial de produtos.",
+        "data": "/dataerasure",
+        "response": "A navegação não carregou a interface de privacidade/exclusão; em vez disso, o servidor retornou uma página de erro 500, exibindo mensagem técnica indicando bloqueio de atividade considerada ilegítima pela aplicação."
+      },
+      {
+        "number": 2,
+        "action": "O usuário aguardou para verificar se a interface se atualizaria ou se o conteúdo da área de exclusão seria carregado posteriormente.",
+        "data": "",
+        "response": "Nenhuma mudança foi observada na tela; a mensagem de erro 500 permaneceu exibida, confirmando que a funcionalidade não ficou disponível durante a tentativa de acesso."
+      }
+    ]
+  }
+}

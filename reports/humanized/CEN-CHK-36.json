@@ -1,0 +1,46 @@
+{
+  "scenario_id": "CEN-CHK-36",
+  "fingerprint": "daff887f34bb071f60241136fce3cad036f291751ad62ce063d446132c7a8887",
+  "content": {
+    "flow": "O cenário valida o comportamento da área de cupom na etapa de pagamento quando nenhum código é informado. O cliente acessa a tela de opções de pagamento, expande a seção de cupom e observa o estado do campo e do botão de resgate sem preencher nenhum valor.",
+    "precondition": "Cliente autenticado com a etapa de pagamento acessível, exibindo as opções de pagamento (cartão, carteira e cupom) disponíveis para seleção.",
+    "observed_result": "Ao expandir a seção de cupom, a interface passou a exibir um campo de texto para inserção do código, um contador de caracteres (0/10) e o botão Redeem. Como nenhum código foi digitado, o botão permaneceu no estado desabilitado, impedindo o resgate de um cupom vazio.",
+    "messages": [
+      "Add a coupon code to receive discounts",
+      "Need a coupon code? Follow us on BlueSky or Reddit for monthly coupons and other spam!"
+    ],
+    "data": "Nenhum código de cupom foi inserido (campo mantido vazio, contador em 0/10).",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O cliente acessa a etapa de pagamento, onde ficam disponíveis as opções de cartão, carteira digital e cupom.",
+        "data": "—",
+        "response": "A tela carregou exibindo as opções de pagamento, incluindo o saldo da carteira e a seção para adicionar um cupom."
+      },
+      {
+        "number": 2,
+        "action": "O cliente aguarda o carregamento completo da tela de pagamento antes de interagir.",
+        "data": "—",
+        "response": "A tela permaneceu estável, exibindo as mesmas opções de pagamento sem alterações."
+      },
+      {
+        "number": 3,
+        "action": "O cliente clica na opção 'Add a coupon' para expandir a área de inserção de código.",
+        "data": "—",
+        "response": "A seção de cupom se expandiu, exibindo o campo de código, a mensagem incentivando o cliente a seguir os canais oficiais para obter cupons, e o botão Redeem."
+      },
+      {
+        "number": 4,
+        "action": "O cliente aguarda a estabilização da interface após a expansão da seção de cupom.",
+        "data": "—",
+        "response": "A interface manteve o campo de cupom vazio, com contador em 0/10 caracteres e o botão Redeem visível ao lado do campo."
+      },
+      {
+        "number": 5,
+        "action": "O cliente verifica o estado do botão Redeem sem ter preenchido nenhum código de cupom.",
+        "data": "—",
+        "response": "O botão Redeem permaneceu desabilitado, confirmando que o resgate não pode ser realizado sem um código informado."
+      }
+    ]
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "scenario_id": "CEN-CHK-37",
+  "fingerprint": "5d20caa06654646e4e90408956b7e6c4c4b8cb0082e02e6a29b87a9a145d8601",
+  "content": {
+    "flow": "A partir do carrinho com um item (Apple Juice 1000ml), o cliente avança pelo processo de checkout, confirma o endereço de entrega cadastrado, seleciona a opção de entrega expressa 'One Day Delivery' no lugar da entrega padrão, escolhe o cartão salvo terminado em 0002 como forma de pagamento e chega à tela final de resumo do pedido, onde o custo da entrega escolhida passa a compor o valor total a pagar.",
+    "precondition": "Cliente autenticado com um produto (Apple Juice 1000ml, 1.99¤) já presente no carrinho, endereço de entrega 'Rua Teste, 100' previamente cadastrado e cartão de teste terminado em 0002 disponível como meio de pagamento.",
+    "observed_result": "Ao selecionar 'One Day Delivery' (0.99¤) em vez da entrega padrão (0.00¤), o resumo final do pedido passou a exibir uma linha específica de 'Delivery' no valor de 0.99¤, somada ao valor dos itens (1.99¤), resultando em um Total Price de 2.98¤, valor superior ao que seria cobrado com a entrega padrão. O resumo também exibiu o endereço de entrega, o método de pagamento (cartão terminado em 0002) e o botão para finalizar e pagar o pedido.",
+    "messages": [
+      "Order Summary Items 1.99¤ Delivery 0.99¤ Promotion 0.00¤ Total Price 2.98¤",
+      "You will gain 0 Bonus Points from this order!"
+    ],
+    "data": "Produto: Apple Juice (1000ml), quantidade 1, valor unitário 1.99¤; Endereço: Rua Teste, 100, Fortaleza, CE; Método de entrega selecionado: One Day Delivery (0.99¤, 1 dia); Cartão de pagamento: terminado em 0002; Total final: 2.98¤.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O cliente acessa a tela do carrinho, onde o item previamente adicionado permanece disponível para prosseguir com a compra.",
+        "data": "Apple Juice (1000ml), quantidade 1, 1.99¤",
+        "response": "A interface exibiu o carrinho com o produto, a quantidade e o Total Price de 1.99¤, além do botão para seguir ao checkout."
+      },
+      {
+        "number": 2,
+        "action": "O cliente inicia o checkout clicando em 'Checkout' no carrinho.",
+        "data": "",
+        "response": "A tela avançou para a seleção de endereço, exibindo o endereço cadastrado 'Rua Teste, 100, Fortaleza, CE' como opção disponível."
+      },
+      {
+        "number": 3,
+        "action": "O cliente aguarda o carregamento completo da tela de seleção de endereço.",
+        "data": "",
+        "response": "Nenhuma alteração visual adicional foi registrada; a tela permaneceu estável exibindo o endereço cadastrado."
+      },
+      {
+        "number": 4,
+        "action": "O cliente seleciona o endereço 'Rua Teste, 100' como destino de entrega.",
+        "data": "Rua Teste, 100, Fortaleza, CE",
+        "response": "O endereço permaneceu destacado como selecionado, mantendo o botão 'Continue' disponível para avançar."
+      },
+      {
+        "number": 5,
+        "action": "O cliente confirma o endereço selecionado avançando pelo botão 'Continue'.",
+        "data": "",
+        "response": "A interface avançou para a tela de escolha de velocidade de entrega, exibindo as três opções disponíveis: One Day Delivery (0.99¤, 1 dia), Fast Delivery (0.50¤, 3 dias) e Standard Delivery (0.00¤, 5 dias)."
+      },
+      {
+        "number": 6,
+        "action": "O cliente aguarda a estabilização da tela de opções de entrega.",
+        "data": "",
+        "response": "Nenhuma mudança adicional foi observada; as três opções de entrega permaneceram visíveis."
+      },
+      {
+        "number": 7,
+        "action": "O cliente seleciona a opção 'One Day Delivery' em vez da entrega padrão.",
+        "data": "One Day Delivery, 0.99¤, 1 dia",
+        "response": "A opção de entrega expressa permaneceu marcada na lista, com o botão 'Continue' disponível para prosseguir."
+      },
+      {
+        "number": 8,
+        "action": "O cliente confirma a escolha de entrega avançando pelo botão 'Continue'.",
+        "data": "",
+        "response": "A tela avançou para as opções de pagamento, exibindo o cartão cadastrado terminado em 0002 e o valor a pagar já atualizado para 2.98¤, refletindo o custo da entrega expressa somado ao item do carrinho."
+      },
+      {
+        "number": 9,
+        "action": "O cliente aguarda o carregamento da tela de pagamento.",
+        "data": "",
+        "response": "Nenhuma mudança adicional foi registrada; o valor de 2.98¤ e o cartão terminado em 0002 permaneceram visíveis."
+      },
+      {
+        "number": 10,
+        "action": "O cliente seleciona o cartão terminado em 0002 como forma de pagamento.",
+        "data": "Cartão terminado em 0002",
+        "response": "O cartão permaneceu destacado como meio de pagamento selecionado, mantendo o valor a pagar em 2.98¤."
+      },
+      {
+        "number": 11,
+        "action": "O cliente aguarda a estabilização da tela após selecionar o cartão.",
+        "data": "",
+        "response": "Nenhuma alteração adicional foi detectada; a tela de pagamento permaneceu inalterada."
+      },
+      {
+        "number": 12,
+        "action": "O cliente confirma o meio de pagamento avançando pelo botão 'Continue'.",
+        "data": "",
+        "response": "A interface exibiu a tela final de resumo do pedido, detalhando o endereço de entrega, o método de pagamento, os itens do carrinho e o detalhamento de valores: Items 1.99¤, Delivery 0.99¤, Promotion 0.00¤ e Total Price 2.98¤."
+      },
+      {
+        "number": 13,
+        "action": "O cliente aguarda a estabilização da tela de resumo final antes de finalizar o pedido.",
+        "data": "",
+        "response": "O resumo permaneceu estável, exibindo o botão 'Place your order and pay' e o valor total de 2.98¤ já consolidado com o custo da entrega expressa."
+      }
+    ]
+  }
+}

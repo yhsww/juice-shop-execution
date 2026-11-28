@@ -1,0 +1,30 @@
+{
+  "scenario_id": "CEN-CHK-44",
+  "fingerprint": "5424de4ed35c11099b28935ffbfb17107555d95487f26caa9bb86d81a54b79d3",
+  "content": {
+    "flow": "O cliente autenticado acessa a página de assinatura Deluxe Membership para consultar os benefícios oferecidos e o valor da adesão, sem efetuar nenhum pagamento. A navegação exibe o conteúdo informativo da assinatura, permitindo verificar o que está incluído no plano antes de qualquer decisão de compra.",
+    "precondition": "Cliente autenticado na loja, previamente navegando na área de busca de produtos.",
+    "observed_result": "A navegação troca a tela de listagem de produtos pela página dedicada à assinatura Deluxe Membership, que passa a exibir o título do plano, sua descrição, o preço de adesão (49¤) e um botão para se tornar membro. Abaixo da descrição principal, a página também exibe os benefícios do plano: acesso a ofertas exclusivas, entrega rápida ilimitada e compra sem restrições de quantidade. Nenhuma ação de pagamento ou confirmação de assinatura foi realizada.",
+    "messages": [
+      "Deluxe Membership Enjoy amazing benefits as a deluxe customer of OWASP Juice Shop. Check out what is included with your membership.",
+      "Deals and Offers As a deluxe member, you get access to exclusive deals and irresistible offers.",
+      "Free Fast Delivery Get unlimited free Fast Delivery for all products in the shop.",
+      "Unlimited Purchase Enjoy unrestricted purchase of your favourite products."
+    ],
+    "data": "Página de assinatura: Deluxe Membership; Preço exibido: 49¤",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário acessa a página de assinatura Deluxe Membership a partir da área de busca de produtos.",
+        "data": "Rota de destino: página de assinatura Deluxe",
+        "response": "A interface carrega o conteúdo da assinatura Deluxe, exibindo título, descrição do plano, preço de 49¤, botão para se tornar membro e a lista de benefícios (ofertas exclusivas, entrega rápida ilimitada e compra ilimitada)."
+      },
+      {
+        "number": 2,
+        "action": "O usuário aguarda a estabilização do carregamento da página após o acesso.",
+        "data": "—",
+        "response": "O conteúdo da página de assinatura permanece estável, sem alterações visuais adicionais, confirmando que todas as informações do plano (benefícios e preço) já estavam totalmente carregadas."
+      }
+    ]
+  }
+}

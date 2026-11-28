@@ -1,0 +1,45 @@
+{
+  "scenario_id": "CEN-IDT-03",
+  "fingerprint": "607044960035c79f74a8a91502333a248875b3203211ec7dd5a7a589da8cf472",
+  "content": {
+    "flow": "O teste teve como objetivo validar o acesso à aplicação por meio da tela de login. O usuário acessou a página de login, preencheu os campos de e-mail e senha e acionou o botão de entrada. Entretanto, o e-mail efetivamente utilizado na execução foi um endereço de teste gerado automaticamente, diferente do e-mail de conta previsto no cenário, e a senha informada correspondeu à senha de referência do cenário. Como resultado, o sistema não reconheceu a combinação de credenciais e respondeu com uma mensagem de erro de autenticação, mantendo o usuário na tela de login sem conceder acesso à área autenticada.",
+    "precondition": "Era esperado que existisse uma conta de teste válida disponível para autenticação, previamente cadastrada na aplicação.",
+    "observed_result": "Após o envio do formulário, a interface permaneceu na tela de login e passou a exibir a mensagem 'Invalid email or password.' acima dos campos de e-mail e senha. Não houve nenhuma alteração indicando sessão iniciada, como exibição de nome de usuário, menu de conta autenticada ou redirecionamento para outra área da aplicação.",
+    "messages": [
+      "Invalid email or password."
+    ],
+    "data": "E-mail utilizado na tentativa de login: cen-cen-idt-03-d8d0b84307@example.com; senha utilizada: Teste@12345.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Usuário acessou a tela de login da aplicação.",
+        "data": "",
+        "response": "A página foi carregada exibindo o formulário de login, com os campos de e-mail e senha, além das opções 'Forgot your password?', 'Log in with Google' e 'Not yet a customer?'."
+      },
+      {
+        "number": 2,
+        "action": "Usuário preencheu o campo de e-mail do formulário de login.",
+        "data": "cen-cen-idt-03-d8d0b84307@example.com",
+        "response": "O campo de e-mail passou a exibir o valor informado, sem alterações adicionais perceptíveis na estrutura da tela."
+      },
+      {
+        "number": 3,
+        "action": "Usuário preencheu o campo de senha do formulário de login.",
+        "data": "Teste@12345",
+        "response": "O valor foi inserido no campo de senha; não houve mudança visual adicional na tela além do preenchimento do campo."
+      },
+      {
+        "number": 4,
+        "action": "Usuário acionou o botão 'Log in' para enviar as credenciais informadas.",
+        "data": "",
+        "response": "A interface exibiu a mensagem 'Invalid email or password.' no topo do formulário, indicando que a combinação de e-mail e senha não foi aceita pelo sistema."
+      },
+      {
+        "number": 5,
+        "action": "Aguardou-se a atualização da interface após a tentativa de login.",
+        "data": "",
+        "response": "A tela permaneceu estável na página de login, mantendo visível a mensagem de erro e os campos do formulário, sem indícios de autenticação bem-sucedida."
+      }
+    ]
+  }
+}

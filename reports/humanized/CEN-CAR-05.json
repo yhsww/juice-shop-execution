@@ -1,0 +1,34 @@
+{
+  "scenario_id": "CEN-CAR-05",
+  "fingerprint": "924b401090b04b707e52d3d01beef3279272a9ec3204e9290d2057baaa9261a7",
+  "content": {
+    "flow": "O cenário valida a remoção de um item previamente adicionado ao carrinho. O cliente acessa a página do carrinho, onde o produto Apple Juice (1000ml) está listado com quantidade 1 e preço unitário de 1.99¤, compondo um total de 1.99¤. Ao acionar o controle de remoção associado a esse item, a lista de produtos do carrinho é esvaziada e o valor total é recalculado para refletir a ausência do item.",
+    "precondition": "O carrinho do cliente já possuía um produto adicionado (Apple Juice, 1000ml, quantidade 1, preço unitário 1.99¤), com o total exibido em 1.99¤ antes da remoção.",
+    "observed_result": "Após a remoção, o item Apple Juice (1000ml) deixou de ser exibido na lista do carrinho, o indicador de quantidade no ícone do carrinho foi atualizado de 1 para 0 e o valor total passou de 1.99¤ para 0¤, confirmando que o produto foi efetivamente retirado da seleção de compra.",
+    "messages": [
+      "Your Basket (anonymous) Apple Juice (1000ml) 1 1.99¤ Total Price: 1.99¤ Checkout You will gain 0 Bonus Points from this order!",
+      "Your Basket (anonymous) Total Price: 0¤ Checkout You will gain 0 Bonus Points from this order!"
+    ],
+    "data": "Produto: Apple Juice (1000ml); quantidade: 1; preço unitário: 1.99¤; total antes da remoção: 1.99¤; total após a remoção: 0¤.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O cliente acessa a página do carrinho de compras para visualizar os itens previamente selecionados.",
+        "data": "Carrinho com 1 produto (Apple Juice 1000ml)",
+        "response": "A interface exibe o item Apple Juice (1000ml), quantidade 1, preço unitário 1.99¤ e total de 1.99¤, confirmando que o carrinho estava populado antes da remoção."
+      },
+      {
+        "number": 2,
+        "action": "O cliente aciona o controle de remoção vinculado ao item listado no carrinho.",
+        "data": "Item removido: Apple Juice (1000ml)",
+        "response": "A listagem do carrinho é atualizada: o produto deixa de aparecer, o total exibido passa a 0¤ e o indicador de itens no ícone do carrinho muda de 1 para 0."
+      },
+      {
+        "number": 3,
+        "action": "O sistema estabiliza a interface após a remoção, permitindo confirmar o novo estado do carrinho.",
+        "data": "Não aplicável",
+        "response": "A página permanece consistente com o carrinho vazio, mantendo o total em 0¤ e nenhum produto listado, sem novas alterações visuais."
+      }
+    ]
+  }
+}

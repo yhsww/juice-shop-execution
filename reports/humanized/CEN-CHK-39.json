@@ -1,0 +1,28 @@
+{
+  "scenario_id": "CEN-CHK-39",
+  "fingerprint": "dd600b8dbd3f9925dc572b496d756858aa68863abb4fadd50402c54f397d1468",
+  "content": {
+    "flow": "O cenário acompanha a etapa final de pagamento de um pedido para um cliente recém-cadastrado, cuja carteira digital ainda não possui saldo. Ao chegar na tela de opções de pagamento, o usuário visualiza a alternativa de pagar usando a carteira (Wallet), que exibe o saldo disponível e o valor correspondente a ser cobrado na finalização da compra.",
+    "precondition": "Cliente autenticado com uma conta recém-criada, cuja carteira digital possui saldo zero, e que já havia selecionado um método de entrega antes de chegar à etapa de pagamento.",
+    "observed_result": "A tela de pagamento exibiu a opção 'Pay using wallet' com o saldo da carteira indicado como 0.00, porém o valor a ser cobrado no botão de pagamento apareceu como 'NaN¤' em vez de um valor monetário válido, evidenciando que o cálculo do montante não foi processado corretamente quando o saldo da carteira está zerado. As demais opções de pagamento (adicionar cartão, cupom de desconto e outras formas de pagamento) permaneceram visíveis e inalteradas entre as duas capturas realizadas, sem qualquer mudança de estado na interface.",
+    "messages": [
+      "My Payment Options Add new card Add a credit or debit card Pay using wallet Wallet Balance 0.00 Pay NaN¤ Add a coupon Add a coupon code to receive discounts Other payment options",
+      "Add a coupon Add a coupon code to receive discounts"
+    ],
+    "data": "Carteira digital com saldo 0.00; valor de pagamento exibido como NaN¤",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário acessa a etapa de pagamento do pedido, onde é apresentada a lista de opções disponíveis, incluindo a possibilidade de pagar com a carteira digital.",
+        "data": "Saldo da carteira: 0.00",
+        "response": "A interface exibiu a opção 'Pay using wallet' com saldo zerado e o valor a ser pago representado como 'NaN¤', além das opções de adicionar cartão, cupom de desconto e outras formas de pagamento."
+      },
+      {
+        "number": 2,
+        "action": "O usuário aguarda para verificar se a interface atualiza ou corrige a exibição do valor de pagamento relacionado à carteira sem saldo.",
+        "data": "—",
+        "response": "Nenhuma alteração ocorreu na tela; as opções de pagamento, o saldo zerado e o valor 'NaN¤' permaneceram exibidos da mesma forma, sem recálculo ou correção visível."
+      }
+    ]
+  }
+}

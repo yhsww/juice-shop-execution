@@ -1,0 +1,39 @@
+{
+  "scenario_id": "CEN-CAR-09",
+  "fingerprint": "982a2c025678dc4b06094da2de6182f10e1886bb151eaaf1a4114bddf06b6fa9",
+  "content": {
+    "flow": "O teste verificou o comportamento do carrinho ao tentar reduzir a quantidade de um item que já possui apenas 1 unidade. Com o produto Apple Juice (1000ml) presente na cesta, o usuário acionou o controle de diminuição de quantidade para avaliar se o sistema permitiria reduzir o valor abaixo de 1 ou removeria o item automaticamente.",
+    "precondition": "Cliente autenticado com acesso à página Your Basket, contendo o produto Apple Juice (1000ml) com quantidade igual a 1 unidade e preço total de 1.99¤.",
+    "observed_result": "Após o clique no controle de diminuição, a interface registrou chamadas de atualização do item do carrinho, mas o texto final exibido na tela permaneceu mostrando Apple Juice (1000ml) com quantidade 1 e Total Price: 1.99¤. Não houve remoção do item nem alteração visível da quantidade ou do valor total exibido ao usuário.",
+    "messages": [
+      "Placed Apple Juice (1000ml) into basket. X"
+    ],
+    "data": "Produto: Apple Juice (1000ml); quantidade inicial: 1; preço unitário: 1.99¤; preço total: 1.99¤",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Usuário acessou a página do carrinho para visualizar os itens atualmente selecionados.",
+        "data": "—",
+        "response": "A tela exibiu o item Apple Juice (1000ml) com quantidade 1, preço unitário 1.99¤ e Total Price: 1.99¤."
+      },
+      {
+        "number": 2,
+        "action": "Usuário aguardou o carregamento completo da página do carrinho antes de interagir com os controles de quantidade.",
+        "data": "—",
+        "response": "Nenhuma alteração visual foi observada; o item e os valores permaneceram inalterados na tela."
+      },
+      {
+        "number": 3,
+        "action": "Usuário clicou no controle de diminuição de quantidade do item Apple Juice (1000ml), que já estava com apenas 1 unidade.",
+        "data": "—",
+        "response": "A interface processou a interação, mas o texto exibido ao final manteve o mesmo item, com quantidade 1 e Total Price: 1.99¤, sem indicação de remoção ou alteração de valor."
+      },
+      {
+        "number": 4,
+        "action": "Usuário aguardou possível atualização adicional da interface após o clique no controle de diminuição.",
+        "data": "—",
+        "response": "Nenhuma mudança visual adicional foi detectada; o carrinho continuou exibindo o mesmo item, quantidade e valor total."
+      }
+    ]
+  }
+}

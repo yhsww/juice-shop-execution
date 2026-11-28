@@ -1,0 +1,27 @@
+{
+  "scenario_id": "CEN-ADM-05",
+  "fingerprint": "25720c1e848ed3ef148f8478d1d690015b9954886afc0736229b31a6fe04493c",
+  "content": {
+    "flow": "Um visitante sem sessão autenticada tentou acessar diretamente a área de administração da loja digitando a rota correspondente no navegador. O sistema identificou que o usuário não possuía permissão para essa área e bloqueou o acesso, impedindo a exibição do painel administrativo.",
+    "precondition": "Nenhuma sessão de usuário estava ativa no navegador antes da tentativa de acesso à área administrativa.",
+    "observed_result": "Em vez de carregar o painel de administração, a interface exibiu uma tela de erro de acesso negado, informando o código 403 e a mensagem de que o acesso àquela página não é permitido. Nenhum conteúdo administrativo foi exibido em nenhum momento.",
+    "messages": [
+      "403 You are not allowed to access this page!"
+    ],
+    "data": "Rota de administração () acessada diretamente pelo visitante.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O visitante, sem estar autenticado, tentou acessar diretamente a área de administração do sistema digitando a rota correspondente no navegador.",
+        "data": "",
+        "response": "A navegação foi bloqueada e a interface exibiu uma tela de erro com o código 403, acompanhada da mensagem informando que o acesso àquela página não é permitido."
+      },
+      {
+        "number": 2,
+        "action": "Aguardou-se para verificar se a interface sofreria alguma alteração após o bloqueio inicial.",
+        "data": "",
+        "response": "A tela de acesso negado permaneceu exibida sem alterações, confirmando que o bloqueio de acesso se manteve estável e não houve liberação posterior do conteúdo administrativo."
+      }
+    ]
+  }
+}

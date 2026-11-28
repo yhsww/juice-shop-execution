@@ -1,0 +1,28 @@
+{
+  "scenario_id": "CEN-IDT-09",
+  "fingerprint": "fc4ebdf2678bde389050e91f8d7841a2a01a70b59a5a8d5638296b4f7a8284ed",
+  "content": {
+    "flow": "O cenário valida o acesso à funcionalidade de recuperação de senha a partir da página inicial da loja. O usuário é direcionado para uma tela específica onde o sistema solicita o e-mail da conta, a resposta da pergunta de segurança e a definição de uma nova senha, permitindo restabelecer o acesso sem depender da senha anterior.",
+    "precondition": "O usuário está na página inicial da aplicação e ainda não está autenticado, condição necessária para acionar o fluxo de recuperação de acesso à conta.",
+    "observed_result": "A navegação substitui a listagem de produtos pela tela de redefinição de senha, que passa a exibir os campos Email, Security Question e New Password, além do campo de confirmação Repeat New Password. A interface também exibe a orientação de que a nova senha deve ter entre 5 e 40 caracteres e disponibiliza o botão Change para concluir a alteração, confirmando que a tela de recuperação foi carregada corretamente.",
+    "messages": [
+      "Password must be 5-40 characters long.",
+      "Forgot Password"
+    ],
+    "data": "Rota de recuperação de senha acessada (); nenhum valor de e-mail foi efetivamente preenchido durante a execução.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário acessa a opção de recuperação de senha, saindo da listagem de produtos e sendo direcionado para a tela específica de redefinição de acesso.",
+        "data": "Rota de recuperação de senha",
+        "response": "A interface troca o conteúdo exibido: a página deixa de mostrar os produtos e passa a apresentar o formulário de recuperação, com os campos de e-mail, pergunta de segurança e nova senha visíveis."
+      },
+      {
+        "number": 2,
+        "action": "O usuário aguarda a estabilização da tela após o carregamento do formulário de recuperação.",
+        "data": "",
+        "response": "A tela permanece estável, mantendo visíveis os campos de e-mail, pergunta de segurança, nova senha e o botão Change, sem novas alterações de layout."
+      }
+    ]
+  }
+}

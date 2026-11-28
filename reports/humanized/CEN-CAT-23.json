@@ -1,0 +1,41 @@
+{
+  "scenario_id": "CEN-CAT-23",
+  "fingerprint": "c0a1f966d272f58ba49f8adf3581875ab1881429a7836e1acc107c86c98be53a",
+  "content": {
+    "flow": "O teste avalia o comportamento do formulário de avaliação de produto quando nenhum texto é informado. A partir da listagem de produtos, o usuário abriu o detalhe do item 'Apple Juice (1000ml)', onde é exibido o painel de avaliações com um campo de texto (limite de 160 caracteres) e o botão de envio. Sem digitar nenhum conteúdo no campo, foi verificado o estado do controle de envio da avaliação, confirmando que o sistema impede o envio de avaliações vazias.",
+    "precondition": "Usuário autenticado na loja, com a listagem de produtos carregada e o produto 'Apple Juice (1000ml)' disponível para seleção.",
+    "observed_result": "Ao abrir o detalhe do produto, o painel de avaliações foi exibido com o campo de texto vazio (0/160 caracteres) e o botão de envio (Submit) permaneceu desabilitado, impedindo o envio de uma avaliação sem conteúdo.",
+    "messages": [
+      "Reviews (5)",
+      "Write a review",
+      "Max. 160 characters 0/160"
+    ],
+    "data": "Produto: Apple Juice (1000ml); Texto da avaliação: nenhum (campo vazio)",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Usuário acessou a página inicial com a listagem de produtos.",
+        "data": "/#/",
+        "response": "A listagem de produtos foi carregada, exibindo itens como Apple Juice (1000ml), Apple Pomace, Banana Juice, entre outros, cada um com preço e botão de adicionar ao carrinho."
+      },
+      {
+        "number": 2,
+        "action": "Usuário clicou no produto 'Apple Juice (1000ml)' para abrir seu detalhe.",
+        "data": "Apple Juice (1000ml)",
+        "response": "O detalhe do produto foi exibido, incluindo a seção de avaliações (Reviews) com 5 avaliações existentes, um campo de texto para nova avaliação com contador 0/160 caracteres e o botão Submit."
+      },
+      {
+        "number": 3,
+        "action": "Usuário aguardou a estabilização da interface antes de interagir com o formulário de avaliação.",
+        "data": "",
+        "response": "Nenhuma alteração visual adicional foi registrada; o painel de avaliação permaneceu exibido com o campo de texto vazio."
+      },
+      {
+        "number": 4,
+        "action": "Usuário verificou o estado do botão de envio da avaliação sem ter digitado nenhum texto no campo.",
+        "data": "Campo de avaliação vazio",
+        "response": "O botão de envio permaneceu desabilitado, confirmando que o sistema não permite submeter uma avaliação sem conteúdo textual."
+      }
+    ]
+  }
+}

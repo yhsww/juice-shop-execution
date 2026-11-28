@@ -1,0 +1,29 @@
+{
+  "scenario_id": "CEN-IDT-11",
+  "fingerprint": "e1ad929a1697bfa902f5072fee024adf4f185ceb2fcaed56c3cab159d8cb720b",
+  "content": {
+    "flow": "O teste acessou diretamente a área de privacidade voltada à exportação de dados pessoais, navegando da página de busca de produtos para a tela de 'Request Data Export'. Nessa tela, o usuário tem a opção de escolher o formato do arquivo (JSON, PDF ou Excel) e acionar o botão de solicitação, que indica que a exportação será aberta em uma nova janela do navegador. A execução registrou a chegada à tela e a presença dos controles de exportação, sem prosseguir com o clique no botão de solicitação.",
+    "precondition": "Era necessário haver uma conta de teste autenticada para acessar a área de privacidade e segurança do usuário.",
+    "observed_result": "A navegação substituiu a listagem de produtos pela tela de exportação de dados pessoais, exibindo o seletor de formato (JSON, PDF, Excel) e o botão 'Request', além do aviso de que o arquivo exportado abrirá em uma nova janela do navegador. Não houve evidência de que a solicitação de exportação tenha sido efetivamente disparada, apenas de que a tela correspondente foi carregada corretamente.",
+    "messages": [
+      "Request Data Export",
+      "Export Format : JSON PDF Excel",
+      "(Your data export will open in a new Browser window.)"
+    ],
+    "data": "Rota de destino: área de exportação de dados pessoais (privacy-security/data-export); formatos disponíveis: JSON, PDF e Excel.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário navegou da tela de busca de produtos até a área de privacidade destinada à exportação de dados pessoais.",
+        "data": "Rota de privacidade e segurança para exportação de dados",
+        "response": "A interface substituiu o conteúdo de produtos pela tela 'Request Data Export', exibindo o seletor de formato de exportação (JSON, PDF, Excel) e o botão 'Request', com aviso de que o arquivo seria aberto em nova janela do navegador."
+      },
+      {
+        "number": 2,
+        "action": "O usuário aguardou para verificar se a interface apresentaria alguma atualização após o carregamento da tela.",
+        "data": "Nenhum dado adicional informado",
+        "response": "A tela permaneceu estável, mantendo visíveis o seletor de formato e o botão de solicitação, sem indicação de nova mudança de estado."
+      }
+    ]
+  }
+}

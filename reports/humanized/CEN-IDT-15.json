@@ -1,0 +1,41 @@
+{
+  "scenario_id": "CEN-IDT-15",
+  "fingerprint": "92aa01afa88476e476e3f71c42d571da2ba6aed6f421ad97701d6a5528e2304f",
+  "content": {
+    "flow": "Na tela de cadastro de usuário, o teste verifica o comportamento do formulário quando o campo de e-mail é deixado em branco. O cliente interage com o campo de e-mail e sai dele sem preencher nenhum valor, permitindo observar se a aplicação sinaliza a ausência de preenchimento antes de permitir o envio do cadastro.",
+    "precondition": "A tela de cadastro de usuário (User Registration) está aberta, exibindo os campos Email, Password, Repeat Password e Security Question, todos vazios.",
+    "observed_result": "Ao sair do campo Email sem preenchê-lo, o formulário passou a exibir uma mensagem de validação abaixo do campo, indicando que o preenchimento é obrigatório. O restante do formulário (Password, Repeat Password, Security Question e botão Register) permaneceu visível e inalterado, sem avançar para a conclusão do cadastro.",
+    "messages": [
+      "Please provide an email address.",
+      "Password must be 5-40 characters long.",
+      "This cannot be changed later!"
+    ],
+    "data": "Campo de e-mail deixado vazio durante a tentativa de cadastro.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Acessar a tela de cadastro de usuário",
+        "data": "Navegação até a página de registro",
+        "response": "A página de cadastro foi carregada exibindo os campos Email, Password, Repeat Password, Security Question/Answer e o botão Register."
+      },
+      {
+        "number": 2,
+        "action": "Selecionar o campo de e-mail (clique no campo Email)",
+        "data": "Nenhum valor inserido",
+        "response": "O foco foi direcionado para o campo Email, mantendo os demais campos do formulário visíveis e vazios."
+      },
+      {
+        "number": 3,
+        "action": "Sair do campo de e-mail sem preenchê-lo (tecla Tab)",
+        "data": "Campo Email vazio",
+        "response": "O formulário exibiu a mensagem 'Please provide an email address.' logo abaixo do campo, indicando que o preenchimento é obrigatório."
+      },
+      {
+        "number": 4,
+        "action": "Aguardar a interface para confirmar a estabilidade da validação exibida",
+        "data": "Nenhuma ação adicional",
+        "response": "A mensagem de campo obrigatório permaneceu visível, sem alterações adicionais na tela."
+      }
+    ]
+  }
+}

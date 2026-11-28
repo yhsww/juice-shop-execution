@@ -1,0 +1,43 @@
+{
+  "scenario_id": "CEN-PER-15",
+  "fingerprint": "b05ab82dc782388c4eb2853a35e99d99ad4eca27e5fc2efc21de707c00d77d6b",
+  "content": {
+    "flow": "O teste verifica o comportamento da página 'Customer Feedback' quando o cliente autenticado preenche apenas o campo de comentário, deixando a avaliação por estrelas no valor padrão sem selecionar explicitamente uma nota. Após digitar o texto, a aplicação foi observada para confirmar se o botão de envio permanece bloqueado nessa condição.",
+    "precondition": "Cliente autenticado e navegando até a página de envio de feedback, com o formulário de 'Customer Feedback' carregado, exibindo os campos de Author, Comment, Rating e o desafio de CAPTCHA.",
+    "observed_result": "Ao digitar o comentário 'Teste AMBOLS', o contador de caracteres do campo Comment foi atualizado de 0/160 para 12/160, confirmando que o texto foi registrado no formulário. O campo Rating permaneceu com o valor padrão de 1 estrela, sem alteração pelo usuário. Na verificação final, o botão de envio (Submit) permaneceu desabilitado, indicando que a ausência de preenchimento do CAPTCHA e/ou de uma nota explícita impede o envio do feedback.",
+    "messages": [],
+    "data": "Comentário informado: 'Teste AMBOLS'",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Acessar a página de envio de feedback do cliente",
+        "data": "",
+        "response": "A página 'Customer Feedback' foi carregada, exibindo os campos Author, Comment (0/160 caracteres), Rating com 1 estrela selecionada por padrão, o desafio de CAPTCHA e o botão Submit."
+      },
+      {
+        "number": 2,
+        "action": "Aguardar o carregamento completo da interface antes de interagir",
+        "data": "",
+        "response": "Nenhuma alteração visual foi registrada; o formulário permaneceu estável com os mesmos elementos exibidos anteriormente."
+      },
+      {
+        "number": 3,
+        "action": "Preencher o campo de comentário com o texto do feedback",
+        "data": "Teste AMBOLS",
+        "response": "O contador de caracteres do campo Comment foi atualizado para 12/160, confirmando que o texto foi digitado corretamente no campo, enquanto o Rating permaneceu inalterado em 1 estrela."
+      },
+      {
+        "number": 4,
+        "action": "Aguardar nova atualização da interface após o preenchimento",
+        "data": "",
+        "response": "Nenhuma mudança adicional foi detectada; o formulário manteve o comentário preenchido e os demais campos no mesmo estado."
+      },
+      {
+        "number": 5,
+        "action": "Verificar o estado do botão de envio sem selecionar uma nota",
+        "data": "",
+        "response": "O botão Submit permaneceu desabilitado, confirmando que o formulário não pôde ser enviado nessa condição, apesar do comentário estar preenchido."
+      }
+    ]
+  }
+}

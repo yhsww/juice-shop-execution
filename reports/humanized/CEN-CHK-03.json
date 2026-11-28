@@ -1,0 +1,49 @@
+{
+  "scenario_id": "CEN-CHK-03",
+  "fingerprint": "eebbe447e11023ecec40071533a9e6bcb2f5592ff6043de65bd01bfac2fa984f",
+  "content": {
+    "flow": "O teste inicia com o carrinho já contendo o produto Apple Juice (1000ml) e avança para a etapa de checkout. Ao acionar o botão de finalização de compra, a aplicação exibe a tela de seleção de endereço, apresentando o endereço previamente cadastrado do cliente. Após selecionar essa linha de endereço e confirmar o avanço, o sistema transita para a etapa seguinte do checkout, exibindo o mesmo endereço como destino de entrega confirmado e disponibilizando as opções de modalidade de frete.",
+    "precondition": "O carrinho de compras contém o produto Apple Juice (1000ml) com total de 1.99¤, e o cliente já possui um endereço cadastrado (Rua Teste, 100, Fortaleza, CE).",
+    "observed_result": "A navegação a partir do carrinho levou à tela 'Select an address', que exibiu o endereço cadastrado do cliente (Cliente Teste, Rua Teste, 100, Fortaleza, CE, 60000000, Brazil). Após a seleção dessa linha e a confirmação, a interface avançou para a tela de escolha de modalidade de entrega, onde o mesmo endereço passou a figurar como 'Delivery Address' confirmado, acompanhado de um número de telefone associado e das opções de frete (One Day Delivery, Fast Delivery e Standard Delivery) com seus respectivos preços e prazos.",
+    "messages": [],
+    "data": "Produto no carrinho: Apple Juice (1000ml), quantidade 1, valor 1.99¤; Endereço selecionado: Cliente Teste, Rua Teste, 100, Fortaleza, CE, 60000000, Brazil; Telefone associado: 8599999999.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Acessar a tela do carrinho de compras",
+        "data": "Carrinho com Apple Juice (1000ml)",
+        "response": "A interface exibiu o item Apple Juice (1000ml) com quantidade 1 e preço 1.99¤, além do total da compra e do botão para prosseguir ao checkout."
+      },
+      {
+        "number": 2,
+        "action": "Acionar o botão 'Checkout' para iniciar a etapa de finalização da compra",
+        "data": "",
+        "response": "A tela mudou para a seleção de endereço, exibindo o cadastro existente do cliente (Cliente Teste, Rua Teste, 100, Fortaleza, CE) junto com a opção de adicionar um novo endereço e o botão para continuar."
+      },
+      {
+        "number": 3,
+        "action": "Aguardar o carregamento completo da tela de seleção de endereço",
+        "data": "",
+        "response": "A tela permaneceu estável, exibindo o endereço cadastrado e o botão de continuar, sem alterações adicionais."
+      },
+      {
+        "number": 4,
+        "action": "Selecionar a linha correspondente ao endereço cadastrado (Rua Teste, 100)",
+        "data": "Rua Teste, 100, Fortaleza, CE, 60000000, Brazil",
+        "response": "O endereço permaneceu em destaque na lista de seleção, sem alteração visual adicional além da marcação do item como escolhido."
+      },
+      {
+        "number": 5,
+        "action": "Acionar o botão 'Continue' para confirmar o endereço selecionado",
+        "data": "",
+        "response": "A aplicação avançou para a etapa de escolha de modalidade de entrega, exibindo o endereço confirmado como 'Delivery Address', o telefone associado e as opções de frete disponíveis com preços e prazos."
+      },
+      {
+        "number": 6,
+        "action": "Aguardar a estabilização da tela de modalidade de entrega",
+        "data": "",
+        "response": "A tela de opções de entrega permaneceu exibida sem novas mudanças, mantendo o endereço de entrega confirmado e as opções de frete visíveis."
+      }
+    ]
+  }
+}

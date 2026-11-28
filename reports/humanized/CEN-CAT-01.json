@@ -1,0 +1,27 @@
+{
+  "scenario_id": "CEN-CAT-01",
+  "fingerprint": "a67ce1e1c2d0d985c03e0b9596b2aff92ebaaad188a914f1679d71aca81e671b",
+  "content": {
+    "flow": "O cliente acessa a página inicial da loja para verificar se o catálogo de produtos está disponível para navegação. A interface carrega apresentando a listagem de itens com seus respectivos preços, confirmando que a vitrine de produtos está operacional e pronta para consulta.",
+    "precondition": "A aplicação Juice Shop está em execução e acessível, sem produtos previamente adicionados à cesta.",
+    "observed_result": "A página inicial carregou exibindo a lista completa de produtos disponíveis, cada um com nome, preço e opção de adicionar à cesta. O cabeçalho exibe o contador da cesta zerado, o seletor de idioma definido como inglês e a paginação indicando 16 itens exibidos de um total de 46 produtos cadastrados no catálogo.",
+    "messages": [
+      "Language has been changed to English"
+    ],
+    "data": "Nenhum dado de entrada foi utilizado; a verificação ocorreu apenas pela navegação até a rota inicial.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário acessa a página inicial da loja para visualizar o catálogo de produtos.",
+        "data": "Rota inicial (/#/)",
+        "response": "A interface carregou a vitrine completa de produtos, exibindo itens como Apple Juice, Banana Juice, Carrot Juice e Lemon Juice, cada um com preço visível e botão para adicionar à cesta. O rodapé da listagem mostrou a indicação de paginação '1 – 16 of 46', confirmando a disponibilidade do catálogo."
+      },
+      {
+        "number": 2,
+        "action": "O usuário aguarda a estabilização da tela para confirmar que o catálogo permanece carregado corretamente.",
+        "data": "Não se aplica",
+        "response": "A listagem de produtos manteve-se estável, sem alterações na quantidade de itens exibidos nem no estado da cesta, reforçando que o catálogo continuou disponível após o carregamento inicial."
+      }
+    ]
+  }
+}

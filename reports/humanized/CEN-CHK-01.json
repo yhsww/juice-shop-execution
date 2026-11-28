@@ -1,0 +1,33 @@
+{
+  "scenario_id": "CEN-CHK-01",
+  "fingerprint": "4d5eb11b04e36ad9bb909b2e2e78da17ea763931ab78e51d562a92380e8b6dd9",
+  "content": {
+    "flow": "O teste verifica a transição do carrinho de compras para a etapa de seleção de endereço, confirmando que o cliente consegue avançar no processo de compra a partir de um item já adicionado ao carrinho.",
+    "precondition": "O carrinho do cliente já continha o produto Apple Juice (1000ml), com quantidade 1 e preço unitário de 1.99¤.",
+    "observed_result": "Ao acionar o botão de checkout, a tela do carrinho foi substituída pela tela de seleção de endereço de entrega, exibindo a opção de adicionar um novo endereço e um botão para continuar o processo. A listagem do produto e o valor total deixaram de ser exibidos, dando lugar aos controles específicos dessa nova etapa.",
+    "messages": [
+      "Placed Apple Juice (1000ml) into basket."
+    ],
+    "data": "Produto: Apple Juice (1000ml); Quantidade: 1; Preço unitário: 1.99¤; Total: 1.99¤",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O cliente acessou a tela do carrinho de compras",
+        "data": "",
+        "response": "A interface exibiu o carrinho contendo o produto Apple Juice (1000ml), quantidade 1, preço unitário 1.99¤ e valor total de 1.99¤, junto da opção de prosseguir para o checkout."
+      },
+      {
+        "number": 2,
+        "action": "O cliente selecionou a opção de checkout a partir do carrinho",
+        "data": "",
+        "response": "A tela foi substituída pela etapa de seleção de endereço, apresentando a opção de adicionar um novo endereço e um botão para continuar, sem mais exibir os itens do carrinho."
+      },
+      {
+        "number": 3,
+        "action": "O sistema aguardou a estabilização da tela de seleção de endereço",
+        "data": "",
+        "response": "A tela permaneceu exibindo a opção de seleção de endereço, sem novas alterações visuais além da transição já ocorrida no passo anterior."
+      }
+    ]
+  }
+}

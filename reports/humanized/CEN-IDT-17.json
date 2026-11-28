@@ -1,0 +1,27 @@
+{
+  "scenario_id": "CEN-IDT-17",
+  "fingerprint": "7b39434e3ab1dd9db542748327927dcaa8103891ecb67aa66797a77f93f6c06f",
+  "content": {
+    "flow": "O teste acessou diretamente a página de cadastro da aplicação, partindo da tela inicial da loja, com o objetivo de verificar o carregamento do formulário de registro de usuário. A interação ficou limitada à navegação até essa tela e à observação dos elementos nela presentes, sem preenchimento de dados nem envio do formulário, portanto não há evidência de que o cadastro tenha sido concluído ou de que tenha ocorrido redirecionamento para a tela de login.",
+    "precondition": "Usuário não autenticado, navegando a partir da página inicial da loja de sucos.",
+    "observed_result": "A aplicação exibiu a tela de cadastro de usuário com os campos Email, Password, Repeat Password e Security Question, além do botão de registro e do link para quem já possui conta. Também foi exibido um aviso de que o idioma da interface havia sido alterado para inglês. Não há evidência de envio do formulário nem de transição para a tela de login.",
+    "messages": [
+      "Language has been changed to English"
+    ],
+    "data": "Rota de cadastro acessada; nenhum e-mail, senha ou resposta de segurança foi efetivamente preenchido durante a execução registrada.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Acessar a página de cadastro de usuário a partir da tela inicial",
+        "data": "Rota de cadastro ()",
+        "response": "A interface carregou o formulário de registro, exibindo os campos de e-mail, senha, repetição de senha, pergunta de segurança e o botão de registro, além da mensagem indicando mudança do idioma para inglês."
+      },
+      {
+        "number": 2,
+        "action": "Aguardar possível atualização da tela após o carregamento do formulário",
+        "data": "Nenhum dado informado neste passo",
+        "response": "Nenhuma alteração visual adicional foi detectada; a tela permaneceu exibindo o formulário de cadastro já carregado no passo anterior."
+      }
+    ]
+  }
+}

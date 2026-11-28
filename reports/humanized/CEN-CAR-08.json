@@ -1,0 +1,39 @@
+{
+  "scenario_id": "CEN-CAR-08",
+  "fingerprint": "df973a35ed100d6907a2f9e61d4c81e8b16be836d4c15d144958c922fa5524f9",
+  "content": {
+    "flow": "A partir da página do carrinho, com uma unidade de Apple Juice já presente, o cliente aciona o controle de incremento de quantidade associado ao item. A interface responde atualizando tanto o contador de unidades quanto o valor total exibido, refletindo o novo estado da compra.",
+    "precondition": "Cliente autenticado acessando a página do carrinho, com uma unidade de Apple Juice (1.99¤) já adicionada, totalizando 1.99¤.",
+    "observed_result": "Após o clique no controle de incremento, a quantidade do item Apple Juice passou de 1 para 2 unidades e o total do carrinho foi recalculado de 1.99¤ para 3.98¤, valores confirmados tanto no corpo da página quanto no indicador de itens do ícone do carrinho no menu superior.",
+    "messages": [
+      "Placed Apple Juice (1000ml) into basket. X"
+    ],
+    "data": "Apple Juice (1000ml) - 1.99¤ por unidade; quantidade alterada de 1 para 2; total alterado de 1.99¤ para 3.98¤.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Usuário acessa a página do carrinho de compras",
+        "data": "",
+        "response": "A página exibiu o item Apple Juice com quantidade 1, preço unitário 1.99¤ e total de 1.99¤, confirmando o estado inicial esperado antes da interação."
+      },
+      {
+        "number": 2,
+        "action": "Usuário aguarda o carregamento completo da página do carrinho",
+        "data": "",
+        "response": "A interface manteve o mesmo conteúdo já exibido, sem alterações visuais, indicando que a página já estava estabilizada."
+      },
+      {
+        "number": 3,
+        "action": "Usuário clica no controle de incremento de quantidade do item Apple Juice",
+        "data": "",
+        "response": "A quantidade exibida do item mudou de 1 para 2 e o total do carrinho foi atualizado de 1.99¤ para 3.98¤; o indicador de itens no ícone do carrinho também passou a mostrar 2."
+      },
+      {
+        "number": 4,
+        "action": "Usuário aguarda a confirmação da atualização na interface",
+        "data": "",
+        "response": "A página permaneceu exibindo a quantidade 2 e o total 3.98¤, confirmando que a alteração foi persistida e refletida de forma estável na tela."
+      }
+    ]
+  }
+}

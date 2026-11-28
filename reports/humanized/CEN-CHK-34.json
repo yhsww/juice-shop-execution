@@ -1,0 +1,69 @@
+{
+  "scenario_id": "CEN-CHK-34",
+  "fingerprint": "d33362489175b9a8bbedce0547915c997a134891cea1a26744f97935d8b17bba",
+  "content": {
+    "flow": "O teste avalia o comportamento do formulário de cadastro de cartão na etapa de pagamento quando um número de cartão incompleto é informado. O usuário acessou a tela de opções de pagamento, iniciou o cadastro de um novo cartão e preencheu nome, número parcial do cartão e as datas de validade. O objetivo foi verificar se o sistema impede o envio do formulário quando o número do cartão não atinge a quantidade mínima de dígitos exigida.",
+    "precondition": "Cliente autenticado na aplicação, com método de entrega já selecionado durante o checkout, na tela de opções de pagamento com a opção de adicionar novo cartão disponível.",
+    "observed_result": "Ao preencher o campo de número do cartão com 12 dígitos, o contador da interface passou a exibir '12/16', indicando que o valor está abaixo do limite necessário de 16 dígitos. Mesmo após completar os campos de nome, mês e ano de expiração, o botão de envio do formulário permaneceu desabilitado, impedindo o cadastro do cartão com número incompleto.",
+    "messages": [
+      "Card Number 12/16"
+    ],
+    "data": "Nome: Cliente Teste; Número do cartão: 400000000000 (12 dígitos); Mês de expiração: 12; Ano de expiração: 2090",
+    "steps": [
+      {
+        "number": 1,
+        "action": "Acessar a tela de opções de pagamento do checkout",
+        "data": "",
+        "response": "A interface exibiu as opções de pagamento disponíveis, incluindo a opção de adicionar um novo cartão de crédito ou débito e o pagamento via carteira."
+      },
+      {
+        "number": 2,
+        "action": "Selecionar a opção de adicionar um novo cartão de crédito ou débito",
+        "data": "",
+        "response": "O formulário de cadastro de cartão foi exibido, contendo os campos Nome, Número do Cartão (com contador 0/16), Mês e Ano de Expiração, além do botão de envio."
+      },
+      {
+        "number": 3,
+        "action": "Aguardar o carregamento completo do formulário",
+        "data": "",
+        "response": "O formulário permaneceu estável, sem alterações visuais adicionais, mantendo todos os campos disponíveis para preenchimento."
+      },
+      {
+        "number": 4,
+        "action": "Preencher o campo de nome do titular do cartão",
+        "data": "Cliente Teste",
+        "response": "O campo Nome foi preenchido sem alterar a estrutura do formulário, que permaneceu com o número do cartão zerado (0/16)."
+      },
+      {
+        "number": 5,
+        "action": "Preencher o campo de número do cartão com um valor de 12 dígitos",
+        "data": "400000000000",
+        "response": "O contador do campo foi atualizado para '12/16', evidenciando que o número informado está abaixo da quantidade mínima exigida pelo sistema."
+      },
+      {
+        "number": 6,
+        "action": "Selecionar o mês de expiração do cartão",
+        "data": "12",
+        "response": "A opção foi selecionada no campo correspondente, sem gerar alterações adicionais na estrutura do formulário."
+      },
+      {
+        "number": 7,
+        "action": "Selecionar o ano de expiração do cartão",
+        "data": "2090",
+        "response": "A opção foi selecionada no campo correspondente, mantendo o contador do número do cartão em '12/16'."
+      },
+      {
+        "number": 8,
+        "action": "Aguardar a atualização da interface após o preenchimento completo dos campos",
+        "data": "",
+        "response": "Nenhuma mudança adicional foi registrada; o formulário permaneceu exibido com os dados preenchidos e o contador indicando número incompleto."
+      },
+      {
+        "number": 9,
+        "action": "Verificar o estado do botão de envio do formulário",
+        "data": "",
+        "response": "O botão de envio permaneceu desabilitado, confirmando que o cadastro do cartão não pôde ser concluído com um número de 12 dígitos."
+      }
+    ]
+  }
+}

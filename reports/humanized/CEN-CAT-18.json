@@ -1,0 +1,39 @@
+{
+  "scenario_id": "CEN-CAT-18",
+  "fingerprint": "921a0a92f00b5f1196a41183b5192947c5cef0bf35bd7680d82d0a8bf9c05380",
+  "content": {
+    "flow": "A partir da página de catálogo completo, o visitante utilizou o campo de busca para localizar produtos digitando o termo em letras maiúsculas e confirmando com a tecla Enter. A interface processou o termo e retornou produtos relacionados a 'apple' mesmo tendo sido digitado em caixa alta, demonstrando que a busca não diferencia maiúsculas de minúsculas.",
+    "precondition": "O catálogo de produtos estava disponível e exibia a listagem completa de itens (46 produtos no total) antes da realização da busca.",
+    "observed_result": "A listagem de produtos, que inicialmente exibia todos os 46 itens do catálogo, foi substituída por um resultado filtrado contendo apenas 3 produtos: Apple Juice (1000ml), Apple Pomace e Pineapple Juice (1000ml). O título da página passou a exibir 'Search Results - APPLE' e o contador de itens foi atualizado para '1 – 3 of 3', confirmando que a busca em caixa alta retornou corretamente os produtos relacionados ao termo pesquisado.",
+    "messages": [
+      "Search Results - APPLE"
+    ],
+    "data": "Termo de busca: APPLE",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O visitante acessou a página de busca do catálogo, que inicialmente carregou a listagem completa de produtos disponíveis.",
+        "data": "",
+        "response": "A tela exibiu todos os produtos do catálogo, totalizando 46 itens distribuídos em páginas de 16 produtos cada."
+      },
+      {
+        "number": 2,
+        "action": "O visitante preencheu o campo de busca com o termo em letras maiúsculas.",
+        "data": "APPLE",
+        "response": "O campo recebeu o texto digitado, mas a listagem de produtos permaneceu inalterada até a confirmação da busca."
+      },
+      {
+        "number": 3,
+        "action": "O visitante confirmou a busca pressionando a tecla Enter.",
+        "data": "",
+        "response": "A interface atualizou o título para 'Search Results - APPLE' e substituiu a listagem completa por três produtos correspondentes ao termo pesquisado: Apple Juice (1000ml), Apple Pomace e Pineapple Juice (1000ml), com o contador ajustado para '1 – 3 of 3'."
+      },
+      {
+        "number": 4,
+        "action": "O visitante aguardou a estabilização da interface após o retorno dos resultados.",
+        "data": "",
+        "response": "Os resultados da busca permaneceram estáveis, sem alterações adicionais na listagem exibida."
+      }
+    ]
+  }
+}

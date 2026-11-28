@@ -1,0 +1,27 @@
+{
+  "scenario_id": "CEN-PER-04",
+  "fingerprint": "4e26467ee3dc55a30838ab8dcc00c36040ff5cfd2e0f320003bf7434fe55f7e6",
+  "content": {
+    "flow": "O cenário valida o acesso de um cliente autenticado à área de privacidade e segurança da conta. A interação parte da tela de busca de produtos e, ao acionar a navegação para a seção específica, o sistema altera o endereço da aplicação para a área correspondente, confirmando que a rota de privacidade e segurança foi efetivamente carregada.",
+    "precondition": "Cliente autenticado na aplicação, com sessão ativa antes de acessar a área de privacidade e segurança.",
+    "observed_result": "A aplicação saiu da tela de busca de produtos e passou a exibir a URL referente à seção de privacidade e segurança, confirmando que a navegação foi concluída. Apesar disso, o conteúdo textual capturado na tela, após a mudança, mostrou apenas elementos fixos do cabeçalho (menu, conta, carrinho e seletor de idioma) e o aviso de cookies, sem exibir detalhes textuais específicos da seção de privacidade e segurança no momento da captura.",
+    "messages": [
+      "This website uses fruit cookies to ensure you get the juiciest tracking experience. But me wait! Me want it!"
+    ],
+    "data": "Nenhum dado adicional informado pelo usuário; a interação consistiu apenas no acesso à seção de privacidade e segurança da conta.",
+    "steps": [
+      {
+        "number": 1,
+        "action": "O usuário acessa a área de privacidade e segurança da conta a partir da tela de busca de produtos.",
+        "data": "Nenhum dado adicional",
+        "response": "A URL da aplicação mudou da tela de busca de produtos para a seção de privacidade e segurança, indicando que a navegação foi concluída. O conteúdo exibido na tela, no entanto, limitou-se aos elementos fixos do cabeçalho e ao aviso de cookies."
+      },
+      {
+        "number": 2,
+        "action": "O usuário aguarda a estabilização da interface após o carregamento da seção.",
+        "data": "Nenhum dado adicional",
+        "response": "Não houve alteração visual adicional; a tela permaneceu exibindo o mesmo conteúdo do cabeçalho e o aviso de cookies observado no passo anterior."
+      }
+    ]
+  }
+}
