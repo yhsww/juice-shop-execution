@@ -15,6 +15,7 @@ from automation.preconditions import (
     scenario_email,
     scenario_password,
 )
+from automation import network
 from config.settings import settings
 from reporting.evidence import Evidence, capture, save_execution, timestamp
 from reporting.report import save_domain_reports, save_report
@@ -75,7 +76,11 @@ async def _run_scenario(scenario: dict) -> dict:
         "messages": [],
     }
 
-    async with browser_session() as (_, _, page):
+    recorder = network.NetworkRecorder(settings.base_url) if network.enabled() else None
+
+    async with browser_session() as (_, context, page):
+        if recorder is not None:
+            recorder.attach(context)
         await open_juice_shop(page)
 
         # Preconditions are part of the scenario budget. A stalled browser
@@ -105,6 +110,7 @@ async def _run_scenario(scenario: dict) -> dict:
             execution["status"] = "AUTOMATION_ERROR"
             print(f"[AUTOMATION_ERROR] {scenario['id']} | pré-condição | {preparation_error}")
             out = settings.report_dir / scenario["id"]
+            _attach_network(recorder, execution, out)
             save_execution(out.with_suffix(".json"), execution)
             save_report(out.with_suffix(".md"), scenario, execution)
             return execution
@@ -123,6 +129,7 @@ async def _run_scenario(scenario: dict) -> dict:
             )
             print(f"[TIMEOUT] {scenario['id']} | pré-condição excedeu {scenario_timeout}s.")
             out = settings.report_dir / scenario["id"]
+            _attach_network(recorder, execution, out)
             save_execution(out.with_suffix(".json"), execution)
             save_report(out.with_suffix(".md"), scenario, execution)
             return execution
@@ -214,6 +221,8 @@ async def _run_scenario(scenario: dict) -> dict:
 
             action_ended = time.time()
             network_evidence = []
+            if recorder is not None:
+                recorder.mark_step(number, action_started, action_ended)
 
             evidence = Evidence(
                 step=number,
@@ -366,9 +375,32 @@ async def _run_scenario(scenario: dict) -> dict:
             )
 
     out = settings.report_dir / scenario["id"]
+    _attach_network(recorder, execution, out)
     save_execution(out.with_suffix(".json"), execution)
     save_report(out.with_suffix(".md"), scenario, execution)
     return execution
+
+
+def _attach_network(recorder, execution: dict, out) -> None:
+    """Salva o HAR do cenário e liga as requisições de API a cada passo."""
+    if recorder is None:
+        return
+    try:
+        per_step = recorder.save(out.with_suffix(".har"))
+    except Exception as exc:  # a coleta de rede nunca deve derrubar o cenário
+        execution["network_summary"] = f"Falha ao salvar a coleta de rede: {exc}"
+        return
+    total = sum(len(items) for items in per_step.values())
+    for step in execution["steps"]:
+        calls = per_step.get(step.get("step"), [])
+        step["network"] = calls
+        step["network_summary"] = (
+            f"{len(calls)} requisição(ões) de API" if calls else "Nenhuma requisição de API."
+        )
+    execution["network_precondition"] = per_step.get(0, [])
+    execution["network_summary"] = (
+        f"{total} requisição(ões) de API registradas em {out.with_suffix('.har').name}."
+    )
 
 
 async def run_scenario(scenario: dict) -> dict:
